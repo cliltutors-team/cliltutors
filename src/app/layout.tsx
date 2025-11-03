@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import LanguageSwitcher from "@/src/components/languageSwitcher";
+import I18nProvider from "../components/I18nProvider";
+import Header from "../components/Header";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Fuente local OTF
+const subjectivity = localFont({
+  src: "./fonts/Subjectivity-Regular.otf",
+  variable: "--font-subjectivity",
+  weight: "400",
+  style: "normal",
 });
 
 export const metadata: Metadata = {
@@ -24,10 +25,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${subjectivity.variable} antialiased`}>
+        <I18nProvider>
+          <Header />
+          {children}
+          <LanguageSwitcher />
+        </I18nProvider>
       </body>
     </html>
   );

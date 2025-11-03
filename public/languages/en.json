@@ -1,0 +1,16 @@
+{
+  "home": {
+    "title": "Welcome to our page 🌎",
+    "description": "Test the language switcher using the floating button at the bottom-right.",
+    "button": "Get started",
+    "footer": "Made with ❤️ — testing i18n with routes /es, /en, /pt"
+  },
+  
+  "header": {
+    "home": "Home",
+    "courses": "Courses", 
+    "teachers": "Teachers",
+    "about": "About",
+    "contact": "Contact"
+  }
+}

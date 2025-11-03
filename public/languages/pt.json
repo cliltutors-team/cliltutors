@@ -1,0 +1,16 @@
+{
+  "home": {
+    "title": "Bem-vindo à nossa página 🌎",
+    "description": "Teste o seletor de idioma usando o botão flutuante no canto inferior direito.",
+    "button": "Começar agora",
+    "footer": "Feito com ❤️ — teste i18n com rotas /es, /en, /pt"
+  },
+
+  "header": {
+    "home": "Início",
+    "courses": "Cursos",
+    "teachers": "Professores",
+    "about": "Sobre",
+    "contact": "Contato"
+  }
+}
