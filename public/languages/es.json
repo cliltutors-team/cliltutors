@@ -4,5 +4,13 @@
     "description": "Prueba el selector de idioma usando el botón flotante abajo a la derecha.",
     "button": "Comenzar ahora",
     "footer": "Hecho con ❤️ — prueba i18n con rutas /es, /en, /pt"
+  },
+
+  "header": {
+    "home": "Inicio",
+    "courses": "Cursos",
+    "teachers": "Profesores", 
+    "about": "Acerca de",
+    "contact": "Contacto"
   }
 }

@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import LanguageSwitcher from "@/src/components/languageSwitcher";
 import I18nProvider from "../components/I18nProvider";
+import Header from "../components/Header";
 
 // Fuente local OTF
 const subjectivity = localFont({
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${subjectivity.variable} antialiased`}>
         <I18nProvider>
+          <Header />
           {children}
           <LanguageSwitcher />
         </I18nProvider>
