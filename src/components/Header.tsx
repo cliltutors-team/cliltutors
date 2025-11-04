@@ -51,7 +51,7 @@ export default function Header() {
   }, [open]);
 
   return (
-    <header className="bg-white">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white">
       <nav className="flex items-center justify-between md:w-[70%] w-[90%] mx-auto py-4 relative">
         {/* LOGO - siempre visible */}
         <Link href="/" className="flex items-center gap-3 z-20">
@@ -59,7 +59,7 @@ export default function Header() {
             src="/images/logo_Cliltutors.png"
             alt="Cliltutors — logo"
             width={130}
-            height={130}
+            height={24}
             priority
             quality={100}
             className="cursor-pointer"
@@ -83,7 +83,7 @@ export default function Header() {
         {/* CTA + Mobile button */}
         <div className="flex items-center gap-4 z-20">
           <Link href="/contact" className="hidden md:inline-block">
-            <button className="bg-[#36DE6B] text-white px-5 py-2 rounded-full hover:bg-[#27b956] transition-colors duration-200">
+            <button className="bg-[#36DE6B] text-white px-5 py-2 rounded-full hover:bg-[#27b956] transition-colors duration-200 cursor-pointer">
               {t("header.contact")}
             </button>
           </Link>
@@ -93,19 +93,18 @@ export default function Header() {
             onClick={() => setOpen((s) => !s)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            className="md:hidden p-2 rounded-md text-[#444665] hover:bg-gray-100 transition"
+            className="md:hidden p-2 rounded-md text-[#444665] hover:bg-gray-100 transition cursor-pointer"
           >
             {open ? <X /> : <Menu />}
           </button>
         </div>
 
-        {/* Dropdown móvil (aparece debajo del nav) */}
+        {/* Dropdown móvil */}
         <div
           ref={dropdownRef}
           className={`absolute left-0 right-0 top-full mt-2 z-10 md:hidden flex justify-center pointer-events-none`}
           aria-hidden={!open}
         >
-          {/* Panel: ahora SOLO usa opacidad para animar */}
           <div
             className={`w-[92%] max-w-md bg-white rounded-2xl shadow-2xl transition-opacity duration-200
               ${
@@ -123,7 +122,7 @@ export default function Header() {
                     <Link
                       href={link.href}
                       onClick={() => setOpen(false)}
-                      className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-50 transition"
+                      className="flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-gray-50 transition cursor-pointer"
                     >
                       <span className="p-2 bg-gray-100 rounded-md">
                         <link.Icon className="w-4 h-4 text-[#444665]" />
@@ -138,7 +137,7 @@ export default function Header() {
 
               <div className="mt-4 border-t pt-4">
                 <Link href="/contact" onClick={() => setOpen(false)}>
-                  <button className="w-full bg-[#36DE6B] text-white py-3 rounded-full font-semibold hover:bg-[#27b956] transition">
+                  <button className="w-full bg-[#36DE6B] text-white py-3 rounded-full font-semibold hover:bg-[#27b956] transition cursor-pointer">
                     {t("header.contact")}
                   </button>
                 </Link>
@@ -147,7 +146,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Overlay más sutil (bg-black/10) */}
+        {/* Overlay */}
         <div
           className={`fixed inset-0 z-0 md:hidden transition-opacity duration-200 ${
             open
