@@ -1,14 +1,20 @@
 {
+  "meta": {
+    "title": "Cliltutors | Online Language & STEM Learning",
+    "ogSiteName": "Cliltutors",
+    "description": "Learn anywhere with native teachers! Live and recorded courses in Spanish, English, and Portuguese. Academic tutoring in Chemistry, Physics, Math, and Programming, plus professional coaching to help you reach your career goals.",
+    "keywords": "language learning, online courses, STEM tutoring, Spanish classes, English classes, Portuguese classes, chemistry tutoring, physics tutoring, math tutoring, programming tutoring, professional coaching"
+  },
   "home": {
     "title": "Welcome to our page 🌎",
     "description": "Test the language switcher using the floating button at the bottom-right.",
     "button": "Get started",
     "footer": "Made with ❤️ — testing i18n with routes /es, /en, /pt"
   },
-  
+
   "header": {
     "home": "Home",
-    "courses": "Courses", 
+    "courses": "Courses",
     "teachers": "Teachers",
     "about": "About",
     "contact": "Contact"
