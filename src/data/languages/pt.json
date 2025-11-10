@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "Cliltutors | Aprendizado de Idiomas e STEM Online",
+    "ogSiteName": "Cliltutors",
+    "description": "Aprenda com professores nativos! Aulas ao vivo e gravadas de espanhol, inglês e português. Reforço acadêmico em Química, Física, Matemática e Programação, além de coaching profissional para apoiar seu crescimento pessoal e profissional.",
+    "keywords": "aprender idiomas, aulas online, reforço STEM, aulas de espanhol, aulas de inglês, aulas de português, reforço de química, reforço de física, reforço de matemática, reforço de programação, coaching profissional"
+  },
+  "home": {
+    "title": "Bem-vindo à nossa página 🌎",
+    "description": "Teste o seletor de idioma usando o botão flutuante no canto inferior direito.",
+    "button": "Começar agora",
+    "footer": "Feito com ❤️ — teste i18n com rotas /es, /en, /pt"
+  },
+
+  "header": {
+    "home": "Início",
+    "courses": "Cursos",
+    "teachers": "Professores",
+    "about": "Sobre",
+    "contact": "Contato"
+  }
+}

@@ -1,5 +1,5 @@
-import { promises as fs } from "fs";
-import path from "path";
+// Ya no necesitamos 'fs' ni 'path' para esta función.
+// Next.js maneja la inclusión del JSON en el bundle del servidor a través de 'import()'.
 
 export type Locale = "en" | "es" | "pt";
 
@@ -8,21 +8,20 @@ export const DEFAULT_LOCALE: Locale = "en";
 
 export async function getMetaDict(locale: Locale) {
   try {
-    const filePath = path.join(
-      process.cwd(),
-      "public/languages",
-      `${locale}.json`
-    );
-    const data = await fs.readFile(filePath, "utf8");
-    return JSON.parse(data).meta;
-  } catch {
-    const fallback = path.join(
-      process.cwd(),
-      "public/languages",
-      `${DEFAULT_LOCALE}.json`
-    );
-    const data = await fs.readFile(fallback, "utf8");
-    return JSON.parse(data).meta;
+    const langData = await import(`../data/languages/${locale}.json`);
+
+    // Devolvemos la propiedad 'meta' del objeto JSON cargado.
+    return langData.meta;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (e) {
+    // En caso de que el archivo del 'locale' solicitado no exista,
+    // cargamos el idioma por defecto como fallback.
+    const fallback = await import(`../data/languages/${DEFAULT_LOCALE}.json`);
+
+    // Puedes loguear el error para depuración si es necesario:
+    // console.error(`Error loading metadata for locale ${locale}. Using fallback.`, e);
+
+    return fallback.meta;
   }
 }
 

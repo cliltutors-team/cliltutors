@@ -72,7 +72,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${subjectivity.variable} antialiased`}>
-        <I18nProvider>
+        <I18nProvider locale={locale}>
           <Header />
           {children}
           <LanguageSwitcher />
