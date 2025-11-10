@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation"; // 👈 NECESARIO PARA router.refresh()
 import i18n from "@/src/i18n";
+import { setLocaleCookie } from "@/src/app/action"; // 👈 IMPORTACIÓN DE LA SERVER ACTION
 
 type Lang = { code: string; label: string; flag: string };
 
@@ -17,6 +19,7 @@ const cdnFlag = (c: string) =>
   `https://unpkg.com/circle-flags@1.0.27/flags/${c}.svg`;
 
 export default function LanguageSwitcher() {
+  const router = useRouter(); // 👈 Inicializa useRouter para recarga
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement | null>(null);
 
@@ -35,6 +38,7 @@ export default function LanguageSwitcher() {
   const tamItem = 42; // 🔹 más pequeñas
   const gap = 8;
 
+  // Efecto 1: Inicializa el idioma desde localStorage al montar
   useEffect(() => {
     try {
       const stored = localStorage.getItem("language");
@@ -47,6 +51,7 @@ export default function LanguageSwitcher() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Efecto 2: Escucha cambios en i18n para actualizar el estado y localStorage
   useEffect(() => {
     const handler = (lng: string) => {
       const code = lng.startsWith("pt")
@@ -65,6 +70,7 @@ export default function LanguageSwitcher() {
     }
   }, []);
 
+  // Efecto 3: Cierra el menú al hacer clic fuera
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
       if (!rootRef.current) return;
@@ -74,17 +80,26 @@ export default function LanguageSwitcher() {
     return () => document.removeEventListener("mousedown", onDocClick);
   }, []);
 
-  const select = (code: string) => {
+  // 🚨 FUNCIÓN DE SELECCIÓN CLAVE: Sincroniza Cliente y Servidor
+  const select = async (code: string) => {
     const normalized = code.slice(0, 2);
     if (normalized === current) return setOpen(false);
+
+    // 1. Actualización del Cliente (inmediata)
     i18n.changeLanguage(normalized);
     setCurrent(normalized);
     try {
       localStorage.setItem("language", normalized);
     } catch {}
+
+    // 2. Sincronización con el Servidor (establecer cookie y recargar)
+    await setLocaleCookie(normalized); // 👈 Llama a la Server Action
+    router.refresh(); // 👈 Fuerza la re-ejecución del Layout
+
     setOpen(false);
   };
 
+  // Manejo de error de carga de imagen (fallback a CDN)
   const handleImgError = (
     e: React.SyntheticEvent<HTMLImageElement>,
     code: string
@@ -99,7 +114,6 @@ export default function LanguageSwitcher() {
   const items = LANGUAGES.filter((l) => l.code !== current);
 
   return (
-    // Reemplaza onMouseEnter y onMouseLeave por toggle con hover + click fuera
     <div ref={rootRef} className="fixed right-6 bottom-6 z-50">
       <div className="relative w-max h-max">
         {/* Menú de banderas */}
@@ -118,7 +132,7 @@ export default function LanguageSwitcher() {
             return (
               <button
                 key={lang.code}
-                onClick={() => select(lang.code)}
+                onClick={() => select(lang.code)} // 👈 Llamada a la función asíncrona
                 title={lang.label}
                 aria-label={`Cambiar a ${lang.label}`}
                 className="absolute left-1/2 -translate-x-1/2 rounded-full 
