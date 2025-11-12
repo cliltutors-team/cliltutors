@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Poppins } from "next/font/google";
 import "./globals.css";
-import LanguageSwitcher from "@/src/components/languageSwitcher";
 import I18nProvider from "../components/I18nProvider";
 import Header from "../components/Header";
 import { cookies, headers } from "next/headers";
@@ -13,7 +13,7 @@ import {
   SUPPORTED_LOCALES,
 } from "@/src/lib/getMeta";
 
-// Fuente local OTF
+// ✅ Fuente local OTF
 const subjectivity = localFont({
   src: "./fonts/Subjectivity-Regular.otf",
   variable: "--font-subjectivity",
@@ -21,7 +21,21 @@ const subjectivity = localFont({
   style: "normal",
 });
 
-// ✅ METADATA DINÁMICA
+// ✅ Fuente local MontserratAlt
+const montserratAlt = localFont({
+  src: "./fonts/MontserratAlt-Regular.ttf",
+  variable: "--font-montserrat-alt",
+  weight: "400",
+  style: "normal",
+});
+
+// ✅ Fuente Google Poppins
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700"], // Puedes ajustar los pesos que uses
+});
+
 export async function generateMetadata(): Promise<Metadata> {
   const c = await cookies();
   const h = await headers();
@@ -56,7 +70,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const dynamic = "force-dynamic";
 
-// ✅ ROOT LAYOUT
+// ✅ Root layout
 export default async function RootLayout({
   children,
 }: {
@@ -71,11 +85,12 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${subjectivity.variable} antialiased`}>
+      <body
+        className={`${subjectivity.variable} ${montserratAlt.variable} ${poppins.variable} antialiased`}
+      >
         <I18nProvider locale={locale}>
           <Header />
           {children}
-          <LanguageSwitcher />
         </I18nProvider>
       </body>
     </html>
