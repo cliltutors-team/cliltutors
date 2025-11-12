@@ -11,12 +11,11 @@
     "button": "Começar agora",
     "footer": "Feito com ❤️ — teste i18n com rotas /es, /en, /pt"
   },
-
   "header": {
-    "home": "Início",
-    "courses": "Cursos",
-    "teachers": "Professores",
-    "about": "Sobre",
-    "contact": "Contato"
+    "link1": "Início",
+    "link2": "Programas",
+    "link3": "Professores",
+    "link4": "Sobre nós",
+    "link5": "Contato"
   }
 }
