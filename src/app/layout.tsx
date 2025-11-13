@@ -94,7 +94,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${subjectivity.variable} ${montserratAlt.variable} ${poppins.variable} antialiased`}
+        className={`${subjectivity.variable} ${montserratAlt.variable} ${poppins.variable} ${inter.variable} antialiased`}
       >
         <I18nProvider locale={locale}>
           <Header />

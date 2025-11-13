@@ -3,10 +3,16 @@ import { useState } from 'react';
 import testimonialsData from '@/src/data/testimonials.json';
 import { useTranslation } from 'react-i18next';
 
-export default function Testimonials() {
-  const { t, } = useTranslation();
+type TestimonialType = {
+  id: number;
+  name: string;
+  text: string;
+  rating: number;
+};
 
-  const testimonials = (testimonialsData as any).testimonials;
+export default function Testimonials() {
+  const { t } = useTranslation();
+  const testimonials = (testimonialsData as { testimonials: TestimonialType[] }).testimonials;
 
   const [currentPage, setCurrentPage] = useState(0);
   const testimonialsPerPage = 8;
@@ -46,7 +52,7 @@ export default function Testimonials() {
 
         {/* Mostrar solo los testimonios de la página actual */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto px-4 md:px-8 font-inter">
-          {currentTestimonials.map((testimonial: any) => (
+          {currentTestimonials.map((testimonial: TestimonialType) => (
             <div 
               key={testimonial.id}
               className="bg-[#FBFAFF] rounded-2xl p-4 md:p-5 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col min-h-[180px] md:min-h-[200px]"
@@ -58,7 +64,7 @@ export default function Testimonials() {
                 </div>
               
                 {/* Rating en esquina superior derecha */}
-                <div className="fflex text-yellow-400 text-xs md:text-sm">
+                <div className="flex text-yellow-400 text-xs md:text-sm">
                   {"★".repeat(testimonial.rating)}
                   {"☆".repeat(5 - testimonial.rating)}
                 </div>
@@ -66,7 +72,7 @@ export default function Testimonials() {
 
               {/* Texto alineado a la izquierda */}
               <blockquote className="text-[#444665] text-xs leading-relaxed text-left flex-grow mb-3 md:mb-4">
-                "{testimonial.text}"
+                &ldquo;{testimonial.text}&rdquo;
               </blockquote>
 
               {/* Nombre en esquina inferior derecha */}
