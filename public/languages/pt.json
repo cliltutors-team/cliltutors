@@ -11,8 +11,8 @@
     "button": "Começar agora",
     "footer": "Feito com ❤️ — teste i18n com rotas /es, /en, /pt"
   },
-
   "header": {
+<<<<<<< HEAD
     "home": "Início",
     "courses": "Cursos",
     "teachers": "Professores",
@@ -23,5 +23,12 @@
   "testimonials": {
     "subtitle": "+400 MIL ALUNOS FLUENTES!",
     "title": "Depoimentos de Alunos"
+=======
+    "link1": "Início",
+    "link2": "Cursos",
+    "link3": "Serviços",
+    "link4": "Sobre nós",
+    "link5": "Contato"
+>>>>>>> develop
   }
 }
