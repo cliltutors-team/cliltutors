@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Inter } from 'next/font/google';
 import "./globals.css";
 import LanguageSwitcher from "@/src/components/languageSwitcher";
 import I18nProvider from "../components/I18nProvider";
@@ -19,6 +20,19 @@ const subjectivity = localFont({
   variable: "--font-subjectivity",
   weight: "400",
   style: "normal",
+});
+
+// Montserrat
+const montserrat = localFont({
+  src: "./fonts/MontserratAlt-Regular.ttf", // o el archivo que tengas
+  variable: "--font-montserrat",
+  weight: "400",
+});
+
+// Inter
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
 });
 
 // ✅ METADATA DINÁMICA

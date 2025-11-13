@@ -4,6 +4,7 @@
 import LanguageSwitcher from "@/src/components/languageSwitcher"; // ajusta la ruta si la tienes en otro lugar
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
+import Testimonials from '@/src/components/Testimonials';
 
 /**
  * Página que usa react-i18next (SPA)
@@ -68,6 +69,8 @@ export default function HomePage() {
 
       {/* El LanguageSwitcher ya en layout, lo dejo también por si quieres */}
       <LanguageSwitcher />
+
+      <Testimonials/>
     </main>
   );
 }

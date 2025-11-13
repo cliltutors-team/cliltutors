@@ -18,5 +18,10 @@
     "teachers": "Teachers",
     "about": "About",
     "contact": "Contact"
+  },
+
+  "testimonials": {
+    "subtitle": "+400K FLUENT STUDENTS!",
+    "title": "Student Testimonials"
   }
 }

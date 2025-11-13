@@ -18,5 +18,11 @@
     "teachers": "Professores",
     "about": "Sobre",
     "contact": "Contato"
+  },
+
+  "testimonials": {
+    "subtitle": "+400 MIL ALUNOS FLUENTES!",
+    "title": "Depoimentos de Alunos"
   }
+
 }

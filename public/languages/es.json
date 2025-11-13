@@ -5,6 +5,7 @@
     "description": "Aprende con profesores nativos. Clases en vivo o grabadas de español, inglés y portugués. Tutorías académicas en Química, Física, Matemáticas y Programación, además de coaching profesional para impulsar tu futuro académico y laboral.",
     "keywords": "aprender idiomas, clases online, tutorías STEM, clases de español, clases de inglés, clases de portugués, tutorías de química, tutorías de física, tutorías de matemáticas, tutorías de programación, coaching profesional"
   },
+  
   "home": {
     "title": "Bienvenido a nuestra página 🌎",
     "description": "Prueba el selector de idioma usando el botón flotante abajo a la derecha.",
@@ -18,5 +19,10 @@
     "teachers": "Profesores",
     "about": "Acerca de",
     "contact": "Contacto"
+  },
+
+  "testimonials": {
+    "subtitle": "+400 MIL ALUMNOS FLUENTES!",
+    "title": "Testimonios de Estudiantes"
   }
 }
