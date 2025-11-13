@@ -47,14 +47,8 @@ export default function HomePage() {
       <p className="mt-2 text-xs text-black">
         Idioma actual: <strong>{(i18n.language || "es").slice(0, 2)}</strong>
       </p>
-<<<<<<< HEAD
-
-      {/* El LanguageSwitcher ya en layout, lo dejo también por si quieres */}
-      <LanguageSwitcher />
 
       <Testimonials/>
-=======
->>>>>>> develop
     </main>
   );
 }

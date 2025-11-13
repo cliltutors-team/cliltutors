@@ -12,23 +12,15 @@
     "footer": "Feito com ❤️ — teste i18n com rotas /es, /en, /pt"
   },
   "header": {
-<<<<<<< HEAD
-    "home": "Início",
-    "courses": "Cursos",
-    "teachers": "Professores",
-    "about": "Sobre",
-    "contact": "Contato"
-  },
-
-  "testimonials": {
-    "subtitle": "+400 MIL ALUNOS FLUENTES!",
-    "title": "Depoimentos de Alunos"
-=======
     "link1": "Início",
     "link2": "Cursos",
     "link3": "Serviços",
     "link4": "Sobre nós",
     "link5": "Contato"
->>>>>>> develop
+  },
+
+  "testimonials": {
+    "subtitle": "+400 MIL ALUNOS FLUENTES!",
+    "title": "Depoimentos de Alunos"
   }
 }

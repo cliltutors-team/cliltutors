@@ -12,23 +12,14 @@
     "footer": "Hecho con ❤️ — prueba i18n con rutas /es, /en, /pt"
   },
   "header": {
-<<<<<<< HEAD
-    "home": "Inicio",
-    "courses": "Cursos",
-    "teachers": "Profesores",
-    "about": "Acerca de",
-    "contact": "Contacto"
-  },
-
-  "testimonials": {
-    "subtitle": "+400 MIL ALUMNOS FLUENTES!",
-    "title": "Testimonios de Estudiantes"
-=======
     "link1": "Inicio",
     "link2": "Programas",
     "link3": "Profesores",
     "link4": "Sobre nosotros",
     "link5": "Contacto"
->>>>>>> develop
+  },
+  "testimonials": {
+    "subtitle": "+400 MIL ALUMNOS FLUENTES!",
+    "title": "Testimonios de Estudiantes"
   }
 }

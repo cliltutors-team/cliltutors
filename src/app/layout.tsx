@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-<<<<<<< HEAD
 import { Inter } from 'next/font/google';
-=======
 import { Poppins } from "next/font/google";
->>>>>>> develop
 import "./globals.css";
 import I18nProvider from "../components/I18nProvider";
 import Header from "../components/Header";
@@ -25,22 +22,7 @@ const subjectivity = localFont({
   style: "normal",
 });
 
-<<<<<<< HEAD
-// Montserrat
-const montserrat = localFont({
-  src: "./fonts/MontserratAlt-Regular.ttf", // o el archivo que tengas
-  variable: "--font-montserrat",
-  weight: "400",
-});
-
-// Inter
-const inter = Inter({ 
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
-
 // ✅ METADATA DINÁMICA
-=======
 // ✅ Fuente local MontserratAlt
 const montserratAlt = localFont({
   src: "./fonts/MontserratAlt-Regular.ttf",
@@ -56,7 +38,12 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700"], // Puedes ajustar los pesos que uses
 });
 
->>>>>>> develop
+// Inter
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
+
 export async function generateMetadata(): Promise<Metadata> {
   const c = await cookies();
   const h = await headers();

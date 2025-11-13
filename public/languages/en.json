@@ -17,5 +17,10 @@
     "link3": "Teachers",
     "link4": "About us",
     "link5": "Contact"
+  },
+
+  "testimonials": {
+    "subtitle": "+400K FLUENT STUDENTS!",
+    "title": "Student Testimonials"
   }
 }

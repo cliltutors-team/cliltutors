@@ -12,23 +12,15 @@
     "footer": "Made with ❤️ — test i18n using routes /es, /en, /pt"
   },
   "header": {
-<<<<<<< HEAD
-    "home": "Home",
-    "courses": "Courses",
-    "teachers": "Teachers",
-    "about": "About",
-    "contact": "Contact"
-  },
-
-  "testimonials": {
-    "subtitle": "+400K FLUENT STUDENTS!",
-    "title": "Student Testimonials"
-=======
     "link1": "Home",
     "link2": "Programs",
     "link3": "Teachers",
     "link4": "About us",
     "link5": "Contact"
->>>>>>> develop
+  },
+
+  "testimonials": {
+    "subtitle": "+400K FLUENT STUDENTS!",
+    "title": "Student Testimonials"
   }
 }
