@@ -1,0 +1,148 @@
+{
+  "testimonials": [
+    {
+      "id": 1,
+      "name": "Ana Silva",
+      "text": "Cliltutors transformou minha forma de aprender idiomas. Os professores são incríveis e a plataforma muito intuitiva.",
+      "rating": 5
+    },
+    {
+      "id": 2,
+      "name": "Carlos Rodríguez",
+      "text": "En solo 3 meses mejoré mi inglés significativamente. El método de enseñanza es muy efectivo.",
+      "rating": 5
+    },
+    {
+      "id": 3,
+      "name": "John Smith",
+      "text": "I learned Spanish much faster than I expected. The classes are very dynamic and engaging.",
+      "rating": 4
+    },
+    {
+      "id": 4,
+      "name": "Maria Santos",
+      "text": "A plataforma é excelente e os professores muito profissionais. Totalmente recomendado.",
+      "rating": 5
+    },
+    {
+      "id": 5,
+      "name": "Sophie Martin",
+      "text": "The flexible schedule allows me to study from anywhere. Very satisfied with the progress.",
+      "rating": 5
+    },
+    {
+      "id": 6,
+      "name": "Ahmed Hassan",
+      "text": "Los horarios flexibles me permiten estudiar desde cualquier lugar. Muy satisfecho.",
+      "rating": 4
+    },
+    {
+      "id": 7,
+      "name": "Laura Chen",
+      "text": "I love that I can choose between different accents and specialized teachers.",
+      "rating": 5
+    },
+    {
+      "id": 8,
+      "name": "David Kim",
+      "text": "A plataforma é muito estável e o suporte técnico responde rapidamente.",
+      "rating": 5
+    },
+    {
+      "id": 9,
+      "name": "Emma Johnson",
+      "text": "En solo 2 meses ya puedo mantener conversaciones básicas en portugués.",
+      "rating": 4
+    },
+    {
+      "id": 10,
+      "name": "Miguel Torres",
+      "text": "Perfect for professionals with busy schedules. The flexibility is key.",
+      "rating": 5
+    },
+    {
+      "id": 11,
+      "name": "Isabella Rossi",
+      "text": "Os professores se adaptam perfeitamente ao meu nível. Experiência incrível.",
+      "rating": 5
+    },
+    {
+      "id": 12,
+      "name": "Thomas Müller",
+      "text": "The teachers are exceptionally qualified. Very satisfied with my progress.",
+      "rating": 4
+    },
+    {
+      "id": 13,
+      "name": "Ling Wei",
+      "text": "El sistema de recordatorios me ayuda a mantener la constancia. Muy útil.",
+      "rating": 5
+    },
+    {
+      "id": 14,
+      "name": "Paula Gómez",
+      "text": "Material de estudo muito completo e atualizado. Aprendo muito em cada aula.",
+      "rating": 5
+    },
+    {
+      "id": 15,
+      "name": "Raj Patel",
+      "text": "The price is very competitive compared to other platforms of similar quality.",
+      "rating": 4
+    },
+    {
+      "id": 16,
+      "name": "Sofia Costa",
+      "text": "La aplicación móvil funciona perfectamente. Puedo practicar desde cualquier lugar.",
+      "rating": 5
+    },
+    {
+      "id": 17,
+      "name": "James Wilson",
+      "text": "He probado varias plataformas y esta es, sin duda, la mejor. Muy recomendable.",
+      "rating": 5
+    },
+    {
+      "id": 18,
+      "name": "Elena Petrova",
+      "text": "As aulas personalizadas aceleraram meu aprendizado. Superou minhas expectativas.",
+      "rating": 4
+    },
+    {
+      "id": 19,
+      "name": "Diego Ramirez",
+      "text": "The enrollment process was very simple and fast. In 5 minutes I had my first class.",
+      "rating": 5
+    },
+    {
+      "id": 20,
+      "name": "Olivia Brown",
+      "text": "As aulas de conversação são muito naturais e fluidas. Você perde o medo de falar.",
+      "rating": 5
+    },
+    {
+      "id": 21,
+      "name": "Hiroshi Tanaka",
+      "text": "Los materiales para exámenes oficiales son excelentes. Profesores muy expertos.",
+      "rating": 4
+    },
+    {
+      "id": 22,
+      "name": "Camila Reyes",
+      "text": "The teachers are very creative in making classes entertaining and effective.",
+      "rating": 5
+    },
+    {
+      "id": 23,
+      "name": "Alexander Schmidt",
+      "text": "O processo de avaliação é muito claro. Posso ver meu progresso semana a semana.",
+      "rating": 5
+    },
+    {
+      "id": 24,
+      "name": "Nora Al-Jaber",
+      "text": "La comunidad de estudiantes es muy activa y solidaria. Aprendemos entre todos.",
+      "rating": 4
+    }
+  ]
+}

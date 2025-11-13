@@ -4,6 +4,7 @@
 import LanguageSwitcher from "@/src/components/languageSwitcher";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
+import Testimonials from '@/src/components/Testimonials';
 
 export default function HomePage() {
   const { t, i18n } = useTranslation();
@@ -46,6 +47,8 @@ export default function HomePage() {
       <p className="mt-2 text-xs text-black">
         Idioma actual: <strong>{(i18n.language || "es").slice(0, 2)}</strong>
       </p>
+
+      <Testimonials/>
     </main>
   );
 }
