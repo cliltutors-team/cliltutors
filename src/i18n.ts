@@ -1,28 +1,39 @@
 // src/i18n.ts
 import i18n from "i18next";
-import Backend from "i18next-http-backend";
 import { initReactI18next } from "react-i18next";
 
-if (!i18n.isInitialized) {
+// 👇 importa las traducciones directamente en el bundle
+import es from "./data/languages/es.json";
+import en from "./data/languages/en.json";
+import pt from "./data/languages/pt.json";
+
+const resources = {
+  es: { translation: es },
+  en: { translation: en },
+  pt: { translation: pt },
+};
+
+export function initI18n(lng: string) {
+  // si ya está inicializado, solo cambia de idioma si hace falta
+  if (i18n.isInitialized) {
+    if (i18n.language !== lng) {
+      i18n.changeLanguage(lng);
+    }
+    return i18n;
+  }
+
   i18n
-    .use(Backend) // carga via HTTP desde /languages/{{lng}}.json
     .use(initReactI18next)
     .init({
+      resources,
+      lng,
       fallbackLng: "es",
-      lng: "es",
-      ns: ["translation"],
-      defaultNS: "translation",
       interpolation: { escapeValue: false },
       react: { useSuspense: false },
-      backend: {
-        // ruta desde donde i18next solicitará los JSON
-        loadPath: "/languages/{{lng}}.json",
-      },
     })
     .catch((err) => {
-      // si hay fallo en init, al menos no rompe la app
       console.error("i18n init error:", err);
     });
-}
 
-export default i18n;
+  return i18n;
+}
