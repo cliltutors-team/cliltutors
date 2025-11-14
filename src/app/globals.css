@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fffefe;
   --font-subjectivity: var(--font-subjectivity); /* nueva variable */
 }
 
@@ -14,7 +13,6 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
     --foreground: #fffefe;
   }
 }
@@ -38,4 +36,16 @@ body {
   .font-subjectivity {
     font-family: var(--font-subjectivity), cursive;
   }
+}
+
+.home-bg {
+  /* Imagen de fondo */
+  background-image: url("/images/bg_difuminadoo.webp");
+  background-repeat: no-repeat;
+
+  /* Tamaño aproximado del área del hero */
+  background-size: 1200px 600px;
+
+  /* Posición: juega con estos valores hasta que quede como en tu diseño */
+  background-position: right -100px top -170px;
 }
