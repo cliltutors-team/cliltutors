@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 "use client";
 
 import { useTranslation } from "react-i18next";
