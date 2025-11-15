@@ -37,15 +37,3 @@ body {
     font-family: var(--font-subjectivity), cursive;
   }
 }
-
-.home-bg {
-  /* Imagen de fondo */
-  background-image: url("/images/bg_difuminadoo.webp");
-  background-repeat: no-repeat;
-
-  /* Tamaño aproximado del área del hero */
-  background-size: 1200px 600px;
-
-  /* Posición: juega con estos valores hasta que quede como en tu diseño */
-  background-position: right -100px top -170px;
-}

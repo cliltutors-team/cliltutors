@@ -1,7 +1,6 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Inter } from "next/font/google";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import I18nProvider from "../components/I18nProvider";
@@ -24,6 +23,7 @@ const subjectivity = localFont({
   style: "normal",
 });
 
+// ✅ Fuente local MontserratAlt
 const montserratAlt = localFont({
   src: "./fonts/MontserratAlt-Regular.ttf",
   variable: "--font-montserrat-alt",
@@ -34,16 +34,9 @@ const montserratAlt = localFont({
 const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
+  weight: ["400", "500", "600", "700"], // Puedes ajustar los pesos que uses
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-// Metadata
 export async function generateMetadata(): Promise<Metadata> {
   const c = await cookies();
   const h = await headers();
@@ -82,7 +75,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${subjectivity.variable} ${montserratAlt.variable} ${poppins.variable} ${inter.variable} antialiased overflow-x-hidden`}
+        className={`${subjectivity.variable} ${montserratAlt.variable} ${poppins.variable} antialiased overflow-hidden`}
       >
         <I18nProvider locale={locale}>
           {isHome && (
