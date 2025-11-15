@@ -26,7 +26,7 @@ export default function Testimonials() {
   const totalPages = Math.ceil(testimonials.length / testimonialsPerPage);
 
   return (
-    <section className="relative w-screen min-h-screen -mx-4 -my-4">
+    <section className="relative -mx-4 -my-4">
       {/* Fondo optimizado */}
       <div className="absolute inset-0 z-0 w-screen">
         <Image
@@ -93,7 +93,7 @@ export default function Testimonials() {
               <button
                 key={index}
                 onClick={() => setCurrentPage(index)}
-                className={`w-3 h-3 rounded-full transition-all ${
+                className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
                   currentPage === index ? "bg-white scale-125" : "bg-white/40"
                 }`}
               />

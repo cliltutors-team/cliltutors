@@ -1,6 +1,6 @@
 import React from "react";
 
-const PlanSection = () => {
+export default function PlanSection() {
   const plans = [
     {
       name: "Plan Básico",
@@ -8,24 +8,24 @@ const PlanSection = () => {
       lessons: "4 aulas/mês",
       monthly: "R$ 220,00 mensal",
       semester: "R$ 1320,00 semestral",
-      description: "Ideal para manter o idiomaativo com regularidade"
+      description: "Ideal para manter o idiomaativo com regularidade",
     },
     {
-      name: "Plan Semi-Intensivo", 
+      name: "Plan Semi-Intensivo",
       color: "#FDB81B",
       lessons: "8 aulas/mês",
       monthly: "R$ 440,00 mensal",
       semester: "R$ 2640,00 semestral",
-      description: "Evolução consistente com foco em conversação"
+      description: "Evolução consistente com foco em conversação",
     },
     {
       name: "Plan Intensivo",
-      color: "#36DE6B", 
+      color: "#36DE6B",
       lessons: "16 aulas/mês",
       monthly: "R$ 700,00 mensal",
       semester: "R$ 4200,00 semestral",
-      description: "Fluência acelerada para metas profissionais ou exames"
-    }
+      description: "Fluência acelerada para metas profissionais ou exames",
+    },
   ];
 
   return (
@@ -52,41 +52,63 @@ const PlanSection = () => {
           Comece hoje. Conheça nossos planos.
         </h2>
         <p className="md:text-sm font-montserrat-alt text-[#444665] mb-16">
-          Oferecemos planos acessíveis e personalizados para quem busca desenvolver <br/>
+          Oferecemos planos acessíveis e personalizados para quem busca
+          desenvolver <br />
           fluência prática com aulas ao vivo e acompanhamento contínuo.
         </p>
 
         {/* Tarjetas de planes */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto mb-20">
           {plans.map((plan, index) => (
-            <div 
+            <div
               key={index}
               className="bg-white border rounded-4xl px-8 py-6 text-left min-h-[310px] shadow-lg hover:shadow-xl transition-all duration-300"
               style={{ borderColor: `${plan.color}20` }}
             >
-              <button 
+              <button
                 className="font-subjectivity w-64 text-[#444665] py-3 rounded-4xl transition-colors font-inter font-bold text-lg mb-8 text-left px-6 hover:opacity-90"
                 style={{ backgroundColor: plan.color }}
               >
                 {plan.name}
               </button>
-                            
+
               <div className="flex items-start mb-2 text-xl">
-                <span className="text-[#444665] mr-2 text-4xl" style={{ lineHeight: '0.8' }}>•</span>
-                <p className="font-inter text-[#444665] font-semibold">{plan.lessons}</p>
+                <span
+                  className="text-[#444665] mr-2 text-4xl"
+                  style={{ lineHeight: "0.8" }}
+                >
+                  •
+                </span>
+                <p className="font-inter text-[#444665] font-semibold">
+                  {plan.lessons}
+                </p>
               </div>
-              
+
               <div className="flex items-start mb-2 text-xl">
-                <span className="text-[#444665] mr-2 text-4xl" style={{ lineHeight: '0.8' }}>•</span>
+                <span
+                  className="text-[#444665] mr-2 text-4xl"
+                  style={{ lineHeight: "0.8" }}
+                >
+                  •
+                </span>
                 <div>
-                  <p className="font-inter text-[#444665] font-semibold">{plan.monthly}</p>
+                  <p className="font-inter text-[#444665] font-semibold">
+                    {plan.monthly}
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start mb-2 text-xl">
-                <span className="text-[#444665] mr-2 text-4xl" style={{ lineHeight: '0.8' }}>•</span>
+                <span
+                  className="text-[#444665] mr-2 text-4xl"
+                  style={{ lineHeight: "0.8" }}
+                >
+                  •
+                </span>
                 <div>
-                  <p className="font-inter text-[#444665] font-semibold">{plan.semester}</p>
+                  <p className="font-inter text-[#444665] font-semibold">
+                    {plan.semester}
+                  </p>
                 </div>
               </div>
 
@@ -103,7 +125,7 @@ const PlanSection = () => {
           {/* Izquierda */}
           <div className="text-center text-sm">
             <p className="font-inter text-[#444665]">
-              Turmas com até 4 alunos <br/>
+              Turmas com até 4 alunos <br />
               ou opção VIP individual
             </p>
           </div>
@@ -111,7 +133,7 @@ const PlanSection = () => {
           {/* Centro */}
           <div className="text-center text-sm">
             <p className="font-inter text-[#444665]">
-              Plataforma Google Workspace for Education <br/>
+              Plataforma Google Workspace for Education <br />
               Organização via Google Classroom
             </p>
           </div>
@@ -119,7 +141,7 @@ const PlanSection = () => {
           {/* Derecha */}
           <div className="text-center text-sm">
             <p className="font-inter text-[#444665]">
-              5% de desconto via Pix <br/>
+              5% de desconto via Pix <br />
               ou transferência
             </p>
           </div>
@@ -127,6 +149,4 @@ const PlanSection = () => {
       </div>
     </section>
   );
-};
-
-export default PlanSection;
+}
