@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import i18n from "@/src/i18n";
+import { useTranslation } from "react-i18next";
 import { setLocaleCookie } from "@/src/app/action";
 import { useState } from "react";
 
@@ -20,24 +20,33 @@ const cdnFlag = (c: string) =>
 
 export default function LanguageSwitcher() {
   const router = useRouter();
+  const { i18n } = useTranslation();
+
+  // 👇 i18n.language ya viene seteado por el I18nProvider (según cookie/servidor)
   const [current, setCurrent] = useState(() => {
-    try {
-      const stored = localStorage.getItem("language");
-      return stored ? stored.slice(0, 2) : "es";
-    } catch {
-      return "es";
-    }
+    const lng = (i18n.language || "es").slice(0, 2);
+    return lng as "es" | "en" | "pt";
   });
 
   const select = async (code: string) => {
-    const normalized = code.slice(0, 2);
+    const normalized = code.slice(0, 2) as "es" | "en" | "pt";
     if (normalized === current) return;
-    i18n.changeLanguage(normalized);
+
+    // 1) Cambia idioma en i18next (instantáneo en UI)
+    await i18n.changeLanguage(normalized);
+
+    // 2) Actualiza estado local del switcher
     setCurrent(normalized);
+
+    // 3) (Opcional) Guarda también en localStorage si quieres
     try {
       localStorage.setItem("language", normalized);
     } catch {}
+
+    // 4) Actualiza cookie en el servidor
     await setLocaleCookie(normalized);
+
+    // 5) Refresca para que el server use ese idioma en futuras navegaciones
     router.refresh();
   };
 
@@ -65,10 +74,8 @@ export default function LanguageSwitcher() {
               "w-7 h-7 rounded-full overflow-hidden shrink-0",
               "bg-white transition-shadow duration-150",
               active
-                ? // ✅ Anillo verde profesional, sin borde negro
-                  "ring-2 ring-[#36DE6B] ring-offset-2 ring-offset-white"
-                : // hover con verde suave
-                  "hover:ring-2 hover:ring-[#9ff3b9] hover:ring-offset-2 hover:ring-offset-white cursor-pointer",
+                ? "ring-2 ring-[#36DE6B] ring-offset-2 ring-offset-white"
+                : "hover:ring-2 hover:ring-[#9ff3b9] hover:ring-offset-2 hover:ring-offset-white cursor-pointer",
             ].join(" ")}
           >
             <Image

@@ -13,10 +13,10 @@ export default function Header() {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const navLinks = [
-    { href: "/", label: t("header.link1"), Icon: Home },
-    { href: "/courses", label: t("header.link2"), Icon: BookOpen },
-    { href: "/teachers", label: t("header.link3"), Icon: User },
-    { href: "/about", label: t("header.link4"), Icon: Info },
+    { href: "/", hrefKey: "header.link1", Icon: Home },
+    { href: "/courses", hrefKey: "header.link2", Icon: BookOpen },
+    { href: "/teachers", hrefKey: "header.link3", Icon: User },
+    { href: "/about", hrefKey: "header.link4", Icon: Info },
   ];
 
   useEffect(() => {
@@ -44,16 +44,23 @@ export default function Header() {
   }, [open]);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-[#fffefe]">
+    <header
+      className="
+        sticky top-0 left-0 w-full z-50 h-20
+        bg-transparent
+        border-none shadow-none
+      "
+    >
       <nav
         className="
           flex items-center justify-between 
           w-full max-w-[1600px] mx-auto
           px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[260px] 
           py-3 sm:py-4 h-16 sm:h-20
+          bg-transparent
         "
       >
-        {/* LOGO (se mantiene igual) */}
+        {/* LOGO */}
         <Link href="/" className="flex items-center shrink-0">
           <Image
             src="/Logo-ClilTutors.svg"
@@ -66,7 +73,7 @@ export default function Header() {
           />
         </Link>
 
-        {/* LINKS + SWITCHER a la derecha */}
+        {/* LINKS + SWITCHER DESKTOP */}
         <div className="hidden md:flex items-center gap-8 ml-auto">
           <ul className="font-poppins flex items-center gap-8 text-[#484a68] text-[0.95rem] lg:text-[1.05rem]">
             {navLinks.map((l, i) => (
@@ -75,28 +82,27 @@ export default function Header() {
                   href={l.href}
                   className="hover:text-[#36DE6B] transition-colors duration-200"
                 >
-                  {l.label}
+                  {t(l.hrefKey)}
                 </Link>
               </li>
             ))}
           </ul>
 
-          {/* Switcher pegado a los links */}
           <LanguageSwitcher />
         </div>
 
-        {/* Menú móvil */}
+        {/* BOTÓN MENÚ MÓVIL (este sí puede tener hover bg para ver el click) */}
         <button
           id="mobile-menu-toggle"
           onClick={() => setOpen((s) => !s)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          className="md:hidden p-2 rounded-md text-[#444665] hover:bg-gray-100 transition cursor-pointer"
+          className="md:hidden p-2 rounded-md text-[#444665] hover:bg-white/40 transition cursor-pointer"
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        {/* Dropdown móvil */}
+        {/* DROPDOWN MÓVIL */}
         <div
           ref={dropdownRef}
           className={`absolute left-0 right-0 top-full mt-2 z-10 md:hidden flex justify-center transition-all duration-300 ${
@@ -117,7 +123,9 @@ export default function Header() {
                     <span className="p-2 bg-gray-100 rounded-md">
                       <link.Icon className="w-4 h-4 text-[#444665]" />
                     </span>
-                    <span className="text-base font-medium">{link.label}</span>
+                    <span className="text-base font-medium">
+                      {t(link.hrefKey)}
+                    </span>
                   </Link>
                 </li>
               ))}
@@ -129,7 +137,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Overlay móvil */}
+        {/* OVERLAY MÓVIL */}
         <div
           className={`fixed inset-0 z-0 md:hidden transition-opacity duration-300 ${
             open
