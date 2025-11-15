@@ -11,7 +11,7 @@ export default function Hero() {
         relative w-full
         mt-16 md:mt-24
         flex items-center justify-center
-        overflow-hidden
+        overflow-hidden pb-14
       "
     >
       {/* 👉 mismo padding lateral que el Header */}
@@ -20,7 +20,7 @@ export default function Hero() {
           relative z-10
           flex flex-col md:flex-row items-center justify-between 
           gap-10 md:gap-5
-          w-full max-w-[1600px] mx-auto
+          w-full max-w-[1600px] mx-auto 
           px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[260px]
         "
       >

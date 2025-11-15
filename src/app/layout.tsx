@@ -75,14 +75,14 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${subjectivity.variable} ${montserratAlt.variable} ${poppins.variable} antialiased overflow-hidden`}
+        className={`${subjectivity.variable} ${montserratAlt.variable} ${poppins.variable} antialiased overflow-x-hidden`}
       >
         <I18nProvider locale={locale}>
           {isHome && (
             <div
               className="
                 pointer-events-none 
-                absolute inset-x-0 -right-125 -top-140 
+                absolute inset-x-0 md:-right-125 md:-top-140 -top-15
                 -z-10 flex justify-center overflow-x-hidden
               "
               aria-hidden="true"
@@ -92,7 +92,7 @@ export default async function RootLayout({
                 alt="Background gradient"
                 width={1400}
                 height={600}
-                className="max-w-none select-none pointer-events-none"
+                className="max-w-none select-none pointer-events-none overflow-hidden"
                 priority
               />
             </div>
