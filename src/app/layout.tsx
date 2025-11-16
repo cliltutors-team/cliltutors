@@ -18,10 +18,29 @@ import Footer from "../components/Footer";
 
 // Fuentes
 const subjectivity = localFont({
-  src: "./fonts/Subjectivity-Regular.otf",
+  src: [
+    {
+      path: "./fonts/Subjectivity-Thin.otf",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Subjectivity-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Subjectivity-Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Subjectivity-ExtraBold.otf",
+      weight: "800",
+      style: "normal",
+    },
+  ],
   variable: "--font-subjectivity",
-  weight: "400",
-  style: "normal",
 });
 
 // ✅ Fuente local MontserratAlt

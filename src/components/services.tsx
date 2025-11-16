@@ -31,11 +31,14 @@ export default function Services() {
   return (
     <section className="w-full py-16 flex flex-col items-center max-w-[1600px] mx-auto">
       {/* Título */}
-      <div className="text-center max-w-3xl mx-auto px-4">
-        <h2 className="text-4xl font-bold text-[#2D2D2D] mb-4">
+      <div className="text-center max-w-[1000px] mx-auto px-4">
+        <h2 className="text-[56px] font-bold text-[#2D2D2D] mb-1">
           Comece pela sua necessidade
         </h2>
-        <p className="text-gray-600">
+        <p
+          className="text-gray-600 max-w-3xl mx-auto leading-relaxed"
+          style={{ lineHeight: "1.1" }}
+        >
           Cada pessoa aprende de um jeito. Por isso, oferecemos aulas e
           mentorias feitas sob medida para o que você precisa agora — seja
           dominar um idioma, reforçar matérias de exatas ou desenvolver novas
@@ -46,7 +49,27 @@ export default function Services() {
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-6xl w-full px-4">
         {services.map((item, i) => (
-          <div key={i} className="flex flex-col items-center">
+          <div key={i} className="flex flex-col items-center relative">
+            {/* CÍRCULO DECORATIVO — Primera card */}`
+            {i === 0 && (
+              <Image
+                src="/images/clil_circle.webp"
+                alt="Decor circle"
+                width={220}
+                height={220}
+                className="hidden md:block absolute -left-16 top-40 z-[-1] rotate-45"
+              />
+            )}
+            {/* CÍRCULO DECORATIVO — Tercera card */}
+            {i === 2 && (
+              <Image
+                src="/images/clil_circle.webp"
+                alt="Decor circle"
+                width={150}
+                height={150}
+                className="hidden md:block absolute -right-10 -top-10 z-[-1] rotate-45"
+              />
+            )}
             {/* Card */}
             <div
               className={`${item.bg} rounded-[40px] px-6 pt-6 pb-0 flex flex-col items-center shadow-lg hover:shadow-xl transition-all duration-300 justify-between relative h-auto lg:h-[455px] lg:w-[310px]`}
@@ -61,7 +84,32 @@ export default function Services() {
                 {item.title}
               </h3>
 
-              {/* Contenedor de la imagen con altura fija */}
+              {/* Badges — SOLO segunda card */}
+              {item.title === "Idiomas com o Método CLIL" && (
+                <>
+                  <span
+                    className="font-poppins absolute left-4 bottom-35 rounded-full px-4 py-1.5 text-xs font-bold"
+                    style={{ backgroundColor: "#4df181", color: "#54577c" }}
+                  >
+                    PORTUGUÊS
+                  </span>
+
+                  <span
+                    className="font-poppins absolute right-7 bottom-55 rounded-full px-4 py-1.5 text-xs font-bold"
+                    style={{ backgroundColor: "#fdb81b", color: "#e55b78" }}
+                  >
+                    ESPANHOL
+                  </span>
+
+                  <span
+                    className="font-poppins absolute right-6 bottom-18 rounded-full px-4 py-1.5 text-xs font-bold"
+                    style={{ backgroundColor: "#e55b78", color: "#fafaff" }}
+                  >
+                    INGLÊS
+                  </span>
+                </>
+              )}
+
               <div className="mt-auto flex items-end justify-center h-[340px]">
                 <Image
                   src={item.img}
@@ -74,13 +122,9 @@ export default function Services() {
                 />
               </div>
             </div>
-
-            {/* Descripción debajo */}
             <p
               className="text-gray-700 text-center mt-4 text-sm leading-relaxed max-w-[260px]"
-              style={{
-                lineHeight: "1.18",
-              }}
+              style={{ lineHeight: "1.18" }}
             >
               {item.description}
             </p>
