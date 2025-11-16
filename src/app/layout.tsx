@@ -14,6 +14,7 @@ import {
   DEFAULT_LOCALE,
   type Locale,
 } from "@/src/lib/getMeta";
+import Footer from "../components/Footer";
 
 // Fuentes
 const subjectivity = localFont({
@@ -101,6 +102,8 @@ export default async function RootLayout({
           <Header />
 
           <main className="relative">{children}</main>
+
+          <Footer />
         </I18nProvider>
       </body>
     </html>
