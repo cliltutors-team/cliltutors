@@ -26,7 +26,6 @@ export default function Hero() {
       >
         {/* COLUMNA DE TEXTO */}
         <div className="flex flex-col items-start justify-center text-left flex-1 w-full">
-          {/* TÍTULO — restaurado SIN apiñamiento */}
           <h1
             className="text-[#34354f] font-bold
               text-4xl sm:text-5xl md:text-6xl
@@ -80,12 +79,12 @@ export default function Hero() {
 
                 {/* Texto en dos líneas */}
                 <span
-                  className="text-lg sm:text-xl"
-                  style={{
-                    lineHeight: "0.98",
-                  }}
+                  className="flex flex-col text-left leading-tight text-lg sm:text-xl"
+                  style={{ lineHeight: "1.05" }}
                 >
-                  Agende sua <br /> aula gratuita
+                  Agende sua
+                  <br />
+                  aula gratuita
                 </span>
               </button>
             </Link>
@@ -148,7 +147,10 @@ export default function Hero() {
         </div>
 
         {/* IMAGEN — full responsive */}
-        <div className="hidden md:flex relative w-full md:w-[50%] justify-center items-center">
+        <div
+          className="hidden md:flex relative w-full justify-center items-center"
+          style={{ width: "47%" }}
+        >
           <Image
             src="/images/Girl-hero.svg"
             alt="Aluna estudando com tablet"
