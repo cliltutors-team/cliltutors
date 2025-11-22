@@ -5,23 +5,24 @@
     "description": "Aprenda com professores nativos! Aulas ao vivo e gravadas de espanhol, inglês e português. Reforço acadêmico em Química, Física, Matemática e Programação, além de coaching profissional para apoiar seu crescimento pessoal e profissional.",
     "keywords": "aprender idiomas, aulas online, reforço STEM, aulas de espanhol, aulas de inglês, aulas de português, reforço de química, reforço de física, reforço de matemática, reforço de programação, coaching profissional"
   },
-  "home": {
-    "title": "Bem-vindo à nossa página 🌎",
-    "description": "Teste o seletor de idioma usando o botão flutuante no canto inferior direito.",
-    "button": "Começar agora",
-    "footer": "Feito com ❤️ — teste i18n com rotas /es, /en, /pt"
-  },
   "header": {
     "link1": "Início",
-    "link2": "Programas",
-    "link3": "Professores",
-    "link4": "Sobre nós",
+    "link2": "Lenguagem",
+    "link3": "Coaching",
+    "link4": "Acadêmico",
     "link5": "Contato"
   },
-
+  "hero": {
+    "title": "Método simples, humano e eficaz.",
+    "description": "Aprenda o que vai te impulsionar com aulas ao vivo, professores nativos e o <b>método CLIL.</b>",
+    "button": "Agende sua aula gratuita"
+  },
+  "services": {
+    "title": "Comece pela sua necessidade",
+    "description": "Cada pessoa aprende de um jeito. Por isso, oferecemos aulas e mentorias feitas sob medida para o que você precisa agora — seja dominar um idioma, reforçar matérias de exatas ou desenvolver novas habilidades profissionais."
+  },
   "testimonials": {
     "subtitle": "+400 MIL ALUNOS FLUENTES!",
     "title": "Depoimentos de Alunos"
   }
-
 }

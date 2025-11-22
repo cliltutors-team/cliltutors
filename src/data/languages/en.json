@@ -1,26 +1,28 @@
 {
   "meta": {
-    "title": "Cliltutors | Online Language and STEM Learning",
+    "title": "Cliltutors | Online Language & STEM Learning",
     "ogSiteName": "Cliltutors",
-    "description": "Learn with native teachers! Live and recorded classes in Spanish, English, and Portuguese. Academic support in Chemistry, Physics, Math, and Programming, plus professional coaching for your personal and career growth.",
-    "keywords": "learn languages, online classes, STEM tutoring, spanish lessons, english lessons, portuguese lessons, chemistry tutoring, physics tutoring, math tutoring, programming tutoring, professional coaching"
-  },
-  "home": {
-    "title": "Welcome to our page 🌎",
-    "description": "Test the language switcher using the floating button at the bottom right corner.",
-    "button": "Start now",
-    "footer": "Made with ❤️ — test i18n using routes /es, /en, /pt"
+    "description": "Learn with native teachers! Live and recorded classes in Spanish, English, and Portuguese. Academic support in Chemistry, Physics, Math, and Programming, plus professional coaching to boost your personal and professional growth.",
+    "keywords": "learn languages, online classes, STEM tutoring, spanish classes, english classes, portuguese classes, chemistry tutoring, physics tutoring, math tutoring, programming tutoring, professional coaching"
   },
   "header": {
     "link1": "Home",
-    "link2": "Programs",
-    "link3": "Teachers",
-    "link4": "About us",
+    "link2": "Languages",
+    "link3": "Coaching",
+    "link4": "Academic",
     "link5": "Contact"
   },
-
+  "hero": {
+    "title": "A simple, human and effective method.",
+    "description": "Learn what will drive your growth with live classes, native teachers, and the <b>CLIL method.</b>",
+    "button": "Book your free class"
+  },
+  "services": {
+    "title": "Start based on your needs",
+    "description": "Everyone learns differently. That’s why we offer classes and mentoring tailored to what you need now — whether mastering a language, strengthening STEM subjects, or developing new professional skills."
+  },
   "testimonials": {
-    "subtitle": "+400K FLUENT STUDENTS!",
+    "subtitle": "+400K STUDENTS FLUENT!",
     "title": "Student Testimonials"
   }
 }

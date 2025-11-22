@@ -1,25 +1,28 @@
 {
   "meta": {
-    "title": "Cliltutors | Aprendizaje de Idiomas y STEM en Línea",
+    "title": "Cliltutors | Aprendizaje de Idiomas y STEM Online",
     "ogSiteName": "Cliltutors",
-    "description": "Aprende con profesores nativos. Clases en vivo y grabadas de español, inglés y portugués. Refuerzo académico en Química, Física, Matemáticas y Programación, además de coaching profesional para tu crecimiento personal y profesional.",
+    "description": "¡Aprende con profesores nativos! Clases en vivo y grabadas de español, inglés y portugués. Refuerzo académico en Química, Física, Matemáticas y Programación, además de coaching profesional para impulsar tu crecimiento personal y profesional.",
     "keywords": "aprender idiomas, clases online, refuerzo STEM, clases de español, clases de inglés, clases de portugués, refuerzo de química, refuerzo de física, refuerzo de matemáticas, refuerzo de programación, coaching profesional"
-  },
-  "home": {
-    "title": "Bienvenido a nuestra página 🌎",
-    "description": "Prueba el selector de idioma usando el botón flotante en la esquina inferior derecha.",
-    "button": "Comenzar ahora",
-    "footer": "Hecho con ❤️ — prueba i18n con rutas /es, /en, /pt"
   },
   "header": {
     "link1": "Inicio",
-    "link2": "Programas",
-    "link3": "Profesores",
-    "link4": "Sobre nosotros",
+    "link2": "Idiomas",
+    "link3": "Coaching",
+    "link4": "Académico",
     "link5": "Contacto"
   },
+  "hero": {
+    "title": "Método simple, humano y eficaz.",
+    "description": "Aprende lo que te va a impulsar con clases en vivo, profesores nativos y el <b>método CLIL.</b>",
+    "button": "Agenda tu clase gratuita"
+  },
+  "services": {
+    "title": "Empieza según tu necesidad",
+    "description": "Cada persona aprende de una forma única. Por eso ofrecemos clases y mentorías hechas a tu medida — ya sea dominar un idioma, reforzar materias de ciencias exactas o desarrollar nuevas habilidades profesionales."
+  },
   "testimonials": {
-    "subtitle": "+400 MIL ALUMNOS FLUENTES!",
+    "subtitle": "¡+400 MIL ESTUDIANTES FLUIDOS!",
     "title": "Testimonios de Estudiantes"
   }
 }
