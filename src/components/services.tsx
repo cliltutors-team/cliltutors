@@ -1,4 +1,5 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import Image from "next/image";
 
@@ -28,21 +29,19 @@ const services = [
 ];
 
 export default function Services() {
+  const { t } = useTranslation();
   return (
     <section className="w-full py-16 flex flex-col items-center max-w-[1600px] mx-auto">
       {/* Título */}
       <div className="text-center max-w-[1000px] mx-auto px-4">
         <h2 className="text-[56px] font-bold text-[#2D2D2D] mb-1">
-          Comece pela sua necessidade
+          {t("services.title")}
         </h2>
         <p
           className="text-gray-600 max-w-3xl mx-auto leading-relaxed"
           style={{ lineHeight: "1.1" }}
         >
-          Cada pessoa aprende de um jeito. Por isso, oferecemos aulas e
-          mentorias feitas sob medida para o que você precisa agora — seja
-          dominar um idioma, reforçar matérias de exatas ou desenvolver novas
-          habilidades profissionais.
+          {t("services.description")}
         </p>
       </div>
 

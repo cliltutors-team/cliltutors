@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useTranslation, Trans } from "react-i18next";
 
 export default function Hero() {
+  const { t } = useTranslation();
   return (
     <section
       className="
@@ -36,9 +38,7 @@ export default function Hero() {
               marginBottom: "90px",
             }}
           >
-            Método <br />
-            <span className="text-[#34354f]">simples, humano</span> <br />e
-            eficaz.
+            {t("hero.title")}
           </h1>
 
           {/* PÁRRAFO ANGOSTO */}
@@ -50,8 +50,10 @@ export default function Hero() {
                 lineHeight: "1.21",
               }}
             >
-              Aprenda o que vai te impulsionar com aulas ao vivo, professores
-              nativos e o <span className="font-bold">método CLIL.</span>
+              <Trans
+                i18nKey="hero.description"
+                components={{ b: <strong className="font-bold" /> }}
+              />
             </p>
           </div>
 
@@ -82,9 +84,7 @@ export default function Hero() {
                   className="flex flex-col text-left leading-tight text-lg sm:text-xl"
                   style={{ lineHeight: "1.05" }}
                 >
-                  Agende sua
-                  <br />
-                  aula gratuita
+                  {t("hero.button")}
                 </span>
               </button>
             </Link>

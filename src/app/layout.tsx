@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import I18nProvider from "../components/I18nProvider";
+import { WhatsAppButton } from "@/src/components/whatsappButton";
 import Header from "../components/Header";
 import Image from "next/image";
 import { cookies, headers } from "next/headers";
@@ -124,6 +125,7 @@ export default async function RootLayout({
 
           <Footer />
         </I18nProvider>
+        <WhatsAppButton />
       </body>
     </html>
   );
