@@ -19,10 +19,43 @@
   },
   "services": {
     "title": "Start based on your needs",
-    "description": "Everyone learns differently. That’s why we offer classes and mentoring tailored to what you need now — whether mastering a language, strengthening STEM subjects, or developing new professional skills."
+    "description": "Everyone learns differently. That's why we offer classes and mentoring tailored to what you need now — whether mastering a language, strengthening STEM subjects, or developing new professional skills."
   },
   "testimonials": {
     "subtitle": "+400K STUDENTS FLUENT!",
     "title": "Student Testimonials"
+  },
+  "footer": {
+    "newsletter": {
+      "title": "Subscribe to our newsletter",
+      "description": "Receive the latest news, offers and updates directly in your email.",
+      "placeholder": "Your email address",
+      "button": "Subscribe",
+      "privacy": "By subscribing you accept our privacy policy."
+    },
+    "menu": {
+      "title": "Menu",
+      "links": {
+        "home": "Home",
+        "mentors": "Mentors",
+        "contact": "Contact us",
+        "about": "About us"
+      }
+    },
+    "courses": {
+      "title": "Courses",
+      "links": {
+        "languages": "Languages",
+        "academic": "Academic"
+      }
+    },
+    "app": {
+      "title": "Download our app",
+      "description": "Coming soon on App Store and Google Play",
+      "button": "In development"
+    },
+    "copyright": "© 2025 Cliltutors. All rights reserved."
   }
 }
+
+
