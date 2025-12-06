@@ -17,7 +17,7 @@
   --color-human: #e94f70;
   --color-vitality: #26d07c;
 
-  /* Optional: automatic shades */
+  /* Automatic shades */
   --color-deep-50: color-mix(in srgb, var(--color-deep) 10%, white);
   --color-deep-100: color-mix(in srgb, var(--color-deep) 20%, white);
 

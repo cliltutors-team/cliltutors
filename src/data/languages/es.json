@@ -24,5 +24,36 @@
   "testimonials": {
     "subtitle": "¡+400 MIL ESTUDIANTES FLUIDOS!",
     "title": "Testimonios de Estudiantes"
+  },
+  "footer": {
+    "newsletter": {
+      "title": "Suscríbete a nuestro newsletter",
+      "description": "Recibe las últimas noticias, ofertas y actualizaciones directamente en tu email.",
+      "placeholder": "Tu dirección de email",
+      "button": "Suscribirse",
+      "privacy": "Al suscribirte aceptas nuestra política de privacidad."
+    },
+    "menu": {
+      "title": "Menú",
+      "links": {
+        "home": "Inicio",
+        "mentors": "Mentores",
+        "contact": "Contáctenos",
+        "about": "Acerca de nosotros"
+      }
+    },
+    "courses": {
+      "title": "Cursos",
+      "links": {
+        "languages": "Idiomas",
+        "academic": "Académico"
+      }
+    },
+    "app": {
+      "title": "Descarga nuestra app",
+      "description": "Próximamente disponible en App Store y Google Play",
+      "button": "En desarrollo"
+    },
+    "copyright": "© 2025 Cliltutors. Todos los derechos reservados."
   }
 }
