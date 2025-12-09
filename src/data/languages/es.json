@@ -1,45 +1,45 @@
 {
   "meta": {
-    "title": "Cliltutors | Aprendizaje de Idiomas y STEM Online",
+    "title": "Cliltutors | Aprendizaje de Idiomas y STEM en Línea",
     "ogSiteName": "Cliltutors",
-    "description": "¡Aprende con profesores nativos! Clases en vivo y grabadas de español, inglés y portugués. Refuerzo académico en Química, Física, Matemáticas y Programación, además de coaching profesional para impulsar tu crecimiento personal y profesional.",
-    "keywords": "aprender idiomas, clases online, refuerzo STEM, clases de español, clases de inglés, clases de portugués, refuerzo de química, refuerzo de física, refuerzo de matemáticas, refuerzo de programación, coaching profesional"
+    "description": "Aprende con profesores nativos. Clases en vivo y grabadas en español, inglés y portugués. Apoyo académico en química, física, matemáticas y programación, además de acompañamiento profesional para impulsar tu desarrollo.",
+    "keywords": "aprender idiomas, clases online, tutorías STEM, clases de español, clases de inglés, clases de portugués, tutorías de química, tutorías de física, tutorías de matemáticas, tutorías de programación, coaching profesional"
   },
   "header": {
     "link1": "Inicio",
-    "link2": "Idiomas",
-    "link3": "Coaching",
-    "link4": "Académico",
-    "link5": "Contacto"
+    "link2": "Sobre nosotros",
+    "link3": "Cursos",
+    "link4": "Tutores",
+    "link5": "Contáctanos"
   },
   "hero": {
-    "title": "Método simple, humano y eficaz.",
-    "description": "Aprende lo que te va a impulsar con clases en vivo, profesores nativos y el <b>método CLIL.</b>",
-    "button": "Agenda tu clase gratuita"
+    "title": "Un método simple, humano y efectivo.",
+    "description": "Aprende lo que impulsará tu crecimiento con clases en vivo, profesores nativos y el <b>método CLIL.</b>",
+    "button": "Reserva tu clase gratis"
   },
   "services": {
-    "title": "Empieza según tu necesidad",
-    "description": "Cada persona aprende de una forma única. Por eso ofrecemos clases y mentorías hechas a tu medida — ya sea dominar un idioma, reforzar materias de ciencias exactas o desarrollar nuevas habilidades profesionales."
+    "title": "Comienza según tus necesidades",
+    "description": "Todos aprenden de forma diferente. Por eso ofrecemos clases y mentorías adaptadas a lo que necesitas ahora — ya sea dominar un idioma, fortalecer materias STEM o desarrollar nuevas habilidades profesionales."
   },
   "testimonials": {
-    "subtitle": "¡+400 MIL ESTUDIANTES FLUIDOS!",
-    "title": "Testimonios de Estudiantes"
+    "subtitle": "¡+400K ESTUDIANTES FLUIDOS!",
+    "title": "Testimonios de estudiantes"
   },
   "footer": {
     "newsletter": {
-      "title": "Suscríbete a nuestro newsletter",
-      "description": "Recibe las últimas noticias, ofertas y actualizaciones directamente en tu email.",
-      "placeholder": "Tu dirección de email",
-      "button": "Suscribirse",
+      "title": "Suscríbete a nuestro boletín",
+      "description": "Recibe las últimas noticias, ofertas y actualizaciones directamente en tu correo.",
+      "placeholder": "Tu correo electrónico",
+      "button": "Suscribirme",
       "privacy": "Al suscribirte aceptas nuestra política de privacidad."
     },
     "menu": {
       "title": "Menú",
       "links": {
         "home": "Inicio",
-        "mentors": "Mentores",
-        "contact": "Contáctenos",
-        "about": "Acerca de nosotros"
+        "mentors": "Tutores",
+        "contact": "Contáctanos",
+        "about": "Sobre nosotros"
       }
     },
     "courses": {
@@ -51,7 +51,7 @@
     },
     "app": {
       "title": "Descarga nuestra app",
-      "description": "Próximamente disponible en App Store y Google Play",
+      "description": "Muy pronto en App Store y Google Play",
       "button": "En desarrollo"
     },
     "copyright": "© 2025 Cliltutors. Todos los derechos reservados."

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import I18nProvider from "../components/I18nProvider";
-import Header from "../components/Header";
+import Header from "../components/header";
 import Footer from "../components/Footer";
 import { WhatsAppButton } from "@/src/components/whatsappButton";
 import { cookies, headers } from "next/headers";
