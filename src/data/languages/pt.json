@@ -1,56 +1,59 @@
 {
   "meta": {
-    "title": "Cliltutors | Aprendizado de Idiomas e STEM Online",
+    "title": "Cliltutors | Aprendizado Online de Idiomas e STEM",
     "ogSiteName": "Cliltutors",
-    "description": "Aprenda com professores nativos! Aulas ao vivo e gravadas de espanhol, inglês e português. Reforço acadêmico em Química, Física, Matemática e Programação, além de coaching profissional para apoiar seu crescimento pessoal e profissional.",
-    "keywords": "aprender idiomas, aulas online, reforço STEM, aulas de espanhol, aulas de inglês, aulas de português, reforço de química, reforço de física, reforço de matemática, reforço de programação, coaching profissional"
+    "description": "Aprenda com professores nativos! Aulas ao vivo e gravadas em espanhol, inglês e português. Suporte acadêmico em química, física, matemática e programação, além de coaching profissional para impulsionar o seu crescimento.",
+    "keywords": "aprender idiomas, aulas online, tutoria STEM, aulas de espanhol, aulas de inglês, aulas de português, tutoria de química, tutoria de física, tutoria de matemática, tutoria de programação, coaching profissional"
   },
   "header": {
     "link1": "Início",
-    "link2": "Lenguagem",
-    "link3": "Coaching",
-    "link4": "Acadêmico",
+    "link2": "Sobre nós",
+    "link3": "Cursos",
+    "link4": "Tutores",
     "link5": "Contato"
   },
   "hero": {
-    "title": "Método simples, humano e eficaz.",
-    "description": "Aprenda o que vai te impulsionar com aulas ao vivo, professores nativos e o <b>método CLIL.</b>",
-    "button": "Agende sua aula gratuita"
+    "title": "Um método simples, humano e eficaz.",
+    "description": "Aprenda o que impulsionará seu crescimento com aulas ao vivo, professores nativos e o <b>método CLIL.</b>",
+    "button": "Agende sua aula grátis"
   },
   "services": {
-    "title": "Comece pela sua necessidade",
-    "description": "Cada pessoa aprende de um jeito. Por isso, oferecemos aulas e mentorias feitas sob medida para o que você precisa agora — seja dominar um idioma, reforçar matérias de exatas ou desenvolver novas habilidades profissionais."
+    "title": "Comece conforme suas necessidades",
+    "description": "Cada pessoa aprende de forma diferente. Por isso oferecemos aulas e mentorias adaptadas ao que você precisa agora — seja dominar um idioma, reforçar matérias STEM ou desenvolver novas habilidades profissionais."
   },
   "testimonials": {
-    "subtitle": "+400 MIL ALUNOS FLUENTES!",
-    "title": "Depoimentos de Alunos"
+    "subtitle": "+400K ESTUDANTES FLUENTES!",
+    "title": "Depoimentos de estudantes"
   },
   "footer": {
     "newsletter": {
-      "title": "Inscreva-se na nossa newsletter",
-      "description": "Receba as últimas notícias, ofertas e atualizaciones diretamente no seu e-mail.",
-      "placeholder": "Seu endereço de e-mail",
-      "button": "Inscrever-se",
-      "privacy": "Ao se inscrever, você aceita nossa política de privacidade."
+      "title": "Assine nossa newsletter",
+      "description": "Receba as últimas notícias, ofertas e atualizações diretamente no seu e-mail.",
+      "placeholder": "Seu e-mail",
+      "button": "Assinar",
+      "privacy": "Ao assinar você aceita nossa política de privacidade."
     },
     "menu": {
       "title": "Menu",
-      "home": "Início",
-      "mentors": "Mentores",
-      "contact": "Contate-nos",
-      "about": "Sobre nós"
+      "links": {
+        "home": "Início",
+        "mentors": "Tutores",
+        "contact": "Contato",
+        "about": "Sobre nós"
+      }
     },
     "courses": {
       "title": "Cursos",
-      "languages": "Idiomas",
-      "academic": "Académico"
+      "links": {
+        "languages": "Idiomas",
+        "academic": "Acadêmico"
+      }
     },
     "app": {
-      "title": "Baixe nosso aplicativo",
+      "title": "Baixe nosso app",
       "description": "Em breve na App Store e Google Play",
-      "button": "Desenvolvimento"
+      "button": "Em desenvolvimento"
     },
     "copyright": "© 2025 Cliltutors. Todos os direitos reservados."
   }
 }
-

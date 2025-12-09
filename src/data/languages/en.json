@@ -7,9 +7,9 @@
   },
   "header": {
     "link1": "Home",
-    "link2": "Languages",
-    "link3": "Coaching",
-    "link4": "Academic",
+    "link2": "About us",
+    "link3": "Courses",
+    "link4": "Tutors",
     "link5": "Contact"
   },
   "hero": {
@@ -37,7 +37,7 @@
       "title": "Menu",
       "links": {
         "home": "Home",
-        "mentors": "Mentors",
+        "mentors": "Tutors",
         "contact": "Contact us",
         "about": "About us"
       }
@@ -57,5 +57,3 @@
     "copyright": "© 2025 Cliltutors. All rights reserved."
   }
 }
-
-
