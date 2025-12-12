@@ -1,166 +1,70 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { useTranslation, Trans } from "react-i18next";
 
 export default function Hero() {
   const { t } = useTranslation();
+
   return (
-    <section
-      className="
-        relative w-full
-        mt-16 md:mt-24
-        flex items-center justify-center
-        overflow-hidden pb-14
-      "
-    >
-      {/* 👉 mismo padding lateral que el Header */}
+    <section className="w-full">
       <div
         className="
-          relative z-10
-          flex flex-col md:flex-row items-center justify-between 
-          gap-10 md:gap-5
-          w-full max-w-[1600px] mx-auto 
-          px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[260px]
+          mx-auto w-full max-w-[1100px]
+          px-4 sm:px-6 md:px-10 lg:px-16
+          pt-20 sm:pt-24 md:pt-28
+          pb-14 sm:pb-16
+          text-center
         "
       >
-        {/* COLUMNA DE TEXTO */}
-        <div className="flex flex-col items-start justify-center text-left flex-1 w-full">
-          <h1
-            className="text-[#34354f] font-bold
-              text-4xl sm:text-5xl md:text-6xl
-            "
-            style={{
-              letterSpacing: "0.012em",
-              lineHeight: "1.05",
-              marginBottom: "90px",
-            }}
+        {/* Eyebrow */}
+        <div className="mb-6 flex justify-center">
+          <span
+            className="
+            rounded-full
+            border border-[#34354f]/10
+            px-4 py-2
+            text-xs sm:text-sm
+            font-semibold
+            text-[#34354f]
+          "
           >
-            {t("hero.title")}
-          </h1>
-
-          {/* PÁRRAFO ANGOSTO */}
-          <div className="max-w-[340px] md:max-w-[320px] w-full">
-            <p
-              className="text-[#202020] text-base sm:text-lg mb-8 font-poppins"
-              style={{
-                letterSpacing: "-0.003em",
-                lineHeight: "1.21",
-              }}
-            >
-              <Trans
-                i18nKey="hero.description"
-                components={{ b: <strong className="font-bold" /> }}
-              />
-            </p>
-          </div>
-
-          {/* BOTÓN + SELLO - RESPONSIVE */}
-          <div className="flex items-center gap-6 flex-wrap sm:flex-nowrap">
-            {/* BOTÓN VERDE */}
-            <Link href="/contact">
-              <button
-                className="
-                  bg-[#36DE6B] hover:bg-[#27b956] text-white font-poppins font-semibold
-                  flex items-center gap-3 transition-all shadow-md
-                  rounded-full leading-tight cursor-pointer
-                "
-                style={{
-                  width: "245px",
-                  height: "65px",
-                  paddingLeft: "18px",
-                  paddingRight: "18px",
-                }}
-              >
-                {/* Círculo blanco con flecha */}
-                <span className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
-                  <ArrowRight size={20} stroke="#36DE6B" strokeWidth={3} />
-                </span>
-
-                {/* Texto en dos líneas */}
-                <span
-                  className="flex flex-col text-left leading-tight text-lg sm:text-xl"
-                  style={{ lineHeight: "1.05" }}
-                >
-                  {t("hero.button")}
-                </span>
-              </button>
-            </Link>
-
-            {/* 🔵 SELLO CIRCULAR RESPONSIVE */}
-            <div className="relative flex items-center justify-center select-none mx-auto sm:mx-0">
-              <svg
-                width="105"
-                height="105"
-                viewBox="0 0 200 200"
-                className="
-                  text-[#34354f] 
-                  select-none 
-                  animate-spin 
-                  [animation-duration:16s]
-                "
-                style={{ userSelect: "none" }}
-              >
-                <defs>
-                  <path
-                    id="circlePathSmall"
-                    d="
-                      M 100, 100
-                      m -75, 0
-                      a 75, 75 0 1, 1 150, 0
-                      a 75, 75 0 1, 1 -150, 0
-                    "
-                  />
-                </defs>
-
-                <text
-                  fontSize="15"
-                  fontFamily="Poppins"
-                  fontWeight="700"
-                  fill="#34354f"
-                  letterSpacing="1.5"
-                >
-                  <textPath
-                    href="#circlePathSmall"
-                    startOffset="0"
-                    textLength="480"
-                  >
-                    100% AO VIVO · ENCONTROS 100% AO VIVO · ENCONTROS
-                  </textPath>
-                </text>
-              </svg>
-
-              {/* Ícono central */}
-              <div className="absolute w-10 h-10 flex items-center justify-center">
-                <Image
-                  src="/images/icon_hero.svg"
-                  alt="Video icon"
-                  width={40}
-                  height={40}
-                  draggable={false}
-                />
-              </div>
-            </div>
-          </div>
+            Idiomas + STEM • Aprendizaje práctico
+          </span>
         </div>
 
-        {/* IMAGEN — full responsive */}
-        <div
-          className="hidden md:flex relative w-full justify-center items-center"
-          style={{ width: "47%" }}
+        {/* TÍTULO */}
+        <h1
+          className="
+            mx-auto max-w-4xl
+            text-[#34354f] font-semibold
+            text-4xl sm:text-5xl md:text-6xl lg:text-7xl
+            leading-[1.08] sm:leading-[1.05]
+            tracking-[-0.02em]
+          "
         >
-          <Image
-            src="/images/Girl-hero.svg"
-            alt="Aluna estudando com tablet"
-            width={600}
-            height={600}
-            className="object-contain w-full select-none"
-            priority
-            draggable={false}
+          {t("hero.title")}
+        </h1>
+
+        {/* DESCRIPCIÓN */}
+        <p
+          className="
+            mx-auto mt-6 max-w-2xl
+            text-[#202020]/80
+            font-poppins
+            text-base sm:text-lg md:text-xl
+            leading-relaxed
+          "
+        >
+          <Trans
+            i18nKey="hero.description"
+            components={{
+              b: <strong className="font-semibold text-[#202020]" />,
+            }}
           />
-        </div>
+        </p>
+
+        {/* Separador sutil */}
+        <div className="mx-auto mt-10 h-px w-24 bg-[#34354f]/10" />
       </div>
     </section>
   );
