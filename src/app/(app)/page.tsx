@@ -1,12 +1,13 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import Hero from "../components/hero";
+import Hero from "../../components/hero";
 import Testimonials from "@/src/components/Testimonials";
-import Services from "../components/services";
-import PlanSection from "../components/PlanSection";
-import About from "../components/about";
-import HeroCorporate from "../components/Corporate";
+import Services from "../../components/services";
+import PlanSection from "../../components/PlanSection";
+import About from "../../components/about";
+import Login from "../../components/Login";
+import TeamSection from "../../components/TeamSection";
 
 export default function HomePage() {
   // ❗ i18n ya maneja fallback internamente. No bloquees el render.
@@ -16,8 +17,8 @@ export default function HomePage() {
     <>
       <Hero />
       <Services />
-
-      <HeroCorporate />
+      <Login />
+      <TeamSection />
       <Testimonials />
       <PlanSection />
     </>
