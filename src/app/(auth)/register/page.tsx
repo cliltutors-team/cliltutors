@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { createMetadataForPage } from "@/src/lib/i18n/metadata";
-
 import RegisterFormClient from "@/src/components/auth/RegisterFormClient";
 
 export const dynamic = "force-dynamic";
@@ -12,15 +11,32 @@ export async function generateMetadata(): Promise<Metadata> {
   return createMetadataForPage("register");
 }
 
+type SearchParams = Record<string, string | string[] | undefined>;
+
 export default async function RegisterPage({
   searchParams,
 }: {
-  searchParams?: { name?: string; email?: string };
+  // ✅ Next 15 puede tipar esto como Promise en algunos setups
+  searchParams?: SearchParams | Promise<SearchParams>;
 }) {
+  const sp = await Promise.resolve(searchParams);
+
+  const initialNameRaw = sp?.name;
+  const initialEmailRaw = sp?.email;
+
   const initialName =
-    typeof searchParams?.name === "string" ? searchParams.name : "";
+    typeof initialNameRaw === "string"
+      ? initialNameRaw
+      : Array.isArray(initialNameRaw)
+      ? initialNameRaw[0] ?? ""
+      : "";
+
   const initialEmail =
-    typeof searchParams?.email === "string" ? searchParams.email : "";
+    typeof initialEmailRaw === "string"
+      ? initialEmailRaw
+      : Array.isArray(initialEmailRaw)
+      ? initialEmailRaw[0] ?? ""
+      : "";
 
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
@@ -40,8 +56,8 @@ export default async function RegisterPage({
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
             <RegisterFormClient
-              initialName={initialName}
-              initialEmail={initialEmail}
+              initialName={decodeURIComponent(initialName)}
+              initialEmail={decodeURIComponent(initialEmail)}
             />
           </div>
         </div>
