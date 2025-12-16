@@ -1,0 +1,134 @@
+{
+  "meta": {
+    "title": "Cliltutors | Aprendizado Online de Idiomas e STEM",
+    "ogSiteName": "Cliltutors",
+    "description": "Aprenda com professores nativos. Aulas ao vivo e gravadas em espanhol, inglês e português. Reforço acadêmico em química, física, matemática e programação, além de orientação profissional.",
+    "keywords": "aprender idiomas, aulas online, tutoria STEM, aulas de espanhol, aulas de inglês, aulas de português, tutoria de química, tutoria de física, tutoria de matemática, tutoria de programação",
+    "ogImage": "/og/default.png",
+    "twitterHandle": "@cliltutors"
+  },
+
+  "metadata": {
+    "default": {
+      "titleKey": "meta.title",
+      "descriptionKey": "meta.description",
+      "keywordsKey": "meta.keywords",
+      "robots": { "index": true, "follow": true }
+    },
+    "pages": {
+      "login": {
+        "title": "Entrar | Cliltutors",
+        "description": "Acesse sua conta Cliltutors e gerencie suas aulas.",
+        "robots": { "index": false, "follow": false }
+      },
+      "register": {
+        "title": "Cadastro | Cliltutors",
+        "description": "Crie sua conta Cliltutors e comece a aprender hoje.",
+        "robots": { "index": false, "follow": false }
+      }
+    }
+  },
+
+  "auth": {
+    "login": {
+      "title": "Entrar na sua conta",
+      "subtitle": "Digite seu email para acessar sua conta",
+      "email": "Email",
+      "password": "Senha",
+      "forgot": "Esqueceu sua senha?",
+      "cta": "Entrar",
+      "or": "Ou continue com",
+      "google": "Entrar com Google",
+      "noAccount": "Não tem uma conta?",
+      "signup": "Cadastre-se",
+      "imageAlt": "Login Cliltutors"
+    },
+    "register": {
+      "title": "Crie sua conta",
+      "subtitle": "Complete seu cadastro para acessar a Cliltutors",
+      "name": "Nome",
+      "email": "Email",
+      "password": "Senha",
+      "cta": "Cadastrar",
+      "or": "Ou continue com",
+      "google": "Cadastrar com Google",
+      "haveAccount": "Já tem uma conta?",
+      "login": "Entrar",
+      "imageAlt": "Cadastro Cliltutors"
+    }
+  },
+
+  "authCard": {
+    "title": "Crie sua conta na Cliltutors",
+    "subtitle": "Junte-se à Cliltutors e tenha acesso a cursos, orientação profissional e muito mais.",
+    "placeholders": {
+      "name": "Seu nome",
+      "email": "Endereço de email"
+    },
+    "button": "Continuar cadastro",
+    "buttonLoading": "Continuando...",
+    "terms": {
+      "prefix": "Ao criar sua conta, você aceita nossos",
+      "terms": "Termos de Serviço",
+      "and": "e",
+      "privacy": "Política de Privacidade",
+      "suffix": "."
+    }
+  },
+
+  "header": {
+    "link1": "Início",
+    "link2": "Sobre nós",
+    "link3": "Cursos",
+    "link4": "Tutores",
+    "link5": "Contato"
+  },
+
+  "hero": {
+    "title": "Aprenda idiomas. Domine STEM. Construa seu futuro",
+    "description": "Idiomas e STEM em uma única plataforma, pensada para impulsionar seu aprendizado e carreira.",
+    "button": "Agende sua aula gratuita"
+  },
+
+  "services": {
+    "title": "Comece de acordo com suas necessidades",
+    "description": "Cada pessoa aprende de forma diferente. Por isso oferecemos aulas e mentorias personalizadas."
+  },
+
+  "testimonials": {
+    "subtitle": "+400K ALUNOS FLUENTES",
+    "title": "Depoimentos de alunos"
+  },
+
+  "footer": {
+    "newsletter": {
+      "title": "Assine nossa newsletter",
+      "description": "Receba novidades, ofertas e atualizações diretamente no seu email.",
+      "placeholder": "Seu email",
+      "button": "Assinar",
+      "privacy": "Ao assinar você aceita nossa política de privacidade."
+    },
+    "menu": {
+      "title": "Menu",
+      "links": {
+        "home": "Início",
+        "mentors": "Tutores",
+        "contact": "Contato",
+        "about": "Sobre nós"
+      }
+    },
+    "courses": {
+      "title": "Cursos",
+      "links": {
+        "languages": "Idiomas",
+        "academic": "Acadêmico"
+      }
+    },
+    "app": {
+      "title": "Baixe nosso app",
+      "description": "Em breve na App Store e Google Play",
+      "button": "Em desenvolvimento"
+    },
+    "copyright": "© 2025 Cliltutors. Todos os direitos reservados."
+  }
+}

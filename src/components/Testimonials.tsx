@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
-import testimonialsData from "@/src/data/testimonials.json";
+import testimonialsData from "@/src/lib/data/testimonials.json";
 import { useTranslation } from "react-i18next";
 
 type TestimonialType = {

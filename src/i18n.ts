@@ -3,9 +3,9 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
 // 👇 importa las traducciones directamente en el bundle
-import es from "./data/languages/es.json";
-import en from "./data/languages/en.json";
-import pt from "./data/languages/pt.json";
+import es from "@/src/lib/data/languages/es.json";
+import en from "@/src/lib/data/languages/en.json";
+import pt from "@/src/lib/data/languages/pt.json";
 
 const resources = {
   es: { translation: es },
