@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { setLocaleCookie } from "@/src/app/action"; // ajusta si es /actions
 
 type LangCode = "es" | "en" | "pt";
@@ -52,6 +52,44 @@ export default function LanguageSwitcher() {
     return LANGUAGES.find((l) => l.code === lng) ?? LANGUAGES[0];
   }, [i18n.language]);
 
+  const handleImgError = (
+    e: React.SyntheticEvent<HTMLImageElement>,
+    code: string
+  ) => {
+    const img = e.currentTarget;
+    if (img.dataset.fallback === "cdn") return;
+    img.dataset.fallback = "cdn";
+    img.src = cdnFlag(code);
+  };
+
+  // ✅ calcula posición SIN useEffect (para evitar setState-in-effect)
+  const computePlacement = useCallback(() => {
+    const root = rootRef.current;
+    const menu = menuRef.current;
+    if (!root || !menu) return;
+
+    const rootRect = root.getBoundingClientRect();
+
+    // medidas reales del menú (si está visible)
+    const menuWidth = menu.offsetWidth || 208;
+    const menuHeight = menu.offsetHeight || 220;
+
+    const spaceBelow = window.innerHeight - rootRect.bottom;
+    const spaceAbove = rootRect.top;
+
+    const nextDropUp = spaceBelow < menuHeight && spaceAbove > spaceBelow;
+    setDropUp(nextDropUp);
+
+    // prevenir choque con bordes (margen 8px)
+    const wouldOverflowLeft = rootRect.right - menuWidth < 8;
+    const wouldOverflowRight =
+      rootRect.left + menuWidth > window.innerWidth - 8;
+
+    if (wouldOverflowLeft && !wouldOverflowRight) setAlign("left");
+    else setAlign("right");
+  }, []);
+
+  // ✅ cerrar al click afuera / escape (OK que el effect haga listeners)
   useEffect(() => {
     const onClickOutside = (e: MouseEvent) => {
       if (!rootRef.current) return;
@@ -69,44 +107,28 @@ export default function LanguageSwitcher() {
     };
   }, []);
 
-  // ✅ Decide arriba/abajo + izquierda/derecha según espacio
+  // ✅ si está abierto, recalcula en resize/scroll (sin usar setState *directo* en effect body)
   useEffect(() => {
     if (!open) return;
-    const root = rootRef.current;
-    const menu = menuRef.current;
-    if (!root || !menu) return;
 
-    const rootRect = root.getBoundingClientRect();
+    const rafRecalc = () => requestAnimationFrame(computePlacement);
 
-    // Fuerza a medir el tamaño real del menú
-    const menuWidth = menu.offsetWidth || 208;
-    const menuHeight = menu.offsetHeight || 220;
+    window.addEventListener("resize", rafRecalc, { passive: true });
+    // scroll puede venir de cualquier contenedor
+    window.addEventListener("scroll", rafRecalc, { passive: true });
 
-    const spaceBelow = window.innerHeight - rootRect.bottom;
-    const spaceAbove = rootRect.top;
-    setDropUp(spaceBelow < menuHeight && spaceAbove > spaceBelow);
+    // primer cálculo al abrir (deferred)
+    rafRecalc();
 
-    const spaceLeft = rootRect.right; // distancia desde el borde izquierdo hasta el borde derecho del botón
-    const spaceRight = window.innerWidth - rootRect.left; // desde el borde izquierdo del botón hasta el borde derecho pantalla
+    return () => {
+      window.removeEventListener("resize", rafRecalc);
+      window.removeEventListener("scroll", rafRecalc);
+    };
+  }, [open, computePlacement]);
 
-    // Si el menú (alineado a la derecha) se saldría por la izquierda, alinea a la izquierda
-    // (y viceversa si algún día lo pones pegado a la derecha)
-    const wouldOverflowLeft = rootRect.right - menuWidth < 8;
-    const wouldOverflowRight =
-      rootRect.left + menuWidth > window.innerWidth - 8;
-
-    if (wouldOverflowLeft && !wouldOverflowRight) setAlign("left");
-    else setAlign("right");
-  }, [open]);
-
-  const handleImgError = (
-    e: React.SyntheticEvent<HTMLImageElement>,
-    code: string
-  ) => {
-    const img = e.currentTarget;
-    if (img.dataset.fallback === "cdn") return;
-    img.dataset.fallback = "cdn";
-    img.src = cdnFlag(code);
+  const toggleOpen = () => {
+    // si va a abrir, necesitamos calcular con el menú “medible”
+    setOpen((v) => !v);
   };
 
   const select = async (code: LangCode) => {
@@ -129,7 +151,7 @@ export default function LanguageSwitcher() {
     <div ref={rootRef} className="relative">
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={toggleOpen}
         className={[
           "inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1.5",
           "shadow-sm transition hover:bg-gray-50",
