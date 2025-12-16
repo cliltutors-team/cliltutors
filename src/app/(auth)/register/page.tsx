@@ -11,35 +11,39 @@ export async function generateMetadata(): Promise<Metadata> {
   return createMetadataForPage("register");
 }
 
+/**
+ * En Next 15.5.x, PageProps.searchParams está tipado como Promise
+ * en algunos setups. Por eso lo declaramos así explícitamente.
+ */
 type SearchParams = Record<string, string | string[] | undefined>;
 
 export default async function RegisterPage({
   searchParams,
 }: {
-  // ✅ Next 15 puede tipar esto como Promise en algunos setups
-  searchParams?: SearchParams | Promise<SearchParams>;
+  searchParams?: Promise<SearchParams>;
 }) {
-  const sp = await Promise.resolve(searchParams);
+  const sp = (await searchParams) ?? {};
 
-  const initialNameRaw = sp?.name;
-  const initialEmailRaw = sp?.email;
+  const nameRaw = sp.name;
+  const emailRaw = sp.email;
 
   const initialName =
-    typeof initialNameRaw === "string"
-      ? initialNameRaw
-      : Array.isArray(initialNameRaw)
-      ? initialNameRaw[0] ?? ""
+    typeof nameRaw === "string"
+      ? decodeURIComponent(nameRaw)
+      : Array.isArray(nameRaw)
+      ? decodeURIComponent(nameRaw[0] ?? "")
       : "";
 
   const initialEmail =
-    typeof initialEmailRaw === "string"
-      ? initialEmailRaw
-      : Array.isArray(initialEmailRaw)
-      ? initialEmailRaw[0] ?? ""
+    typeof emailRaw === "string"
+      ? decodeURIComponent(emailRaw)
+      : Array.isArray(emailRaw)
+      ? decodeURIComponent(emailRaw[0] ?? "")
       : "";
 
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
+      {/* LADO IZQUIERDO */}
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center md:justify-start">
           <Link href="/" className="flex items-center">
@@ -56,13 +60,14 @@ export default async function RegisterPage({
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
             <RegisterFormClient
-              initialName={decodeURIComponent(initialName)}
-              initialEmail={decodeURIComponent(initialEmail)}
+              initialName={initialName}
+              initialEmail={initialEmail}
             />
           </div>
         </div>
       </div>
 
+      {/* LADO DERECHO */}
       <div className="relative hidden bg-gray-100 lg:block">
         <Image
           src="/placeholder.svg"
