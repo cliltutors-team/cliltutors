@@ -1,16 +1,7 @@
 import type { Locale } from "@/src/lib/getMeta";
 import { getLangDict } from "@/src/lib/getMeta";
+import type { I18nDict } from "@/src/lib/i18n/types";
 
-/**
- * Diccionario i18n genérico:
- * - JSON profundo
- * - valores string u objetos anidados
- */
-type Dict = Record<string, unknown>;
-
-/**
- * Acceso seguro a paths tipo "auth.login.title"
- */
 function getPath(obj: unknown, path: string): unknown {
   return path.split(".").reduce<unknown>((acc, key) => {
     if (acc && typeof acc === "object" && key in acc) {
@@ -20,17 +11,11 @@ function getPath(obj: unknown, path: string): unknown {
   }, obj);
 }
 
-/**
- * Obtiene el diccionario del idioma
- */
-export async function getDict(locale: Locale): Promise<Dict> {
+export async function getDict(locale: Locale): Promise<I18nDict> {
   const d = await getLangDict(locale);
-  return (d?.default ?? d) as Dict;
+  return (d?.default ?? d) as unknown as I18nDict;
 }
 
-/**
- * Crea función de traducción server-side
- */
 export async function createT(locale: Locale) {
   const dict = await getDict(locale);
 

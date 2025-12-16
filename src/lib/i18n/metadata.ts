@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 import { getServerLocale } from "@/src/lib/locale";
 import { createT, getDict } from "@/src/lib/i18n/server";
+import type { I18nDict } from "@/src/lib/i18n/types";
 
-type PageKey = string; // ej: "login", "home", "about"
+type PageKey = string;
 
 export async function createMetadataForPage(page: PageKey): Promise<Metadata> {
   const locale = await getServerLocale();
-
-  const dict = await getDict(locale);
+  const dict: I18nDict = await getDict(locale);
   const t = await createT(locale);
 
-  const pageMeta = dict?.metadata?.pages?.[page];
-  const defaultMeta = dict?.metadata?.default;
-  const metaRoot = dict?.meta;
+  const pageMeta = dict.metadata?.pages?.[page];
+  const defaultMeta = dict.metadata?.default;
+  const metaRoot = dict.meta;
 
   const title =
     pageMeta?.title ??
@@ -30,18 +30,11 @@ export async function createMetadataForPage(page: PageKey): Promise<Metadata> {
 
   const robots = pageMeta?.robots ?? defaultMeta?.robots;
 
-  const ogImage =
-    pageMeta?.openGraph?.image ??
-    (defaultMeta?.openGraph?.imageKey
-      ? t(defaultMeta.openGraph.imageKey)
-      : metaRoot?.ogImage);
-
   return {
     title,
     description,
     keywords,
     robots,
-
     openGraph: {
       type: "website",
       siteName:
@@ -59,9 +52,16 @@ export async function createMetadataForPage(page: PageKey): Promise<Metadata> {
         (defaultMeta?.openGraph?.descriptionKey
           ? t(defaultMeta.openGraph.descriptionKey)
           : description),
-      images: ogImage ? [{ url: ogImage }] : undefined,
+      images: [
+        {
+          url:
+            pageMeta?.openGraph?.image ??
+            (defaultMeta?.openGraph?.imageKey
+              ? t(defaultMeta.openGraph.imageKey)
+              : metaRoot?.ogImage ?? "/og/default.png"),
+        },
+      ],
     },
-
     twitter: {
       card: "summary_large_image",
       title:
@@ -74,7 +74,12 @@ export async function createMetadataForPage(page: PageKey): Promise<Metadata> {
         (defaultMeta?.twitter?.descriptionKey
           ? t(defaultMeta.twitter.descriptionKey)
           : description),
-      images: ogImage ? [ogImage] : undefined,
+      images: [
+        pageMeta?.twitter?.image ??
+          (defaultMeta?.twitter?.imageKey
+            ? t(defaultMeta.twitter.imageKey)
+            : metaRoot?.ogImage ?? "/og/default.png"),
+      ],
       creator:
         metaRoot?.twitterHandle && metaRoot.twitterHandle.startsWith("@")
           ? metaRoot.twitterHandle
