@@ -1,14 +1,32 @@
 @import "tailwindcss";
 
-:root {
-  --background: #fffefe;
-  --font-subjectivity: var(--font-subjectivity); /* nueva variable */
-}
+@theme {
+  /* =========================
+     Brand Colors
+     ========================= */
+  --color-deep: #34365b;
+  --color-illumination: #ffc800;
+  --color-human: #e94f70;
+  --color-vitality: #26d07c;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-subjectivity); /* usa tu fuente principal */
+  /* Automatic shades */
+  --color-deep-50: color-mix(in srgb, var(--color-deep) 10%, white);
+  --color-deep-100: color-mix(in srgb, var(--color-deep) 20%, white);
+
+  --color-illumination-50: color-mix(
+    in srgb,
+    var(--color-illumination) 15%,
+    white
+  );
+  --color-human-50: color-mix(in srgb, var(--color-human) 15%, white);
+  --color-vitality-50: color-mix(in srgb, var(--color-vitality) 15%, white);
+
+  /* =========================
+     Fonts (Tailwind v4)
+     ========================= */
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-poppins: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-quicksand: var(--font-quicksand), ui-sans-serif, system-ui, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,23 +35,28 @@
   }
 }
 
+/* =========================
+   Base styles
+   ========================= */
+:root {
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+/* =========================
+   Font utility classes
+   ========================= */
+.font-montserrat {
+  font-family: var(--font-sans);
+}
+
 .font-poppins {
   font-family: var(--font-poppins);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-subjectivity), Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  /* La clase de Tailwind usará la variable CSS de Next.js */
-  .font-montserratAlt {
-    font-family: var(--font-montserrat-alt), sans-serif;
-  }
-
-  .font-subjectivity {
-    font-family: var(--font-subjectivity), cursive;
-  }
+.font-quicksand {
+  font-family: var(--font-quicksand);
 }

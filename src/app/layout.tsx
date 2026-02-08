@@ -1,107 +1,63 @@
-// app/layout.tsx
+// src/app/layout.tsx
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Poppins } from "next/font/google";
+import { Montserrat, Poppins, Quicksand } from "next/font/google";
 import "./globals.css";
+
 import I18nProvider from "../components/I18nProvider";
-import Header from "../components/Header";
-import Image from "next/image";
-import { cookies, headers } from "next/headers";
+import { getServerLocale } from "@/src/lib/locale";
+import { createMetadataForPage } from "@/src/lib/i18n/metadata";
 
-import {
-  getMetaDict,
-  pickLocale,
-  DEFAULT_LOCALE,
-  type Locale,
-} from "@/src/lib/getMeta";
-
-// Fuentes
-const subjectivity = localFont({
-  src: "./fonts/Subjectivity-Regular.otf",
-  variable: "--font-subjectivity",
-  weight: "400",
-  style: "normal",
+// Montserrat → títulos / estructura
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
-// ✅ Fuente local MontserratAlt
-const montserratAlt = localFont({
-  src: "./fonts/MontserratAlt-Regular.ttf",
-  variable: "--font-montserrat-alt",
-  weight: "400",
-  style: "normal",
-});
-
+// Poppins → párrafos / CTAs
 const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
-  weight: ["400", "500", "600", "700"], // Puedes ajustar los pesos que uses
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const c = await cookies();
-  const h = await headers();
-
-  const cookieLocale = c.get("locale")?.value as Locale | undefined;
-  const accept = h.get("accept-language") || undefined;
-  const locale = cookieLocale ?? pickLocale(accept) ?? DEFAULT_LOCALE;
-
-  const meta = await getMetaDict(locale);
-
-  return {
-    title: meta.title,
-    description: meta.description,
-    keywords: meta.keywords,
-  };
-}
+// Quicksand → UI, pills, microcopy
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  variable: "--font-quicksand",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
 
 export const dynamic = "force-dynamic";
+
+// ✅ Metadata global automática (usa tu JSON: metadata.default)
+export async function generateMetadata(): Promise<Metadata> {
+  // Si no tienes "metadata.pages.default", esta función igual cae al default del JSON
+  return createMetadataForPage("default");
+}
 
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const c = await cookies();
-  const h = await headers();
-
-  const cookieLocale = c.get("locale")?.value as Locale | undefined;
-  const accept = h.get("accept-language") || undefined;
-  const locale = cookieLocale ?? pickLocale(accept) ?? DEFAULT_LOCALE;
-
-  // Detectar ruta por header x-invoke-path
-  const pathname = h.get("x-invoke-path") || "/";
-  const isHome = pathname === "/";
+  const locale = await getServerLocale();
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${subjectivity.variable} ${montserratAlt.variable} ${poppins.variable} antialiased overflow-x-hidden`}
+        className={`
+          ${montserrat.variable}
+          ${poppins.variable}
+          ${quicksand.variable}
+          antialiased
+          overflow-x-hidden
+        `}
       >
-        <I18nProvider locale={locale}>
-          {isHome && (
-            <div
-              className="
-                pointer-events-none 
-                absolute inset-x-0 md:-right-125 md:-top-140 -top-15
-                -z-10 flex justify-center overflow-x-hidden
-              "
-              aria-hidden="true"
-            >
-              <Image
-                src="/images/bg_difuminadoo.webp"
-                alt="Background gradient"
-                width={1400}
-                height={600}
-                className="max-w-none select-none pointer-events-none overflow-hidden"
-                priority
-              />
-            </div>
-          )}
-
-          <Header />
-
-          <main className="relative">{children}</main>
-        </I18nProvider>
+        <I18nProvider locale={locale}>{children}</I18nProvider>
       </body>
     </html>
   );
