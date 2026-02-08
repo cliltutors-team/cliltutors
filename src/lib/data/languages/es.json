@@ -78,10 +78,12 @@
 
   "header": {
     "link1": "Inicio",
-    "link2": "Nosotros",
+    "link2": "Sobre nosotros",
     "link3": "Cursos",
     "link4": "Tutores",
-    "link5": "Contacto"
+    "link5": "Contacto",
+    "login": "Iniciar sesión",
+    "getStarted": "Comenzar"
   },
 
   "hero": {
