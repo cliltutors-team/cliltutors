@@ -81,7 +81,9 @@
     "link2": "About us",
     "link3": "Courses",
     "link4": "Tutors",
-    "link5": "Contact"
+    "link5": "Contact",
+    "login": "Login",
+    "getStarted": "Get started"
   },
 
   "hero": {

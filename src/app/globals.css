@@ -4,22 +4,12 @@
   /* =========================
      Brand Colors
      ========================= */
-  --color-deep: #34365b;
-  --color-illumination: #ffc800;
-  --color-human: #e94f70;
-  --color-vitality: #26d07c;
-
-  /* Automatic shades */
-  --color-deep-50: color-mix(in srgb, var(--color-deep) 10%, white);
-  --color-deep-100: color-mix(in srgb, var(--color-deep) 20%, white);
-
-  --color-illumination-50: color-mix(
-    in srgb,
-    var(--color-illumination) 15%,
-    white
-  );
-  --color-human-50: color-mix(in srgb, var(--color-human) 15%, white);
-  --color-vitality-50: color-mix(in srgb, var(--color-vitality) 15%, white);
+  --color-deep-blue: #1e3a8a;
+  --color-medium-blue: #2563eb;
+  --color-light-blue: #60a5fa;
+  --color-violet: #7c3aed;
+  --color-coral: #f97316;
+  --color-warm-yellow: #fbbf24;
 
   /* =========================
      Fonts (Tailwind v4)
@@ -29,17 +19,17 @@
   --font-quicksand: var(--font-quicksand), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground: #fffefe;
-  }
-}
-
 /* =========================
    Base styles
    ========================= */
 :root {
   color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: #fffefe;
+  }
 }
 
 body {
