@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "title": "Cliltutors | Online Language & STEM Learning",
+    "ogSiteName": "Cliltutors",
+    "description": "Learn with native teachers! Live and recorded classes in Spanish, English, and Portuguese. Academic support in Chemistry, Physics, Math, and Programming, plus professional coaching to boost your personal and professional growth.",
+    "keywords": "learn languages, online classes, STEM tutoring, spanish classes, english classes, portuguese classes, chemistry tutoring, physics tutoring, math tutoring, programming tutoring, professional coaching",
+    "ogImage": "/og/default.png",
+    "twitterHandle": "@cliltutors"
+  },
+
+  "metadata": {
+    "default": {
+      "titleKey": "meta.title",
+      "descriptionKey": "meta.description",
+      "keywordsKey": "meta.keywords",
+      "robots": { "index": true, "follow": true }
+    },
+    "pages": {
+      "login": {
+        "title": "Login | Cliltutors",
+        "description": "Access your Cliltutors account and manage your classes, tutoring, and progress.",
+        "robots": { "index": false, "follow": false }
+      },
+      "register": {
+        "title": "Register | Cliltutors",
+        "description": "Create your Cliltutors account and start learning languages and STEM today.",
+        "robots": { "index": false, "follow": false }
+      }
+    }
+  },
+
+  "auth": {
+    "login": {
+      "title": "Login to your account",
+      "subtitle": "Enter your email below to login to your account",
+      "email": "Email",
+      "password": "Password",
+      "forgot": "Forgot your password?",
+      "cta": "Login",
+      "or": "Or continue with",
+      "google": "Login with Google",
+      "noAccount": "Don't have an account?",
+      "signup": "Sign up",
+      "imageAlt": "Cliltutors login"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Complete your registration to access Cliltutors",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "cta": "Register",
+      "or": "Or continue with",
+      "google": "Register with Google",
+      "haveAccount": "Already have an account?",
+      "login": "Login",
+      "imageAlt": "Cliltutors register"
+    }
+  },
+
+  "authCard": {
+    "title": "Create your Cliltutors account",
+    "subtitle": "Join Cliltutors to access courses, guidance from professionals, and much more!",
+    "placeholders": {
+      "name": "Your name",
+      "email": "Email address"
+    },
+    "button": "Continue registration",
+    "buttonLoading": "Continuing...",
+    "terms": {
+      "prefix": "By creating your account, you accept our",
+      "terms": "Terms of Service",
+      "and": "and",
+      "privacy": "Privacy Policy",
+      "suffix": "."
+    }
+  },
+
+  "header": {
+    "link1": "Home",
+    "link2": "About us",
+    "link3": "Courses",
+    "link4": "Tutors",
+    "link5": "Contact",
+    "login": "Login",
+    "getStarted": "Get started"
+  },
+
+  "hero": {
+    "title": "Learn languages. Master STEM. Build your future",
+    "description": "Languages and STEM in one platform, designed to boost your learning and your career.",
+    "button": "Book your free class"
+  },
+
+  "services": {
+    "title": "Start based on your needs",
+    "description": "Everyone learns differently. That's why we offer classes and mentoring tailored to what you need now — whether mastering a language, strengthening STEM subjects, or developing new professional skills."
+  },
+
+  "testimonials": {
+    "subtitle": "+400K STUDENTS FLUENT!",
+    "title": "Student Testimonials"
+  },
+
+  "footer": {
+    "newsletter": {
+      "title": "Subscribe to our newsletter",
+      "description": "Receive the latest news, offers and updates directly in your email.",
+      "placeholder": "Your email address",
+      "button": "Subscribe",
+      "privacy": "By subscribing you accept our privacy policy."
+    },
+    "menu": {
+      "title": "Menu",
+      "links": {
+        "home": "Home",
+        "mentors": "Tutors",
+        "contact": "Contact us",
+        "about": "About us"
+      }
+    },
+    "courses": {
+      "title": "Courses",
+      "links": {
+        "languages": "Languages",
+        "academic": "Academic"
+      }
+    },
+    "app": {
+      "title": "Download our app",
+      "description": "Coming soon on App Store and Google Play",
+      "button": "In development"
+    },
+    "copyright": "© 2025 Cliltutors. All rights reserved."
+  }
+}
