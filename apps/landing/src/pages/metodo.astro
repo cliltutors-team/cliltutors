@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Redirecting...">
+    <div
+        class="min-h-screen bg-[#fbfcff] flex items-center justify-center font-poppins text-[#34354f]"
+    >
+        <div class="text-center space-y-4">
+            <div
+                class="w-12 h-12 border-4 border-[#36de6b] border-t-transparent rounded-full animate-spin mx-auto"
+            >
+            </div>
+            <p class="font-medium">
+                Redirecionando / Redirecting / Redirigiendo...
+            </p>
+        </div>
+    </div>
+    <script>
+        const langs = ["en", "es", "pt"];
+        const userLang = navigator.language.split("-")[0];
+        const targetLang = langs.includes(userLang) ? userLang : "pt";
+        window.location.replace(`/${targetLang}/metodo`);
+    </script>
+</Layout>
