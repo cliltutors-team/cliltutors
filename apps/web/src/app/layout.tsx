@@ -1,41 +1,29 @@
 // src/app/layout.tsx
 import type { Metadata } from "next";
-import { Montserrat, Poppins, Quicksand } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 
 import I18nProvider from "../components/I18nProvider";
 import { getServerLocale } from "@/src/lib/locale";
 import { createMetadataForPage } from "@/src/lib/i18n/metadata";
 
-// Montserrat → títulos / estructura
-const montserrat = Montserrat({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-montserrat",
-  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-plus-jakarta",
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
-// Poppins → párrafos / CTAs
-const poppins = Poppins({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-poppins",
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-// Quicksand → UI, pills, microcopy
-const quicksand = Quicksand({
-  subsets: ["latin"],
-  variable: "--font-quicksand",
-  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-inter",
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
 export const dynamic = "force-dynamic";
 
-// ✅ Metadata global automática (usa tu JSON: metadata.default)
 export async function generateMetadata(): Promise<Metadata> {
-  // Si no tienes "metadata.pages.default", esta función igual cae al default del JSON
   return createMetadataForPage("default");
 }
 
@@ -50,9 +38,8 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <body
         className={`
-          ${montserrat.variable}
-          ${poppins.variable}
-          ${quicksand.variable}
+          ${plusJakarta.variable}
+          ${inter.variable}
           antialiased
           overflow-x-hidden
         `}

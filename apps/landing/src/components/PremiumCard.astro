@@ -1,0 +1,353 @@
+---
+/**
+ * PremiumCard Component
+ * Sophisticated card for enterprise $10M platform
+ * Features: Glassmorphism, dynamic hovers, multi-variant support
+ */
+
+interface Props {
+  icon?: string;
+  iconType?: 'emoji' | 'svg' | 'image';
+  title: string;
+  description: string;
+  href?: string;
+  linkText?: string;
+  variant?: 'blue' | 'purple' | 'gold' | 'orange' | 'navy' | 'glass';
+  size?: 'sm' | 'md' | 'lg';
+  featured?: boolean;
+  featuredLabel?: string;
+  metrics?: Array<{ label: string; value: string }>;
+  tags?: string[];
+}
+
+const {
+  icon,
+  iconType = 'emoji',
+  title,
+  description,
+  href,
+  linkText,
+  variant = 'blue',
+  size = 'md',
+  featured = false,
+  featuredLabel = 'Featured',
+  metrics = [],
+  tags = []
+} = Astro.props;
+
+const variantMap = {
+  blue: { gradient: 'from-brand-blue-50 to-brand-blue-100', icon: 'icon-blue', border: 'border-brand-blue-200' },
+  purple: { gradient: 'from-brand-purple-50 to-brand-purple-100', icon: 'icon-purple', border: 'border-brand-purple-200' },
+  gold: { gradient: 'from-brand-gold-50 to-brand-gold-100', icon: 'icon-gold', border: 'border-brand-gold-200' },
+  orange: { gradient: 'from-brand-orange-50 to-brand-coral-50', icon: 'icon-orange', border: 'border-brand-orange-200' },
+  navy: { gradient: 'from-gray-50 to-gray-100', icon: 'icon-navy', border: 'border-gray-300' },
+  glass: { gradient: 'from-white/80 to-white/60', icon: 'icon-glass', border: 'border-white/50' }
+};
+
+const sizeClasses = {
+  sm: 'p-5',
+  md: 'p-6',
+  lg: 'p-8'
+};
+---
+
+<article 
+  class:list={[
+    'premium-card group',
+    sizeClasses[size],
+    featured && 'card-featured',
+    href && 'card-interactive'
+  ]}
+>
+  {/* Featured Badge */}
+  {featured && (
+    <div class="featured-badge">
+      <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+      </svg>
+		<span>{featuredLabel}</span>
+    </div>
+  )}
+
+  {/* Icon */}
+  {icon && (
+    <div class:list={['card-icon', variantMap[variant].icon]}>
+      {iconType === 'emoji' && <span class="icon-emoji" aria-hidden="true">{icon}</span>}
+      {iconType === 'svg' && <div class="icon-svg" set:html={icon} />}
+      {iconType === 'image' && <img src={icon} alt="" class="icon-image" />}
+    </div>
+  )}
+
+  {/* Content */}
+  <div class="card-content">
+    <h3 class="card-title group-hover:text-brand-indigo transition-colors">
+      {title}
+    </h3>
+    
+    <p class="card-description">
+      {description}
+    </p>
+
+    {/* Tags */}
+    {tags.length > 0 && (
+      <div class="card-tags">
+        {tags.map((tag) => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+    )}
+
+    {/* Metrics */}
+    {metrics.length > 0 && (
+      <div class="card-metrics">
+        {metrics.map((metric) => (
+          <div class="metric">
+            <span class="metric-value">{metric.value}</span>
+            <span class="metric-label">{metric.label}</span>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+
+  {/* Link */}
+  {href && linkText && (
+    <a href={href} class="card-link group/link">
+      <span>{linkText}</span>
+      <svg class="link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    </a>
+  )}
+</article>
+
+<style>
+  .premium-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 400ms var(--ease-out-expo);
+    overflow: hidden;
+  }
+
+  .premium-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(82, 138, 237, 0.02), rgba(166, 123, 244, 0.02));
+    opacity: 0;
+    transition: opacity 400ms var(--ease-out-expo);
+  }
+
+  .card-interactive:hover {
+    transform: translateY(-6px);
+    box-shadow: 
+      0 20px 50px rgba(0, 0, 0, 0.08),
+      0 8px 20px rgba(0, 0, 0, 0.04);
+    border-color: rgba(82, 138, 237, 0.15);
+  }
+
+  .card-interactive:hover::before {
+    opacity: 1;
+  }
+
+  .card-featured {
+    border: 2px solid var(--color-brand-gold);
+    box-shadow: 0 0 0 1px var(--color-brand-gold);
+  }
+
+  /* Featured Badge */
+  .featured-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: linear-gradient(135deg, var(--color-brand-gold), var(--color-brand-orange));
+    color: white;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 100px;
+    box-shadow: 0 4px 12px rgba(254, 187, 55, 0.3);
+  }
+
+  /* Icon */
+  .card-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    transition: all 300ms var(--ease-out-expo);
+  }
+
+  .icon-blue {
+    background: linear-gradient(135deg, var(--color-brand-blue-50), var(--color-brand-blue-100));
+    border: 1px solid var(--color-brand-blue-200);
+  }
+
+  .icon-purple {
+    background: linear-gradient(135deg, var(--color-brand-purple-50), var(--color-brand-purple-100));
+    border: 1px solid var(--color-brand-purple-200);
+  }
+
+  .icon-gold {
+    background: linear-gradient(135deg, var(--color-brand-gold-50), var(--color-brand-gold-100));
+    border: 1px solid var(--color-brand-gold-200);
+  }
+
+  .icon-orange {
+    background: linear-gradient(135deg, var(--color-brand-orange-50), var(--color-brand-coral-50));
+    border: 1px solid var(--color-brand-orange-200);
+  }
+
+  .icon-navy {
+    background: linear-gradient(135deg, var(--color-gray-50), var(--color-gray-100));
+    border: 1px solid var(--color-gray-300);
+  }
+
+  .icon-glass {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .card-interactive:hover .card-icon {
+    transform: scale(1.05) rotate(-3deg);
+  }
+
+  .icon-emoji {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .icon-svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .icon-image {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+  }
+
+  /* Content */
+  .card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-brand-navy);
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .card-description {
+    font-size: 0.9375rem;
+    color: var(--color-slate-light);
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+  }
+
+  /* Tags */
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    padding: 0.25rem 0.625rem;
+    background: var(--color-gray-100);
+    color: var(--color-gray-600);
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 100px;
+  }
+
+  /* Metrics */
+  .card-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 1rem;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--color-gray-100);
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .metric-value {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-brand-navy);
+  }
+
+  .metric-label {
+    font-size: 0.75rem;
+    color: var(--color-gray-500);
+  }
+
+  /* Link */
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-brand-blue);
+    text-decoration: none;
+    transition: all 250ms var(--ease-out-expo);
+  }
+
+  .card-link:hover {
+    color: var(--color-brand-indigo);
+    gap: 0.75rem;
+  }
+
+  .link-arrow {
+    width: 1.125rem;
+    height: 1.125rem;
+    transition: transform 250ms var(--ease-out-expo);
+  }
+
+  .card-link:hover .link-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .premium-card {
+      padding: 1.25rem;
+    }
+
+    .card-metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

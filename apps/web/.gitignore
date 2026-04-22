@@ -2,3 +2,5 @@ node_modules
 .next
 .turbo
 .env
+.vercel
+.env*.local

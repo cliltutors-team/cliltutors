@@ -1,0 +1,39 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  ctaText: string;
+  ctaHref: string;
+}
+
+const { title, description, ctaText, ctaHref } = Astro.props;
+---
+
+<section class="relative overflow-hidden">
+  <!-- Background gradient -->
+  <div class="absolute inset-0 gradient-cta"></div>
+
+  <!-- Decorative pattern -->
+  <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 32px 32px;"></div>
+
+  <!-- Floating orbs -->
+  <div class="absolute top-0 right-0 w-[300px] h-[300px] rounded-full opacity-15 blur-[80px]" style="background: rgba(166,123,244,0.5); animation: float 5s ease-in-out infinite;"></div>
+  <div class="absolute bottom-0 left-0 w-[250px] h-[250px] rounded-full opacity-10 blur-[60px]" style="background: rgba(254,187,55,0.4); animation: float 6s ease-in-out infinite 1.5s;"></div>
+
+  <div class="relative max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 py-20 lg:py-24 text-center">
+    <h2 class="font-heading font-bold text-3xl sm:text-4xl lg:text-[2.75rem] text-white leading-[1.1] text-balance reveal">
+      {title}
+    </h2>
+    {description && (
+      <p class="mt-5 text-lg text-white/75 max-w-2xl mx-auto reveal">
+        {description}
+      </p>
+    )}
+    <div class="mt-10 reveal">
+      <a href={ctaHref} class="btn-white group">
+        {ctaText}
+        <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+      </a>
+    </div>
+  </div>
+</section>

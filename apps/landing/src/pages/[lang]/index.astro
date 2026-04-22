@@ -1,28 +1,517 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import PremiumHero from '../../components/PremiumHero.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import PremiumCard from '../../components/PremiumCard.astro';
+import StatsBanner from '../../components/StatsBanner.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import TestimonialCard from '../../components/TestimonialCard.astro';
+import MethodStep from '../../components/MethodStep.astro';
+import CourseCatalogSection from '../../components/CourseCatalogSection.astro';
+import PremiumPricingSection from '../../components/PremiumPricingSection.astro';
+import TrustSignalsSection from '../../components/TrustSignalsSection.astro';
+import CourseInstructorSpotlight from '../../components/CourseInstructorSpotlight.astro';
+import LearningOutcomesSection from '../../components/LearningOutcomesSection.astro';
+import SuccessStoriesSection from '../../components/SuccessStoriesSection.astro';
+import FinalCTASection from '../../components/FinalCTASection.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { languages } from '../../i18n/ui';
 
 export function getStaticPaths() {
-    return [
-        { params: { lang: "en" } },
-        { params: { lang: "es" } },
-        { params: { lang: "pt" } },
-    ];
+return Object.keys(languages).map(lang => ({ params: { lang } }));
 }
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const heroTrustIndicators = [
+  { value: '94%', label: 'Success Rate' },
+  { value: '3x', label: 'Faster Learning' },
+  { value: '92%', label: 'Satisfaction' },
+];
+
+const outcomeStats = [
+  { value: '94%', label: 'Improved communication' },
+  { value: '87%', label: 'Collaboration effectiveness' },
+  { value: '3x', label: 'Faster acquisition' },
+  { value: '92%', label: 'Client satisfaction' },
+];
+
+const courses = [
+  {
+    id: '1',
+    title: 'Business English Mastery',
+    subtitle: 'Communicate confidently in professional settings',
+    category: 'Business',
+    level: 'intermediate',
+    duration: '40 hours',
+    students: 2340,
+    rating: 4.8,
+    price: 297,
+    originalPrice: 397,
+    image: '/images/web/first_sec.webp',
+    instructor: 'Sarah Johnson',
+    bestseller: true,
+  },
+  {
+    id: '2',
+    title: 'Spanish for Healthcare',
+    subtitle: 'Essential medical Spanish for patient care',
+    category: 'Professional',
+    level: 'beginner',
+    duration: '32 hours',
+    students: 1850,
+    rating: 4.9,
+    price: 247,
+    image: '/images/web/second_sec.webp',
+    instructor: 'Carlos Martínez',
+    featured: true,
+  },
+  {
+    id: '3',
+    title: 'Academic Writing Excellence',
+    subtitle: 'Master research writing and publications',
+    category: 'Academic',
+    level: 'advanced',
+    duration: '48 hours',
+    students: 1560,
+    rating: 4.7,
+    price: 347,
+    image: '/images/web/third_sec.webp',
+    instructor: 'Dr. Emily Chen',
+  },
+];
+
+const pricingTiers = [
+  {
+    id: 'basic',
+    name: 'Starter',
+    description: 'Perfect for getting started',
+    price: 49,
+    period: 'month',
+    features: [
+      'Access to 50+ courses',
+      'Mobile app access',
+      'Community forums',
+      'Course certificates',
+    ],
+    ctaText: 'Start Learning',
+    ctaHref: '/signup',
+  },
+  {
+    id: 'pro',
+    name: 'Professional',
+    description: 'Best value for serious learners',
+    price: 99,
+    originalPrice: 149,
+    period: 'month',
+    features: [
+      'Access to 200+ premium courses',
+      'Personalized learning paths',
+      '1-on-1 mentoring sessions',
+      'Priority support',
+      'Verified certificates',
+      'Offline downloads',
+    ],
+    highlighted: true,
+    badge: 'Most Popular',
+    ctaText: 'Go Professional',
+    ctaHref: '/signup',
+  },
+  {
+    id: 'enterprise',
+    name: 'Enterprise',
+    description: 'For teams and organizations',
+    price: 299,
+    period: 'month',
+    features: [
+      'Everything in Professional',
+      'Team analytics dashboard',
+      'Custom course creation',
+      'SSO authentication',
+      'Dedicated account manager',
+      'API access',
+    ],
+    ctaText: 'Contact Sales',
+    ctaHref: '/enterprise',
+  },
+];
+
+const trustIndicators = [
+  { value: '94%', label: 'Success Rate', icon: '✓' },
+  { value: '50K+', label: 'Students', icon: '👨‍🎓' },
+  { value: '4.9', label: 'Average Rating', icon: '⭐' },
+  { value: '120+', label: 'Countries', icon: '🌍' },
+];
+
+const instructors = [
+  {
+    id: '1',
+    name: 'Sarah Johnson',
+    title: 'Business English Specialist',
+    bio: '15+ years teaching professionals',
+    image: '/images/web/Laura.png',
+    courses: 12,
+    students: 8450,
+    rating: 4.9,
+    specialties: ['Business', 'Communication', 'Interviews'],
+  },
+  {
+    id: '2',
+    name: 'Carlos Martínez',
+    title: 'Medical Spanish Expert',
+    bio: 'Certified medical interpreter',
+    image: '/images/web/Cristian.png',
+    courses: 8,
+    students: 5200,
+    rating: 4.8,
+    specialties: ['Healthcare', 'Medical', 'Professional'],
+  },
+  {
+    id: '3',
+    name: 'Dr. Emily Chen',
+    title: 'Academic Writing Coach',
+    bio: 'Published researcher and professor',
+    image: '/images/web/Xiomara.png',
+    courses: 6,
+    students: 3900,
+    rating: 4.9,
+    specialties: ['Academic', 'Research', 'Writing'],
+  },
+];
+
+const outcomes = [
+  {
+    id: '1',
+    title: 'Fluency Improvement',
+    description: 'Students report significant improvement',
+    icon: '🎯',
+    percentage: 94,
+    color: 'blue',
+  },
+  {
+    id: '2',
+    title: 'Career Advancement',
+    description: 'Landed better opportunities',
+    icon: '📈',
+    percentage: 87,
+    color: 'purple',
+  },
+  {
+    id: '3',
+    title: 'Confidence Boost',
+    description: 'Feel more confident speaking',
+    icon: '💪',
+    percentage: 96,
+    color: 'gold',
+  },
+  {
+    id: '4',
+    title: 'Goal Achievement',
+    description: 'Reached learning objectives',
+    icon: '✓',
+    percentage: 92,
+    color: 'orange',
+  },
+];
+
+const successStories = [
+  {
+    id: '1',
+    name: 'Maria Rodriguez',
+    role: 'Healthcare Administrator',
+    company: 'Regional Hospital',
+    image: '/images/web/Laura.png',
+    quote: 'The medical Spanish course transformed how I communicate with patients. My confidence skyrocketed and patient satisfaction improved.',
+    outcome: 'Promoted to Director',
+    outcomeIcon: '📈',
+    course: 'Medical Spanish',
+  },
+  {
+    id: '2',
+    name: 'James Chen',
+    role: 'Software Engineer',
+    company: 'Tech Startup',
+    image: '/images/web/Cristian.png',
+    quote: 'Business English mastery helped me lead international projects and present at global conferences with confidence.',
+    outcome: '2x Salary Increase',
+    outcomeIcon: '💰',
+    course: 'Business English',
+  },
+  {
+    id: '3',
+    name: 'Ana Silva',
+    role: 'PhD Candidate',
+    company: 'University Research',
+    image: '/images/web/Xiomara.png',
+    quote: 'The academic writing course helped me publish 3 papers in top journals. The structured approach was exactly what I needed.',
+    outcome: '3 Papers Published',
+    outcomeIcon: '📚',
+    course: 'Academic Writing',
+  },
+];
 ---
 
-<Layout title="Cliltutors">
-    <main
-        class="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-50 text-center"
-    >
-        <h1 class="text-4xl font-bold font-montserrat text-[#34354f]">
-            Cliltutors Landing
-        </h1>
-        <p class="mt-4 text-xl font-poppins text-[#54577c]">Select a page:</p>
-        <a
-            href="./metodo"
-            class="mt-8 px-8 py-4 bg-[#36de6b] text-white rounded-full font-bold shadow-lg transition-transform hover:scale-105"
-        >
-            Ver Método Cliltutors
-        </a>
-    </main>
+<Layout title={t('home.meta.title')} description={t('home.meta.desc')} lang={lang}>
+<Navbar />
+
+  <!-- Premium Hero -->
+  <PremiumHero
+    eyebrow={t('home.challenge.eyebrow')}
+    title={t('home.hero.title')}
+    subtitle={t('home.hero.subtitle')}
+    ctaPrimary={{ text: t('home.hero.cta1'), href: `/${lang}/solutions` }}
+    ctaSecondary={{ text: t('home.hero.cta2'), href: `/${lang}/consultation` }}
+    visualType="image"
+    visualAsset="/images/web/Corporate_Hero.webp"
+    alignment="split"
+    theme="gradient"
+    trustIndicators={heroTrustIndicators}
+  />
+
+<!-- NEW: Trust Signals Section -->
+<TrustSignalsSection
+  trustIndicators={trustIndicators}
+  studentCount="50,000+"
+  courseCount="200+"
+  countryCount="120+"
+  studentLabel={t('trust.students')}
+  courseLabel={t('trust.courses')}
+  countryLabel={t('trust.countries')}
+  ratingLabel={t('trust.rating')}
+  verifiedLabel={t('trust.verified')}
+  lifetimeLabel={t('trust.lifetime')}
+  expertsLabel={t('trust.experts')}
+  partnersLabel={t('trust.partners')}
+/>
+
+  <!-- Challenge Section -->
+  <section class="section-padding bg-white">
+    <div class="container-narrow">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div class="reveal-left">
+          <SectionHeader eyebrow={t('home.challenge.eyebrow')} title={t('home.challenge.title')} center={false} />
+          <p class="text-slate-light leading-relaxed text-lg -mt-8">{t('home.challenge.desc')}</p>
+        </div>
+        <div class="reveal">
+          <div class="challenge-image-wrap">
+            <img src="/images/web/first_sec.webp" alt="Global challenge" class="w-full rounded-xl" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities with Premium Cards -->
+  <section class="section-padding gradient-section-alt">
+    <div class="container-narrow">
+      <SectionHeader eyebrow={t('home.capabilities.eyebrow')} title={t('home.capabilities.title')} />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <PremiumCard
+          icon="🌐"
+          title={t('home.cap1.title')}
+          description={t('home.cap1.desc')}
+          variant="blue"
+          size="md"
+        />
+        <PremiumCard
+          icon="🤝"
+          title={t('home.cap2.title')}
+          description={t('home.cap2.desc')}
+          variant="purple"
+          size="md"
+        />
+        <PremiumCard
+          icon="🧠"
+          title={t('home.cap3.title')}
+          description={t('home.cap3.desc')}
+          variant="gold"
+          size="md"
+        />
+        <PremiumCard
+          icon="🎯"
+          title={t('home.cap4.title')}
+          description={t('home.cap4.desc')}
+          variant="orange"
+          size="md"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions Grid with Premium Cards -->
+  <section class="section-padding bg-white">
+    <div class="container-narrow">
+      <SectionHeader eyebrow={t('home.solutions.eyebrow')} title={t('home.solutions.title')} />
+      <div class="grid sm:grid-cols-2 gap-6">
+        <PremiumCard
+          icon="🏢"
+          title={t('home.sol1.title')}
+          description={t('home.sol1.desc')}
+          href={`/${lang}/corporate-training`}
+          linkText={t('solutions.learn')}
+          variant="blue"
+size="lg"
+  featured={true}
+  featuredLabel={t('card.featured')}
+        />
+        <PremiumCard
+          icon="💼"
+          title={t('home.sol2.title')}
+          description={t('home.sol2.desc')}
+          href={`/${lang}/professional-development`}
+          linkText={t('solutions.learn')}
+          variant="purple"
+          size="lg"
+        />
+        <PremiumCard
+          icon="🎓"
+          title={t('home.sol3.title')}
+          description={t('home.sol3.desc')}
+          href={`/${lang}/academic-support`}
+          linkText={t('solutions.learn')}
+          variant="gold"
+          size="lg"
+        />
+        <PremiumCard
+          icon="📚"
+          title={t('home.sol4.title')}
+          description={t('home.sol4.desc')}
+          href={`/${lang}/k12-global-preparation`}
+          linkText={t('solutions.learn')}
+          variant="orange"
+          size="lg"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Methodology -->
+  <section class="section-padding gradient-section-alt">
+    <div class="container-narrow">
+      <SectionHeader eyebrow={t('home.methodology.eyebrow')} title={t('home.methodology.title')} />
+      <div class="max-w-2xl mx-auto">
+        <MethodStep step={1} eyebrow={t('home.method1.title')} title={t('home.method1.title')} description={t('home.method1.desc')} />
+        <MethodStep step={2} eyebrow={t('home.method2.title')} title={t('home.method2.title')} description={t('home.method2.desc')} />
+        <MethodStep step={3} eyebrow={t('home.method3.title')} title={t('home.method3.title')} description={t('home.method3.desc')} />
+        <MethodStep step={4} eyebrow={t('home.method4.title')} title={t('home.method4.title')} description={t('home.method4.desc')} />
+        <MethodStep step={5} eyebrow={t('home.method5.title')} title={t('home.method5.title')} description={t('home.method5.desc')} isLast />
+      </div>
+    </div>
+  </section>
+
+  <!-- Outcomes with StatsBanner -->
+  <StatsBanner
+    stats={outcomeStats}
+    layout="grid"
+    theme="gradient"
+    title={t('home.outcomes.title')}
+    subtitle={t('home.outcomes.subtitle')}
+  />
+
+  <!-- Testimonials -->
+  <section class="section-padding bg-white">
+    <div class="container-narrow">
+      <SectionHeader eyebrow={t('home.testimonials.eyebrow')} title={t('home.testimonials.title')} />
+      <div class="grid md:grid-cols-3 gap-6">
+        <TestimonialCard quote={t('home.test1.quote')} name={t('home.test1.name')} role={t('home.test1.role')} />
+        <TestimonialCard quote={t('home.test2.quote')} name={t('home.test2.name')} role={t('home.test2.role')} />
+        <TestimonialCard quote={t('home.test3.quote')} name={t('home.test3.name')} role={t('home.test3.role')} />
+      </div>
+    </div>
+  </section>
+
+  <!-- NEW: Course Catalog Section -->
+  <CourseCatalogSection 
+    courses={courses}
+    title={t('catalog.title')}
+    subtitle={t('catalog.subtitle')}
+    eyebrow={t('catalog.eyebrow')}
+    filterAllText={t('catalog.filter.all')}
+    bestsellerText={t('course.bestseller')}
+    featuredText={t('course.featured')}
+    studentsText={t('course.students')}
+    enrollText={t('course.enroll')}
+    viewAllText={t('catalog.viewall')}
+    viewAllHref={`/${lang}/solutions`}
+  />
+
+  <!-- NEW: Learning Outcomes Section -->
+  <LearningOutcomesSection 
+    outcomes={outcomes}
+    title={t('outcomes.title')}
+    subtitle={t('outcomes.subtitle')}
+  />
+
+  <!-- NEW: Instructor Spotlight Section -->
+  <CourseInstructorSpotlight 
+    instructors={instructors}
+    title={t('instructors.title')}
+    subtitle={t('instructors.subtitle')}
+  />
+
+  <!-- NEW: Premium Pricing Section -->
+  <PremiumPricingSection 
+    tiers={pricingTiers}
+    title={t('pricing.section.title')}
+    subtitle={t('pricing.section.subtitle')}
+  />
+
+  <!-- NEW: Success Stories Section -->
+  <SuccessStoriesSection 
+    stories={successStories}
+    title={t('stories.title')}
+    subtitle={t('stories.subtitle')}
+  />
+
+<!-- NEW: Final CTA Section -->
+<FinalCTASection
+  title={t('finalcta.title')}
+  description={t('finalcta.description')}
+  badge={t('finalcta.badge')}
+  primaryCta={{ text: t('finalcta.primary'), href: `/${lang}/consultation` }}
+  secondaryCta={{ text: t('finalcta.secondary'), href: `/${lang}/solutions` }}
+  features={[t('finalcta.trial'), t('finalcta.nocard'), t('finalcta.cancel')]}
+  accessTitle={t('finalcta.access')}
+  accessDesc={t('finalcta.access.desc')}
+  certificateTitle={t('finalcta.certificate')}
+  certificateDesc={t('finalcta.certificate.desc')}
+  communityTitle={t('finalcta.community')}
+  communityDesc={t('finalcta.community.desc')}
+ />
+
+  <Footer />
 </Layout>
+
+<style>
+.challenge-image-wrap {
+background: linear-gradient(135deg, var(--color-brand-blue-50), var(--color-brand-purple-50));
+border-radius: 1.25rem;
+padding: 1.5rem;
+border: 1px solid var(--color-brand-blue-100);
+}
+
+@keyframes fade-up {
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+.animate-fade-up {
+animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+opacity: 0;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+</style>

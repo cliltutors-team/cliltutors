@@ -1,0 +1,364 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import PremiumHero from '../../components/PremiumHero.astro';
+import PremiumCard from '../../components/PremiumCard.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { languages } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const categories = [
+  { id: 'language', label: t('resources.cat1'), icon: '🌐' },
+  { id: 'communication', label: t('resources.cat2'), icon: '🤝' },
+  { id: 'education', label: t('resources.cat3'), icon: '🏫' },
+];
+
+const featuredResources = [
+  {
+    category: 'language',
+    icon: '📖',
+    title: t('resources.featured1.title'),
+    description: t('resources.featured1.desc'),
+    variant: 'blue',
+    featured: true,
+    tags: [t('resources.featured1.tag1'), t('resources.featured1.tagCLIL'), t('resources.featured1.tag2')]
+  },
+  {
+    category: 'communication',
+    icon: '🌍',
+    title: t('resources.featured2.title'),
+    description: t('resources.featured2.desc'),
+    variant: 'purple',
+    featured: true,
+    tags: [t('resources.featured2.tag1'), t('resources.featured2.tag2')]
+  },
+  {
+    category: 'education',
+    icon: '🎓',
+    title: t('resources.featured3.title'),
+    description: t('resources.featured3.desc'),
+    variant: 'gold',
+    featured: true,
+    tags: [t('resources.featured3.tag1'), t('resources.featured3.tag2')]
+  }
+];
+
+const additionalResources = [
+  {
+    category: 'language',
+    icon: '🗣️',
+    title: t('resources.add1.title'),
+    description: t('resources.add1.desc'),
+    variant: 'blue'
+  },
+  {
+    category: 'communication',
+    icon: '💼',
+    title: t('resources.add2.title'),
+    description: t('resources.add2.desc'),
+    variant: 'purple'
+  },
+  {
+    category: 'language',
+    icon: '📝',
+    title: t('resources.add3.title'),
+    description: t('resources.add3.desc'),
+    variant: 'blue'
+  },
+  {
+    category: 'education',
+    icon: '📊',
+    title: t('resources.add4.title'),
+    description: t('resources.add4.desc'),
+    variant: 'gold'
+  }
+];
+---
+
+<Layout title={t('resources.meta.title')} description={t('resources.meta.desc')} lang={lang}>
+  <Navbar />
+  
+  <PremiumHero
+    eyebrow={t('resources.eyebrow')}
+    title={t('resources.hero.title')}
+    subtitle={t('resources.hero.subtitle')}
+    theme="gradient"
+    alignment="center"
+  />
+
+  <section class="resources-hub section-padding bg-white">
+    <div class="container-wide">
+      <div class="filters-container">
+        <button class="filter-btn active" data-category="all">
+          {t('resources.all')}
+        </button>
+        {categories.map(cat => (
+          <button class="filter-btn" data-category={cat.id}>
+            <span class="filter-icon">{cat.icon}</span>
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      <div class="featured-section">
+        <h2 class="section-title">
+          {t('resources.featured.title')}
+        </h2>
+        <div class="featured-grid">
+          {featuredResources.map(resource => (
+            <div class="resource-card" data-category={resource.category}>
+              <PremiumCard
+                icon={resource.icon}
+                title={resource.title}
+                description={resource.description}
+                variant={resource.variant}
+size="lg"
+  featured={resource.featured}
+  featuredLabel={t('card.featured')}
+  tags={resource.tags}
+                href="#"
+                linkText={t('resources.read.article')}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="additional-section">
+        <h2 class="section-title">
+          {t('resources.additional.title')}
+        </h2>
+        <div class="additional-grid">
+          {additionalResources.map(resource => (
+            <div class="resource-card" data-category={resource.category}>
+              <PremiumCard
+                icon={resource.icon}
+                title={resource.title}
+                description={resource.description}
+                variant={resource.variant}
+                size="md"
+                href="#"
+                linkText={t('resources.read.article')}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="coming-soon-section">
+        <div class="coming-soon-card">
+          <div class="coming-soon-icon">📚</div>
+          <h3>{t('resources.coming')}</h3>
+          <form class="subscribe-form">
+            <input 
+              type="email" 
+              placeholder={t('resources.email.placeholder')} 
+              class="email-input"
+              required
+            />
+            <button type="submit" class="subscribe-btn">
+              {t('resources.subscribe')}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .resources-hub {
+    position: relative;
+  }
+
+  .filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  .filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border: 1.5px solid rgba(52, 53, 79, 0.15);
+    border-radius: 100px;
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-slate);
+    cursor: pointer;
+    transition: all 300ms var(--ease-out-expo);
+  }
+
+  .filter-btn:hover {
+    border-color: var(--color-brand-blue);
+    color: var(--color-brand-blue);
+  }
+
+  .filter-btn.active {
+    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 16px rgba(82, 138, 237, 0.25);
+  }
+
+  .filter-icon {
+    font-size: 1.25rem;
+  }
+
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-brand-navy);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .additional-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .resource-card {
+    transition: opacity 300ms var(--ease-out-expo), transform 300ms var(--ease-out-expo);
+  }
+
+  .resource-card.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .coming-soon-section {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .coming-soon-card {
+    background: linear-gradient(135deg, rgba(82, 138, 237, 0.03), rgba(166, 123, 244, 0.03));
+    border: 1px solid rgba(82, 138, 237, 0.1);
+    border-radius: 1.5rem;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .coming-soon-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .coming-soon-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--color-slate-light);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .subscribe-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .email-input {
+    flex: 1;
+    min-width: 250px;
+    padding: 1rem 1.5rem;
+    border: 1.5px solid rgba(52, 53, 79, 0.15);
+    border-radius: 14px;
+    font-size: 1rem;
+    transition: all 300ms var(--ease-out-expo);
+  }
+
+  .email-input:focus {
+    outline: none;
+    border-color: var(--color-brand-blue);
+    box-shadow: 0 0 0 3px rgba(82, 138, 237, 0.1);
+  }
+
+  .subscribe-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 300ms var(--ease-out-expo);
+    box-shadow: 0 4px 16px rgba(82, 138, 237, 0.25);
+  }
+
+  .subscribe-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(82, 138, 237, 0.35);
+  }
+
+  @media (max-width: 768px) {
+    .featured-grid,
+    .additional-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .subscribe-form {
+      flex-direction: column;
+    }
+
+    .email-input,
+    .subscribe-btn {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const resourceCards = document.querySelectorAll('.resource-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const category = btn.getAttribute('data-category');
+
+      resourceCards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

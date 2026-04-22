@@ -1,0 +1,308 @@
+---
+interface PricingTier {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  originalPrice?: number;
+  period: string;
+  features: string[];
+  highlighted?: boolean;
+  badge?: string;
+  ctaText: string;
+  ctaHref: string;
+}
+
+interface Props {
+  tiers: PricingTier[];
+  title?: string;
+  subtitle?: string;
+  eyebrow?: string;
+  enterpriseText?: string;
+  secureText?: string;
+  secureDesc?: string;
+  billingText?: string;
+  billingDesc?: string;
+  refundText?: string;
+  refundDesc?: string;
+}
+
+const {
+  tiers,
+  title = "Choose Your Learning Path",
+  subtitle = "Invest in your future with our flexible pricing options",
+  eyebrow = "Pricing",
+  enterpriseText = "Contact Enterprise Sales",
+  secureText = "Secure Payment",
+  secureDesc = "256-bit SSL encryption",
+  billingText = "Flexible Billing",
+  billingDesc = "Cancel anytime, no questions",
+  refundText = "30-Day Refund",
+  refundDesc = "Money-back guarantee",
+} = Astro.props;
+---
+
+<section class="section-padding relative overflow-hidden">
+  <div
+    class="absolute inset-0 bg-gradient-to-br from-brand-navy-900 via-brand-navy to-brand-blue-dark"
+  >
+  </div>
+  <div
+    class="absolute inset-0 opacity-10"
+    style="background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 32px 32px;"
+  >
+  </div>
+
+  <div class="relative container-narrow">
+    <div class="text-center mb-14 reveal">
+      <span
+        class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white/90 text-xs font-bold uppercase tracking-widest mb-6"
+      >
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        {eyebrow}
+      </span>
+      <h2
+        class="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight mb-4"
+      >
+        {title}
+      </h2>
+      <p class="text-lg text-white/70 max-w-2xl mx-auto">{subtitle}</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+      {
+        tiers.map((tier, index) => (
+          <div
+            class={`pricing-card ${tier.highlighted ? "featured" : ""} reveal`}
+            style={`animation-delay: ${150 + index * 100}ms`}
+          >
+            {tier.badge && (
+              <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-brand-gold to-brand-orange text-white text-xs font-bold uppercase tracking-wide rounded-full shadow-lg whitespace-nowrap">
+                {tier.badge}
+              </div>
+            )}
+
+            <div class="text-center mb-6">
+              <h3 class="font-heading font-bold text-2xl text-brand-navy mb-2">
+                {tier.name}
+              </h3>
+              <p class="text-sm text-gray-600">{tier.description}</p>
+            </div>
+
+            <div class="text-center mb-6 pb-6 border-b border-gray-200">
+              <div class="flex items-baseline justify-center gap-1">
+                {tier.originalPrice && (
+                  <span class="text-lg text-gray-400 line-through">
+                    ${tier.originalPrice}
+                  </span>
+                )}
+                <span class="text-5xl font-bold text-brand-navy">
+                  ${tier.price}
+                </span>
+                <span class="text-sm text-gray-500">/{tier.period}</span>
+              </div>
+            </div>
+
+            <ul class="space-y-3 mb-8">
+              {tier.features.map((feature) => (
+                <li class="flex items-start gap-3">
+                  <svg
+                    class="w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span class="text-sm text-gray-700">{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href={tier.ctaHref}
+              class={`block w-full text-center py-3.5 px-6 rounded-xl font-semibold transition-all duration-300 ${
+                tier.highlighted
+                  ? "bg-gradient-to-r from-brand-blue to-brand-indigo text-white hover:shadow-lg hover:shadow-brand-blue/40 hover:-translate-y-0.5"
+                  : "bg-brand-navy text-white hover:bg-brand-navy-800 hover:shadow-lg"
+              }`}
+            >
+              {tier.ctaText}
+            </a>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-12 text-center reveal delay-600">
+      <p class="text-sm text-white/60 mb-4">
+        Need a custom solution for your organization?
+      </p>
+      <a
+        href={`/${Astro.currentLocale}/enterprise`}
+        class="inline-flex items-center gap-2 text-white font-semibold hover:text-brand-gold transition-colors"
+      >
+        {enterpriseText}
+        <svg
+          class="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+    </div>
+
+    <div class="mt-16 grid sm:grid-cols-3 gap-8 text-center reveal delay-700">
+      <div>
+        <div
+          class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm mb-3"
+        >
+          <svg
+            class="w-6 h-6 text-brand-gold"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+            ></path>
+          </svg>
+        </div>
+        <h4 class="font-heading font-semibold text-white mb-1">{secureText}</h4>
+        <p class="text-sm text-white/60">{secureDesc}</p>
+      </div>
+      <div>
+        <div
+          class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm mb-3"
+        >
+          <svg
+            class="w-6 h-6 text-brand-gold"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 10h18M7 15h1m4 0h1m-6 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+            ></path>
+          </svg>
+        </div>
+        <h4 class="font-heading font-semibold text-white mb-1">
+          {billingText}
+        </h4>
+        <p class="text-sm text-white/60">{billingDesc}</p>
+      </div>
+      <div>
+        <div
+          class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm mb-3"
+        >
+          <svg
+            class="w-6 h-6 text-brand-gold"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            ></path>
+          </svg>
+        </div>
+        <h4 class="font-heading font-semibold text-white mb-1">{refundText}</h4>
+        <p class="text-sm text-white/60">{refundDesc}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing-card {
+    position: relative;
+    background: var(--color-white);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .pricing-card.featured {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(248, 250, 252, 0.95)
+    );
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    transform: scale(1.05);
+    z-index: 2;
+  }
+
+  .pricing-card.featured::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 22px;
+    padding: 2px;
+    background: linear-gradient(
+      135deg,
+      var(--color-brand-gold),
+      var(--color-brand-orange)
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  }
+
+  .pricing-card.featured:hover {
+    transform: scale(1.05) translateY(-8px);
+  }
+
+  @media (max-width: 768px) {
+    .pricing-card.featured {
+      transform: scale(1);
+    }
+
+    .pricing-card.featured:hover {
+      transform: translateY(-8px);
+    }
+  }
+</style>

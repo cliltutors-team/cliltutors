@@ -2,8 +2,10 @@
 
 import React, { FormEvent, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { User, Mail, Lock } from "lucide-react";
+import { User, Mail, Lock, Loader2 } from "lucide-react";
+import { api, setTokens, ApiClientError } from "@/src/lib/api/client";
 
 function GoogleIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -36,14 +38,74 @@ export default function RegisterFormClient({
   initialEmail?: string;
 }) {
   const { t } = useTranslation();
+  const router = useRouter();
 
   const [name, setName] = useState(initialName ?? "");
   const [email, setEmail] = useState(initialEmail ?? "");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log("REGISTER:", { name, email, password });
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError(t("auth.register.passwordMismatch", "Passwords do not match"));
+      return;
+    }
+
+    if (password.length < 8) {
+      setError(
+        t(
+          "auth.register.passwordTooShort",
+          "Password must be at least 8 characters",
+        ),
+      );
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const [firstName, ...lastNameParts] = name.split(" ");
+      const lastName = lastNameParts.join(" ") || "";
+
+      const response = await api.post<{
+        user: { id: number; username: string; email: string };
+        tokens: { access: string; refresh: string };
+        message: string;
+      }>("/api/register/", {
+        username: email.split("@")[0],
+        email,
+        password,
+        password_confirm: confirmPassword,
+        first_name: firstName,
+        last_name: lastName,
+      });
+
+      setTokens(response.tokens.access, response.tokens.refresh);
+      router.push("/");
+    } catch (err) {
+      if (err instanceof ApiClientError && err.errors) {
+        const errorMessages = Object.entries(err.errors)
+          .map(([field, messages]) => `${field}: ${messages.join(", ")}`)
+          .join("; ");
+        setError(errorMessages);
+      } else if (err instanceof ApiClientError) {
+        setError(
+          err.message ||
+            t("auth.register.error", "Registration failed. Please try again."),
+        );
+      } else {
+        setError(
+          t("auth.register.error", "Registration failed. Please try again."),
+        );
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -53,6 +115,12 @@ export default function RegisterFormClient({
         <p className="text-sm text-gray-500">{t("auth.register.subtitle")}</p>
       </div>
 
+      {error && (
+        <div className="rounded-lg p-3 text-sm bg-red-50 text-red-600 border border-red-200">
+          {error}
+        </div>
+      )}
+
       <div className="relative">
         <User
           className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
@@ -61,9 +129,10 @@ export default function RegisterFormClient({
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder={t("authCard.placeholders.name")}
+          placeholder={t("authCard.placeholders.name", "Full name")}
           required
-          className="h-11 w-full rounded-lg border border-gray-200 bg-white pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-black/10"
+          disabled={isLoading}
+          className="h-11 w-full rounded-lg border border-gray-200 bg-white pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
         />
       </div>
 
@@ -76,9 +145,10 @@ export default function RegisterFormClient({
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder={t("authCard.placeholders.email")}
+          placeholder={t("authCard.placeholders.email", "Email")}
           required
-          className="h-11 w-full rounded-lg border border-gray-200 bg-white pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-black/10"
+          disabled={isLoading}
+          className="h-11 w-full rounded-lg border border-gray-200 bg-white pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
         />
       </div>
 
@@ -91,22 +161,49 @@ export default function RegisterFormClient({
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder={t("auth.register.password")}
+          placeholder={t(
+            "auth.register.password",
+            "Password (min 8 characters)",
+          )}
           required
-          className="h-11 w-full rounded-lg border border-gray-200 bg-white pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-black/10"
+          minLength={8}
+          disabled={isLoading}
+          className="h-11 w-full rounded-lg border border-gray-200 bg-white pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+        />
+      </div>
+
+      <div className="relative">
+        <Lock
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
+          size={18}
+        />
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder={t("auth.register.confirmPassword", "Confirm password")}
+          required
+          disabled={isLoading}
+          className="h-11 w-full rounded-lg border border-gray-200 bg-white pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
         />
       </div>
 
       <button
         type="submit"
-        className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-black px-4 text-sm font-medium text-white hover:opacity-90"
+        disabled={isLoading}
+        className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-black px-4 text-sm font-medium text-white hover:opacity-90 disabled:opacity-50"
       >
-        {t("auth.register.cta")}
+        {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+        {isLoading
+          ? t("auth.register.creating", "Creating account...")
+          : t("auth.register.cta", "Create account")}
       </button>
 
       <div className="flex items-center gap-3">
         <div className="h-px flex-1 bg-gray-200" />
-        <span className="text-xs text-gray-500">{t("auth.register.or")}</span>
+        <span className="text-xs text-gray-500">
+          {t("auth.register.or", "or")}
+        </span>
         <div className="h-px flex-1 bg-gray-200" />
       </div>
 
@@ -115,13 +212,13 @@ export default function RegisterFormClient({
         className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 text-sm font-medium hover:bg-gray-50"
       >
         <GoogleIcon />
-        {t("auth.register.google")}
+        {t("auth.register.google", "Continue with Google")}
       </button>
 
       <p className="text-center text-sm text-gray-600">
-        {t("auth.register.haveAccount")}{" "}
+        {t("auth.register.haveAccount", "Already have an account?")}{" "}
         <Link href="/login" className="underline underline-offset-4">
-          {t("auth.register.login")}
+          {t("auth.register.login", "Sign in")}
         </Link>
       </p>
     </form>

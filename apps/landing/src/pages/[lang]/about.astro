@@ -1,0 +1,132 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { languages } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const values = [
+  { icon: '🤝', title: t('about.val1.title'), desc: t('about.val1.desc') },
+  { icon: '🌍', title: t('about.val2.title'), desc: t('about.val2.desc') },
+  { icon: '🌐', title: t('about.val3.title'), desc: t('about.val3.desc') },
+  { icon: '📈', title: t('about.val4.title'), desc: t('about.val4.desc') },
+];
+
+const numbers = [
+  { value: t('about.num1.value'), label: t('about.num1.label') },
+  { value: t('about.num2.value'), label: t('about.num2.label') },
+  { value: t('about.num3.value'), label: t('about.num3.label') },
+  { value: t('about.num4.value'), label: t('about.num4.label') },
+];
+
+const team = [
+  { name: 'Jimmy Ramires', photo: '/images/web/Jimmy.png', role: t('about.team.role1') },
+  { name: 'Alissa Lechleitner', photo: '/images/web/Alissa.png', role: t('about.team.role2') },
+  { name: 'Laura Gomes', photo: '/images/web/Laura.png', role: t('about.team.role3') },
+  { name: 'Thayline Candatti', photo: '/images/web/Thayline.png', role: t('about.team.role4') },
+  { name: 'Xiomara Ramires', photo: '/images/web/Xiomara.png', role: t('about.team.role5') },
+  { name: 'Cristian', photo: '/images/web/Cristian.png', role: t('about.team.role6') },
+];
+---
+
+<Layout title={t('about.meta.title')} description={t('about.meta.desc')} lang={lang}>
+  <Navbar />
+  <HeroSection
+    eyebrow={t('about.hero.eyebrow')}
+    title={t('about.hero.title')}
+    subtitle={t('about.hero.subtitle')}
+    cta1Text={t('nav.consultation')}
+    cta1Href={`/${lang}/consultation`}
+  />
+
+  <!-- Story Section -->
+  <section class="section-padding bg-white">
+    <div class="container-narrow">
+      <div class="text-center mb-12 reveal">
+        <span class="eyebrow">{t('about.story.label')}</span>
+        <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-navy mt-3">{t('about.story.title')}</h2>
+      </div>
+      <div class="max-w-3xl mx-auto space-y-6">
+        <p class="text-lg text-gray-600 leading-relaxed reveal delay-100">{t('about.story.p1')}</p>
+        <p class="text-lg text-gray-600 leading-relaxed reveal delay-200">{t('about.story.p2')}</p>
+        <p class="text-lg text-gray-600 leading-relaxed reveal delay-300">{t('about.story.p3')}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="section-padding gradient-section-alt">
+    <div class="container-narrow">
+      <div class="text-center mb-12 reveal">
+        <span class="eyebrow">{t('about.values.label')}</span>
+        <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-navy mt-3">{t('about.values.title')}</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {values.map((v, i) => (
+          <div class={`card-gradient p-6 text-center reveal delay-${(i + 1) * 100}`}>
+            <div class="icon-box-blue mx-auto mb-4 text-2xl" aria-hidden="true">{v.icon}</div>
+            <h3 class="font-heading font-semibold text-lg text-brand-navy">{v.title}</h3>
+            <p class="text-sm text-gray-500 mt-2 leading-relaxed">{v.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Numbers Section -->
+  <section class="section-padding bg-white">
+    <div class="container-narrow">
+      <div class="text-center mb-12 reveal">
+        <span class="eyebrow">{t('about.numbers.label')}</span>
+        <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-navy mt-3">{t('about.numbers.title')}</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {numbers.map((n, i) => (
+          <div class={`text-center reveal delay-${(i + 1) * 100}`}>
+            <div class="font-heading text-4xl md:text-5xl font-bold gradient-cta-warm bg-clip-text text-transparent">{n.value}</div>
+            <p class="text-sm text-gray-500 mt-2 font-medium">{n.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="section-padding gradient-section-alt">
+    <div class="container-narrow">
+      <div class="text-center mb-12 reveal">
+        <span class="eyebrow">{t('about.team.label')}</span>
+        <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-navy mt-3">{t('about.team.title')}</h2>
+        <p class="text-gray-500 mt-3 max-w-2xl mx-auto">{t('about.team.subtitle')}</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {team.map((member, i) => (
+          <div class={`card-gradient p-6 text-center reveal delay-${((i % 3) + 1) * 100}`}>
+            <div class="w-24 h-24 mx-auto rounded-full overflow-hidden border-3 border-brand-blue-100 bg-gray-100 transition-all duration-300 hover:border-brand-blue-200">
+              <img src={member.photo} alt={member.name} class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-brand-navy mt-4">{member.name}</h3>
+            <p class="text-sm text-gray-500 mt-1">{member.role}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABanner
+    title={t('about.cta.title')}
+    description={t('about.cta.subtitle')}
+    ctaText={t('nav.consultation')}
+    ctaHref={`/${lang}/consultation`}
+  />
+  <Footer />
+</Layout>

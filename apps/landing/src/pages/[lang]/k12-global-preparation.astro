@@ -1,0 +1,498 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import PremiumHero from '../../components/PremiumHero.astro';
+import PremiumCard from '../../components/PremiumCard.astro';
+import StatsBanner from '../../components/StatsBanner.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { languages } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const k12Stats = [
+  { value: '95%', label: t('k12.stats.bilingual'), trend: 'up' as const, trendValue: '+22%' },
+  { value: '87%', label: t('k12.stats.readiness'), trend: 'up' as const, trendValue: '+15%' },
+  { value: '94%', label: t('k12.stats.acceptance'), trend: 'up' as const, trendValue: '+30%' },
+  { value: '98%', label: t('k12.stats.engagement'), trend: 'up' as const, trendValue: '+12%' }
+];
+
+const k12Programs = [
+  {
+    icon: '🎨',
+    title: t('k12.programs.elementary.title'),
+    description: t('k12.programs.elementary.desc'),
+    metrics: [
+      { label: t('k12.programs.elementary.metric1.label'), value: t('k12.programs.elementary.metric1.value') }
+    ],
+    tags: [t('k12.programs.elementary.tag1'), t('k12.programs.elementary.tag2')],
+    variant: 'purple' as const,
+    featured: true
+  },
+  {
+    icon: '📖',
+    title: t('k12.programs.middle.title'),
+    description: t('k12.programs.middle.desc'),
+    metrics: [
+      { label: t('k12.programs.middle.metric1.label'), value: t('k12.programs.middle.metric1.value') }
+    ],
+    tags: [t('k12.programs.middle.tag1'), t('k12.programs.middle.tag2')],
+    variant: 'blue' as const
+  },
+  {
+    icon: '🎯',
+    title: t('k12.programs.high.title'),
+    description: t('k12.programs.high.desc'),
+    metrics: [
+      { label: t('k12.programs.high.metric1.label'), value: t('k12.programs.high.metric1.value') }
+    ],
+    tags: [t('k12.programs.high.tag1'), t('k12.programs.high.tag2')],
+    variant: 'gold' as const
+  },
+  {
+    icon: '🌍',
+    title: t('k12.programs.exchange.title'),
+    description: t('k12.programs.exchange.desc'),
+    metrics: [
+      { label: t('k12.programs.exchange.metric1.label'), value: t('k12.programs.exchange.metric1.value') }
+    ],
+    tags: [t('k12.programs.exchange.tag1'), t('k12.programs.exchange.tag2')],
+    variant: 'orange' as const
+  }
+];
+
+const methodologySteps = [
+  { phase: '01', title: t('k12.method.phase1.title'), items: [t('k12.method.phase1.item1'), t('k12.method.phase1.item2')] },
+  { phase: '02', title: t('k12.method.phase2.title'), items: [t('k12.method.phase2.item1'), t('k12.method.phase2.item2')] },
+  { phase: '03', title: t('k12.method.phase3.title'), items: [t('k12.method.phase3.item1'), t('k12.method.phase3.item2')] },
+  { phase: '04', title: t('k12.method.phase4.title'), items: [t('k12.method.phase4.item1'), t('k12.method.phase4.item2')] }
+];
+
+const k12Benefits = [
+  {
+    icon: '🧠',
+    title: t('k12.benefits.cognitive.title'),
+    description: t('k12.benefits.cognitive.desc'),
+    linkText: t('k12.benefits.link'),
+    href: `/${lang}/consultation`,
+    variant: 'purple' as const
+  },
+  {
+    icon: '📊',
+    title: t('k12.benefits.academic.title'),
+    description: t('k12.benefits.academic.desc'),
+    linkText: t('k12.benefits.link'),
+    href: `/${lang}/consultation`,
+    variant: 'blue' as const
+  },
+  {
+    icon: '🌏',
+    title: t('k12.benefits.cultural.title'),
+    description: t('k12.benefits.cultural.desc'),
+    linkText: t('k12.benefits.link'),
+    href: `/${lang}/consultation`,
+    variant: 'gold' as const
+  },
+  {
+    icon: '🚀',
+    title: t('k12.benefits.future.title'),
+    description: t('k12.benefits.future.desc'),
+    linkText: t('k12.benefits.link'),
+    href: `/${lang}/consultation`,
+    variant: 'orange' as const
+  }
+];
+---
+
+<Layout title={t('k12.meta.title')} description={t('k12.meta.desc')} lang={lang}>
+  <Navbar />
+
+  <PremiumHero
+    eyebrow={t('k12.hero.eyebrow')}
+    title={t('k12.hero.title')}
+    subtitle={t('k12.hero.subtitle')}
+    ctaPrimary={{ text: t('k12.hero.cta'), href: `/${lang}/consultation` }}
+    ctaSecondary={{ text: t('k12.hero.cta2'), href: `#programs` }}
+    alignment="center"
+    theme="gradient"
+    trustIndicators={[
+      { value: '3,000+', label: t('k12.trust.students') },
+      { value: '50+', label: t('k12.trust.schools') },
+      { value: '98%', label: t('k12.trust.satisfaction') }
+    ]}
+  />
+
+  <StatsBanner
+    stats={k12Stats}
+    theme="gradient"
+    title={t('k12.stats.title')}
+    subtitle={t('k12.stats.subtitle')}
+  />
+
+  <section id="programs" class="section-padding bg-white">
+    <div class="container-wide">
+      <div class="text-center mb-16">
+        <span class="eyebrow-k12">{t('k12.programs.eyebrow')}</span>
+        <h2 class="section-title mt-4">{t('k12.programs.title')}</h2>
+        <p class="section-subtitle max-w-2xl mx-auto">{t('k12.programs.subtitle')}</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        {k12Programs.map((program) => (
+          <PremiumCard
+            icon={program.icon}
+            title={program.title}
+            description={program.description}
+            metrics={program.metrics}
+            tags={program.tags}
+            variant={program.variant}
+featured={program.featured}
+  featuredLabel={t('card.featured')}
+  size="lg"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding k12-gradient">
+    <div class="container-wide">
+      <div class="text-center mb-16">
+        <span class="eyebrow-k12-light">{t('k12.method.eyebrow')}</span>
+        <h2 class="section-title-light mt-4">{t('k12.method.title')}</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {methodologySteps.map((phase, i) => (
+          <div class="process-card">
+            <div class="phase-number">{phase.phase}</div>
+            <h3 class="phase-title">{phase.title}</h3>
+            <ul class="phase-items">
+              {phase.items.map((item) => (
+                <li class="phase-item">
+                  <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            {i < methodologySteps.length - 1 && (
+              <div class="process-connector hidden lg:block" aria-hidden="true"></div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-white">
+    <div class="container-wide">
+      <div class="text-center mb-16">
+        <span class="eyebrow-k12">{t('k12.benefits.eyebrow')}</span>
+        <h2 class="section-title mt-4">{t('k12.benefits.title')}</h2>
+        <p class="section-subtitle max-w-2xl mx-auto">{t('k12.benefits.subtitle')}</p>
+      </div>
+
+      <div class="grid lg:grid-cols-4 gap-6">
+        {k12Benefits.map((benefit) => (
+          <PremiumCard
+            icon={benefit.icon}
+            title={benefit.title}
+            description={benefit.description}
+            href={benefit.href}
+            linkText={benefit.linkText}
+            variant={benefit.variant}
+            size="md"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-brand-navy text-white">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-brand-gold font-heading font-bold text-xs tracking-widest uppercase">{t('k12.featured.eyebrow')}</span>
+          <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-6">{t('k12.featured.title')}</h2>
+          <p class="text-white/80 text-lg leading-relaxed mb-8">{t('k12.featured.desc')}</p>
+
+          <div class="grid grid-cols-2 gap-6">
+            <div class="featured-stat">
+              <div class="featured-value">{t('k12.featured.stat1.value')}</div>
+              <div class="featured-label">{t('k12.featured.stat1.label')}</div>
+            </div>
+            <div class="featured-stat">
+              <div class="featured-value">{t('k12.featured.stat2.value')}</div>
+              <div class="featured-label">{t('k12.featured.stat2.label')}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="featured-cards">
+          <div class="featured-card-item">
+            <div class="card-icon-wrap">
+              <span class="text-3xl" aria-hidden="true">📊</span>
+            </div>
+            <div>
+              <h4 class="font-heading font-semibold text-lg">{t('k12.featured.card1.title')}</h4>
+              <p class="text-white/70 text-sm">{t('k12.featured.card1.desc')}</p>
+            </div>
+          </div>
+          <div class="featured-card-item">
+            <div class="card-icon-wrap">
+              <span class="text-3xl" aria-hidden="true">📝</span>
+            </div>
+            <div>
+              <h4 class="font-heading font-semibold text-lg">{t('k12.featured.card2.title')}</h4>
+              <p class="text-white/70 text-sm">{t('k12.featured.card2.desc')}</p>
+            </div>
+          </div>
+          <div class="featured-card-item">
+            <div class="card-icon-wrap">
+              <span class="text-3xl" aria-hidden="true">💬</span>
+            </div>
+            <div>
+              <h4 class="font-heading font-semibold text-lg">{t('k12.featured.card3.title')}</h4>
+              <p class="text-white/70 text-sm">{t('k12.featured.card3.desc')}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-white">
+    <div class="container-narrow text-center">
+      <h2 class="section-title">{t('k12.cta.title')}</h2>
+      <p class="section-subtitle mb-8">{t('k12.cta.subtitle')}</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={`/${lang}/consultation`} class="btn-primary-premium">
+          {t('k12.cta.btn')}
+          <svg class="w-5 h-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+        <a href={`/${lang}/methodology`} class="btn-outline-premium">{t('k12.cta.secondary')}</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .eyebrow-k12 {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(82, 138, 237, 0.08);
+    color: var(--color-brand-blue);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+  }
+
+  .eyebrow-k12-light {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--color-brand-navy);
+    letter-spacing: -0.02em;
+    font-family: var(--font-heading);
+  }
+
+  .section-title-light {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.02em;
+    font-family: var(--font-heading);
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-slate-light);
+    line-height: 1.7;
+  }
+
+  .k12-gradient {
+    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
+  }
+
+  .process-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .phase-number {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.15);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .phase-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .phase-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .phase-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9375rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .check-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--color-brand-gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .process-connector {
+    position: absolute;
+    top: 50%;
+    right: -1.5rem;
+    width: 3rem;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+  }
+
+  .featured-stat {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .featured-value {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-brand-gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .featured-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .featured-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .featured-card-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    transition: all 300ms var(--ease-out-expo);
+  }
+
+  .featured-card-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(8px);
+  }
+
+  .card-icon-wrap {
+    width: 3rem;
+    height: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .btn-primary-premium {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
+    color: white;
+    font-weight: 600;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 300ms var(--ease-out-expo);
+    font-family: var(--font-heading);
+  }
+
+  .btn-primary-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(82, 138, 237, 0.4);
+  }
+
+  .btn-outline-premium {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: transparent;
+    color: var(--color-brand-navy);
+    font-weight: 600;
+    border: 1.5px solid rgba(52, 53, 79, 0.2);
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 250ms var(--ease-out-expo);
+    font-family: var(--font-heading);
+  }
+
+  .btn-outline-premium:hover {
+    background: rgba(52, 53, 79, 0.04);
+    border-color: rgba(52, 53, 79, 0.3);
+  }
+
+  @media (max-width: 1024px) {
+    .process-connector {
+      display: none;
+    }
+  }
+</style>

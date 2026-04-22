@@ -1,0 +1,479 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import PremiumHero from '../../components/PremiumHero.astro';
+import PremiumCard from '../../components/PremiumCard.astro';
+import StatsBanner from '../../components/StatsBanner.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { languages } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const academicPrograms = [
+  {
+		icon: '📝',
+		iconAriaHidden: true,
+		title: t('academic.programs.essay.title'),
+    description: t('academic.programs.essay.desc'),
+    metrics: [
+      { label: t('academic.programs.essay.metric1.label'), value: t('academic.programs.essay.metric1.value') },
+      { label: t('academic.programs.essay.metric2.label'), value: t('academic.programs.essay.metric2.value') }
+    ],
+    tags: [t('academic.programs.essay.tag1'), t('academic.programs.essay.tag2')],
+    variant: 'purple' as const,
+    featured: true
+  },
+  {
+    icon: '📚',
+    title: t('academic.programs.thesis.title'),
+    description: t('academic.programs.thesis.desc'),
+    metrics: [
+      { label: t('academic.programs.thesis.metric1.label'), value: t('academic.programs.thesis.metric1.value') }
+    ],
+    tags: [t('academic.programs.thesis.tag1')],
+    variant: 'blue' as const
+  },
+  {
+    icon: '🔬',
+    title: t('academic.programs.research.title'),
+    description: t('academic.programs.research.desc'),
+    metrics: [
+      { label: t('academic.programs.research.metric1.label'), value: t('academic.programs.research.metric1.value') }
+    ],
+    tags: [t('academic.programs.research.tag1'), t('academic.programs.research.tag2')],
+    variant: 'gold' as const
+  },
+  {
+    icon: '🎤',
+    title: t('academic.programs.defense.title'),
+    description: t('academic.programs.defense.desc'),
+    metrics: [
+      { label: t('academic.programs.defense.metric1.label'), value: t('academic.programs.defense.metric1.value') }
+    ],
+    tags: [t('academic.programs.defense.tag1')],
+    variant: 'orange' as const
+  }
+];
+
+const academicStats = [
+  { value: '92%', label: t('academic.stats.publication'), trend: 'up' as const, trendValue: '+18%' },
+  { value: '4.2', label: t('academic.stats.gpa'), trend: 'up' as const, trendValue: '+0.5' },
+  { value: '78%', label: t('academic.stats.acceptance'), trend: 'up' as const, trendValue: '+32%' },
+  { value: '150+', label: t('academic.stats.institutions') }
+];
+
+const supportAreas = [
+  {
+    icon: '📖',
+    title: t('academic.areas.writing.title'),
+    description: t('academic.areas.writing.desc'),
+    linkText: t('academic.areas.link'),
+    href: `/${lang}/consultation`,
+    variant: 'navy' as const
+  },
+  {
+    icon: '📊',
+    title: t('academic.areas.methodology.title'),
+    description: t('academic.areas.methodology.desc'),
+    linkText: t('academic.areas.link'),
+    href: `/${lang}/consultation`,
+    variant: 'navy' as const
+  },
+  {
+    icon: '💬',
+    title: t('academic.areas.communication.title'),
+    description: t('academic.areas.communication.desc'),
+    linkText: t('academic.areas.link'),
+    href: `/${lang}/consultation`,
+    variant: 'navy' as const
+  }
+];
+
+const researchProcess = [
+  { phase: '01', title: t('academic.process.phase1.title'), items: [t('academic.process.phase1.item1'), t('academic.process.phase1.item2')] },
+  { phase: '02', title: t('academic.process.phase2.title'), items: [t('academic.process.phase2.item1'), t('academic.process.phase2.item2')] },
+  { phase: '03', title: t('academic.process.phase3.title'), items: [t('academic.process.phase3.item1'), t('academic.process.phase3.item2')] },
+  { phase: '04', title: t('academic.process.phase4.title'), items: [t('academic.process.phase4.item1'), t('academic.process.phase4.item2')] }
+];
+---
+
+<Layout title={t('academic.meta.title')} description={t('academic.meta.desc')} lang={lang}>
+  <Navbar />
+
+  <PremiumHero
+    eyebrow={t('academic.hero.eyebrow')}
+    title={t('academic.hero.title')}
+    subtitle={t('academic.hero.subtitle')}
+    ctaPrimary={{ text: t('academic.hero.cta'), href: `/${lang}/consultation` }}
+    ctaSecondary={{ text: t('academic.hero.cta2'), href: `#programs` }}
+    alignment="center"
+    theme="gradient"
+    trustIndicators={[
+      { value: '5,000+', label: t('academic.trust.students') },
+      { value: '150+', label: t('academic.trust.universities') },
+      { value: '92%', label: t('academic.trust.satisfaction') }
+    ]}
+  />
+
+  <StatsBanner
+    stats={academicStats}
+    theme="gradient"
+    title={t('academic.stats.title')}
+    subtitle={t('academic.stats.subtitle')}
+  />
+
+  <section id="programs" class="section-padding bg-white">
+    <div class="container-wide">
+      <div class="text-center mb-16">
+        <span class="eyebrow-academic">{t('academic.programs.eyebrow')}</span>
+        <h2 class="section-title mt-4">{t('academic.programs.title')}</h2>
+        <p class="section-subtitle max-w-2xl mx-auto">{t('academic.programs.subtitle')}</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        {academicPrograms.map((program) => (
+          <PremiumCard
+            icon={program.icon}
+            title={program.title}
+            description={program.description}
+            metrics={program.metrics}
+            tags={program.tags}
+            variant={program.variant}
+featured={program.featured}
+  featuredLabel={t('card.featured')}
+  size="lg"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding academic-gradient">
+    <div class="container-wide">
+      <div class="text-center mb-16">
+        <span class="eyebrow-academic">{t('academic.process.eyebrow')}</span>
+        <h2 class="section-title-academic mt-4">{t('academic.process.title')}</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {researchProcess.map((phase, i) => (
+          <div class="process-card">
+            <div class="phase-number">{phase.phase}</div>
+            <h3 class="phase-title">{phase.title}</h3>
+            <ul class="phase-items">
+              {phase.items.map((item) => (
+                <li class="phase-item">
+                  <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            {i < researchProcess.length - 1 && (
+              <div class="process-connector hidden lg:block"></div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-white">
+    <div class="container-wide">
+      <div class="text-center mb-16">
+        <span class="eyebrow-academic">{t('academic.areas.eyebrow')}</span>
+        <h2 class="section-title mt-4">{t('academic.areas.title')}</h2>
+        <p class="section-subtitle max-w-2xl mx-auto">{t('academic.areas.subtitle')}</p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6">
+        {supportAreas.map((area) => (
+          <PremiumCard
+            icon={area.icon}
+            title={area.title}
+            description={area.description}
+            href={area.href}
+            linkText={area.linkText}
+            variant={area.variant}
+            size="md"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-brand-navy text-white">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-brand-gold font-heading font-bold text-xs tracking-widest uppercase">{t('academic.featured.eyebrow')}</span>
+          <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-6">{t('academic.featured.title')}</h2>
+          <p class="text-white/80 text-lg leading-relaxed mb-8">{t('academic.featured.desc')}</p>
+
+          <div class="grid grid-cols-2 gap-6">
+            <div class="featured-stat">
+              <div class="featured-value">{t('academic.featured.stat1.value')}</div>
+              <div class="featured-label">{t('academic.featured.stat1.label')}</div>
+            </div>
+            <div class="featured-stat">
+              <div class="featured-value">{t('academic.featured.stat2.value')}</div>
+              <div class="featured-label">{t('academic.featured.stat2.label')}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="featured-cards">
+          <div class="featured-card-item">
+            <div class="card-icon-wrap">
+              <span class="text-3xl" aria-hidden="true">📑</span>
+            </div>
+            <div>
+              <h4 class="font-heading font-semibold text-lg">{t('academic.featured.card1.title')}</h4>
+              <p class="text-white/70 text-sm">{t('academic.featured.card1.desc')}</p>
+            </div>
+          </div>
+          <div class="featured-card-item">
+            <div class="card-icon-wrap">
+              <span class="text-3xl" aria-hidden="true">🎓</span>
+            </div>
+            <div>
+              <h4 class="font-heading font-semibold text-lg">{t('academic.featured.card2.title')}</h4>
+              <p class="text-white/70 text-sm">{t('academic.featured.card2.desc')}</p>
+            </div>
+          </div>
+          <div class="featured-card-item">
+            <div class="card-icon-wrap">
+              <span class="text-3xl" aria-hidden="true">🌐</span>
+            </div>
+            <div>
+              <h4 class="font-heading font-semibold text-lg">{t('academic.featured.card3.title')}</h4>
+              <p class="text-white/70 text-sm">{t('academic.featured.card3.desc')}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-white">
+    <div class="container-narrow text-center">
+      <h2 class="section-title">{t('academic.cta.title')}</h2>
+      <p class="section-subtitle mb-8">{t('academic.cta.subtitle')}</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={`/${lang}/consultation`} class="btn-primary-premium">
+          {t('academic.cta.primary')}
+<svg class="w-5 h-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+    </svg>
+        </a>
+        <a href={`/${lang}/methodology`} class="btn-outline-premium">{t('academic.cta.secondary')}</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .eyebrow-academic {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(166, 123, 244, 0.08);
+    color: var(--color-brand-purple);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--color-brand-navy);
+    letter-spacing: -0.02em;
+    font-family: var(--font-heading);
+  }
+
+  .section-title-academic {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.02em;
+    font-family: var(--font-heading);
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-slate-light);
+    line-height: 1.7;
+  }
+
+  .academic-gradient {
+    background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-indigo));
+  }
+
+  .process-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .phase-number {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.15);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .phase-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .phase-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .phase-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9375rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .check-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--color-brand-gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .process-connector {
+    position: absolute;
+    top: 50%;
+    right: -1.5rem;
+    width: 3rem;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+  }
+
+  .featured-stat {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .featured-value {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-brand-gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .featured-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .featured-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .featured-card-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    transition: all 300ms var(--ease-out-expo);
+  }
+
+  .featured-card-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(8px);
+  }
+
+  .card-icon-wrap {
+    width: 3rem;
+    height: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .btn-primary-premium {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-indigo));
+    color: white;
+    font-weight: 600;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 300ms var(--ease-out-expo);
+    font-family: var(--font-heading);
+  }
+
+  .btn-primary-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(166, 123, 244, 0.4);
+  }
+
+  .btn-outline-premium {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: transparent;
+    color: var(--color-brand-navy);
+    font-weight: 600;
+    border: 1.5px solid rgba(52, 53, 79, 0.2);
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 250ms var(--ease-out-expo);
+    font-family: var(--font-heading);
+  }
+
+  .btn-outline-premium:hover {
+    background: rgba(52, 53, 79, 0.04);
+    border-color: rgba(52, 53, 79, 0.3);
+  }
+
+  @media (max-width: 1024px) {
+    .process-connector {
+      display: none;
+    }
+  }
+</style>

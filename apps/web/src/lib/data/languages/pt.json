@@ -1,11 +1,9 @@
 {
   "meta": {
-    "title": "Cliltutors | Aprendizado Online de Idiomas e STEM",
+    "title": "Cliltutors | Aprendizagem de Idiomas e STEM Online",
     "ogSiteName": "Cliltutors",
-    "description": "Aprenda com professores nativos. Aulas ao vivo e gravadas em espanhol, inglês e português. Reforço acadêmico em química, física, matemática e programação, além de orientação profissional.",
-    "keywords": "aprender idiomas, aulas online, tutoria STEM, aulas de espanhol, aulas de inglês, aulas de português, tutoria de química, tutoria de física, tutoria de matemática, tutoria de programação",
-    "ogImage": "/og/default.png",
-    "twitterHandle": "@cliltutors"
+    "description": "Aprenda com professores nativos. Aulas ao vivo e gravadas em espanhol, inglês e português.",
+    "keywords": "aprender idiomas, aulas online, tutoria STEM, metodologia CLIL"
   },
 
   "metadata": {
@@ -18,12 +16,12 @@
     "pages": {
       "login": {
         "title": "Entrar | Cliltutors",
-        "description": "Acesse sua conta Cliltutors e gerencie suas aulas.",
+        "description": "Acesse sua conta Cliltutors.",
         "robots": { "index": false, "follow": false }
       },
       "register": {
-        "title": "Cadastro | Cliltutors",
-        "description": "Crie sua conta Cliltutors e comece a aprender hoje.",
+        "title": "Registrar | Cliltutors",
+        "description": "Crie sua conta Cliltutors.",
         "robots": { "index": false, "follow": false }
       }
     }
@@ -31,106 +29,179 @@
 
   "auth": {
     "login": {
-      "title": "Entrar na sua conta",
-      "subtitle": "Digite seu email para acessar sua conta",
-      "email": "Email",
+      "title": "Bem-vindo de volta",
+      "subtitle": "Insira suas credenciais para acessar",
+      "email": "E-mail",
       "password": "Senha",
-      "forgot": "Esqueceu sua senha?",
+      "forgot": "Esqueceu a senha?",
       "cta": "Entrar",
-      "or": "Ou continue com",
-      "google": "Entrar com Google",
-      "noAccount": "Não tem uma conta?",
-      "signup": "Cadastre-se",
-      "imageAlt": "Login Cliltutors"
+      "or": "Ou continuar com",
+      "google": "Continuar com Google",
+      "noAccount": "Não tem conta?",
+      "signup": "Criar uma",
+      "imageAlt": "Cliltutors login"
     },
     "register": {
       "title": "Crie sua conta",
-      "subtitle": "Complete seu cadastro para acessar a Cliltutors",
-      "name": "Nome",
-      "email": "Email",
+      "subtitle": "Comece sua jornada de aprendizagem de idiomas hoje",
+      "name": "Nome completo",
+      "email": "E-mail",
       "password": "Senha",
-      "cta": "Cadastrar",
-      "or": "Ou continue com",
-      "google": "Cadastrar com Google",
-      "haveAccount": "Já tem uma conta?",
+      "cta": "Criar conta",
+      "or": "Ou continuar com",
+      "google": "Continuar com Google",
+      "haveAccount": "Já tem conta?",
       "login": "Entrar",
-      "imageAlt": "Cadastro Cliltutors"
+      "imageAlt": "Cliltutors register"
     }
   },
 
-  "authCard": {
-    "title": "Crie sua conta na Cliltutors",
-    "subtitle": "Junte-se à Cliltutors e tenha acesso a cursos, orientação profissional e muito mais.",
-    "placeholders": {
-      "name": "Seu nome",
-      "email": "Endereço de email"
-    },
-    "button": "Continuar cadastro",
-    "buttonLoading": "Continuando...",
-    "terms": {
-      "prefix": "Ao criar sua conta, você aceita nossos",
-      "terms": "Termos de Serviço",
-      "and": "e",
-      "privacy": "Política de Privacidade",
-      "suffix": "."
-    }
+  "sidebar": {
+    "main": "Principal",
+    "account": "Conta",
+    "dashboard": "Painel",
+    "courses": "Cursos",
+    "myLearning": "Meu Aprendizado",
+    "schedule": "Agenda",
+    "instructors": "Instrutores",
+    "profile": "Perfil"
   },
 
-  "header": {
-    "link1": "Início",
-    "link2": "Sobre nós",
-    "link3": "Cursos",
-    "link4": "Tutores",
-    "link5": "Contato",
-    "login": "Entrar",
-    "getStarted": "Começar"
+  "topbar": {
+    "search": "Buscar cursos, aulas..."
   },
 
-  "hero": {
-    "title": "Aprenda idiomas. Domine STEM. Construa seu futuro",
-    "description": "Idiomas e STEM em uma única plataforma, pensada para impulsionar seu aprendizado e carreira.",
-    "button": "Agende sua aula gratuita"
+  "dashboard": {
+    "welcomeBack": "Bem-vindo de volta",
+    "continueMsg": "Continue de onde parou",
+    "continueCourse": "Continuar aprendendo",
+    "totalHours": "Horas estudadas",
+    "streak": "Sequência de dias",
+    "lessonsCompleted": "Aulas feitas",
+    "currentLevel": "Nível atual",
+    "continueLearning": "Continuar aprendendo",
+    "explore": "Explorar",
+    "browseCourses": "Explorar cursos",
+    "bookSession": "Agendar sessão",
+    "liveInstructors": "Ao vivo com instrutores",
+    "meetInstructors": "Conheça instrutores",
+    "expertTeam": "Nossa equipe especialista"
   },
 
-  "services": {
-    "title": "Comece de acordo com suas necessidades",
-    "description": "Cada pessoa aprende de forma diferente. Por isso oferecemos aulas e mentorias personalizadas."
+  "courses": {
+    "title": "Catálogo de Cursos",
+    "subtitle": "Explore nossos cursos de idiomas e metodologia",
+    "searchPlaceholder": "Buscar cursos ou instrutores...",
+    "language": "Idioma",
+    "level": "Nível",
+    "category": "Categoria",
+    "featured": "Cursos em Destaque",
+    "allCourses": "Todos os Cursos",
+    "results": "resultados",
+    "noResults": "Nenhum curso encontrado",
+    "tryDifferent": "Tente ajustar seus filtros",
+    "backToCatalog": "Voltar aos Cursos",
+    "instructor": "Instrutor",
+    "curriculum": "Grade Curricular",
+    "continueLearning": "Continuar aprendendo",
+    "enrollNow": "Inscrever-se",
+    "free": "Grátis",
+    "fullAccess": "Acesso completo a todas as aulas",
+    "duration": "Duração",
+    "lessons": "Aulas",
+    "modules": "Módulos"
   },
 
-  "testimonials": {
-    "subtitle": "+400K ALUNOS FLUENTES",
-    "title": "Depoimentos de alunos"
+  "lessons": {
+    "clickToPlay": "Clique para reproduzir",
+    "resources": "Recursos",
+    "prev": "Anterior",
+    "next": "Próxima aula",
+    "backToCourse": "Concluir curso",
+    "courseContent": "Conteúdo do curso"
   },
 
-  "footer": {
-    "newsletter": {
-      "title": "Assine nossa newsletter",
-      "description": "Receba novidades, ofertas e atualizações diretamente no seu email.",
-      "placeholder": "Seu email",
-      "button": "Assinar",
-      "privacy": "Ao assinar você aceita nossa política de privacidade."
-    },
-    "menu": {
-      "title": "Menu",
-      "links": {
-        "home": "Início",
-        "mentors": "Tutores",
-        "contact": "Contato",
-        "about": "Sobre nós"
-      }
-    },
-    "courses": {
-      "title": "Cursos",
-      "links": {
-        "languages": "Idiomas",
-        "academic": "Acadêmico"
-      }
-    },
-    "app": {
-      "title": "Baixe nosso app",
-      "description": "Em breve na App Store e Google Play",
-      "button": "Em desenvolvimento"
-    },
-    "copyright": "© 2025 Cliltutors. Todos os direitos reservados."
+  "myLearning": {
+    "title": "Meu Aprendizado",
+    "subtitle": "Acompanhe seu progresso e continue de onde parou",
+    "inProgress": "Em andamento",
+    "completed": "Concluídos",
+    "bookmarked": "Salvos",
+    "noBookmarks": "Sem cursos salvos",
+    "noCompleted": "Sem cursos concluídos",
+    "exploreCourses": "Explorar cursos"
+  },
+
+  "schedule": {
+    "title": "Agenda",
+    "subtitle": "Agende sessões ao vivo com nossos instrutores",
+    "browse": "Explorar Sessões",
+    "mySessions": "Minhas Sessões",
+    "calendar": "Calendário",
+    "allDays": "Todos",
+    "book": "Agendar",
+    "cancel": "Cancelar",
+    "booked": "Agendada",
+    "free": "Grátis",
+    "full": "Lotada",
+    "spots": "vagas",
+    "noSessions": "Nenhuma sessão encontrada",
+    "tryFilters": "Tente mudar seus filtros ou explorar outra semana",
+    "tryFree": "Experimente uma sessão grátis",
+    "tryFreeDesc": "Conheça nossa metodologia com uma sessão experimental gratuita de 25 minutos",
+    "showTrials": "Ver testes gratuitos",
+    "upcomingSessions": "Próximas sessões",
+    "pastSessions": "Passadas e canceladas",
+    "noUpcoming": "Sem sessões próximas",
+    "browseToBook": "Explore as sessões disponíveis para começar",
+    "browseSessions": "Explorar sessões",
+    "selectDay": "Selecione um dia",
+    "selectDayDesc": "Clique em uma data com sessões para ver detalhes",
+    "confirmBooking": "Confirmar agendamento",
+    "bookingConfirmed": "Sessão agendada!",
+    "confirmationMsg": "Você receberá um e-mail de confirmação com o link da sessão.",
+    "notesLabel": "Notas para o instrutor",
+    "notesPlaceholder": "Em que você gostaria de se concentrar?",
+    "freeSession": "Sessão gratuita",
+    "confirmBook": "Confirmar agendamento",
+    "cancelTitle": "Cancelar sessão?",
+    "cancelWarning": "Esta ação não pode ser desfeita. Sua vaga será liberada.",
+    "cancelReasonLabel": "Por que você está cancelando?",
+    "confirmCancel": "Cancelar sessão"
+  },
+
+  "instructors": {
+    "title": "Nossos Instrutores",
+    "subtitle": "Conheça nossa equipe especialista em idiomas e metodologia",
+    "bookSession": "Agendar sessão",
+    "viewProfile": "Ver perfil e agendar",
+    "backToAll": "Todos os instrutores",
+    "availableSessions": "Sessões disponíveis",
+    "noSessions": "Sem sessões próximas",
+    "qualifications": "Qualificações e experiência"
+  },
+
+  "profile": {
+    "title": "Perfil",
+    "subtitle": "Gerencie sua conta e preferências",
+    "hoursStudied": "Horas estudadas",
+    "dayStreak": "Sequência de dias",
+    "courses": "Cursos",
+    "editProfile": "Editar perfil",
+    "name": "Nome",
+    "email": "E-mail",
+    "language": "Idioma",
+    "save": "Salvar alterações",
+    "logout": "Sair"
+  },
+
+  "common": {
+    "viewAll": "Ver tudo",
+    "complete": "completo",
+    "available": "disponíveis",
+    "resume": "Continuar",
+    "optional": "opcional",
+    "close": "Pronto",
+    "goBack": "Voltar"
   }
 }

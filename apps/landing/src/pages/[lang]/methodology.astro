@@ -1,0 +1,210 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import PremiumHero from '../../components/PremiumHero.astro';
+import PremiumCard from '../../components/PremiumCard.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { languages } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const steps = [
+  {
+    step: 1,
+    icon: '🔍',
+    title: t('methodology.diagnosis.title'),
+    description: t('methodology.diagnosis.desc'),
+    items: [
+      t('methodology.diagnosis.item1'),
+      t('methodology.diagnosis.item2'),
+      t('methodology.diagnosis.item3')
+    ],
+    variant: 'blue'
+  },
+  {
+    step: 2,
+    icon: '📐',
+    title: t('methodology.architecture.title'),
+    description: t('methodology.architecture.desc'),
+    variant: 'purple'
+  },
+  {
+    step: 3,
+    icon: '📊',
+    title: t('methodology.progression.title'),
+    description: t('methodology.progression.desc'),
+    variant: 'gold'
+  },
+  {
+    step: 4,
+    icon: '🎯',
+    title: t('methodology.integration.title'),
+    description: t('methodology.integration.desc'),
+    variant: 'orange'
+  },
+  {
+    step: 5,
+    icon: '📈',
+    title: t('methodology.evaluation.title'),
+    description: t('methodology.evaluation.desc'),
+    variant: 'navy'
+  }
+];
+---
+
+<Layout title={t('methodology.meta.title')} description={t('methodology.meta.desc')} lang={lang}>
+  <Navbar />
+  
+  <PremiumHero
+    eyebrow={lang === 'en' ? 'OUR METHODOLOGY' : lang === 'pt' ? 'NOSSA METODOLOGIA' : 'NUESTRA METODOLOGÍA'}
+    title={t('methodology.hero.title')}
+    subtitle={t('methodology.hero.subtitle')}
+    ctaPrimary={{ text: t('home.finalcta.cta'), href: `/${lang}/consultation` }}
+    theme="gradient"
+    alignment="center"
+  />
+
+  <section class="methodology-journey section-padding bg-white">
+    <div class="container-wide">
+      <div class="steps-container">
+        {steps.map((step, index) => (
+          <div class="step-wrapper">
+            <div class="step-connector">
+              <div class="step-number">{step.step}</div>
+              {index < steps.length - 1 && <div class="connector-line"></div>}
+            </div>
+            
+            <PremiumCard
+              icon={step.icon}
+              title={step.title}
+              description={step.description}
+              variant={step.variant}
+              size="lg"
+              href={`#step-${step.step}`}
+              linkText={lang === 'en' ? 'Learn more' : lang === 'pt' ? 'Saiba mais' : 'Saber más'}
+            >
+              {step.items && (
+                <ul class="step-items">
+                  {step.items.map(item => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              )}
+            </PremiumCard>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTABanner title={t('home.finalcta.title')} ctaText={t('home.finalcta.cta')} ctaHref={`/${lang}/consultation`} />
+  <Footer />
+</Layout>
+
+<style>
+  .methodology-journey {
+    position: relative;
+  }
+
+  .steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .step-wrapper {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .step-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .step-number {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
+    color: white;
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(82, 138, 237, 0.25);
+    position: relative;
+    z-index: 2;
+  }
+
+  .connector-line {
+    width: 3px;
+    flex: 1;
+    min-height: 60px;
+    background: linear-gradient(to bottom, var(--color-brand-blue), transparent);
+    margin-top: 1rem;
+    opacity: 0.3;
+  }
+
+  .step-items {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .step-items li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.9375rem;
+    color: var(--color-slate-light);
+    line-height: 1.6;
+  }
+
+  .step-items li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-brand-blue);
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .step-wrapper {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .step-connector {
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    .connector-line {
+      display: none;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      font-size: 1.25rem;
+    }
+  }
+</style>

@@ -1,0 +1,118 @@
+TIPOGRAFÍA EXACTA 
+
+
+1️⃣ HEADINGS / TÍTULOS
+Plus Jakarta Sans
+Usada para títulos, subtítulos destacados y mensajes clave.
+Pesos utilizados:
+700 (Bold) → títulos principales (H1)
+
+
+600 (SemiBold) → subtítulos importantes (H2–H3)
+
+
+500 (Medium) → destacados cortos, badges, frases clave
+
+
+👉 Sensación: moderna, sólida, tecnológica, muy EdTech / SaaS.
+
+2️⃣ BODY TEXT / PÁRRAFOS
+Inter
+Usada para textos largos, descripciones, listas, botones secundarios.
+Pesos utilizados:
+400 (Regular) → párrafos principales
+
+
+500 (Medium) → botones, textos enfatizados
+
+
+600 (SemiBold) → labels, CTAs suaves
+
+
+👉 Sensación: extremadamente legible, profesional, neutral internacional.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4️⃣ CÓMO CONFIGURAR ESTO EN CANVA 
+
+En Brand Kit → Fonts:
+🔹 Primary Font (Headings)
+Plus Jakarta Sans
+Heading: 700
+
+
+Subheading: 600
+
+
+Accent: 500
+
+
+🔹 Secondary Font (Body)
+Inter
+Body text: 400
+
+
+Buttons: 500
+
+
+CTAs: 600
+
+
+👉 Canva sí reconoce estas jerarquías si las defines así.
+
+
+5️⃣ POR QUÉ ESTA COMBINACIÓN ES PERFECTA PARA CLILTUTORS
+Esta dupla funciona porque:
+✔ Se ve EdTech global
+
+
+✔ No parece academia tradicional
+
+
+✔ Funciona perfecto en:
+
+
+inglés
+
+
+español
+
+
+portugués
+
+
+✔ Excelente lectura en desktop y mobile
+
+
+✔ Ideal para SaaS, educación, corporate y STEM
+
+
+👉 Exactamente el posicionamiento que Cliltutors necesita.
+
+6️⃣ ALTERNATIVA (si algún día quieres variar)
+Si en el futuro quieres una ligera variación sin romper identidad:
+Headings: DM Sans o Manrope
+
+
+Body: Inter (mantener siempre)
+
+
+Pero hoy, Plus Jakarta Sans + Inter es una elección muy sólida y estratégica.
+

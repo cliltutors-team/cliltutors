@@ -1,25 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { languages, defaultLang } from "../i18n/ui";
 ---
 
-<Layout title="Redirecting...">
-	<div
-		class="min-h-screen bg-[#fbfcff] flex items-center justify-center font-poppins text-[#34354f]"
-	>
-		<div class="text-center space-y-4">
-			<div
-				class="w-12 h-12 border-4 border-[#36de6b] border-t-transparent rounded-full animate-spin mx-auto"
-			>
-			</div>
-			<p class="font-medium">
-				Redirecionando / Redirecting / Redirigiendo...
-			</p>
-		</div>
-	</div>
-	<script>
-		const langs = ["en", "es", "pt"];
-		const userLang = navigator.language.split("-")[0];
-		const targetLang = langs.includes(userLang) ? userLang : "pt";
-		window.location.replace(`/${targetLang}/`);
-	</script>
+<Layout title="Cliltutors — Redirecting..." lang={defaultLang}>
+  <div class="min-h-screen bg-brand-off-white flex items-center justify-center">
+    <div class="text-center space-y-4">
+      <div class="w-12 h-12 border-4 border-brand-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
+      <p class="font-heading font-medium text-brand-navy">Redirecting...</p>
+    </div>
+  </div>
+  <script define:vars={{ languages: Object.keys(languages), defaultLang }}>
+    const userLang = navigator.language.split("-")[0];
+    const target = languages.includes(userLang) ? userLang : defaultLang;
+    window.location.replace(`/${target}/`);
+  </script>
 </Layout>

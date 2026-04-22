@@ -4,6 +4,15 @@ import type { NextConfig } from "next";
 import type { Configuration, RuleSetRule } from "webpack";
 
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://cliltutors-backend.onrender.com/api/:path*",
+      },
+    ];
+  },
+
   webpack(config: Configuration) {
     // 1) Excluir .svg del loader de assets de Next
     const rules = (config.module?.rules ?? []) as RuleSetRule[];
@@ -13,7 +22,7 @@ const nextConfig: NextConfig = {
         typeof rule === "object" &&
         rule !== null &&
         rule.test instanceof RegExp &&
-        rule.test.test(".svg")
+        rule.test.test(".svg"),
     );
 
     if (fileLoaderRule) {
