@@ -1,0 +1,573 @@
+---
+/**
+ * PremiumHero Component
+ * Enterprise-grade hero section for $10M language learning platform
+ * Features: Dynamic gradients, animated backgrounds, premium typography
+ * i18n: Full translation support via props
+ */
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle: string;
+  ctaPrimary?: { text: string; href: string };
+  ctaSecondary?: { text: string; href: string };
+  visualType?: "image" | "illustration" | "gradient" | "video";
+  visualAsset?: string;
+  alignment?: "left" | "center" | "split";
+  theme?: "dark" | "light" | "gradient";
+  trustIndicators?: Array<{ value: string; label: string }>;
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  ctaPrimary,
+  ctaSecondary,
+  visualType = "gradient",
+  visualAsset,
+  alignment = "split",
+  theme = "gradient",
+  trustIndicators = [],
+} = Astro.props;
+
+const isDark = theme === "dark" || theme === "gradient";
+const isSplit = alignment === "split";
+---
+
+<section
+  class:list={[
+    "premium-hero relative overflow-hidden",
+    `hero-theme-${theme}`,
+    `hero-align-${alignment}`,
+  ]}
+>
+  {/* Desert Grain Mesh Background */}
+  {
+    isDark && (
+      <Fragment>
+        <div class="desert-mesh">
+          <svg style="display:none" aria-hidden="true">
+            <filter id="grainy">
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.65"
+                numOctaves="3"
+                stitchTiles="stitch"
+              />
+              <feColorMatrix type="saturate" values="0" />
+              <feComponentTransfer>
+                <feFuncA type="linear" slope="0.1" />
+              </feComponentTransfer>
+              <feBlend mode="overlay" in2="SourceGraphic" />
+            </filter>
+          </svg>
+        </div>
+      </Fragment>
+    )
+  }
+
+  <div class="hero-container">
+    <div
+      class:list={[
+        "hero-content",
+        { "hero-content-center": alignment === "center" },
+      ]}
+    >
+      {/* Eyebrow Badge */}
+      {
+        eyebrow && (
+          <div
+            class={`hero-eyebrow animate-fade-up ${isDark ? "dark" : "light"}`}
+          >
+            <span class="eyebrow-dot" />
+            {eyebrow}
+          </div>
+        )
+      }
+
+      {/* Title with Premium Typography */}
+      <h1
+        class={`hero-title animate-fade-up delay-100 ${isDark ? "text-white" : "text-brand-navy"}`}
+        set:html={title}
+      />
+
+      {/* Subtitle */}
+      <p
+        class={`hero-subtitle animate-fade-up delay-200 ${isDark ? "text-white/80" : "text-slate-light"}`}
+        set:html={subtitle}
+      />
+
+      {/* CTAs */}
+      {
+        (ctaPrimary || ctaSecondary) && (
+          <div class="hero-cta-group animate-fade-up delay-300">
+            {ctaPrimary && (
+              <a
+                href={ctaPrimary.href}
+                class={`hero-btn-primary ${isDark ? "btn-white-premium" : "btn-primary-premium"}`}
+              >
+                <span>{ctaPrimary.text}</span>
+                <svg
+                  class="btn-arrow"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </a>
+            )}
+            {ctaSecondary && (
+              <a
+                href={ctaSecondary.href}
+                class={`hero-btn-secondary ${isDark ? "btn-ghost-premium" : "btn-outline-premium"}`}
+              >
+                {ctaSecondary.text}
+              </a>
+            )}
+          </div>
+        )
+      }
+
+      {/* Trust Indicators */}
+      {
+        trustIndicators.length > 0 && (
+          <div class="hero-trust-bar animate-fade-up delay-400">
+            {trustIndicators.map((indicator) => (
+              <div class="trust-indicator">
+                <span class="trust-value">{indicator.value}</span>
+                <span class="trust-label">{indicator.label}</span>
+              </div>
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    {/* Visual Panel */}
+    {
+      visualType !== "gradient" && visualAsset && (
+        <div class="hero-visual h-full animate-fade-up delay-300">
+          <div class="visual-wrapper h-full">
+            {visualType === "image" && (
+              <img
+                src={visualAsset}
+                alt=""
+                class="visual-image"
+                loading="eager"
+              />
+            )}
+            {visualType === "illustration" && (
+              <div class="visual-illustration" set:html={visualAsset} />
+            )}
+          </div>
+        </div>
+      )
+    }
+  </div>
+
+  {/* Scroll Indicator */}
+  <div class="hero-scroll-indicator animate-fade-up delay-500">
+    <div class="scroll-mouse">
+      <div class="scroll-wheel"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Container & Layout ── */
+  .premium-hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: 72px;
+  }
+
+  .hero-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .hero-align-split .hero-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .hero-align-center .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  /* ── Desert Grain Mesh Background ── */
+  .desert-mesh {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background-color: var(--color-brand-navy-900);
+    z-index: 0;
+  }
+
+  .desert-mesh::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image:
+      radial-gradient(
+        circle at 10% 20%,
+        var(--color-brand-blue) 0%,
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 80% 10%,
+        var(--color-brand-purple) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 50% 50%,
+        var(--color-brand-gold) 0%,
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 90% 80%,
+        var(--color-brand-coral) 0%,
+        transparent 45%
+      ),
+      radial-gradient(
+        circle at 20% 80%,
+        var(--color-brand-indigo) 0%,
+        transparent 50%
+      );
+    background-size: 100% 100%;
+    filter: blur(80px) saturate(1.5);
+    animation: drift 25s infinite alternate ease-in-out;
+    opacity: 0.8;
+  }
+
+  .desert-mesh::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    filter: url(#grainy);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  @keyframes drift {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      transform: rotate(3deg) scale(1.1) translateX(2%);
+    }
+    100% {
+      transform: rotate(-2deg) scale(1.05) translateY(1%);
+    }
+  }
+
+  /* ── Content ── */
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-content-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(12px);
+  }
+
+  .hero-eyebrow.light {
+    background: rgba(82, 138, 237, 0.08);
+    color: var(--color-brand-blue);
+    border: 1px solid rgba(82, 138, 237, 0.2);
+  }
+
+  .hero-eyebrow.dark {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .hero-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+  }
+
+  .hero-align-center .hero-title {
+    max-width: 1000px;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+  }
+
+  .hero-align-center .hero-subtitle {
+    max-width: 750px;
+  }
+
+  /* ── Buttons ── */
+  .hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 300ms var(--ease-out-expo);
+    cursor: pointer;
+  }
+
+  .btn-white-premium {
+    background: white;
+    color: var(--color-brand-navy);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .btn-white-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-ghost-premium {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+  }
+
+  .btn-ghost-premium:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-primary-premium {
+    background: linear-gradient(
+      135deg,
+      var(--color-brand-blue),
+      var(--color-brand-indigo)
+    );
+    color: white;
+    box-shadow: 0 4px 15px rgba(82, 138, 237, 0.3);
+  }
+
+  .btn-primary-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(82, 138, 237, 0.4);
+  }
+
+  .btn-outline-premium {
+    background: transparent;
+    color: var(--color-brand-navy);
+    border: 1.5px solid rgba(52, 53, 79, 0.2);
+  }
+
+  .btn-outline-premium:hover {
+    background: rgba(52, 53, 79, 0.04);
+    border-color: rgba(52, 53, 79, 0.3);
+  }
+
+  .btn-arrow {
+    width: 18px;
+    height: 18px;
+    transition: transform 300ms var(--ease-out-expo);
+  }
+
+  .hero-btn-primary:hover .btn-arrow {
+    transform: translateX(4px);
+  }
+
+  /* ── Trust Bar ── */
+  .hero-trust-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .trust-indicator {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .trust-value {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: inherit;
+  }
+
+  .trust-label {
+    font-size: 0.875rem;
+    opacity: 0.7;
+  }
+
+  /* ── Visual Panel ── */
+  .hero-visual {
+    position: relative;
+    z-index: 2;
+  }
+
+  .visual-wrapper {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow:
+      0 30px 70px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  }
+
+  .visual-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 1.5rem;
+    padding: 2px;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.02)
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .visual-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ── Scroll Indicator ── */
+  .hero-scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  .scroll-mouse {
+    width: 26px;
+    height: 42px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+  }
+
+  .scroll-wheel {
+    width: 4px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-pulse {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(6px);
+    }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .hero-align-split .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-cta-group {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-container {
+      padding: 2rem 1rem;
+    }
+
+    .hero-trust-bar {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  }
+</style>

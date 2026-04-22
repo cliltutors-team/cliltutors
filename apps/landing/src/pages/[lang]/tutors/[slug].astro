@@ -1,0 +1,33 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import Navbar from '../../../components/Navbar.astro'
+import Footer from '../../../components/Footer.astro'
+import TutorProfilePage from '../../../components/TutorProfilePage'
+import { getLangFromUrl, useTranslations } from '../../../i18n/utils'
+import { languages } from '../../../i18n/ui'
+import { tutorProfiles, getTutorBySlug } from '../../../data/tutors'
+
+export function getStaticPaths() {
+  const paths = []
+  for (const lang of Object.keys(languages)) {
+    for (const tutor of tutorProfiles) {
+      paths.push({
+        params: { lang, slug: tutor.slug },
+        props: { tutor },
+      })
+    }
+  }
+  return paths
+}
+
+const { lang, slug } = Astro.params
+const { tutor } = Astro.props
+const currentLang = getLangFromUrl(Astro.url)
+const t = useTranslations(currentLang)
+---
+
+<Layout title={`${tutor.name} — ${t('tutors.meta.title')}`} description={tutor.bio[currentLang] || tutor.bio.en} lang={currentLang}>
+  <Navbar />
+  <TutorProfilePage client:idle tutor={tutor} lang={currentLang} t={t} />
+  <Footer />
+</Layout>

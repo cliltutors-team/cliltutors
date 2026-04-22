@@ -1,0 +1,171 @@
+---
+interface TrustIndicator {
+  value: string;
+  label: string;
+  icon?: string;
+}
+
+interface Partner {
+  name: string;
+  logo: string;
+}
+
+interface Props {
+  trustIndicators: TrustIndicator[];
+  partners?: Partner[];
+  studentCount?: string;
+  courseCount?: string;
+  countryCount?: string;
+  studentLabel?: string;
+  courseLabel?: string;
+  countryLabel?: string;
+  ratingLabel?: string;
+  verifiedLabel?: string;
+  lifetimeLabel?: string;
+  expertsLabel?: string;
+  partnersLabel?: string;
+}
+
+const {
+  trustIndicators,
+  partners = [],
+  studentCount = "50,000+",
+  courseCount = "200+",
+  countryCount = "120+",
+  studentLabel = "Active Students",
+  courseLabel = "Premium Courses",
+  countryLabel = "Countries",
+  ratingLabel = "Average Rating",
+  verifiedLabel = "Verified Certificates",
+  lifetimeLabel = "Lifetime Access",
+  expertsLabel = "Expert Instructors",
+  partnersLabel = "Trusted by leading organizations"
+} = Astro.props;
+---
+
+<section class="py-16 bg-white border-y border-gray-100">
+  <div class="container-narrow">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 reveal">
+      <div class="text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-blue-50 to-brand-purple-50 mb-3">
+          <svg class="w-8 h-8 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+          </svg>
+        </div>
+<div class="font-heading font-bold text-3xl text-brand-navy mb-1">{studentCount}</div>
+    <div class="text-sm text-gray-600">{studentLabel}</div>
+  </div>
+
+  <div class="text-center">
+    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-purple-50 to-brand-gold-50 mb-3">
+      <svg class="w-8 h-8 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 6.477 9.246 7.073 8 7.75c-1.246.677-2.667 1.075-4 1.25v11c1.333-.175 2.754-.573 4-1.25 1.246-.677 2.832-1.273 4-1.75m0-13c1.168.477 2.754 1.073 4 1.25v11c-1.333-.175-2.754-.573-4-1.25m0-13V3m0 13v3m0-3c-1.246.677-2.667 1.075-4 1.25m4-1.25c1.246.677 2.832 1.073 4 1.25"/>
+          </svg>
+        </div>
+<div class="font-heading font-bold text-3xl text-brand-navy mb-1">{courseCount}</div>
+    <div class="text-sm text-gray-600">{courseLabel}</div>
+  </div>
+
+  <div class="text-center">
+    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-gold-50 to-brand-orange-50 mb-3">
+      <svg class="w-8 h-8 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+<div class="font-heading font-bold text-3xl text-brand-navy mb-1">{countryCount}</div>
+    <div class="text-sm text-gray-600">{countryLabel}</div>
+  </div>
+
+  <div class="text-center">
+    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-orange-50 to-brand-coral-50 mb-3">
+      <svg class="w-8 h-8 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+          </svg>
+        </div>
+<div class="font-heading font-bold text-3xl text-brand-navy mb-1">4.9</div>
+    <div class="text-sm text-gray-600">{ratingLabel}</div>
+  </div>
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 reveal delay-100">
+      {trustIndicators.map((indicator, index) => (
+        <div class="trust-badge flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-gray-50 to-white border border-gray-100 hover:border-brand-blue-200 transition-all duration-300 hover:shadow-md">
+          {indicator.icon && (
+            <div class="w-10 h-10 rounded-lg bg-brand-blue-50 flex items-center justify-center text-xl flex-shrink-0">
+              {indicator.icon}
+            </div>
+          )}
+          <div>
+            <div class="font-heading font-bold text-xl text-brand-navy">{indicator.value}</div>
+            <div class="text-xs text-gray-600">{indicator.label}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+{partners.length > 0 && (
+  <div class="reveal delay-200">
+    <p class="text-center text-sm text-gray-500 mb-6 uppercase tracking-wide font-semibold">{partnersLabel}</p>
+        <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12 opacity-60">
+          {partners.map(partner => (
+            <div class="partner-logo grayscale hover:grayscale-0 transition-all duration-500">
+              <img src={partner.logo} alt={partner.name} class="h-8 md:h-10 object-contain" loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+<div class="mt-12 grid sm:grid-cols-3 gap-4 reveal delay-300">
+  <div class="flex items-center justify-center gap-2 px-4 py-2 bg-brand-blue-50 rounded-lg">
+    <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+    </svg>
+    <span class="text-sm font-semibold text-brand-navy">{verifiedLabel}</span>
+  </div>
+  <div class="flex items-center justify-center gap-2 px-4 py-2 bg-brand-purple-50 rounded-lg">
+    <svg class="w-5 h-5 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <span class="text-sm font-semibold text-brand-navy">{lifetimeLabel}</span>
+  </div>
+  <div class="flex items-center justify-center gap-2 px-4 py-2 bg-brand-gold-50 rounded-lg">
+    <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+    </svg>
+    <span class="text-sm font-semibold text-brand-navy">{expertsLabel}</span>
+  </div>
+</div>
+      <div class="flex items-center justify-center gap-2 px-4 py-2 bg-brand-purple-50 rounded-lg">
+        <svg class="w-5 h-5 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span class="text-sm font-semibold text-brand-navy">Lifetime Access</span>
+      </div>
+      <div class="flex items-center justify-center gap-2 px-4 py-2 bg-brand-gold-50 rounded-lg">
+        <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <span class="text-sm font-semibold text-brand-navy">Expert Instructors</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.trust-badge {
+  transition: all 300ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.trust-badge:hover {
+  transform: translateY(-2px);
+}
+
+.partner-logo {
+  transition: all 400ms ease;
+}
+
+.partner-logo:hover {
+  transform: scale(1.05);
+}
+</style>

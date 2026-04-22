@@ -1,0 +1,492 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import PremiumHero from '../../components/PremiumHero.astro';
+import PremiumCard from '../../components/PremiumCard.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { languages } from '../../i18n/ui';
+
+export function getStaticPaths() {
+return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const trustIndicators = [
+{ value: '500+', label: t('consultation.trust.clients') },
+{ value: '98%', label: t('consultation.trust.satisfaction') },
+{ value: '24h', label: t('consultation.trust.response') },
+];
+
+const benefits = [
+{ icon: '🎯', title: t('consultation.benefit1.title'), description: t('consultation.benefit1.desc') },
+{ icon: '📊', title: t('consultation.benefit2.title'), description: t('consultation.benefit2.desc') },
+{ icon: '🤝', title: t('consultation.benefit3.title'), description: t('consultation.benefit3.desc') },
+];
+---
+
+<Layout title={t('consultation.meta.title')} description={t('consultation.meta.desc')} lang={lang}>
+<Navbar />
+
+<PremiumHero
+eyebrow={t('consultation.hero.eyebrow')}
+title={t('consultation.hero.title')}
+subtitle={t('consultation.hero.subtitle')}
+ctaPrimary={{ text: t('consultation.hero.cta'), href: '#consultation-form' }}
+alignment="center"
+theme="gradient"
+trustIndicators={trustIndicators}
+/>
+
+<section class="section-padding bg-white">
+<div class="container-narrow">
+<div class="grid lg:grid-cols-2 gap-16 items-start">
+<div class="form-section">
+<div class="form-header mb-8">
+<h2 class="font-heading text-3xl font-semibold text-brand-navy mb-3">{t('consultation.form.header')}</h2>
+<p class="text-brand-slate-light">{t('consultation.form.subheader')}</p>
+</div>
+
+<form id="consultation-form" class="premium-form">
+<div class="form-row">
+<div class="form-group">
+<label for="name" class="form-label">
+{t('consultation.form.name')}
+<span class="required" aria-label="required">*</span>
+</label>
+<input
+type="text"
+id="name"
+name="name"
+required
+class="form-input"
+placeholder={t('consultation.form.name.placeholder')}
+aria-required="true"
+/>
+</div>
+
+<div class="form-group">
+<label for="email" class="form-label">
+{t('consultation.form.email')}
+<span class="required" aria-label="required">*</span>
+</label>
+<input
+type="email"
+id="email"
+name="email"
+required
+class="form-input"
+placeholder={t('consultation.form.email.placeholder')}
+aria-required="true"
+/>
+</div>
+</div>
+
+<div class="form-row">
+<div class="form-group">
+<label for="company" class="form-label">{t('consultation.form.company')}</label>
+<input
+type="text"
+id="company"
+name="company"
+class="form-input"
+placeholder={t('consultation.form.company.placeholder')}
+/>
+</div>
+
+<div class="form-group">
+<label for="role" class="form-label">
+{t('consultation.form.role')}
+<span class="required" aria-label="required">*</span>
+</label>
+<input
+type="text"
+id="role"
+name="role"
+required
+class="form-input"
+placeholder={t('consultation.form.role.placeholder')}
+aria-required="true"
+/>
+</div>
+</div>
+
+<div class="form-group">
+<label for="program-type" class="form-label">
+{t('consultation.form.program')}
+<span class="required" aria-label="required">*</span>
+</label>
+<select id="program-type" name="program-type" required class="form-input form-select" aria-required="true">
+<option value="">{t('consultation.form.program.select')}</option>
+<option value="corporate">{t('consultation.form.program.corporate')}</option>
+<option value="professional">{t('consultation.form.program.professional')}</option>
+<option value="academic">{t('consultation.form.program.academic')}</option>
+<option value="k12">{t('consultation.form.program.k12')}</option>
+</select>
+</div>
+
+<div class="form-group">
+<label for="timeline" class="form-label">{t('consultation.form.timeline')}</label>
+<select id="timeline" name="timeline" class="form-input form-select">
+<option value="">{t('consultation.form.timeline.select')}</option>
+<option value="immediate">{t('consultation.form.timeline.immediate')}</option>
+<option value="1-3months">{t('consultation.form.timeline.1-3')}</option>
+<option value="3-6months">{t('consultation.form.timeline.3-6')}</option>
+<option value="planning">{t('consultation.form.timeline.planning')}</option>
+</select>
+</div>
+
+<div class="form-group">
+<label for="objective" class="form-label">
+{t('consultation.form.objective')}
+<span class="required" aria-label="required">*</span>
+</label>
+<textarea
+id="objective"
+name="objective"
+rows="4"
+required
+class="form-input form-textarea"
+placeholder={t('consultation.form.objective.placeholder')}
+aria-required="true"
+></textarea>
+</div>
+
+<div class="form-group">
+<div class="flex items-start gap-3">
+<input
+type="checkbox"
+id="newsletter"
+name="newsletter"
+class="form-checkbox"
+/>
+<label for="newsletter" class="form-label-checkbox">
+{t('consultation.form.newsletter')}
+</label>
+</div>
+</div>
+
+<button type="submit" class="form-submit-btn">
+<span>{t('consultation.form.submit')}</span>
+<svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+</svg>
+</button>
+
+<div id="form-success" class="form-success hidden" role="alert" aria-live="polite">
+<svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+<p>{t('consultation.form.success')}</p>
+</div>
+</form>
+</div>
+
+<div class="benefits-section">
+<h3 class="font-heading text-2xl font-semibold text-brand-navy mb-6">{t('consultation.benefits.title')}</h3>
+<div class="space-y-5">
+{benefits.map((benefit) => (
+<PremiumCard
+icon={benefit.icon}
+iconType="emoji"
+title={benefit.title}
+description={benefit.description}
+variant="blue"
+size="md"
+/>
+))}
+</div>
+
+<div class="calendar-card mt-8">
+<div class="calendar-header">
+<div class="calendar-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+</svg>
+</div>
+<div>
+<h3 class="font-heading font-semibold text-lg text-brand-navy">{t('consultation.calendar.title')}</h3>
+<p class="text-sm text-brand-slate-light">{t('consultation.calendar.desc')}</p>
+</div>
+</div>
+<div class="calendar-widget">
+<div class="calendar-placeholder">
+<p>{t('consultation.calendar.loading')}</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<Footer />
+</Layout>
+
+<style>
+.section-padding {
+padding: 5rem 0;
+}
+
+.form-section {
+position: relative;
+}
+
+.form-header {
+border-bottom: 2px solid var(--color-gray-100);
+padding-bottom: 1.5rem;
+}
+
+.form-header h2 {
+letter-spacing: -0.02em;
+}
+
+.premium-form {
+display: flex;
+flex-direction: column;
+gap: 1.75rem;
+}
+
+.form-row {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1.25rem;
+}
+
+.form-group {
+display: flex;
+flex-direction: column;
+gap: 0.5rem;
+}
+
+.form-label {
+display: flex;
+align-items: center;
+gap: 0.25rem;
+font-family: var(--font-heading);
+font-size: 0.875rem;
+font-weight: 600;
+color: var(--color-brand-navy);
+}
+
+.required {
+color: var(--color-brand-blue);
+font-weight: 700;
+}
+
+.form-input {
+width: 100%;
+padding: 0.875rem 1rem;
+font-size: 0.9375rem;
+color: var(--color-brand-navy);
+background: var(--color-gray-50);
+border: 1.5px solid var(--color-gray-200);
+border-radius: 12px;
+transition: all 250ms ease;
+}
+
+.form-input:hover {
+border-color: var(--color-gray-300);
+}
+
+.form-input:focus {
+outline: none;
+background: white;
+border-color: var(--color-brand-blue);
+box-shadow: 0 0 0 3px rgba(82, 138, 237, 0.1);
+}
+
+.form-input::placeholder {
+color: var(--color-gray-400);
+}
+
+.form-textarea {
+resize: vertical;
+min-height: 120px;
+}
+
+.form-select {
+appearance: none;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+background-repeat: no-repeat;
+background-position: right 0.75rem center;
+background-size: 1.25rem;
+padding-right: 2.5rem;
+}
+
+.form-checkbox {
+width: 1.25rem;
+height: 1.25rem;
+accent-color: var(--color-brand-blue);
+cursor: pointer;
+}
+
+.form-label-checkbox {
+font-size: 0.875rem;
+color: var(--color-slate-light);
+cursor: pointer;
+line-height: 1.5;
+}
+
+.form-submit-btn {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0.75rem;
+width: 100%;
+padding: 1rem 2rem;
+font-family: var(--font-heading);
+font-size: 1rem;
+font-weight: 600;
+color: white;
+background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
+border: none;
+border-radius: 14px;
+cursor: pointer;
+transition: all 300ms var(--ease-out-expo);
+box-shadow: 0 4px 15px rgba(82, 138, 237, 0.3);
+}
+
+.form-submit-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px rgba(82, 138, 237, 0.4);
+}
+
+.btn-icon {
+width: 18px;
+height: 18px;
+transition: transform 300ms var(--ease-out-expo);
+}
+
+.form-submit-btn:hover .btn-icon {
+transform: translateX(4px);
+}
+
+.form-success {
+display: flex;
+align-items: center;
+gap: 0.75rem;
+padding: 1rem 1.25rem;
+background: linear-gradient(135deg, rgba(82, 138, 237, 0.1), rgba(166, 123, 244, 0.1));
+border: 1px solid var(--color-brand-blue);
+border-radius: 12px;
+margin-top: 1rem;
+}
+
+.success-icon {
+width: 24px;
+height: 24px;
+color: var(--color-brand-blue);
+flex-shrink: 0;
+}
+
+.form-success p {
+font-size: 0.9375rem;
+font-weight: 500;
+color: var(--color-brand-blue);
+margin: 0;
+}
+
+.benefits-section h3 {
+letter-spacing: -0.02em;
+}
+
+.calendar-card {
+background: white;
+border: 1.5px solid var(--color-gray-200);
+border-radius: 1.25rem;
+padding: 1.5rem;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.calendar-header {
+display: flex;
+align-items: flex-start;
+gap: 1rem;
+margin-bottom: 1.25rem;
+}
+
+.calendar-icon {
+width: 3rem;
+height: 3rem;
+display: flex;
+align-items: center;
+justify-content: center;
+background: linear-gradient(135deg, var(--color-brand-blue-50), var(--color-brand-blue-100));
+border: 1px solid var(--color-brand-blue-200);
+border-radius: 0.875rem;
+flex-shrink: 0;
+}
+
+.calendar-icon svg {
+width: 1.5rem;
+height: 1.5rem;
+color: var(--color-brand-blue);
+}
+
+.calendar-widget {
+height: 320px;
+background: var(--color-gray-50);
+border-radius: 12px;
+overflow: hidden;
+}
+
+.calendar-placeholder {
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--color-gray-400);
+font-size: 0.875rem;
+}
+
+@media (max-width: 1024px) {
+.form-row {
+grid-template-columns: 1fr;
+}
+
+.container-narrow {
+max-width: 800px;
+}
+}
+
+@media (max-width: 768px) {
+.section-padding {
+padding: 3rem 0;
+}
+
+.grid.lg\\:grid-cols-2 {
+grid-template-columns: 1fr;
+gap: 3rem;
+}
+
+.benefits-section {
+order: -1;
+}
+
+.calendar-card {
+margin-top: 2rem;
+}
+}
+</style>
+
+<script>
+const form = document.getElementById('consultation-form');
+const success = document.getElementById('form-success');
+
+form?.addEventListener('submit', (e) => {
+e.preventDefault();
+
+const formData = new FormData(form as HTMLFormElement);
+const data = Object.fromEntries(formData.entries());
+
+console.log('Consultation form submitted:', data);
+
+success?.classList.remove('hidden');
+(form as HTMLFormElement).reset();
+
+setTimeout(() => success?.classList.add('hidden'), 6000);
+});
+</script>

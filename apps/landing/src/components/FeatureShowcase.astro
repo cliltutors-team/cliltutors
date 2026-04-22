@@ -1,0 +1,375 @@
+---
+/**
+ * FeatureShowcase Component
+ * Premium feature highlight with split layout
+ * Features: Icon + title + description, premium animations, i18n support
+ */
+
+interface Feature {
+  icon?: string;
+  iconType?: 'emoji' | 'svg' | 'image';
+  title: string;
+  description: string;
+  href?: string;
+  linkText?: string;
+  metrics?: Array<{
+    value: string;
+    label: string;
+  }>;
+  tags?: string[];
+}
+
+interface Props {
+  features: Feature[];
+  layout?: 'grid' | 'alternating' | 'carousel';
+  columns?: 2 | 3 | 4;
+  variant?: 'default' | 'glass' | 'gradient';
+  showMetrics?: boolean;
+  animated?: boolean;
+  analytics?: {
+    sectionId?: string;
+    clickAction?: string;
+  };
+}
+
+const {
+  features,
+  layout = 'grid',
+  columns = 3,
+  variant = 'default',
+  showMetrics = true,
+  animated = true,
+  analytics
+} = Astro.props;
+
+const columnClasses = {
+  2: 'lg:grid-cols-2',
+  3: 'lg:grid-cols-3',
+  4: 'lg:grid-cols-4'
+};
+
+const iconGradients = [
+  'from-brand-blue-500 to-brand-indigo-500',
+  'from-brand-purple-500 to-brand-indigo-500',
+  'from-brand-gold-500 to-brand-orange-500',
+  'from-brand-blue-400 to-brand-purple-400'
+];
+---
+
+<div 
+  class:list={['feature-showcase-wrapper', `layout-${layout}`]}
+  {...analytics?.sectionId && { 'data-section': analytics.sectionId }}
+>
+  <div class:list={['features-grid', columnClasses[columns]]}>
+    {features.map((feature, index) => (
+      <div 
+        class:list={[
+          'feature-card',
+          `variant-${variant}`,
+          animated && 'feature-animated'
+        ]}
+        style={`--index: ${index}; --delay: ${index * 150}ms`}
+        {...analytics?.clickAction && { 'data-action': analytics.clickAction }}
+      >
+        {/* Icon */}
+        {feature.icon && (
+          <div class:list={['feature-icon-wrapper', `gradient-${index % iconGradients.length}`]}>
+            {feature.iconType === 'emoji' && (
+              <span class="icon-emoji">{feature.icon}</span>
+            )}
+            {feature.iconType === 'svg' && (
+              <div class="icon-svg" set:html={feature.icon} />
+            )}
+            {feature.iconType === 'image' && (
+              <img src={feature.icon} alt="" class="icon-image" />
+            )}
+          </div>
+        )}
+
+        {/* Content */}
+        <div class="feature-content">
+          <h3 class="feature-title">{feature.title}</h3>
+          <p class="feature-description">{feature.description}</p>
+
+          {/* Tags */}
+          {feature.tags && feature.tags.length > 0 && (
+            <div class="feature-tags">
+              {feature.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          )}
+
+          {/* Metrics */}
+          {showMetrics && feature.metrics && feature.metrics.length > 0 && (
+            <div class="feature-metrics">
+              {feature.metrics.map((metric) => (
+                <div class="metric">
+                  <span class="metric-value">{metric.value}</span>
+                  <span class="metric-label">{metric.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Link */}
+          {feature.href && feature.linkText && (
+            <a href={feature.href} class="feature-link">
+              <span>{feature.linkText}</span>
+              <svg class="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+.feature-showcase-wrapper {
+  width: 100%;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .features-grid {
+    gap: 2.5rem;
+  }
+}
+
+/* Feature Card */
+.feature-card {
+  position: relative;
+  background: white;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  border: 1px solid var(--color-gray-200);
+  transition: all 400ms var(--ease-out-expo);
+}
+
+.feature-animated {
+  animation: fadeSlideUp 0.8s ease-out backwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  border-color: var(--color-brand-blue-200);
+}
+
+/* Variants */
+.variant-glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.variant-gradient {
+  background: linear-gradient(135deg, var(--color-brand-blue-50), var(--color-brand-purple-50));
+  border: 1px solid var(--color-brand-blue-200);
+}
+
+/* Icon */
+.feature-icon-wrapper {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: all 300ms var(--ease-out-expo);
+}
+
+.gradient-0 {
+  background: linear-gradient(135deg, var(--color-brand-blue-500), var(--color-brand-indigo-500));
+}
+
+.gradient-1 {
+  background: linear-gradient(135deg, var(--color-brand-purple-500), var(--color-brand-indigo-500));
+}
+
+.gradient-2 {
+  background: linear-gradient(135deg, var(--color-brand-gold-500), var(--color-brand-orange-500));
+}
+
+.gradient-3 {
+  background: linear-gradient(135deg, var(--color-brand-blue-400), var(--color-brand-purple-400));
+}
+
+.feature-card:hover .feature-icon-wrapper {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.icon-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.icon-svg {
+  width: 2rem;
+  height: 2rem;
+  color: white;
+}
+
+.icon-image {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+}
+
+/* Content */
+.feature-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.feature-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-brand-navy);
+  line-height: 1.3;
+  margin: 0;
+  transition: color 250ms;
+}
+
+.feature-card:hover .feature-title {
+  color: var(--color-brand-blue);
+}
+
+.feature-description {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-slate-light);
+  margin: 0;
+}
+
+/* Tags */
+.feature-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.tag {
+  padding: 0.25rem 0.75rem;
+  background: var(--color-gray-100);
+  color: var(--color-gray-600);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 100px;
+}
+
+/* Metrics */
+.feature-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 1rem;
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--color-gray-100);
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metric-value {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: var(--color-gray-500);
+}
+
+/* Link */
+.feature-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-brand-blue);
+  text-decoration: none;
+  transition: all 250ms var(--ease-out-expo);
+}
+
+.feature-link:hover {
+  color: var(--color-brand-indigo);
+  gap: 0.75rem;
+}
+
+.link-icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  transition: transform 250ms var(--ease-out-expo);
+}
+
+.feature-link:hover .link-icon {
+  transform: translateX(4px);
+}
+
+/* Alternating Layout */
+.layout-alternating .features-grid {
+  gap: 3rem;
+}
+
+.layout-alternating .feature-card:nth-child(even) {
+  transform: translateY(2rem);
+}
+
+/* Carousel Layout */
+.layout-carousel .features-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.layout-carousel .feature-card {
+  min-width: 300px;
+  scroll-snap-align: start;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .feature-card {
+    padding: 1.5rem;
+  }
+  
+  .feature-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

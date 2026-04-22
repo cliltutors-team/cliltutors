@@ -1,0 +1,60 @@
+---
+interface Props {
+  quote: string;
+  name: string;
+  role: string;
+}
+
+const { quote, name, role } = Astro.props;
+---
+
+<div class="testimonial-card group reveal">
+  <div class="quote-mark">
+    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z"/>
+    </svg>
+  </div>
+  <p class="text-gray-600 leading-relaxed flex-1 text-[15px]">
+    "{quote}"
+  </p>
+  <div class="mt-6 pt-5 border-t border-gray-100 flex items-center gap-3">
+    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-blue to-brand-indigo flex items-center justify-center text-white font-heading font-bold text-sm shrink-0">
+      {name ? name.charAt(0) : '?'}
+    </div>
+    <div>
+      <p class="font-heading font-semibold text-sm text-brand-navy">{name}</p>
+      <p class="text-xs text-gray-400 mt-0.5">{role}</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .testimonial-card {
+    background: white;
+    border: 1px solid var(--color-gray-200);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    transition: all 300ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .testimonial-card:hover {
+    border-color: var(--color-brand-blue-200);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(82, 138, 237, 0.08);
+  }
+
+  .quote-mark {
+    color: var(--color-brand-blue);
+    opacity: 0.2;
+    margin-bottom: 1rem;
+    transition: opacity 300ms;
+  }
+
+  .testimonial-card:hover .quote-mark {
+    opacity: 0.4;
+  }
+</style>

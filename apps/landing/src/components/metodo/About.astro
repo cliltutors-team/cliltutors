@@ -1,0 +1,74 @@
+---
+interface Props {
+    t: (key: string) => string;
+}
+const { t } = Astro.props;
+---
+
+<section id="about" class="py-20 bg-gradient-to-b from-blue-50/50 to-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <!-- Hero Card with Background Image -->
+        <div class="relative rounded-3xl overflow-hidden mb-16 h-[400px]">
+            <img
+                src="/images/web/second_sec.webp"
+                alt="Global learning experience"
+                class="absolute inset-0 w-full h-full object-cover"
+            />
+            <div
+                class="absolute inset-0 bg-gradient-to-r from-[#2d3559]/80 to-[#2d3559]/30"
+            >
+            </div>
+            <div class="relative h-full flex items-center p-12">
+                <h2
+                    class="font-heading text-5xl md:text-6xl font-semibold text-white leading-tight max-w-md"
+                    set:html={t("about.card.title")}
+                />
+            </div>
+        </div>
+
+        <!-- Mission & Vision Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <!-- Left: Description -->
+            <div class="space-y-4">
+                <p
+                    class="text-lg font-medium text-[#2d3559] leading-relaxed"
+                    set:html={t("about.card.desc")
+                        .split(".")
+                        .slice(0, 2)
+                        .join(".") + "."}
+                />
+                <p
+                    class="text-gray-600 text-lg leading-relaxed"
+                    set:html={t("about.card.desc")
+                        .split(".")
+                        .slice(2)
+                        .join(".")}
+                />
+            </div>
+
+            <!-- Right: Mission & Vision -->
+            <div class="space-y-10">
+                <div>
+                    <h3
+                        class="font-heading text-xl font-semibold text-[#2d3559] uppercase tracking-wider mb-3"
+                    >
+                        {t("about.mission.label")}
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        {t("about.mission.text")}
+                    </p>
+                </div>
+                <div>
+                    <h3
+                        class="font-heading text-xl font-semibold text-[#2d3559] uppercase tracking-wider mb-3"
+                    >
+                        {t("about.vision.label")}
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        {t("about.vision.text")}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

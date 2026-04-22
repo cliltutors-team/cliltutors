@@ -1,6 +1,5 @@
 {
-  "name": "cliltutors",
-  "version": "0.1.0",
+  "name": "cliltutors-monorepo",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -22,18 +21,19 @@
     "react-i18next": "^16.2.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@types/webpack": "^5.28.5",
-    "eslint": "^9",
-    "eslint-config-next": "16.0.1",
-    "tailwindcss": "^4",
-    "typescript": "^5",
-    "webpack": "^5.102.1"
+    "prettier": "^3.7.4",
+    "turbo": "^2.8.7",
+    "typescript": "5.9.2"
   },
-  "trustedDependencies": [
-    "unrs-resolver"
-  ]
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "bun@1.3.9",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "jsdom": "^28.1.0"
+  }
 }

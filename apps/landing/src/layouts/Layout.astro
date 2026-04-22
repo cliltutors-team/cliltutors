@@ -1,0 +1,97 @@
+---
+import "../styles/global.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/plus-jakarta-sans/500.css";
+import "@fontsource/plus-jakarta-sans/600.css";
+import "@fontsource/plus-jakarta-sans/700.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+  ogImage?: string;
+}
+
+const { title, description = "Learning systems for global performance. Language development, multicultural communication, and cognitive learning.", lang = "en", ogImage = "/images/og-default.png" } = Astro.props;
+const canonicalUrl = Astro.url.href;
+const languages = ["en", "pt", "es"];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Cliltutors" />
+    <meta property="og:locale" content={lang} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- hreflang -->
+    {languages.map((l) => {
+      const href = canonicalUrl.replace(`/${lang}/`, `/${l}/`);
+      return <link rel="alternate" hreflang={l} href={href} />;
+    })}
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl.replace(`/${lang}/`, `/en/`)} />
+
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <!-- Analytics placeholders -->
+    <!-- Google Analytics -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script> -->
+    <!-- LinkedIn Insight -->
+    <!-- <script>/* LinkedIn Insight Tag */</script> -->
+    <!-- Meta Pixel -->
+    <!-- <script>/* Meta Pixel */</script> -->
+  </head>
+  <body class="font-body antialiased overflow-x-hidden" style="color: var(--color-slate); background: var(--color-white);">
+    <slot />
+
+    <!-- Scroll-reveal system -->
+    <script>
+      const initReveal = () => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+        );
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-scale').forEach((el) => {
+          observer.observe(el);
+        });
+      };
+
+      // Run on load and on Astro page transitions
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReveal);
+      } else {
+        initReveal();
+      }
+      document.addEventListener('astro:page-load', initReveal);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+---
+interface Props {
+    t: (key: string) => string;
+}
+const { t } = Astro.props;
+
+const tags = [
+    { key: "clil.tag1", emoji: "💼" },
+    { key: "clil.tag2", emoji: "💻" },
+    { key: "clil.tag3", emoji: "🌍" },
+    { key: "clil.tag4", emoji: "🎓" },
+];
+
+const langPills = [
+    { key: "clil.lang1", color: "bg-red-400" },
+    { key: "clil.lang2", color: "bg-yellow-400" },
+    { key: "clil.lang3", color: "bg-green-400" },
+];
+---
+
+<section
+    class="py-20 bg-gradient-to-b from-white to-blue-50/30 overflow-hidden"
+>
+    <div class="max-w-7xl mx-auto px-6">
+        <!-- Big Green Title -->
+        <h2
+            class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-[#4ade80] text-center mb-16 leading-tight"
+            set:html={t("clil.title")}
+        />
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Left: Content -->
+            <div class="space-y-8">
+                <h3
+                    class="font-heading text-3xl md:text-4xl font-bold text-[#2d3559] italic"
+                >
+                    {t("clil.subtitle")}
+                </h3>
+
+                <!-- C.L.I.L. Expansion -->
+                <div class="flex flex-wrap items-center gap-4">
+                    <div
+                        class="font-heading text-3xl md:text-4xl font-bold text-[#2d3559] leading-tight"
+                    >
+                        <div>Content</div>
+                        <div>Language</div>
+                        <div>Integrated</div>
+                        <div>Learning</div>
+                    </div>
+
+                    <!-- Language pills -->
+                    <div class="flex flex-col gap-2">
+                        {
+                            langPills.map((lp) => (
+                                <span
+                                    class={`${lp.color} text-white text-sm font-bold px-5 py-1.5 rounded-full`}
+                                >
+                                    {t(lp.key)}
+                                </span>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <!-- Body text -->
+                <p class="text-gray-600 leading-relaxed text-base max-w-lg">
+                    {t("clil.body")}
+                </p>
+            </div>
+
+            <!-- Right: Visual with Tags -->
+            <div class="relative flex justify-center">
+                <!-- Central Person Image -->
+                <div class="relative">
+                    <img
+                        src="/images/web/clil_circle.webp"
+                        alt="CLIL Learning"
+                        class="w-full h-auto max-w-sm rounded-[3rem] object-contain drop-shadow-xl"
+                    />
+
+                    <!-- Floating "Let's talk about!" bubble -->
+                    <div
+                        class="absolute -right-4 top-1/2 -translate-y-1/2 bg-[#4ade80] text-white font-bold text-lg px-6 py-3 rounded-2xl shadow-lg rotate-2"
+                    >
+                        {t("clil.bubble")}
+                    </div>
+
+                    <!-- Floating Tags -->
+                    {
+                        tags.map((tag, i) => {
+                            const positions = [
+                                "absolute -top-4 right-0 translate-x-1/2",
+                                "absolute top-1/4 -left-8 -translate-x-full",
+                                "absolute bottom-1/4 -right-12 translate-x-full",
+                                "absolute -bottom-4 left-0 -translate-x-1/4",
+                            ];
+                            return (
+                                <div
+                                    class={`${positions[i]} bg-white/90 backdrop-blur-sm shadow-md px-4 py-2 rounded-full text-sm font-medium text-gray-700 whitespace-nowrap`}
+                                >
+                                    {tag.emoji} {t(tag.key)}
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

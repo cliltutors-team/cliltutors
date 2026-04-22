@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import Card from '../../components/Card.astro';
+import CTABanner from '../../components/CTABanner.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { languages } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('solutions.meta.title')} description={t('solutions.meta.desc')} lang={lang}>
+  <Navbar />
+  <HeroSection title={t('solutions.hero.title')} subtitle={t('solutions.hero.subtitle')} cta1Text={t('solutions.cta')} cta1Href={`/${lang}/consultation`} />
+
+  <section class="section-padding bg-white">
+    <div class="container-narrow">
+      <div class="grid sm:grid-cols-2 gap-6">
+        <Card icon="🏢" title={t('home.sol1.title')} description={t('home.sol1.desc')} href={`/${lang}/corporate-training`} linkText={t('solutions.learn')} />
+        <Card icon="💼" title={t('home.sol2.title')} description={t('home.sol2.desc')} href={`/${lang}/professional-development`} linkText={t('solutions.learn')} />
+        <Card icon="🎓" title={t('home.sol3.title')} description={t('home.sol3.desc')} href={`/${lang}/academic-support`} linkText={t('solutions.learn')} />
+        <Card icon="📚" title={t('home.sol4.title')} description={t('home.sol4.desc')} href={`/${lang}/k12-global-preparation`} linkText={t('solutions.learn')} />
+      </div>
+    </div>
+  </section>
+
+  <CTABanner title={t('home.finalcta.title')} ctaText={t('solutions.cta')} ctaHref={`/${lang}/consultation`} />
+  <Footer />
+</Layout>

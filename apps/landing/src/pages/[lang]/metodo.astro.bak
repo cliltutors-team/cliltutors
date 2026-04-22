@@ -1,0 +1,954 @@
+---
+import type { GetStaticPaths } from "astro";
+import { readFileSync } from "node:fs";
+import { useTranslations } from "../../i18n/utils";
+import { ui } from "../../i18n/ui";
+
+export const getStaticPaths = (() => {
+    return [
+        { params: { lang: "pt" } },
+        { params: { lang: "en" } },
+        { params: { lang: "es" } },
+    ];
+}) satisfies GetStaticPaths;
+
+const { lang } = Astro.params as { lang: keyof typeof ui };
+const t = useTranslations(lang);
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function stripTags(s: string): string {
+    return s
+        .replace(/<br\s*\/?>/gi, "\n")
+        .replace(/<[^>]+>/g, "")
+        .trim();
+}
+
+// ── Read the Canva embed ─────────────────────────────────────────────────────
+const embedPath = new URL("../metodo.astro", import.meta.url).pathname;
+const embedSource = readFileSync(embedPath, "utf-8");
+
+// ── Extract the <body> content ───────────────────────────────────────────────
+const bodyStart = embedSource.indexOf("<body");
+const bodyEnd = embedSource.indexOf("</body>");
+const bodyHtml =
+    bodyStart >= 0 && bodyEnd >= 0
+        ? embedSource.substring(
+              embedSource.indexOf(">", bodyStart) + 1,
+              bodyEnd,
+          )
+        : "";
+
+// ── Extract slide HTML blocks by splitting on data-page-id ───────────────────
+function extractSlides(html: string): string[] {
+    const slides: string[] = [];
+    const re = /data-page-id="[^"]+"/g;
+    let m;
+    const positions: number[] = [];
+    while ((m = re.exec(html)) !== null) {
+        const divStart = html.lastIndexOf("<div", m.index);
+        positions.push(divStart);
+    }
+    for (let i = 0; i < positions.length; i++) {
+        const from = positions[i];
+        const to = i + 1 < positions.length ? positions[i + 1] : html.length;
+        slides.push(html.substring(from, to));
+    }
+    return slides;
+}
+
+const rawSlides = extractSlides(bodyHtml);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// i18n TEXT REPLACEMENT
+// ══════════════════════════════════════════════════════════════════════════════
+// Strategy: The Canva HTML stores text inside <span class="a_GcMg"> elements.
+// Text is split at the SPAN level, so we replace the exact text content that
+// appears between >…</span>.
+//
+// We build a map of Portuguese span-level text fragments → translated text.
+// Each entry maps the EXACT text as it appears inside a specific span.
+// ══════════════════════════════════════════════════════════════════════════════
+
+// Helper: escape special HTML entities as they appear in source
+function esc(s: string): string {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// Build replacement pairs: [Portuguese span text, translated text]
+// These match the EXACT text content of individual <span class="a_GcMg"> elements
+const spanReplacements: [string, string][] = [
+    // ── SLIDE 1: HERO ──
+    // Title: split across 2 spans in 2 <p> elements
+    [
+        ">Método</span>",
+        `>${stripTags(t("hero.title")).split("\n")[0] || "Método"}</span>`,
+    ],
+    [
+        ">simples, humano<br>e eficaz.</span>",
+        `>${stripTags(t("hero.title")).split("\n").slice(1).join("<br>") || "simples, humano<br>e eficaz."}</span>`,
+    ],
+
+    // Subtitle: split across 4 spans
+    [
+        ">Aprenda o que vai te impulsionar</span>",
+        `>${
+            stripTags(t("hero.subtitle"))
+                .replace(/ método CLIL\./, "")
+                .split("\n")[0] || "Aprenda o que vai te impulsionar"
+        }</span>`,
+    ],
+    [
+        ">com aulas ao vivo, professores</span>",
+        `>${
+            stripTags(t("hero.subtitle"))
+                .replace(/ método CLIL\./, "")
+                .split("\n")[1] || "com aulas ao vivo, professores"
+        }</span>`,
+    ],
+    [
+        ">nativos e o </span>",
+        `>${
+            stripTags(t("hero.subtitle"))
+                .replace(/ método CLIL\./, "")
+                .split("\n")[2] || "nativos e o "
+        }</span>`,
+    ],
+    [
+        ">método CLIL.</span>",
+        `>${lang === "pt" ? "método CLIL." : lang === "en" ? "CLIL method." : "método CLIL."}</span>`,
+    ],
+
+    // CTA button
+    [
+        ">Agende sua</span>",
+        `>${stripTags(t("hero.cta.book")).split("\n")[0]}</span>`,
+    ],
+    [
+        ">aula gratuíta</span>",
+        `>${stripTags(t("hero.cta.book")).split("\n")[1] || stripTags(t("hero.cta.book")).split("\n")[0]}</span>`,
+    ],
+    [
+        ">aula gratuita</span>",
+        `>${stripTags(t("hero.cta.book")).split("\n")[1] || stripTags(t("hero.cta.book")).split("\n")[0]}</span>`,
+    ],
+
+    // Nav links
+    [">Sobre nós</span>", `>${t("nav.about")}</span>`],
+    [">Curso pra você</span>", `>${t("nav.course")}</span>`],
+    [">Curso prara empresas</span>", `>${t("nav.business")}</span>`],
+    [">Curso para empresas</span>", `>${t("nav.business")}</span>`],
+    [">Coaching Profissional</span>", `>${t("nav.coaching")}</span>`],
+
+    // ── SLIDE 2: SERVICES (3 pills) ──
+    // Section title
+    [
+        ">Comece pela sua necessidade</span>",
+        `>${stripTags(t("about.title"))}</span>`,
+    ],
+
+    // Sub-description
+    // Features pill #1: "Idiomas com o Método CLIL"
+    // This appears across multiple spans with whitespace:
+
+    // Features pill #2: "Mentoria em Ciências e Exatas (STEM)"
+    // Features pill #3: "Coaching Profissional" (different from nav)
+
+    // Language pills
+    [">PORTUGUÊS</span>", `>${t("start.portuguese")}</span>`],
+    [">INGLÊS</span>", `>${t("start.english")}</span>`],
+    [">ESPANHOL</span>", `>${t("start.spanish")}</span>`],
+    [">NOVO</span>", `>${t("start.badge")}</span>`],
+
+    // "Comece a aprender" CTA
+    [">Comece a aprender</span>", `>${stripTags(t("start.title"))}</span>`],
+
+    // ── SLIDE 3: ABOUT ──
+    [
+        ">Sobre a</span>",
+        `>${lang === "pt" ? "Sobre a" : lang === "en" ? "About" : "Sobre"}</span>`,
+    ],
+    [">MISSÃO</span>", `>${t("about.mission.label")}</span>`],
+    [">VISÃO</span>", `>${t("about.vision.label")}</span>`],
+
+    // ── SLIDE 4: CLIL METHOD ──
+    [">Isso é método CLIL!</span>", `>${stripTags(t("clil.subtitle"))}</span>`],
+    [">espanhol</span>", `>${t("clil.lang1")}</span>`],
+    [">inglês</span>", `>${t("clil.lang2")}</span>`],
+    [">português</span>", `>${t("clil.lang3")}</span>`],
+    [">Lets talk abaut!</span>", `>${stripTags(t("clil.bubble"))}</span>`],
+    [">Lets talk about!</span>", `>${stripTags(t("clil.bubble"))}</span>`],
+
+    // Tags
+    [">Negócios e Carreira</span>", `>${stripTags(t("clil.tag1"))}</span>`],
+    [">Tecnologia e Inovação</span>", `>${stripTags(t("clil.tag2"))}</span>`],
+    [">Viagens e Cultura</span>", `>${stripTags(t("clil.tag3"))}</span>`],
+    [">Exames e Certificações</span>", `>${stripTags(t("clil.tag4"))}</span>`],
+
+    // ── SLIDE 5: TUTORS ──
+    [">OS PROFESSORES DA CLILTUTORS</span>", `>${t("tutors.label")}</span>`],
+    [
+        ">Conheça nossos tutors!</span>",
+        `>${stripTags(t("tutors.title"))}</span>`,
+    ],
+    [">Estude comigo →</span>", `>${t("tutors.btn")}</span>`],
+    [">Estude comigo</span>", `>${t("tutors.btn").replace(" →", "")}</span>`],
+
+    // ── SLIDE 6: CORPORATE ──
+    [
+        ">CONHEÇA NOSSA SOLUÇÃO DE INGLÊS CORPORATIVO</span>",
+        `>${t("corp.label")}</span>`,
+    ],
+
+    // ── SLIDE 7: TESTIMONIALS ──
+    [
+        ">+400 MIL ALUNOS FLUENTES!</span>",
+        `>${stripTags(t("test.label"))}</span>`,
+    ],
+    [">Depoimentos de alunos</span>", `>${stripTags(t("test.title"))}</span>`],
+
+    // ── SLIDE 8: PRICING ──
+    [">Plano Básico</span>", `>${t("pricing.p1.name")}</span>`],
+    [">Plano Semi-Intensivo</span>", `>${t("pricing.p2.name")}</span>`],
+    [">Plano Intensivo</span>", `>${t("pricing.p3.name")}</span>`],
+    [">4 aulas/mês</span>", `>${t("pricing.p1.freq")}</span>`],
+    [">8 aulas/mês</span>", `>${t("pricing.p2.freq")}</span>`],
+    [">16 aulas/mês</span>", `>${t("pricing.p3.freq")}</span>`],
+    [
+        ">R$ 220,00</span>",
+        `>${t("pricing.p1.price_month").replace(" mensal", "").replace(" monthly", "").replace(" mensual", "")}</span>`,
+    ],
+    [
+        ">R$ 440,00</span>",
+        `>${t("pricing.p2.price_month").replace(" mensal", "").replace(" monthly", "").replace(" mensual", "")}</span>`,
+    ],
+    [
+        ">R$ 720,00</span>",
+        `>${t("pricing.p3.price_month").replace(" mensal", "").replace(" monthly", "").replace(" mensual", "")}</span>`,
+    ],
+    [
+        ">mensal</span>",
+        `>${lang === "pt" ? "mensal" : lang === "en" ? "monthly" : "mensual"}</span>`,
+    ],
+    [
+        ">semestral</span>",
+        `>${lang === "pt" ? "semestral" : lang === "en" ? "semiannually" : "semestral"}</span>`,
+    ],
+    [
+        ">R$ 1320,00</span>",
+        `>${t("pricing.p1.price_sem").replace(" semestral", "").replace(" semiannually", "")}</span>`,
+    ],
+    [
+        ">R$ 2640,00</span>",
+        `>${t("pricing.p2.price_sem").replace(" semestral", "").replace(" semiannually", "")}</span>`,
+    ],
+    [
+        ">R$ 4300,00</span>",
+        `>${t("pricing.p3.price_sem").replace(" semestral", "").replace(" semiannually", "")}</span>`,
+    ],
+
+    // ── SLIDE 9: FOOTER CTA ──
+    [">Começar Agora</span>", `>${stripTags(t("footer.cta"))}</span>`],
+];
+
+// For longer text fragments that span multiple words with whitespace variations,
+// we use regex patterns that allow flexible whitespace matching
+const regexReplacements: [RegExp, string][] = [
+    // ── NAV LINKS (text split across lines with heavy whitespace) ──
+    [/>\s*Sobre\s+nós\s*<\/span>/g, `>${t("nav.about")}</span>`],
+    [/>\s*Curso\s+pra\s+você\s*<\/span>/g, `>${t("nav.course")}</span>`],
+    [
+        />\s*Curso\s+prara\s+empresas\s*<\/span>/g,
+        `>${t("nav.business")}</span>`,
+    ],
+    [/>\s*Curso\s+para\s+empresas\s*<\/span>/g, `>${t("nav.business")}</span>`],
+
+    // Hero subtitle spans with flexible whitespace
+    [
+        />\s*Aprenda\s+o\s+que\s+vai\s+te\s+impulsionar\s*<\/span>/g,
+        `>${lang === "en" ? "Learn what will propel you forward" : lang === "es" ? "Aprende lo que te impulsará" : "Aprenda o que vai te impulsionar"}</span>`,
+    ],
+    [
+        />\s*com\s+aulas\s+ao\s+vivo,\s+professores\s*<\/span>/g,
+        `>${lang === "en" ? "with live classes, native teachers," : lang === "es" ? "con clases en vivo, profesores" : "com aulas ao vivo, professores"}</span>`,
+    ],
+    [
+        />\s*nativos\s+e\s+o\s+<\/span>/g,
+        `>${lang === "en" ? "and the " : lang === "es" ? "nativos y el " : "nativos e o "}</span>`,
+    ],
+    [
+        />\s*método\s+CLIL\.\s*<\/span>/g,
+        `>${lang === "en" ? "CLIL method." : "método CLIL."}</span>`,
+    ],
+
+    // Método title
+    [
+        />\s*Método\s*<\/span>/g,
+        `>${lang === "en" ? "Simple, human" : lang === "es" ? "Método" : "Método"}</span>`,
+    ],
+    [
+        />\s*simples,\s+humano\s*<br>\s*e\s+eficaz\.\s*<\/span>/g,
+        `>${lang === "en" ? "and effective<br>method." : lang === "es" ? "simple, humano<br>y eficaz." : "simples, humano<br>e eficaz."}</span>`,
+    ],
+
+    // Agende sua / aula gratuíta
+    [
+        />\s*Agende\s+sua\s*<\/span>/g,
+        `>${lang === "en" ? "Book your" : lang === "es" ? "Reserva tu" : "Agende sua"}</span>`,
+    ],
+    [
+        />\s*aula\s+gratu[íi]ta\s*<\/span>/g,
+        `>${lang === "en" ? "free trial" : lang === "es" ? "clase gratuita" : "aula gratuita"}</span>`,
+    ],
+
+    // Features — Idiomas com o / Método CLIL (spans in pill titles)
+    [
+        />\s*Idiomas\s*\n?\s*com\s+o\s*<br>\s*Método\s+CLIL\s*<\/span>/g,
+        `>${stripTags(t("features.f1.title"))}</span>`,
+    ],
+    [
+        />\s*Idiomas\s*\n?\s*com\s+o\s*<\/span>/g,
+        `>${lang === "en" ? "Languages with the" : lang === "es" ? "Idiomas con el" : "Idiomas com o"}</span>`,
+    ],
+
+    // Mentoria em Ciências e Exatas (STEM) — spans with line breaks
+    [
+        />\s*Mentoria\s*\n?\s*em\s*<br>\s*Ciências\s+e\s+Exatas\s*<br>\s*\(STEM\)\s*<\/span>/g,
+        `>${stripTags(t("features.f2.title"))}</span>`,
+    ],
+    [
+        />\s*Mentoria\s*\n?\s*em\s*<\/span>/g,
+        `>${lang === "en" ? "STEM" : lang === "es" ? "Mentoría en" : "Mentoria em"}</span>`,
+    ],
+
+    // Coaching Profissional (pill title, not nav)
+    [
+        />\s*Coaching\s*<br>\s*Profissional\s*<\/span>/g,
+        `>${stripTags(t("features.f3.title"))}</span>`,
+    ],
+    [
+        />\s*Coaching\s*\n?\s*Profissional\s*<\/span>/g,
+        `>${stripTags(t("features.f3.title"))}</span>`,
+    ],
+
+    // Feature descriptions — these are multi-span with bold fragments
+    // f1 desc: "Aprenda inglês, espanhol ou...português...enquanto explora temas reais..."
+    [
+        />\s*Aprenda\s*\n?\s*<\/span>/g,
+        `>${lang === "en" ? "Learn " : lang === "es" ? "Aprende " : "Aprenda "}</span>`,
+    ],
+    [
+        />\s*inglês,\s*espanhol\s+ou\s*<\/span>/g,
+        `>${lang === "en" ? "English, Spanish or" : lang === "es" ? "inglés, español o" : "inglês, espanhol ou"}</span>`,
+    ],
+    [
+        />\s*português\s*<\/span>(<span[^>]*>)\s*\n?\s*enquanto/g,
+        `>${t("clil.lang3")}</span>$1 ${lang === "en" ? "while exploring real-world" : lang === "es" ? "mientras exploras temas" : "enquanto explora temas"}`,
+    ],
+    [
+        />\s*enquanto\s+explora\s+temas\s*<br>\s*reais\s*—\s*\n?\s*tecnologia,\s+viagens,\s*<br>\s*negócios\s+ou\s*\n?\s*cultura\.\s*<\/span>/g,
+        `>${lang === "en" ? "while exploring real-world topics — technology, travel, business, or culture." : lang === "es" ? "mientras exploras temas reales: tecnología, viajes, negocios o cultura." : "enquanto explora temas reais — tecnologia, viagens, negócios ou cultura."}</span>`,
+    ],
+
+    // f2 desc: "Professores especializados em Matemática, Física, Química e Biologia..."
+    [
+        />\s*Professores\s*\n?\s*especializados\s+em\s*<br>\s*<\/span>/g,
+        `>${lang === "en" ? "Specialized teachers in " : lang === "es" ? "Profesores especializados en " : "Professores especializados em "}</span>`,
+    ],
+    [
+        />\s*Matemática,\s*\n?\s*Física,\s+Química\s+e\s*<\/span>/g,
+        `>${lang === "en" ? "Math, Physics, Chemistry and" : lang === "es" ? "Matemáticas, Física, Química y" : "Matemática, Física, Química e"}</span>`,
+    ],
+    [
+        />\s*Biologia\s*\n?\s*<\/span>/g,
+        `>${lang === "en" ? "Biology" : lang === "es" ? "Biología" : "Biologia"}</span>`,
+    ],
+    [
+        />\s*que\s*\n?\s*tornam\s+o\s*<br>\s*aprendizado\s+mais\s+leve\s+e\s*<br>\s*eficiente\.\s*<\/span>/g,
+        `>${lang === "en" ? "who make learning lighter and more efficient." : lang === "es" ? "que hacen el aprendizaje más ligero y eficiente." : "que tornam o aprendizado mais leve e eficiente."}</span>`,
+    ],
+
+    // f3 desc: "Encontros que ajudam você a construir um plano claro e motivador para o futuro."
+    [
+        />\s*Encontros\s+que\s+ajudam\s+você\s+a\s*<br>\s*<\/span>/g,
+        `>${lang === "en" ? "Sessions that help you " : lang === "es" ? "Encuentros que te ayudan a " : "Encontros que ajudam você a "}</span>`,
+    ],
+    [
+        />\s*construir\s+um\s+plano\s+claro\s+e\s*<\/span>/g,
+        `>${lang === "en" ? "build a clear and motivating plan" : lang === "es" ? "construir un plan claro y motivador" : "construir um plano claro e"}</span>`,
+    ],
+    [
+        />\s*motivador\s+para\s+o\s+futuro\.\s*<\/span>/g,
+        `>${lang === "en" ? "for your future." : lang === "es" ? "para el futuro." : "motivador para o futuro."}</span>`,
+    ],
+
+    // About card subtitle
+    [
+        />\s*Comece\s+pela\s+sua\s+necessidade\s*<\/span>/g,
+        `>${stripTags(t("about.title"))}</span>`,
+    ],
+    // About description (multi-line)
+    [
+        />\s*Cada\s+pessoa\s+aprende\s+de\s+um\s+jeito/g,
+        `>${lang === "en" ? "Everyone learns differently" : lang === "es" ? "Cada persona aprende distinto" : "Cada pessoa aprende de um jeito"}`,
+    ],
+
+    // About card title: "Uma experiência global de aprendizado."
+    [
+        />\s*Uma\s*<br>\s*experiência\s*<br>\s*global\s+de\s*<br>\s*aprendizado\.\s*<\/span>/g,
+        `>${stripTags(t("about.card.title")).replace(/\n/g, "<br>")}</span>`,
+    ],
+
+    // CLIL method section
+    [
+        />\s*Aprenda\s+falando\s*<br>\s*sobre\s+o\s+conteúdo\s*<br>\s*que\s+você\s+ama\.\s*<\/span>/g,
+        `>${stripTags(t("clil.title")).replace(/\n/g, "<br>")}</span>`,
+    ],
+    [
+        />\s*Aprenda\s+falando\s*\n?\s*<\/span>/g,
+        `>${lang === "en" ? "Learn talking" : lang === "es" ? "Aprende hablando" : "Aprenda falando"}</span>`,
+    ],
+    [
+        />\s*sobre\s+o\s+conteúdo\s*<br>\s*que\s+você\s+ama\.\s*<\/span>/g,
+        `>${lang === "en" ? "about the content<br>you love." : lang === "es" ? "sobre el contenido<br>que amas." : "sobre o conteúdo<br>que você ama."}</span>`,
+    ],
+    [
+        />\s*Isso\s+é\s+método\s+CLIL!\s*<\/span>/g,
+        `>${stripTags(t("clil.subtitle"))}</span>`,
+    ],
+
+    // Corporate section
+    [
+        />\s*CONHEÇA\s+NOSSA\s+SOLUÇÃO\s+DE\s+INGLÊS\s+CORPORATIVO\s*<\/span>/g,
+        `>${t("corp.label")}</span>`,
+    ],
+    [
+        />\s*Idiomas\s+estratégicos\s*<br>\s*para\s+equipes\s+de\s*<br>\s*alta\s+performance\s*<\/span>/g,
+        `>${stripTags(t("corp.title")).replace(/\n/g, "<br>")}</span>`,
+    ],
+    [
+        />\s*Idiomas\s+estratégicos\s*\n?\s*<\/span>/g,
+        `>${lang === "en" ? "Strategic languages" : lang === "es" ? "Idiomas estratégicos" : "Idiomas estratégicos"}</span>`,
+    ],
+    [
+        />\s*para\s+equipes\s+de\s*<\/span>/g,
+        `>${lang === "en" ? "for high performance" : lang === "es" ? "para equipos de" : "para equipes de"}</span>`,
+    ],
+    [
+        />\s*alta\s+performance\s*<\/span>/g,
+        `>${lang === "en" ? "teams" : lang === "es" ? "alto rendimiento" : "alta performance"}</span>`,
+    ],
+
+    // Testimonials
+    [
+        />\s*\+400\s+MIL\s+ALUNOS\s+FLUENTES!\s*<\/span>/g,
+        `>${stripTags(t("test.label"))}</span>`,
+    ],
+    [
+        />\s*Depoimentos\s+de\s+alunos\s*<\/span>/g,
+        `>${stripTags(t("test.title"))}</span>`,
+    ],
+
+    // Pricing section title
+    [
+        />\s*Comece\s+hoje\.\s*<br>\s*Conheça\s+nossos\s+planos\.\s*<\/span>/g,
+        `>${stripTags(t("pricing.title")).replace(/\n/g, "<br>")}</span>`,
+    ],
+    [
+        />\s*Comece\s+hoje\.\s*<\/span>/g,
+        `>${stripTags(t("pricing.title")).split(".")[0]}.</span>`,
+    ],
+
+    // Footer CTA
+    [
+        />\s*Pronto\s+para\s+dar\s*<br>\s*o\s+próximo\s+passo\?\s*<\/span>/g,
+        `>${stripTags(t("footer.title")).replace(/\n/g, "<br>")}</span>`,
+    ],
+    [
+        />\s*Pronto\s+para\s+dar\s*\n?\s*<\/span>/g,
+        `>${lang === "en" ? "Ready to take" : lang === "es" ? "¿Listo para dar" : "Pronto para dar"}</span>`,
+    ],
+    [
+        />\s*o\s+próximo\s+passo\?\s*<\/span>/g,
+        `>${lang === "en" ? "the next step?" : lang === "es" ? "el próximo paso?" : "o próximo passo?"}</span>`,
+    ],
+    [
+        />\s*Começar\s+Agora\s*<\/span>/g,
+        `>${stripTags(t("footer.cta"))}</span>`,
+    ],
+
+    // Tutor section
+    [
+        />\s*OS\s+PROFESSORES\s+DA\s+CLILTUTORS\s*<\/span>/g,
+        `>${t("tutors.label")}</span>`,
+    ],
+    [
+        />\s*Conheça\s+nossos\s+tutors!\s*<\/span>/g,
+        `>${stripTags(t("tutors.title"))}</span>`,
+    ],
+    [/>\s*Estude\s+comigo\s*→\s*<\/span>/g, `>${t("tutors.btn")}</span>`],
+    [
+        />\s*Estude\s+comigo\s*<\/span>/g,
+        `>${t("tutors.btn").replace(" →", "")}</span>`,
+    ],
+
+    // Pricing details
+    [/>\s*Plano\s+Básico\s*<\/span>/g, `>${t("pricing.p1.name")}</span>`],
+    [
+        />\s*Plano\s+Semi-Intensivo\s*<\/span>/g,
+        `>${t("pricing.p2.name")}</span>`,
+    ],
+    [/>\s*Plano\s+Intensivo\s*<\/span>/g, `>${t("pricing.p3.name")}</span>`],
+    [/>\s*4\s+aulas\/mês\s*<\/span>/g, `>${t("pricing.p1.freq")}</span>`],
+    [/>\s*8\s+aulas\/mês\s*<\/span>/g, `>${t("pricing.p2.freq")}</span>`],
+    [/>\s*16\s+aulas\/mês\s*<\/span>/g, `>${t("pricing.p3.freq")}</span>`],
+
+    // ── ABOUT SECTION: Mission text (split across 4 spans) ──
+    [
+        />\s*Transformar\s+o\s+aprendizado\s+em\s+uma\s*<\/span>/g,
+        `>${lang === "en" ? "To turn learning into a" : lang === "es" ? "Transformar el aprendizaje en una" : "Transformar o aprendizado em uma"}</span>`,
+    ],
+    [
+        />\s*experiência\s+humana\s+e\s+global,\s+onde\s+o\s*<\/span>/g,
+        `>${lang === "en" ? "human and global experience, where" : lang === "es" ? "experiencia humana y global, donde el" : "experiência humana e global, onde o"}</span>`,
+    ],
+    [
+        />\s*idioma\s+é\s+a\s+ferramenta\s+para\s+viver\s+novas\s*<\/span>/g,
+        `>${lang === "en" ? "language is the tool to live new" : lang === "es" ? "idioma es la herramienta para vivir nuevas" : "idioma é a ferramenta para viver novas"}</span>`,
+    ],
+    [
+        />\s*histórias,\s+não\s+apenas\s+estudá-las\.\s*<\/span>/g,
+        `>${lang === "en" ? "stories, not just study them." : lang === "es" ? "historias, no solo estudiarlas." : "histórias, não apenas estudá-las."}</span>`,
+    ],
+
+    // About vision text (split across spans)
+    [
+        />\s*Ser\s+uma\s+ponte\s+entre\s+pessoas\s+e\s*<\/span>/g,
+        `>${lang === "en" ? "To be a bridge between people and" : lang === "es" ? "Ser un puente entre personas y" : "Ser uma ponte entre pessoas e"}</span>`,
+    ],
+    [
+        />\s*culturas,\s+tornando\s+o\s+aprendizado\s*<\/span>/g,
+        `>${lang === "en" ? "cultures, making learning alive," : lang === "es" ? "culturas, haciendo el aprendizaje" : "culturas, tornando o aprendizado"}</span>`,
+    ],
+    [
+        />\s*algo\s+vivo,\s+acessível\s+e\s+cheio\s+de\s*<\/span>/g,
+        `>${lang === "en" ? "accessible, and full of" : lang === "es" ? "algo vivo, accesible y lleno de" : "algo vivo, acessível e cheio de"}</span>`,
+    ],
+    [
+        />\s*significado\.\s*<\/span>/g,
+        `>${lang === "en" ? "meaning." : lang === "es" ? "significado." : "significado."}</span>`,
+    ],
+
+    // About card title "Uma experiência global de aprendizado."
+    [
+        />\s*Uma\s*<\/span>/g,
+        `>${lang === "en" ? "A" : lang === "es" ? "Una" : "Uma"}</span>`,
+    ],
+    [
+        />\s*experiência\s*<\/span>/g,
+        `>${lang === "en" ? "global" : lang === "es" ? "experiencia" : "experiência"}</span>`,
+    ],
+    [
+        />\s*global\s+de\s*<\/span>/g,
+        `>${lang === "en" ? "learning" : lang === "es" ? "global de" : "global de"}</span>`,
+    ],
+    [
+        />\s*aprendizado\.\s*<\/span>/g,
+        `>${lang === "en" ? "experience." : lang === "es" ? "aprendizaje." : "aprendizado."}</span>`,
+    ],
+
+    // About card desc — "Desde 2020" body text
+    [
+        />\s*Desde\s+2020,\s+a\s+Cliltutors\s+conecta\s*<\/span>/g,
+        `>${lang === "en" ? "Since 2020, Cliltutors has connected" : lang === "es" ? "Desde 2020, Cliltutors conecta" : "Desde 2020, a Cliltutors conecta"}</span>`,
+    ],
+    [
+        />\s*alunos\s+e\s+professores\s+do\s+mundo\s*<\/span>/g,
+        `>${lang === "en" ? "students and teachers worldwide." : lang === "es" ? "alumnos y profesores del mundo" : "alunos e professores do mundo"}</span>`,
+    ],
+    [
+        />\s*todo\.\s*<\/span>/g,
+        `>${lang === "en" ? "" : lang === "es" ? "entero." : "todo."}</span>`,
+    ],
+    [
+        />\s*Nosso\s+propósito\s+é\s+transformar\s+o\s*<\/span>/g,
+        `>${lang === "en" ? "Our purpose is to turn learning into" : lang === "es" ? "Nuestro propósito es transformar el" : "Nosso propósito é transformar o"}</span>`,
+    ],
+    [
+        />\s*aprendizado\s+em\s+algo\s+vivo\s+e\s*<\/span>/g,
+        `>${lang === "en" ? "something alive and contextual —" : lang === "es" ? "aprendizaje en algo vivo y" : "aprendizado em algo vivo e"}</span>`,
+    ],
+    [
+        />\s*contextual\s+—\s+uma\s+jornada\s+leve,\s*<\/span>/g,
+        `>${lang === "en" ? "a light journey, with real results" : lang === "es" ? "contextual — una jornada ligera," : "contextual — uma jornada leve,"}</span>`,
+    ],
+    [
+        />\s*com\s+resultados\s+reais\s+desde\s+as\s*<\/span>/g,
+        `>${lang === "en" ? "from the very first classes." : lang === "es" ? "con resultados reales desde las" : "com resultados reais desde as"}</span>`,
+    ],
+    [
+        />\s*primeiras\s+aulas\.\s*<\/span>/g,
+        `>${lang === "en" ? "" : lang === "es" ? "primeras clases." : "primeiras aulas."}</span>`,
+    ],
+
+    // About desc "Cada pessoa aprende de um jeito..."
+    [
+        />\s*Cada\s+pessoa\s+aprende\s+de\s+um\s+jeito\.\s*<\/span>/g,
+        `>${lang === "en" ? "Everyone learns differently." : lang === "es" ? "Cada persona aprende distinto." : "Cada pessoa aprende de um jeito."}</span>`,
+    ],
+    [
+        />\s*Por\s+isso,\s+oferecemos\s+aulas\s+e\s*<\/span>/g,
+        `>${lang === "en" ? "That's why we offer custom-made" : lang === "es" ? "Por eso, ofrecemos clases y" : "Por isso, oferecemos aulas e"}</span>`,
+    ],
+    [
+        />\s*mentorias\s+feitas\s+sob\s+medida\s*<\/span>/g,
+        `>${lang === "en" ? "classes and mentorships for what" : lang === "es" ? "mentorías hechas a medida" : "mentorias feitas sob medida"}</span>`,
+    ],
+    [
+        />\s*para\s+o\s+que\s+você\s+precisa\s+agora\s*<\/span>/g,
+        `>${lang === "en" ? "you need right now — whether mastering" : lang === "es" ? "para lo que necesitas ahora — sea" : "para o que você precisa agora"}</span>`,
+    ],
+    [
+        />\s*—\s+seja\s+dominar\s+um\s+idioma,\s*<\/span>/g,
+        `>${lang === "en" ? "a language, reinforcing STEM" : lang === "es" ? "dominar un idioma, reforzar" : "— seja dominar um idioma,"}</span>`,
+    ],
+    [
+        />\s*reforçar\s+matérias\s+de\s+exatas\s+ou\s*<\/span>/g,
+        `>${lang === "en" ? "subjects, or developing new" : lang === "es" ? "materias de exactas o desarrollar" : "reforçar matérias de exatas ou"}</span>`,
+    ],
+    [
+        />\s*desenvolver\s+novas\s+habilidades\s*<\/span>/g,
+        `>${lang === "en" ? "professional skills." : lang === "es" ? "nuevas habilidades profesionales." : "desenvolver novas habilidades"}</span>`,
+    ],
+    [
+        />\s*profissionais\.\s*<\/span>/g,
+        `>${lang === "en" ? "" : lang === "es" ? "" : "profissionais."}</span>`,
+    ],
+
+    // ── TUTORS intro text ──
+    [
+        />\s*Nossos\s+tutores\s+são\s+nativos\s+e\s*<\/span>/g,
+        `>${lang === "en" ? "Our tutors are native and" : lang === "es" ? "Nuestros tutores son nativos y" : "Nossos tutores são nativos e"}</span>`,
+    ],
+    [
+        />\s*tutores\s+são\s+nativos\s+e\s+bilíngues,\s+certificados\s+em\s*<\/span>/g,
+        `>${lang === "en" ? "tutors are native and bilingual, certified in" : lang === "es" ? "tutores son nativos y bilingües, certificados en" : "tutores são nativos e bilíngues, certificados em"}</span>`,
+    ],
+    [
+        />\s*bilíngues,\s+certificados\s+em\s*<\/span>/g,
+        `>${lang === "en" ? "bilingual, certified in" : lang === "es" ? "bilingües, certificados en" : "bilíngues, certificados em"}</span>`,
+    ],
+    [
+        />\s*CLIL,\s+TEFL\s+e\s+TESOL\.\s*<\/span>/g,
+        `>${lang === "en" ? "CLIL, TEFL and TESOL." : lang === "es" ? "CLIL, TEFL y TESOL." : "CLIL, TEFL e TESOL."}</span>`,
+    ],
+    [
+        />\s*Eles\s+trazem\s+sotaques,\s+histórias\s*<\/span>/g,
+        `>${lang === "en" ? "They bring different accents, stories" : lang === "es" ? "Traen acentos, historias y culturas" : "Eles trazem sotaques, histórias"}</span>`,
+    ],
+    [
+        />\s*e\s+culturas\s+diferentes\s+—\s+para\s+que\s*<\/span>/g,
+        `>${lang === "en" ? "and cultures — so that each class" : lang === "es" ? "diferentes — para que cada clase" : "e culturas diferentes — para que"}</span>`,
+    ],
+    [
+        />\s*cada\s+aula\s+seja\s+uma\s+verdadeira\s*<\/span>/g,
+        `>${lang === "en" ? "is a true global immersion." : lang === "es" ? "sea una verdadera inmersión global." : "cada aula seja uma verdadeira"}</span>`,
+    ],
+    [
+        />\s*imersão\s+global\.\s*<\/span>/g,
+        `>${lang === "en" ? "" : lang === "es" ? "" : "imersão global."}</span>`,
+    ],
+
+    // ── CORPORATE section ──
+    [
+        />\s*Conheça\s+nossos\s+planos\s*<\/span>/g,
+        `>${lang === "en" ? "See our plans" : lang === "es" ? "Conoce nuestros planes" : "Conheça nossos planos"}</span>`,
+    ],
+
+    // ── PRICING section title and label ──
+    [
+        />\s*Comece\s+hoje\.\s+Conheça\s+nossos\s+planos\.\s*<\/span>/g,
+        `>${stripTags(t("pricing.title"))}</span>`,
+    ],
+    [
+        />\s*Planos\s+ALUNOS\s+INDIVIDUAIS\s*<\/span>/g,
+        `>${lang === "en" ? "INDIVIDUAL STUDENT PLANS" : lang === "es" ? "PLANES ALUMNOS INDIVIDUALES" : "Planos ALUNOS INDIVIDUAIS"}</span>`,
+    ],
+
+    // Pricing subtitle
+    [
+        />\s*Oferecemos\s+planos\s+acessíveis\s+e\s*<\/span>/g,
+        `>${lang === "en" ? "We offer affordable and" : lang === "es" ? "Ofrecemos planes accesibles y" : "Oferecemos planos acessíveis e"}</span>`,
+    ],
+    [
+        />\s*personalizados\s+para\s+quem\s+busca\s*<\/span>/g,
+        `>${lang === "en" ? "personalized plans for those looking" : lang === "es" ? "personalizados para quienes buscan" : "personalizados para quem busca"}</span>`,
+    ],
+    [
+        />\s*desenvolver\s+fluência\s+prática\s+com\s*<\/span>/g,
+        `>${lang === "en" ? "to develop practical fluency with" : lang === "es" ? "desarrollar fluidez práctica con" : "desenvolver fluência prática com"}</span>`,
+    ],
+    [
+        />\s*aulas\s+ao\s+vivo\s+e\s+acompanhamento\s*<\/span>/g,
+        `>${lang === "en" ? "live classes and continuous" : lang === "es" ? "clases en vivo y seguimiento" : "aulas ao vivo e acompanhamento"}</span>`,
+    ],
+    [
+        />\s*contínuo\.\s*<\/span>/g,
+        `>${lang === "en" ? "monitoring." : lang === "es" ? "continuo." : "contínuo."}</span>`,
+    ],
+
+    // Plan descriptions
+    [
+        />\s*Ideal\s+para\s+manter\s+o\s+idioma\s*<\/span>/g,
+        `>${lang === "en" ? "Ideal for keeping the language" : lang === "es" ? "Ideal para mantener el idioma" : "Ideal para manter o idioma"}</span>`,
+    ],
+    [
+        />\s*ativo\s+com\s+regularidade\s*<\/span>/g,
+        `>${lang === "en" ? "active regularly" : lang === "es" ? "activo con regularidad" : "ativo com regularidade"}</span>`,
+    ],
+    [
+        />\s*Evolução\s+consistente\s+com\s+foco\s*<\/span>/g,
+        `>${lang === "en" ? "Consistent evolution focusing" : lang === "es" ? "Evolución consistente con foco" : "Evolução consistente com foco"}</span>`,
+    ],
+    [
+        />\s*em\s+conversação\s*<\/span>/g,
+        `>${lang === "en" ? "on conversation" : lang === "es" ? "en conversación" : "em conversação"}</span>`,
+    ],
+    [
+        />\s*Fluência\s+acelerada\s+para\s+metas\s*<\/span>/g,
+        `>${lang === "en" ? "Accelerated fluency for" : lang === "es" ? "Fluidez acelerada para metas" : "Fluência acelerada para metas"}</span>`,
+    ],
+    [
+        />\s*profissionais\s+ou\s+exames\s*<\/span>/g,
+        `>${lang === "en" ? "professional goals or exams" : lang === "es" ? "profesionales o exámenes" : "profissionais ou exames"}</span>`,
+    ],
+
+    // ── BENEFITS ──
+    [
+        />\s*Turmas\s+com\s+até\s+4\s+alunos\s*<\/span>/g,
+        `>${lang === "en" ? "Classes with up to 4 students" : lang === "es" ? "Clases con hasta 4 alumnos" : "Turmas com até 4 alunos"}</span>`,
+    ],
+    [
+        />\s*ou\s+opção\s+VIP\s+individual\s*<\/span>/g,
+        `>${lang === "en" ? "or individual VIP option" : lang === "es" ? "u opción VIP individual" : "ou opção VIP individual"}</span>`,
+    ],
+    [
+        />\s*Plataforma\s+Google\s+Workspace\s+for\s+Education\s*<\/span>/g,
+        `>${t("benefits.b2").split("|")[0].trim()}</span>`,
+    ],
+    [
+        />\s*Organização\s+via\s+Google\s+Classroom\s*<\/span>/g,
+        `>${t("benefits.b2").split("|")[1]?.trim() || "Google Classroom"}</span>`,
+    ],
+    [
+        />\s*5%\s+de\s+desconto\s+via\s+Pix\s*<\/span>/g,
+        `>${lang === "en" ? "5% discount via Pix" : lang === "es" ? "5% de descuento vía Pix" : "5% de desconto via Pix"}</span>`,
+    ],
+    [
+        />\s*ou\s+transferência\s*<\/span>/g,
+        `>${lang === "en" ? "or bank transfer" : lang === "es" ? "o transferencia" : "ou transferência"}</span>`,
+    ],
+
+    // ── FOOTER desc ──
+    [
+        />\s*Agende\s+uma\s+aula\s+experimental\s*<\/span>/g,
+        `>${lang === "en" ? "Schedule a free trial class and" : lang === "es" ? "Agenda una clase experimental" : "Agende uma aula experimental"}</span>`,
+    ],
+    [
+        />\s*gratuita\s+e\s+conheça\s+nosso\s+método,\s*<\/span>/g,
+        `>${lang === "en" ? "get to know our simple and" : lang === "es" ? "gratuita y conoce nuestro método," : "gratuita e conheça nosso método,"}</span>`,
+    ],
+    [
+        />\s*simples\s+e\s+eficaz\.\s*<\/span>/g,
+        `>${lang === "en" ? "effective method." : lang === "es" ? "simple y eficaz." : "simples e eficaz."}</span>`,
+    ],
+
+    // ── CLIL body text ──
+    [
+        />\s*O\s+método\s+CLIL\s+\(Content\s+and\s*<\/span>/g,
+        `>${lang === "en" ? "The CLIL (Content and" : lang === "es" ? "El método CLIL (Content and" : "O método CLIL (Content and"}</span>`,
+    ],
+    [
+        />\s*Language\s+Integrated\s+Learning\)\s*<\/span>/g,
+        `>${lang === "en" ? "Language Integrated Learning)" : lang === "es" ? "Language Integrated Learning)" : "Language Integrated Learning)"}</span>`,
+    ],
+    [
+        />\s*Content\s+Language\s+Integrated\s+Learning\s*<\/span>/g,
+        `>${t("clil.expansion")}</span>`,
+    ],
+];
+
+// Apply all translations
+function applyTranslations(html: string): string {
+    let result = html;
+
+    // Replace lang attribute
+    result = result.replace(
+        /lang="pt-BR"/g,
+        `lang="${lang === "pt" ? "pt-BR" : lang === "es" ? "es" : "en"}"`,
+    );
+
+    // Apply exact string replacements first
+    for (const [from, to] of spanReplacements) {
+        if (from !== to) {
+            result = result.replaceAll(from, to);
+        }
+    }
+
+    // Apply regex replacements
+    for (const [pattern, replacement] of regexReplacements) {
+        result = result.replace(pattern, replacement);
+    }
+
+    return result;
+}
+
+const translatedSlides = rawSlides.map((s) => applyTranslations(s));
+
+// Section metadata per slide
+const sections = [
+    { id: "hero", bg: "#ffffff", label: "Hero" },
+    { id: "services", bg: "#F9FAFB", label: "Services" },
+    { id: "about", bg: "#ffffff", label: "About" },
+    { id: "clil", bg: "#ffffff", label: "CLIL Method" },
+    { id: "tutors", bg: "#36DE6B", label: "Tutors" },
+    { id: "corporate", bg: "#34354F", label: "Corporate" },
+    { id: "testimonials", bg: "#FDD122", label: "Testimonials" },
+    { id: "pricing", bg: "#ffffff", label: "Pricing" },
+    { id: "footer", bg: "#36DE6B", label: "Footer CTA" },
+];
+
+// CSS files from the Canva embed
+const cssFiles = [
+    "/canva-css/font-_fb-s-9ebe5bfcf37fcce0d8e45969bcd8e089.css",
+    "/canva-css/static-a0684b0780c739e9.vendor.ltr.css",
+    "/canva-css/static-51a89ccd23ea0625.ltr.css",
+    "/canva-css/static-8bd269e5c4bec772.ltr.css",
+    "/canva-css/static-03d161fc35e6c638.ltr.css",
+    "/canva-css/static-07b12f055ad16ae8.ltr.css",
+    "/canva-css/static-28090cd61956cdc6.ltr.css",
+    "/canva-css/static-58f022713178e573.ltr.css",
+    "/canva-css/static-5b7fe8f909b06739.ltr.css",
+    "/canva-css/static-8aa736b600299170.ltr.css",
+    "/canva-css/static-a6ed7156bddd5277.ltr.css",
+    "/canva-css/static-aa7c8ddbe9333c01.ltr.css",
+    "/canva-css/static-b3e102e06355a6b1.ltr.css",
+    "/canva-css/static-c3690160ba23f81f.ltr.css",
+    "/canva-css/static-cbd0558dd6bee59b.ltr.css",
+    "/canva-css/static-cc0593be40803ebf.ltr.css",
+    "/canva-css/static-ccd01f8a6eb123a4.ltr.css",
+    "/canva-css/static-cf684cb9e2d6167b.ltr.css",
+    "/canva-css/static-eea8529d4bce8c52.ltr.css",
+    "/canva-css/static-f7688c2d15a1efc4.ltr.css",
+    "/canva-css/chunk1-c77c8453330f9faf.ltr.css+3a02d7e4318a6e05.ltr.css",
+    "/canva-css/chunk1-2bb6595928fbedfc.ltr.css+b9f2e31d70f241e9.ltr.css",
+    "/canva-css/chunk1-6b89a5e4c4e793af.ltr.css+74d4733965462919.ltr.css+23db6ecd70cd652d.ltr.css+3efb7bb5ad0cceff.ltr.css",
+    "/canva-css/chunk1-64b721c7a013238d.ltr.css+baeb73d3860ee397.ltr.css+f18a6f4d4210a6ab.ltr.css+ebd35407ebabe259.ltr.css+0e838d3dece74d5b.ltr.css",
+    "/canva-css/chunk1-c8367504d82e2650.ltr.css+c3c6ac8134d418b6.ltr.css+193033d90d85d6fa.ltr.css+470d85834afc5af8.ltr.css+4f66bae6f2e0b30f.ltr.css",
+    "/canva-css/chunk1-5b5c2ac730e5aef0.ltr.css+8f5d6a8c81efcbcd.ltr.css+fa4c57433823c911.ltr.css+93310cde3800434c.ltr.css+b9f2e31d70f241e9.ltr.css+57f334fb4f0c0127.ltr.css+638e8938c76a575e.ltr.css+ce17f8ab26c5414e.ltr.css",
+];
+
+// Page title per language
+const pageTitles: Record<string, string> = {
+    pt: "Cliltutors — Método simples, humano e eficaz",
+    en: "Cliltutors — Simple, human, and effective method",
+    es: "Cliltutors — Método simple, humano y eficaz",
+};
+---
+
+<!doctype html>
+<html lang={lang === "pt" ? "pt-BR" : lang}>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content={pageTitles[lang]} />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=5"
+        />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <title>{pageTitles[lang]}</title>
+
+        {cssFiles.map((f) => <link rel="stylesheet" href={f} />)}
+
+        <style is:global>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                overflow-x: hidden;
+                overflow-y: auto;
+                background: #fbfcff;
+                width: 100%;
+            }
+
+            .ct-section {
+                width: 100%;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .ct-canva-slide {
+                position: relative;
+                overflow: hidden;
+                width: 100%;
+            }
+
+            .ct-canva-slide ._14BoqA {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 1366px;
+                transform-origin: top left;
+            }
+
+            .ct-canva-slide img {
+                max-width: none;
+            }
+        </style>
+    </head>
+    <body>
+        {
+            sections.map((sec, i) => {
+                const slideHtml = translatedSlides[i] || "";
+                return (
+                    <section
+                        class="ct-section"
+                        id={sec.id}
+                        style={`background: ${sec.bg}`}
+                    >
+                        <div class="ct-canva-slide" data-slide-index={i}>
+                            <Fragment set:html={slideHtml} />
+                        </div>
+                    </section>
+                );
+            })
+        }
+
+        <script is:inline>
+            (function () {
+                function scaleSlides() {
+                    document
+                        .querySelectorAll(".ct-canva-slide")
+                        .forEach(function (wrapper) {
+                            var canvas = wrapper.querySelector("._14BoqA");
+                            if (!canvas) return;
+                            var canvasW =
+                                parseFloat(canvas.style.width) || 1366;
+                            var canvasH =
+                                parseFloat(canvas.style.height) || 700;
+                            var containerW = wrapper.clientWidth;
+                            var scale = containerW / canvasW;
+                            canvas.style.transform = "scale(" + scale + ")";
+                            canvas.style.transformOrigin = "top left";
+                            wrapper.style.height = canvasH * scale + "px";
+                        });
+                }
+                if (document.readyState === "loading") {
+                    document.addEventListener("DOMContentLoaded", scaleSlides);
+                } else {
+                    scaleSlides();
+                }
+                window.addEventListener("resize", scaleSlides);
+            })();
+        </script>
+    </body>
+</html>

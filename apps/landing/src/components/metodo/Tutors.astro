@@ -1,0 +1,106 @@
+---
+interface Props {
+  t: (key: string) => string;
+}
+const { t } = Astro.props;
+
+/* ───────────────────────────────────────
+   TUTOR DATA — edit this array to update
+   ─────────────────────────────────────── */
+const tutors = [
+  {
+    name: 'Cristian',
+    tags: ['ESPANHOL', 'CLIL', 'STEM'],
+    image: '/images/web/Cristian.png',
+  },
+  {
+    name: 'Xiomara Ramires',
+    tags: ['ESPANHOL', 'CLIL', 'STEM'],
+    image: '/images/web/Xiomara.png',
+  },
+  {
+    name: 'Thayline Candatti',
+    tags: ['INGLÊS', 'CLIL', 'STEM'],
+    image: '/images/web/Thayline.png',
+  },
+  {
+    name: 'Laura Gomes',
+    tags: ['PORTUGUÊS', 'CLIL', 'STEM'],
+    image: '/images/web/Laura.png',
+  },
+  {
+    name: 'Jimmy Ramires',
+    tags: ['ESPANHOL', 'CLIL', 'STEM'],
+    image: '/images/web/Jimmy.png',
+  },
+  {
+    name: 'Alissa Lechleitner',
+    tags: ['ESPANHOL', 'CLIL', 'STEM'],
+    image: '/images/web/Alissa.png',
+  },
+];
+---
+
+<section class="relative py-20 bg-[#4ade80] overflow-hidden">
+  <!-- Decorative Shapes -->
+  <div class="absolute top-10 right-16 w-28 h-6 bg-[#fbbf24]/80 rounded-full rotate-[-10deg]" />
+  <div class="absolute top-20 left-0 w-20 h-5 bg-[#f87171]/70 rounded-full rotate-[30deg]" />
+  <div class="absolute bottom-16 left-8 w-24 h-5 bg-[#f87171]/70 rounded-full rotate-[-25deg]" />
+  <div class="absolute top-8 right-48 w-4 h-4 bg-[#4ade80] border-2 border-[#fbbf24] rounded-full" />
+
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <p class="text-sm font-inter font-semibold uppercase tracking-[0.2em] text-[#2d3559]/70 mb-3">
+        {t('tutors.label')}
+      </p>
+      <h2 class="font-heading text-4xl md:text-6xl font-semibold text-[#2d3559] mb-6">
+        {t('tutors.title')}
+      </h2>
+      <p class="text-[#2d3559]/80 max-w-2xl mx-auto leading-relaxed">
+        {t('tutors.intro')}
+      </p>
+    </div>
+
+    <!-- Tutor Cards - Horizontal Scrollable -->
+    <div class="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-6 px-6">
+      {tutors.map((tutor) => (
+        <div class="flex-shrink-0 w-52 group snap-start">
+          <div class="relative rounded-2xl overflow-hidden shadow-lg aspect-[3/4] bg-gray-200">
+            <img
+              src={tutor.image}
+              alt={tutor.name}
+              class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            />
+            <!-- Gradient overlay at bottom -->
+            <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
+
+            <!-- Tags on top -->
+            <div class="absolute top-3 left-3 flex gap-1.5 flex-wrap">
+              {tutor.tags.map((tag: string) => (
+                <span class="bg-white/80 backdrop-blur-sm text-[10px] font-inter font-semibold text-gray-700 px-2 py-0.5 rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <!-- Name + CTA at bottom -->
+            <div class="absolute bottom-4 left-4 right-4">
+              <h3 class="font-heading text-lg font-medium text-white leading-tight uppercase">
+                {tutor.name}
+              </h3>
+              <a href="#pricing" class="text-white/80 text-sm mt-1 inline-block hover:text-white transition-colors">
+                {t('tutors.btn')}
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+</style>

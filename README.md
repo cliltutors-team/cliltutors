@@ -1,197 +1,114 @@
-# 💼 CLILTUTORS – Plataforma Web del Centro de Prácticas
+# ClilTutors Monorepo Deployment
 
-¡Bienvenido/a al repositorio oficial de **CLILTUTORS**!  
-Este proyecto fue desarrollado por estudiantes del programa de Ingeniería Informática como parte del Centro de Prácticas.  
-Su propósito es ofrecer una base sólida para el desarrollo, mantenimiento y mejora continua del sitio web institucional.
+This monorepo contains two applications deployed separately on Vercel:
 
----
+## Applications
 
-## 🧭 Propósito del repositorio
+### 🌐 Web App (`@cliltutors/web`)
 
-Este repositorio contiene el código fuente del sitio web **CLILTUTORS**, construido con **Next.js** y administrado bajo un flujo de trabajo colaborativo en **GitHub**.
+- **Path**: `apps/web/`
+- **Framework**: Next.js 15.5.7
+- **Build Command**: `bun run build`
+- **Output Directory**: `.next/`
+- **Port**: 3000 (development)
 
-Está diseñado para que los nuevos ingenieros y practicantes puedan continuar con su mantenimiento sin dificultades, siguiendo buenas prácticas de control de versiones, documentación y despliegue.
+### 🚀 Landing Page (`@cliltutors/landing`)
 
----
+- **Path**: `apps/landing/`
+- **Framework**: Astro 5.17.1
+- **Build Command**: `bun run build`
+- **Output Directory**: `dist/`
+- **Port**: 4321 (development)
 
-## 🧱 Tecnologías principales
+## Vercel Deployment Setup
 
-- **Next.js 15** — Framework principal para el frontend.
-- **React** — Biblioteca base para la interfaz.
-- **Bun** — Gestor de paquetes y entorno de ejecución.
-- **Git y GitHub** — Control de versiones y colaboración.
-- **Vercel** — Plataforma de despliegue automático.
+### Option 1: Separate Vercel Projects (Recommended)
 
----
+1. **Create two Vercel projects**:
+   - Project 1: `cliltutors-web`
+   - Project 2: `cliltutors-landing`
 
-## 🚀 Estructura de ramas y flujo de trabajo
+2. **Configure each project**:
 
-Para mantener un trabajo ordenado y evitar conflictos, el repositorio utiliza una estructura de ramas inspirada en el modelo **Git Flow**:
+   **Web App (cliltutors-web)**:
+   - Root Directory: `apps/web`
+   - Framework Preset: Next.js
+   - Build Command: `bun run build`
+   - Output Directory: `.next`
+   - Install Command: `bun install`
 
-| Rama                           | Propósito                                                                                      |
-| ------------------------------ | ---------------------------------------------------------------------------------------------- |
-| `main`                         | Contiene la versión **estable** del sitio web (en producción).                                 |
-| `develop`                      | Rama de **desarrollo**, donde se integran las nuevas funciones antes de pasarlas a producción. |
-| `feature/nombre-funcionalidad` | Ramas individuales para desarrollar nuevas páginas, componentes o mejoras.                     |
-| `hotfix/nombre-corrección`     | Ramas para corregir errores críticos detectados en producción.                                 |
+   **Landing Page (cliltutors-landing)**:
+   - Root Directory: `apps/landing`
+   - Framework Preset: Astro
+   - Build Command: `bun run build`
+   - Output Directory: `dist`
+   - Install Command: `bun install`
 
-### 🔧 Ejemplo de flujo de trabajo
+3. **Environment Variables**:
+   Set in each Vercel project dashboard as needed.
 
-1. Actualiza la rama principal:
+### Option 2: Monorepo Deployment (vercel.json)
 
-   ```bash
-   git checkout develop
-   git pull
-   ```
+This repository includes `vercel.json` for monorepo deployment configuration.
 
-2. Crea una nueva rama para tu tarea:
-
-   ```bash
-   git checkout -b feature/nueva-pagina
-   ```
-
-3. Realiza los cambios y guárdalos:
-
-   ```bash
-   git add .
-   git commit -m "Agrega nueva página de contacto"
-   ```
-
-4. Sube tu rama al repositorio remoto:
-
-   ```bash
-   git push -u origin feature/nueva-pagina
-   ```
-
-5. En GitHub, crea un **Pull Request (PR)** hacia la rama `develop`.  
-   Cuando el código sea revisado y aprobado, se integrará.
-
----
-
-## 🧑‍💻 Cómo ejecutar el proyecto localmente
-
-1. Clona este repositorio:
-
-   ```bash
-   git clone https://github.com/cliltutors-team/cliltutors
-   ```
-
-2. Entra a la carpeta del proyecto:
-
-   ```bash
-   cd cliltutors
-   ```
-
-3. Instala las dependencias:
-
-   ```bash
-   bun install
-   ```
-
-4. Ejecuta el servidor de desarrollo:
-
-   ```bash
-   bun dev
-   ```
-
-5. Abre tu navegador en:
-   ```
-   http://localhost:3000
-   ```
-
----
-
-## ☁️ Despliegue (Vercel)
-
-El sitio está configurado para desplegar automáticamente con **Vercel**:
-
-- La rama `main` se publica en el dominio oficial:  
-  👉 [https://cliltutors.com](https://cliltutors.com)
-
-- La rama `develop` genera una **vista previa automática**, accesible mediante una URL de prueba como:  
-  👉 `https://cliltutors-git-develop.vercel.app`
-
-Cada **Pull Request** genera una vista previa temporal, lo que permite revisar los cambios antes de integrarlos.
-
----
-
-## 🔐 Permisos y roles en GitHub
-
-Los administradores del centro son los encargados de gestionar los permisos.
-
-### Para agregar nuevos colaboradores:
-
-1. En el repositorio, ir a **Settings → Collaborators**.
-2. Seleccionar **Add people** e ingresar el nombre de usuario de GitHub.
-3. Asignar el nivel de acceso:
-   - **Read** → solo lectura.
-   - **Write** → puede subir ramas y commits.
-   - **Admin** → gestiona configuración, ramas protegidas y despliegues.
-
-### Recomendaciones:
-
-- Los nuevos ingenieros deben iniciar con acceso **Write**.
-- Solo el responsable técnico debe tener **Admin**.
-
----
-
-## 🧠 Buenas prácticas del equipo
-
-1. Nunca trabajar directamente sobre `main`.
-2. Crear una rama **feature/** para cada tarea.
-3. Antes de comenzar, ejecutar:
-   ```bash
-   git pull origin develop
-   ```
-   para actualizar la base de trabajo.
-4. Mantener mensajes de commits claros y descriptivos.
-5. Usar **Pull Requests** para todo cambio.
-6. Solicitar revisión de otro integrante antes del merge.
-7. No subir archivos personales, `.env` ni dependencias externas al repositorio.
-
----
-
-## 🔍 Verificación de ramas
-
-Para comprobar en qué rama estás trabajando:
+## Local Development
 
 ```bash
-git branch
+# Install dependencies
+bun install
+
+# Run all apps in development
+bun run dev
+
+# Run specific app
+bun run dev --filter=@cliltutors/web
+bun run dev --filter=@cliltutors/landing
+
+# Build all apps
+bun run build
+
+# Lint all apps
+bun run lint
+
+# Type check all apps
+bun run check-types
 ```
 
-Para comparar con `main`:
+## Project Structure
 
-```bash
-git diff main
+```
+├── apps/
+│   ├── web/              # Next.js web application
+│   ├── landing/          # Astro landing page
+│   └── docs/             # Documentation site
+├── packages/
+│   ├── ui/               # Shared UI components
+│   ├── tailwind-config/  # Shared Tailwind configuration
+│   ├── eslint-config/    # Shared ESLint configuration
+│   └── typescript-config/# Shared TypeScript configuration
+├── turbo.json            # Turborepo configuration
+├── package.json          # Root package.json
+└── vercel.json           # Vercel deployment configuration
 ```
 
-Si no hay diferencias, significa que ambas ramas están sincronizadas.
+## Shared Packages
 
----
+### @repo/tailwind-config
 
-## 📦 Mantenimiento
+Shared Tailwind configuration with font definitions:
 
-- **Actualizar dependencias:**
-  ```bash
-  bun update
-  ```
-- **Eliminar ramas locales antiguas:**
-  ```bash
-  git branch -d nombre-rama
-  ```
-- **Ver historial de commits:**
-  ```bash
-  git log --oneline --graph --all
-  ```
+```typescript
+import { fonts, defaultFont, headingFont } from "@repo/tailwind-config/fonts";
+```
 
----
+### @repo/ui
 
-## 🏛️ Créditos institucionales
+Shared React components (if any).
 
-Desarrollado inicialmente por estudiantes en práctica del **Centro de Prácticas CLILTUTORS**, como parte del programa de Ingeniería Informática.
+### @repo/eslint-config
 
-Este repositorio está destinado a mantenerse y ampliarse con cada nueva cohorte de practicantes, bajo los lineamientos técnicos establecidos en este documento.
+Shared ESLint rules for consistent code quality.
 
-📅 Año de inicio: 2025  
-👨‍💻 Responsable técnico: Coordinador del Centro de Prácticas  
-🌐 Sitio oficial: [https://cliltutors.com](https://cliltutors.com)
+### @repo/typescript-config
+
+Shared TypeScript configurations for type safety.

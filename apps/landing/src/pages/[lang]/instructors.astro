@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import InstructorCard from '../../components/InstructorCard.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { languages } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const instructors = [
+  { name: 'Jimmy Ramires', photo: '/images/web/Jimmy.png', languages: ['Spanish', 'English'], specialization: 'CLIL · Business Communication' },
+  { name: 'Alissa Lechleitner', photo: '/images/web/Alissa.png', languages: ['English', 'Portuguese'], specialization: 'CLIL · Academic Writing' },
+  { name: 'Laura Gomes', photo: '/images/web/Laura.png', languages: ['Portuguese', 'English'], specialization: 'CLIL · STEM Education' },
+  { name: 'Thayline Candatti', photo: '/images/web/Thayline.png', languages: ['English', 'Portuguese'], specialization: 'CLIL · Professional Coaching' },
+  { name: 'Xiomara Ramires', photo: '/images/web/Xiomara.png', languages: ['Spanish', 'Portuguese'], specialization: 'CLIL · Cultural Communication' },
+  { name: 'Cristian', photo: '/images/web/Cristian.png', languages: ['Spanish', 'English', 'Portuguese'], specialization: 'CLIL · Corporate Training' },
+];
+---
+
+<Layout title={t('instructors.meta.title')} description={t('instructors.meta.desc')} lang={lang}>
+  <Navbar />
+  <HeroSection title={t('instructors.hero.title')} subtitle={t('instructors.hero.subtitle')} />
+
+  <section class="section-padding bg-white">
+    <div class="container-narrow">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {instructors.map(inst => (
+          <InstructorCard
+            name={inst.name}
+            photo={inst.photo}
+            languages={inst.languages}
+            specialization={inst.specialization}
+            ctaText={t('instructors.cta')}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,30 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import PremiumFooter from './PremiumFooter';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const currentPath = Astro.url.pathname.replace(/^\/(pt|en|es)/, '') || '/';
+
+const solutionLinks = [
+  { href: `/${lang}/corporate-training`, label: 'home.sol1.title' },
+  { href: `/${lang}/professional-development`, label: 'home.sol2.title' },
+  { href: `/${lang}/academic-support`, label: 'home.sol3.title' },
+  { href: `/${lang}/k12-global-preparation`, label: 'home.sol4.title' },
+];
+
+const resourceLinks = [
+  { href: `/${lang}/methodology`, label: 'nav.methodology' },
+  { href: `/${lang}/resources`, label: 'nav.resources' },
+  { href: `/${lang}/instructors`, label: 'nav.instructors' },
+];
+---
+
+<PremiumFooter
+  client:idle
+  lang={lang}
+  t={t}
+  solutionLinks={solutionLinks}
+  resourceLinks={resourceLinks}
+  currentPath={currentPath}
+/>

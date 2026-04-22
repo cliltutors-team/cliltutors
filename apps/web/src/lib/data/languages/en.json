@@ -1,0 +1,207 @@
+{
+  "meta": {
+    "title": "Cliltutors | Online Language & STEM Learning",
+    "ogSiteName": "Cliltutors",
+    "description": "Learn with native teachers! Live and recorded classes in Spanish, English, and Portuguese. Academic support and professional coaching.",
+    "keywords": "learn languages, online classes, STEM tutoring, CLIL methodology"
+  },
+
+  "metadata": {
+    "default": {
+      "titleKey": "meta.title",
+      "descriptionKey": "meta.description",
+      "keywordsKey": "meta.keywords",
+      "robots": { "index": true, "follow": true }
+    },
+    "pages": {
+      "login": {
+        "title": "Login | Cliltutors",
+        "description": "Access your Cliltutors account.",
+        "robots": { "index": false, "follow": false }
+      },
+      "register": {
+        "title": "Register | Cliltutors",
+        "description": "Create your Cliltutors account.",
+        "robots": { "index": false, "follow": false }
+      }
+    }
+  },
+
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Enter your credentials to access your account",
+      "email": "Email",
+      "password": "Password",
+      "forgot": "Forgot password?",
+      "cta": "Sign In",
+      "or": "Or continue with",
+      "google": "Continue with Google",
+      "noAccount": "Don't have an account?",
+      "signup": "Create one",
+      "imageAlt": "Cliltutors login"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Start your language learning journey today",
+      "name": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "cta": "Create Account",
+      "or": "Or continue with",
+      "google": "Continue with Google",
+      "haveAccount": "Already have an account?",
+      "login": "Sign in",
+      "imageAlt": "Cliltutors register"
+    }
+  },
+
+  "sidebar": {
+    "main": "Main",
+    "account": "Account",
+    "dashboard": "Dashboard",
+    "courses": "Courses",
+    "myLearning": "My Learning",
+    "schedule": "Schedule",
+    "instructors": "Instructors",
+    "profile": "Profile"
+  },
+
+  "topbar": {
+    "search": "Search courses, lessons..."
+  },
+
+  "dashboard": {
+    "welcomeBack": "Welcome back",
+    "continueMsg": "Continue where you left off",
+    "continueCourse": "Continue Learning",
+    "totalHours": "Hours Studied",
+    "streak": "Day Streak",
+    "lessonsCompleted": "Lessons Done",
+    "currentLevel": "Current Level",
+    "continueLearning": "Continue Learning",
+    "explore": "Explore",
+    "browseCourses": "Browse Courses",
+    "bookSession": "Book a Session",
+    "liveInstructors": "Live with instructors",
+    "meetInstructors": "Meet Instructors",
+    "expertTeam": "Our expert team"
+  },
+
+  "courses": {
+    "title": "Course Catalog",
+    "subtitle": "Explore our language and methodology courses",
+    "searchPlaceholder": "Search courses or instructors...",
+    "language": "Language",
+    "level": "Level",
+    "category": "Category",
+    "featured": "Featured Courses",
+    "allCourses": "All Courses",
+    "results": "results",
+    "noResults": "No courses found",
+    "tryDifferent": "Try adjusting your filters",
+    "backToCatalog": "Back to Courses",
+    "instructor": "Instructor",
+    "curriculum": "Curriculum",
+    "continueLearning": "Continue Learning",
+    "enrollNow": "Enroll Now",
+    "free": "Free",
+    "fullAccess": "Full access to all lessons",
+    "duration": "Duration",
+    "lessons": "Lessons",
+    "modules": "Modules"
+  },
+
+  "lessons": {
+    "clickToPlay": "Click to play",
+    "resources": "Resources",
+    "prev": "Previous",
+    "next": "Next Lesson",
+    "backToCourse": "Complete Course",
+    "courseContent": "Course Content"
+  },
+
+  "myLearning": {
+    "title": "My Learning",
+    "subtitle": "Track your progress and continue where you left off",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "bookmarked": "Bookmarked",
+    "noBookmarks": "No bookmarked courses yet",
+    "noCompleted": "No completed courses yet",
+    "exploreCourses": "Explore Courses"
+  },
+
+  "schedule": {
+    "title": "Schedule",
+    "subtitle": "Book live sessions with our instructors",
+    "browse": "Browse Sessions",
+    "mySessions": "My Sessions",
+    "calendar": "Calendar",
+    "allDays": "All",
+    "book": "Book",
+    "cancel": "Cancel",
+    "booked": "Booked",
+    "free": "Free",
+    "full": "Full",
+    "spots": "spots",
+    "noSessions": "No sessions found",
+    "tryFilters": "Try changing your filters or browse a different week",
+    "tryFree": "Try a Free Session",
+    "tryFreeDesc": "Experience our methodology with a complimentary 25-minute trial session",
+    "showTrials": "Show Free Trials",
+    "upcomingSessions": "Upcoming Sessions",
+    "pastSessions": "Past & Cancelled",
+    "noUpcoming": "No upcoming sessions",
+    "browseToBook": "Browse available sessions to get started",
+    "browseSessions": "Browse Sessions",
+    "selectDay": "Select a day",
+    "selectDayDesc": "Click on a date with sessions to see details",
+    "confirmBooking": "Confirm Booking",
+    "bookingConfirmed": "Session Booked!",
+    "confirmationMsg": "You'll receive a confirmation email with the session link.",
+    "notesLabel": "Notes for instructor",
+    "notesPlaceholder": "What would you like to focus on?",
+    "freeSession": "Free Session",
+    "confirmBook": "Confirm Booking",
+    "cancelTitle": "Cancel Session?",
+    "cancelWarning": "This action cannot be undone. Your spot will be released.",
+    "cancelReasonLabel": "Why are you cancelling?",
+    "confirmCancel": "Cancel Session"
+  },
+
+  "instructors": {
+    "title": "Our Instructors",
+    "subtitle": "Meet our expert team of language and methodology specialists",
+    "bookSession": "Book Session",
+    "viewProfile": "View Profile & Book",
+    "backToAll": "All Instructors",
+    "availableSessions": "Available Sessions",
+    "noSessions": "No upcoming sessions",
+    "qualifications": "Qualifications & Experience"
+  },
+
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Manage your account and preferences",
+    "hoursStudied": "Hours Studied",
+    "dayStreak": "Day Streak",
+    "courses": "Courses",
+    "editProfile": "Edit Profile",
+    "name": "Name",
+    "email": "Email",
+    "language": "Language",
+    "save": "Save Changes",
+    "logout": "Log Out"
+  },
+
+  "common": {
+    "viewAll": "View All",
+    "complete": "complete",
+    "available": "available",
+    "resume": "Resume",
+    "optional": "optional",
+    "close": "Done",
+    "goBack": "Go Back"
+  }
+}

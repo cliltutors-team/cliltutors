@@ -1,0 +1,188 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  primaryCta?: {
+    text: string;
+    href: string;
+  };
+  secondaryCta?: {
+    text: string;
+    href: string;
+  };
+  badge?: string;
+  features?: string[];
+  accessTitle?: string;
+  accessDesc?: string;
+  certificateTitle?: string;
+  certificateDesc?: string;
+  communityTitle?: string;
+  communityDesc?: string;
+}
+
+const {
+  title = "Start Your Learning Journey Today",
+  description = "Join thousands of professionals who have transformed their careers. Get unlimited access to expert-led courses, hands-on projects, and a global community.",
+  primaryCta = {
+    text: "Get Started Free",
+    href: "/signup"
+  },
+  secondaryCta = {
+    text: "View All Courses",
+    href: "/courses"
+  },
+  badge = "Limited Time: 30% Off Annual Plans",
+  features = [
+    "7-day free trial",
+    "No credit card required",
+    "Cancel anytime"
+  ],
+  accessTitle = "Instant Access",
+  accessDesc = "Start learning immediately after signup",
+  certificateTitle = "Verified Certificate",
+  certificateDesc = "Earn industry-recognized credentials",
+  communityTitle = "Community Support",
+  communityDesc = "Connect with learners worldwide"
+} = Astro.props;
+---
+
+<section class="relative overflow-hidden py-20 lg:py-28">
+  <div class="absolute inset-0 gradient-cta"></div>
+  
+  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px); background-size: 24px 24px;"></div>
+  
+  <div class="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-30 blur-[150px]" style="background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);"></div>
+  <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full opacity-20 blur-[100px]" style="background: radial-gradient(circle, rgba(254,187,55,0.3) 0%, transparent 70%);"></div>
+
+  <div class="relative container-narrow">
+    <div class="max-w-3xl mx-auto text-center reveal">
+      {badge && (
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-white text-sm font-semibold mb-6">
+          <svg class="w-4 h-4 text-brand-gold" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5 2a2 2 0 00-2 2v14l3.5-2 3.5 2 3.5-2 3.5 2V4a2 2 0 00-2-2H5zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm6 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"/>
+          </svg>
+          {badge}
+        </div>
+      )}
+
+      <h2 class="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight mb-6 leading-tight">
+        {title}
+      </h2>
+
+      <p class="text-lg sm:text-xl text-white/90 leading-relaxed mb-10 max-w-2xl mx-auto">
+        {description}
+      </p>
+
+      <div class="flex flex-wrap gap-4 justify-center mb-8">
+        <a 
+          href={primaryCta.href}
+          class="btn-white group text-base px-8 py-4"
+        >
+          {primaryCta.text}
+          <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+        
+        <a 
+          href={secondaryCta.href}
+          class="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-300 text-base"
+        >
+          {secondaryCta.text}
+        </a>
+      </div>
+
+      {features && features.length > 0 && (
+        <div class="flex flex-wrap gap-6 justify-center">
+          {features.map((feature, index) => (
+            <div 
+              class="flex items-center gap-2 text-white/80 text-sm"
+              style={`animation-delay: ${150 + index * 50}ms`}
+            >
+              <svg class="w-4 h-4 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span>{feature}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+<div class="mt-16 grid sm:grid-cols-3 gap-8 reveal delay-300">
+  <div class="text-center">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm mb-3">
+      <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    </div>
+    <div class="font-heading font-bold text-2xl text-white mb-1">{accessTitle}</div>
+    <p class="text-sm text-white/70">{accessDesc}</p>
+  </div>
+
+  <div class="text-center">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm mb-3">
+      <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+      </svg>
+    </div>
+    <div class="font-heading font-bold text-2xl text-white mb-1">{certificateTitle}</div>
+    <p class="text-sm text-white/70">{certificateDesc}</p>
+  </div>
+
+  <div class="text-center">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm mb-3">
+      <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+      </svg>
+    </div>
+    <div class="font-heading font-bold text-2xl text-white mb-1">{communityTitle}</div>
+    <p class="text-sm text-white/70">{communityDesc}</p>
+  </div>
+</div>
+  </div>
+</section>
+
+<style>
+section {
+  position: relative;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.gradient-cta {
+  background: linear-gradient(135deg, var(--color-brand-blue) 0%, var(--color-brand-indigo) 50%, var(--color-brand-purple) 100%);
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+.btn-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.98);
+  color: var(--color-brand-navy);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.btn-white:hover {
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+</style>

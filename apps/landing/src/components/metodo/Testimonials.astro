@@ -1,0 +1,97 @@
+---
+interface Props {
+    t: (key: string) => string;
+}
+const { t } = Astro.props;
+
+/* ───────────────────────────────────────────
+   TESTIMONIAL DATA — edit this array to update
+   ─────────────────────────────────────────── */
+const testimonials = [
+    {
+        quote: "Em 3 meses, conduzi reunião com cliente internacional com total confiança!",
+        name: "Maria P.",
+        role: "Customer Success",
+        avatar: "👩‍💼",
+    },
+    {
+        quote: "Nosso time ficou mais confiante e rápido em inglês técnico. A CLILTUTORS superou nossas expectativas.",
+        name: "Flavio A.",
+        role: "Dir. Tech Solutions",
+        avatar: "👨‍💻",
+    },
+    {
+        quote: "Em poucas semanas, consegui participar de apresentações globais sem depender de tradução. O curso fez toda a diferença!",
+        name: "Ana R.",
+        role: "Gerente de Projetos",
+        avatar: "👩‍🏫",
+    },
+    {
+        quote: "Em 3 meses, conduzi reunião com cliente internacional com total confiança!",
+        name: "Maria P.",
+        role: "Customer Success",
+        avatar: "👩‍💼",
+    },
+];
+---
+
+<section class="relative py-20 overflow-hidden">
+    <!-- Real exported gradient background -->
+    <div class="absolute inset-0 z-0">
+        <img
+            src="/images/web/testimonials_bg.webp"
+            alt=""
+            class="w-full h-full object-cover mix-blend-multiply opacity-90"
+        />
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <p
+                class="text-sm font-inter font-semibold uppercase tracking-wider text-white/90 mb-2"
+            >
+                {t("test.label")}
+            </p>
+            <h2
+                class="font-heading text-4xl md:text-5xl font-semibold text-[#2d3559]"
+            >
+                {t("test.title")}
+            </h2>
+        </div>
+
+        <!-- Testimonial Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            {
+                testimonials.map((test) => (
+                    <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="text-4xl mb-4">{test.avatar}</div>
+                        <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                            &ldquo;{test.quote}&rdquo;
+                        </p>
+                        <p class="font-inter font-semibold text-[#2d3559] text-sm">
+                            {test.name}, {test.role}
+                        </p>
+                    </div>
+                ))
+            }
+        </div>
+
+        <!-- Second row (duplicate for visual effect like original) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {
+                testimonials.map((test) => (
+                    <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="text-4xl mb-4">{test.avatar}</div>
+                        <p class="text-gray-700 text-sm leading-relaxed mb-4">
+                            &ldquo;{test.quote}&rdquo;
+                        </p>
+                        <p class="font-inter font-semibold text-[#2d3559] text-sm">
+                            {test.name}, {test.role}
+                        </p>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>

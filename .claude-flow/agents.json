@@ -1,0 +1,173 @@
+{
+  "agents": {
+    "discover-1776009555503-8vdb": {
+      "agentId": "discover-1776009555503-8vdb",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "scout",
+        "hiveRole": "scout"
+      },
+      "createdAt": "2026-04-12T15:59:15.504Z",
+      "domain": "hive-mind"
+    },
+    "discover-1776009555504-b4pm": {
+      "agentId": "discover-1776009555504-b4pm",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "scout",
+        "hiveRole": "scout"
+      },
+      "createdAt": "2026-04-12T15:59:15.504Z",
+      "domain": "hive-mind"
+    },
+    "discover-1776009555504-2v80": {
+      "agentId": "discover-1776009555504-2v80",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "scout",
+        "hiveRole": "scout"
+      },
+      "createdAt": "2026-04-12T15:59:15.504Z",
+      "domain": "hive-mind"
+    },
+    "brand-analyst-1776009683511-8x4i": {
+      "agentId": "brand-analyst-1776009683511-8x4i",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "specialist",
+        "hiveRole": "specialist"
+      },
+      "createdAt": "2026-04-12T16:01:23.511Z",
+      "domain": "hive-mind"
+    },
+    "brand-analyst-1776009683511-sl13": {
+      "agentId": "brand-analyst-1776009683511-sl13",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "specialist",
+        "hiveRole": "specialist"
+      },
+      "createdAt": "2026-04-12T16:01:23.511Z",
+      "domain": "hive-mind"
+    },
+    "brand-analyst-1776009683511-9d5q": {
+      "agentId": "brand-analyst-1776009683511-9d5q",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "specialist",
+        "hiveRole": "specialist"
+      },
+      "createdAt": "2026-04-12T16:01:23.511Z",
+      "domain": "hive-mind"
+    },
+    "brand-analyst-1776009683511-yfkw": {
+      "agentId": "brand-analyst-1776009683511-yfkw",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "specialist",
+        "hiveRole": "specialist"
+      },
+      "createdAt": "2026-04-12T16:01:23.511Z",
+      "domain": "hive-mind"
+    },
+    "section-analyst-1776010261268-8t4b": {
+      "agentId": "section-analyst-1776010261268-8t4b",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "worker",
+        "hiveRole": "worker"
+      },
+      "createdAt": "2026-04-12T16:11:01.268Z",
+      "domain": "hive-mind"
+    },
+    "section-analyst-1776010261268-s68a": {
+      "agentId": "section-analyst-1776010261268-s68a",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "worker",
+        "hiveRole": "worker"
+      },
+      "createdAt": "2026-04-12T16:11:01.268Z",
+      "domain": "hive-mind"
+    },
+    "section-analyst-1776010261269-ogv4": {
+      "agentId": "section-analyst-1776010261269-ogv4",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "worker",
+        "hiveRole": "worker"
+      },
+      "createdAt": "2026-04-12T16:11:01.269Z",
+      "domain": "hive-mind"
+    },
+    "section-analyst-1776010261269-p638": {
+      "agentId": "section-analyst-1776010261269-p638",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "worker",
+        "hiveRole": "worker"
+      },
+      "createdAt": "2026-04-12T16:11:01.269Z",
+      "domain": "hive-mind"
+    },
+    "section-analyst-1776010261269-hvyp": {
+      "agentId": "section-analyst-1776010261269-hvyp",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "worker",
+        "hiveRole": "worker"
+      },
+      "createdAt": "2026-04-12T16:11:01.269Z",
+      "domain": "hive-mind"
+    },
+    "section-analyst-1776010261269-qp48": {
+      "agentId": "section-analyst-1776010261269-qp48",
+      "agentType": "worker",
+      "status": "idle",
+      "health": 1,
+      "taskCount": 0,
+      "config": {
+        "role": "worker",
+        "hiveRole": "worker"
+      },
+      "createdAt": "2026-04-12T16:11:01.269Z",
+      "domain": "hive-mind"
+    }
+  }
+}
