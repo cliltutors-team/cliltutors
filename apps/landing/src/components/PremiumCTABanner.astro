@@ -1,9 +1,12 @@
 ---
+import LucideIcon from './LucideIcon';
+import MotionReveal from './MotionReveal';
+
 /**
- * PremiumCTABanner Component
- * Conversion-optimized CTA section with multiple variants
- * Features: Dark/light/gradient themes, trust badges, countdown timer, full i18n
- */
+* PremiumCTABanner Component
+* Conversion-optimized CTA section with multiple variants
+* Features: Dark/light/gradient themes, trust badges, countdown timer, full i18n
+*/
 
 interface Props {
   title: string;
@@ -19,6 +22,7 @@ interface Props {
   variant?: 'dark' | 'light' | 'gradient' | 'gradient-purple' | 'gradient-gold';
   trustBadges?: Array<{
     icon?: string;
+    iconType?: 'emoji' | 'lucide';
     label: string;
     value?: string;
   }>;
@@ -61,79 +65,93 @@ const {
     <div class="pattern-overlay"></div>
   </div>
 
-  {/* Content */}
   <div class="banner-content">
-    {/* Countdown Timer */}
     {countdown && (
-      <div class="countdown-timer reveal" id="countdown-timer">
-        <div class="countdown-item">
-          <span class="countdown-value" data-unit="days">00</span>
-          <span class="countdown-label">{countdown.labels.days}</span>
+      <MotionReveal client:visible direction="up" delay={0.05}>
+        <div class="countdown-timer" id="countdown-timer" data-target-date={countdown.targetDate}>
+          <div class="countdown-item">
+            <span class="countdown-value" data-unit="days">00</span>
+            <span class="countdown-label">{countdown.labels.days}</span>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <span class="countdown-value" data-unit="hours">00</span>
+            <span class="countdown-label">{countdown.labels.hours}</span>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <span class="countdown-value" data-unit="minutes">00</span>
+            <span class="countdown-label">{countdown.labels.minutes}</span>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <span class="countdown-value" data-unit="seconds">00</span>
+            <span class="countdown-label">{countdown.labels.seconds}</span>
+          </div>
         </div>
-        <div class="countdown-separator">:</div>
-        <div class="countdown-item">
-          <span class="countdown-value" data-unit="hours">00</span>
-          <span class="countdown-label">{countdown.labels.hours}</span>
-        </div>
-        <div class="countdown-separator">:</div>
-        <div class="countdown-item">
-          <span class="countdown-value" data-unit="minutes">00</span>
-          <span class="countdown-label">{countdown.labels.minutes}</span>
-        </div>
-        <div class="countdown-separator">:</div>
-        <div class="countdown-item">
-          <span class="countdown-value" data-unit="seconds">00</span>
-          <span class="countdown-label">{countdown.labels.seconds}</span>
-        </div>
-      </div>
+      </MotionReveal>
     )}
 
-    <h2 class="banner-title reveal">{title}</h2>
+    <MotionReveal client:visible direction="up" delay={0.1}>
+      <h2 class="banner-title">{title}</h2>
+    </MotionReveal>
 
     {description && (
-      <p class="banner-description reveal">{description}</p>
+      <MotionReveal client:visible direction="up" delay={0.15}>
+        <p class="banner-description">{description}</p>
+      </MotionReveal>
     )}
 
-    {/* CTA Buttons */}
     {(primaryCTA || secondaryCTA) && (
-      <div class="cta-buttons reveal">
-        {primaryCTA && (
-          <a 
-            href={primaryCTA.href}
-            class="btn-primary"
-            {...analytics?.primaryAction && { 'data-action': analytics.primaryAction }}
-          >
-            <span>{primaryCTA.text}</span>
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-        )}
-        {secondaryCTA && (
-          <a 
-            href={secondaryCTA.href}
-            class="btn-secondary"
-            {...analytics?.secondaryAction && { 'data-action': analytics.secondaryAction }}
-          >
-            {secondaryCTA.text}
-          </a>
-        )}
-      </div>
+      <MotionReveal client:visible direction="up" delay={0.2}>
+        <div class="cta-buttons">
+          {primaryCTA && (
+            <a
+              href={primaryCTA.href}
+              class="btn-primary"
+              {...analytics?.primaryAction && { 'data-action': analytics.primaryAction }}
+            >
+              <span>{primaryCTA.text}</span>
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          )}
+          {secondaryCTA && (
+            <a
+              href={secondaryCTA.href}
+              class="btn-secondary"
+              {...analytics?.secondaryAction && { 'data-action': analytics.secondaryAction }}
+            >
+              {secondaryCTA.text}
+            </a>
+          )}
+        </div>
+      </MotionReveal>
     )}
 
-    {/* Trust Badges */}
     {trustBadges.length > 0 && (
-      <div class="trust-badges reveal">
-        {trustBadges.map((badge) => (
-          <div class="trust-badge">
-            {badge.icon && <span class="badge-icon">{badge.icon}</span>}
-            <div class="badge-content">
-              {badge.value && <span class="badge-value">{badge.value}</span>}
-              <span class="badge-label">{badge.label}</span>
+      <MotionReveal client:visible direction="up" delay={0.3}>
+        <div class="trust-badges">
+          {trustBadges.map((badge) => (
+            <div class="trust-badge">
+              {badge.icon && (
+                badge.iconType === 'lucide' ? (
+                  <div class="badge-icon-lucide">
+                    <LucideIcon client:idle name={badge.icon} size={20} color="currentColor" className={variant === 'light' ? 'text-brand-blue' : 'text-white/90'} />
+                  </div>
+                ) : (
+                  <span class="badge-icon">{badge.icon}</span>
+                )
+              )}
+              <div class="badge-content">
+                {badge.value && <span class="badge-value">{badge.value}</span>}
+                <span class="badge-label">{badge.label}</span>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </MotionReveal>
     )}
   </div>
 </section>
@@ -152,7 +170,7 @@ const {
 }
 
 .variant-light {
-  background: linear-gradient(135deg, white 0%, var(--color-gray-50) 100%);
+  background: linear-gradient(135deg, white 0%, var(--color-brand-blue-50) 100%);
   color: var(--color-brand-navy);
 }
 
@@ -211,12 +229,7 @@ const {
   background-size: 32px 32px;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-30px); }
-}
-
-/* Content */
+  /* Content */
 .banner-content {
   position: relative;
   z-index: 1;
@@ -409,7 +422,7 @@ const {
 }
 
 .variant-light .trust-badges {
-  border-top-color: var(--color-gray-200);
+  border-top-color: var(--color-brand-blue-200);
 }
 
 .trust-badge {
@@ -418,9 +431,22 @@ const {
   gap: 0.75rem;
 }
 
-.badge-icon {
-  font-size: 1.5rem;
-}
+  .badge-icon {
+    font-size: 1.5rem;
+  }
+
+  .badge-icon-lucide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+  }
+
+  .variant-light .badge-icon-lucide {
+    color: var(--color-brand-blue);
+  }
 
 .badge-content {
   display: flex;
@@ -443,35 +469,34 @@ const {
 
 {countdown && (
 <script>
-  const targetDate = new Date('${countdown.targetDate}');
   const timer = document.getElementById('countdown-timer');
-  
-  function updateCountdown() {
-    const now = new Date();
-    const diff = targetDate - now;
-    
-    if (diff <= 0) {
-      timer?.classList.add('countdown-complete');
-      return;
+  if (timer) {
+    const targetDateStr = timer.getAttribute('data-target-date');
+    if (targetDateStr) {
+      const targetDate = new Date(targetDateStr);
+      function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate - now;
+        if (diff <= 0) {
+          timer.classList.add('countdown-complete');
+          return;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        const daysEl = timer.querySelector('[data-unit="days"]');
+        const hoursEl = timer.querySelector('[data-unit="hours"]');
+        const minutesEl = timer.querySelector('[data-unit="minutes"]');
+        const secondsEl = timer.querySelector('[data-unit="seconds"]');
+        if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+        if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+        if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+        if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
     }
-    
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
-  const daysEl = timer?.querySelector('[data-unit="days"]');
-  const hoursEl = timer?.querySelector('[data-unit="hours"]');
-  const minutesEl = timer?.querySelector('[data-unit="minutes"]');
-  const secondsEl = timer?.querySelector('[data-unit="seconds"]');
-  
-  if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
-  if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
-  if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
-  if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
   }
-  
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
 </script>
 )}

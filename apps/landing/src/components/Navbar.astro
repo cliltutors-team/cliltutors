@@ -7,10 +7,34 @@ const t = useTranslations(lang);
 
 const navLinks = [
   { href: `/${lang}/`, key: "nav.home" as const },
-  { href: `/${lang}/solutions`, key: "nav.solutions" as const },
-  { href: `/${lang}/methodology`, key: "nav.methodology" as const },
+  {
+    href: `/${lang}/solutions`,
+    key: "nav.solutions" as const,
+    children: [
+      { href: `/${lang}/academic-support`, key: "nav.solutions.academic" as const, icon: "academic" },
+      { href: `/${lang}/corporate-training`, key: "nav.solutions.corporate" as const, icon: "corporate" },
+      { href: `/${lang}/k12-global-preparation`, key: "nav.solutions.k12" as const, icon: "k12" },
+      { href: `/${lang}/professional-development`, key: "nav.solutions.professional" as const, icon: "professional" },
+    ],
+  },
+  {
+    href: "#",
+    key: "nav.platform" as const,
+    children: [
+      { href: `/${lang}/methodology`, key: "nav.methodology" as const, icon: "methodology" },
+      { href: `/${lang}/tutors`, key: "nav.tutors" as const, icon: "tutors" },
+      { href: `/${lang}/instructors`, key: "nav.instructors" as const, icon: "instructors" },
+    ],
+  },
   { href: `/${lang}/resources`, key: "nav.resources" as const },
-  { href: `/${lang}/instructors`, key: "nav.instructors" as const },
+  {
+    href: `/${lang}/about`,
+    key: "nav.about" as const,
+    children: [
+      { href: `/${lang}/about`, key: "nav.about" as const, icon: "about" },
+      { href: `/${lang}/contact`, key: "nav.contact" as const, icon: "contact" },
+    ],
+  },
 ];
 ---
 
@@ -34,13 +58,92 @@ const navLinks = [
     <div class="hidden lg:flex items-center gap-1">
       <ul class="flex items-center gap-0.5">
         {
-          navLinks.map((link) => (
-            <li>
-              <a href={link.href} class="nav-link-premium">
-                {t(link.key)}
-              </a>
-            </li>
-          ))
+          navLinks.map((link) =>
+            link.children ? (
+              <li class="relative group/nav">
+                <a href={link.href} class="nav-link-premium inline-flex items-center gap-1.5">
+                  {t(link.key)}
+                  <svg
+                    class="w-3 h-3 transition-transform duration-300 group-hover/nav:rotate-180 opacity-50"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </a>
+                <div class="nav-dropdown">
+                  <div class="py-1.5">
+                    {
+                      link.children.map((child) => (
+                        <a href={child.href} class="nav-dropdown-item">
+                          <span class="nav-dropdown-icon">
+                            {child.icon === "academic" && (
+                              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                              </svg>
+                            )}
+                            {child.icon === "corporate" && (
+                              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                              </svg>
+                            )}
+                            {child.icon === "k12" && (
+                              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                            )}
+{child.icon === "professional" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                              )}
+                              {child.icon === "methodology" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                              )}
+                              {child.icon === "tutors" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.636 50.636 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.05 50.05 0 0112 13.489a50.05 50.05 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 6.55A55.37 55.37 0 0112 8.443m0 0a55.37 55.37 0 015.257 2.364M12 8.443a55.37 55.37 0 015.257 2.364" />
+                                </svg>
+                              )}
+                              {child.icon === "instructors" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.99 5.99 0 0012 12.75a5.99 5.99 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                                </svg>
+                              )}
+                              {child.icon === "about" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                              )}
+                              {child.icon === "contact" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                </svg>
+                              )}
+                            </span>
+                            <span>{t(child.key)}</span>
+                          </a>
+                        ))
+                      }
+                    </div>
+                  </div>
+                </li>
+            ) : (
+              <li>
+                <a href={link.href} class="nav-link-premium">
+                  {t(link.key)}
+                </a>
+              </li>
+            )
+          )
         }
       </ul>
 
@@ -52,12 +155,12 @@ const navLinks = [
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            ><path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1.5"
-              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"
-            ></path></svg
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"
+          ></path></svg
           >
           <span class="text-[13px] font-semibold">{lang.toUpperCase()}</span>
           <svg
@@ -65,11 +168,12 @@ const navLinks = [
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            ><path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"></path></svg
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          ></path></svg
           >
         </button>
         <div class="lang-dropdown">
@@ -104,11 +208,12 @@ const navLinks = [
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          ><path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 5l7 7-7 7"></path></svg
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"
+        ></path></svg
         >
       </a>
     </div>
@@ -116,7 +221,7 @@ const navLinks = [
     <!-- Mobile Toggle -->
     <button
       id="mobile-toggle"
-      class="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors relative z-10"
+      class="lg:hidden p-2 rounded-xl hover:bg-brand-blue-50 transition-colors relative z-10"
       aria-label="Menu"
     >
       <svg
@@ -125,11 +230,12 @@ const navLinks = [
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16"></path></svg
+      ><path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h16"
+      ></path></svg
       >
       <svg
         id="close-icon"
@@ -137,11 +243,12 @@ const navLinks = [
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
-        ><path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M6 18L18 6M6 6l12 12"></path></svg
+      ><path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M6 18L18 6M6 6l12 12"
+      ></path></svg
       >
     </button>
   </nav>
@@ -149,20 +256,90 @@ const navLinks = [
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden lg:hidden">
     <div class="mobile-menu-inner">
-      <div class="px-5 py-6 space-y-1">
+      <div class="px-5 py-6 space-y-1 max-h-[80vh] overflow-y-auto">
         {
-          navLinks.map((link) => (
-            <a
-              href={link.href}
-              class="block text-[15px] font-medium text-brand-navy hover:text-brand-blue py-3 px-3 rounded-xl hover:bg-brand-blue-50 transition-all"
-            >
-              {t(link.key)}
-            </a>
-          ))
+          navLinks.map((link) =>
+            link.children ? (
+              <div class="mobile-nav-group">
+                <a
+                  href={link.href}
+                  class="flex items-center justify-between text-[15px] font-medium text-brand-navy hover:text-brand-blue py-3 px-3 rounded-xl hover:bg-brand-blue-50 transition-all"
+                >
+                  {t(link.key)}
+                </a>
+                <div class="pl-4 space-y-0.5">
+                  {
+                    link.children.map((child) => (
+                      <a
+                        href={child.href}
+                        class="flex items-center gap-2.5 text-[14px] font-medium text-brand-navy-700 hover:text-brand-blue py-2.5 px-3 rounded-xl hover:bg-brand-blue-50 transition-all"
+                      >
+                        <span class="text-brand-blue opacity-70">
+                          {child.icon === "academic" && (
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                          )}
+                          {child.icon === "corporate" && (
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                          )}
+                          {child.icon === "k12" && (
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          )}
+{child.icon === "professional" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                              )}
+                              {child.icon === "methodology" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                              )}
+                              {child.icon === "tutors" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.636 50.636 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.05 50.05 0 0112 13.489a50.05 50.05 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 6.55A55.37 55.37 0 0112 8.443m0 0a55.37 55.37 0 015.257 2.364M12 8.443a55.37 55.37 0 015.257 2.364" />
+                                </svg>
+                              )}
+                              {child.icon === "instructors" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.99 5.99 0 0012 12.75a5.99 5.99 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                                </svg>
+                              )}
+                              {child.icon === "about" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                </svg>
+                              )}
+                              {child.icon === "contact" && (
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                </svg>
+                              )}
+                            </span>
+                            {t(child.key)}
+                          </a>
+                        ))
+                      }
+                    </div>
+                  </div>
+                ) : (
+              <a
+                href={link.href}
+                class="block text-[15px] font-medium text-brand-navy hover:text-brand-blue py-3 px-3 rounded-xl hover:bg-brand-blue-50 transition-all"
+              >
+                {t(link.key)}
+              </a>
+            )
+          )
         }
-        <div class="pt-5 mt-3 border-t border-gray-200">
+        <div class="pt-5 mt-3 border-t border-brand-blue-200">
           <p
-            class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-3"
+            class="text-xs font-semibold text-brand-blue-400 uppercase tracking-wider mb-3 px-3"
           >
             {t("nav.lang")}
           </p>
@@ -176,7 +353,7 @@ const navLinks = [
                 return (
                   <a
                     href={currentPath}
-                    class={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${code === lang ? "bg-brand-blue text-white shadow-md" : "bg-gray-100 text-brand-slate hover:bg-gray-200"}`}
+                    class={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${code === lang ? "bg-brand-blue text-white shadow-md" : "bg-brand-blue-50 text-brand-slate hover:bg-brand-blue-100"}`}
                   >
                     {name}
                   </a>
@@ -207,7 +384,7 @@ const navLinks = [
     position: relative;
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-gray-600);
+    color: var(--color-brand-navy-700);
     padding: 0.5rem 0.875rem;
     border-radius: 8px;
     transition:
@@ -243,6 +420,68 @@ const navLinks = [
     left: 20%;
   }
 
+  /* ── Solutions dropdown ── */
+  .nav-dropdown {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    margin-top: 0.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow:
+      0 16px 48px rgba(52, 53, 79, 0.12),
+      0 4px 16px rgba(52, 53, 79, 0.06);
+    border: 1px solid var(--color-brand-blue-100);
+    padding: 0.5rem;
+    min-width: 260px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(8px) scale(0.97);
+    transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .group\/nav:hover .nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  .nav-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    border-radius: 10px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-brand-navy-700);
+    transition: all 200ms;
+  }
+
+  .nav-dropdown-item:hover {
+    background: var(--color-brand-blue-50);
+    color: var(--color-brand-blue);
+  }
+
+  .nav-dropdown-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--color-brand-blue-50);
+    color: var(--color-brand-blue);
+    flex-shrink: 0;
+    transition: all 200ms;
+  }
+
+  .nav-dropdown-item:hover .nav-dropdown-icon {
+    background: var(--color-brand-blue);
+    color: white;
+  }
+
   /* ── Language switcher ── */
   .lang-trigger {
     display: flex;
@@ -251,7 +490,7 @@ const navLinks = [
     padding: 0.4375rem 0.75rem;
     border-radius: 10px;
     border: 1.5px solid transparent;
-    color: var(--color-gray-600);
+    color: var(--color-brand-navy-700);
     transition: all 250ms;
     cursor: pointer;
     background: transparent;
@@ -273,7 +512,7 @@ const navLinks = [
     box-shadow:
       0 12px 40px rgba(52, 53, 79, 0.12),
       0 4px 12px rgba(52, 53, 79, 0.06);
-    border: 1px solid var(--color-gray-100);
+    border: 1px solid var(--color-brand-blue-100);
     padding: 0.5rem;
     min-width: 160px;
     opacity: 0;
@@ -296,7 +535,7 @@ const navLinks = [
     border-radius: 8px;
     font-size: 0.8125rem;
     font-weight: 500;
-    color: var(--color-gray-600);
+    color: var(--color-brand-navy-700);
     transition: all 200ms;
   }
 
@@ -315,7 +554,7 @@ const navLinks = [
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--color-gray-300);
+    background: var(--color-brand-blue-400);
     transition: background 200ms;
   }
 
@@ -340,9 +579,15 @@ const navLinks = [
   /* ── Mobile menu ── */
   .mobile-menu-inner {
     background: white;
-    border-top: 1px solid var(--color-gray-100);
+    border-top: 1px solid var(--color-brand-blue-100);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
     animation: slide-down 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .mobile-nav-group {
+    border-bottom: 1px solid var(--color-brand-blue-100);
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.25rem;
   }
 
   @keyframes slide-down {
@@ -364,7 +609,6 @@ const navLinks = [
   const closeIcon = document.getElementById("close-icon");
   const nav = document.getElementById("main-nav");
 
-  // Toggle mobile menu
   toggle?.addEventListener("click", () => {
     const isOpen = !menu?.classList.contains("hidden");
     menu?.classList.toggle("hidden");
@@ -374,7 +618,6 @@ const navLinks = [
     else document.body.style.overflow = "";
   });
 
-  // Nav scroll effect
   const handleScroll = () => {
     if (window.scrollY > 10) {
       nav?.classList.add("scrolled");
@@ -386,7 +629,6 @@ const navLinks = [
   window.addEventListener("scroll", handleScroll, { passive: true });
   handleScroll();
 
-  // Close on resize
   window.addEventListener("resize", () => {
     if (window.innerWidth >= 1024) {
       menu?.classList.add("hidden");

@@ -1,4 +1,6 @@
 ---
+import SectionHeader from './SectionHeader.astro';
+
 interface PricingTier {
   id: string;
   name: string;
@@ -14,35 +16,37 @@ interface PricingTier {
 }
 
 interface Props {
-  tiers: PricingTier[];
-  title?: string;
-  subtitle?: string;
-  eyebrow?: string;
-  enterpriseText?: string;
-  secureText?: string;
-  secureDesc?: string;
-  billingText?: string;
-  billingDesc?: string;
-  refundText?: string;
-  refundDesc?: string;
+	tiers: PricingTier[];
+	title: string;
+	subtitle: string;
+	eyebrow: string;
+	enterpriseText: string;
+	secureText: string;
+	secureDesc: string;
+	billingText: string;
+	billingDesc: string;
+	refundText: string;
+	refundDesc: string;
+	customSolutionText: string;
 }
 
 const {
-  tiers,
-  title = "Choose Your Learning Path",
-  subtitle = "Invest in your future with our flexible pricing options",
-  eyebrow = "Pricing",
-  enterpriseText = "Contact Enterprise Sales",
-  secureText = "Secure Payment",
-  secureDesc = "256-bit SSL encryption",
-  billingText = "Flexible Billing",
-  billingDesc = "Cancel anytime, no questions",
-  refundText = "30-Day Refund",
-  refundDesc = "Money-back guarantee",
+	tiers,
+	title,
+	subtitle,
+	eyebrow,
+	enterpriseText,
+	secureText,
+	secureDesc,
+	billingText,
+	billingDesc,
+	refundText,
+	refundDesc,
+	customSolutionText,
 } = Astro.props;
 ---
 
-<section class="section-padding relative overflow-hidden">
+<section class="section-padding relative overflow-hidden pricing-section">
   <div
     class="absolute inset-0 bg-gradient-to-br from-brand-navy-900 via-brand-navy to-brand-blue-dark"
   >
@@ -54,39 +58,14 @@ const {
   </div>
 
   <div class="relative container-narrow">
-    <div class="text-center mb-14 reveal">
-      <span
-        class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white/90 text-xs font-bold uppercase tracking-widest mb-6"
-      >
-        <svg
-          class="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
-        </svg>
-        {eyebrow}
-      </span>
-      <h2
-        class="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight mb-4"
-      >
-        {title}
-      </h2>
-      <p class="text-lg text-white/70 max-w-2xl mx-auto">{subtitle}</p>
-    </div>
+    <SectionHeader eyebrow={eyebrow} title={title} description={subtitle} light={true} />
 
     <div class="grid md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
       {
         tiers.map((tier, index) => (
           <div
-            class={`pricing-card ${tier.highlighted ? "featured" : ""} reveal`}
-            style={`animation-delay: ${150 + index * 100}ms`}
+			class={`pricing-card ${tier.highlighted ? "featured" : ""} reveal`}
+			style={`--stagger: ${index + 2}`}
           >
             {tier.badge && (
               <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-brand-gold to-brand-orange text-white text-xs font-bold uppercase tracking-wide rounded-full shadow-lg whitespace-nowrap">
@@ -98,20 +77,20 @@ const {
               <h3 class="font-heading font-bold text-2xl text-brand-navy mb-2">
                 {tier.name}
               </h3>
-              <p class="text-sm text-gray-600">{tier.description}</p>
+              <p class="text-sm text-brand-navy-700">{tier.description}</p>
             </div>
 
-            <div class="text-center mb-6 pb-6 border-b border-gray-200">
+            <div class="text-center mb-6 pb-6 border-b border-brand-blue-200">
               <div class="flex items-baseline justify-center gap-1">
                 {tier.originalPrice && (
-                  <span class="text-lg text-gray-400 line-through">
+                  <span class="text-lg text-brand-blue-400 line-through">
                     ${tier.originalPrice}
                   </span>
                 )}
                 <span class="text-5xl font-bold text-brand-navy">
                   ${tier.price}
                 </span>
-                <span class="text-sm text-gray-500">/{tier.period}</span>
+                <span class="text-sm text-brand-blue-500">/{tier.period}</span>
               </div>
             </div>
 
@@ -131,7 +110,7 @@ const {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span class="text-sm text-gray-700">{feature}</span>
+                  <span class="text-sm text-brand-navy">{feature}</span>
                 </li>
               ))}
             </ul>
@@ -151,10 +130,10 @@ const {
       }
     </div>
 
-    <div class="mt-12 text-center reveal delay-600">
-      <p class="text-sm text-white/60 mb-4">
-        Need a custom solution for your organization?
-      </p>
+	<div class="mt-12 text-center reveal" style="--stagger: 6">
+		<p class="text-sm text-white/60 mb-4">
+			{customSolutionText}
+		</p>
       <a
         href={`/${Astro.currentLocale}/enterprise`}
         class="inline-flex items-center gap-2 text-white font-semibold hover:text-brand-gold transition-colors"
@@ -175,7 +154,7 @@ const {
       </a>
     </div>
 
-    <div class="mt-16 grid sm:grid-cols-3 gap-8 text-center reveal delay-700">
+	<div class="mt-16 grid sm:grid-cols-3 gap-8 text-center reveal" style="--stagger: 7">
       <div>
         <div
           class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm mb-3"
@@ -246,7 +225,19 @@ const {
 </section>
 
 <style>
-  .pricing-card {
+	.pricing-section .reveal {
+		opacity: 0;
+		transform: translateY(24px);
+		transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+		transition-delay: calc(var(--stagger, 0) * 80ms);
+	}
+
+.pricing-section .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+	.pricing-card {
     position: relative;
     background: var(--color-white);
     border-radius: 20px;
@@ -304,5 +295,7 @@ const {
     .pricing-card.featured:hover {
       transform: translateY(-8px);
     }
-  }
-</style>
+	}
+	</style>
+
+

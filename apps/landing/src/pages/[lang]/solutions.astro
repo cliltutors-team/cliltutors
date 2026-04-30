@@ -2,10 +2,16 @@
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
-import HeroSection from '../../components/HeroSection.astro';
+import PremiumHero from '../../components/PremiumHero.astro';
+import PremiumCard from '../../components/PremiumCard.astro';
+import StatsBanner from '../../components/StatsBanner.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
-import Card from '../../components/Card.astro';
-import CTABanner from '../../components/CTABanner.astro';
+import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
+import LucideIcon from '../../components/LucideIcon.tsx';
+import MotionReveal from '../../components/MotionReveal.tsx';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
+import MotionCard from '../../components/MotionCard.tsx';
+import StatsCounter from '../../components/StatsCounter.tsx';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -15,23 +21,667 @@ export function getStaticPaths() {
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const programs = [
+  {
+    icon: 'briefcase',
+    iconType: 'lucide' as const,
+    title: t('solutions.programs.corporate.title'),
+    description: t('solutions.programs.corporate.desc'),
+    href: `/${lang}/corporate-training`,
+    linkText: t('solutions.learn'),
+    variant: 'blue' as const,
+    size: 'lg' as const,
+    featured: true,
+    featuredLabel: t('solutions.programs.eyebrow'),
+    metrics: [
+      { label: t('solutions.programs.corporate.metric1.label'), value: t('solutions.programs.corporate.metric1.value') },
+      { label: t('solutions.programs.corporate.metric2.label'), value: t('solutions.programs.corporate.metric2.value') },
+    ],
+    tags: [t('solutions.programs.corporate.tag1'), t('solutions.programs.corporate.tag2')],
+  },
+  {
+    icon: 'briefcase',
+    iconType: 'lucide' as const,
+    title: t('solutions.programs.professional.title'),
+    description: t('solutions.programs.professional.desc'),
+    href: `/${lang}/professional-development`,
+    linkText: t('solutions.learn'),
+    variant: 'purple' as const,
+    size: 'lg' as const,
+    metrics: [
+      { label: t('solutions.programs.professional.metric1.label'), value: t('solutions.programs.professional.metric1.value') },
+    ],
+    tags: [t('solutions.programs.professional.tag1'), t('solutions.programs.professional.tag2')],
+  },
+  {
+    icon: 'graduation-cap',
+    iconType: 'lucide' as const,
+    title: t('solutions.programs.academic.title'),
+    description: t('solutions.programs.academic.desc'),
+    href: `/${lang}/academic-support`,
+    linkText: t('solutions.learn'),
+    variant: 'gold' as const,
+    size: 'lg' as const,
+    metrics: [
+      { label: t('solutions.programs.academic.metric1.label'), value: t('solutions.programs.academic.metric1.value') },
+    ],
+    tags: [t('solutions.programs.academic.tag1'), t('solutions.programs.academic.tag2')],
+  },
+  {
+    icon: 'book-open',
+    iconType: 'lucide' as const,
+    title: t('solutions.programs.k12.title'),
+    description: t('solutions.programs.k12.desc'),
+    href: `/${lang}/k12-global-preparation`,
+    linkText: t('solutions.learn'),
+    variant: 'orange' as const,
+    size: 'lg' as const,
+    metrics: [
+      { label: t('solutions.programs.k12.metric1.label'), value: t('solutions.programs.k12.metric1.value') },
+    ],
+    tags: [t('solutions.programs.k12.tag1'), t('solutions.programs.k12.tag2')],
+  },
+];
+
+const phases = [
+  {
+    number: '01',
+    title: t('solutions.process.phase1.title'),
+    items: [t('solutions.process.phase1.item1'), t('solutions.process.phase1.item2')],
+    variant: 'blue' as const,
+  },
+  {
+    number: '02',
+    title: t('solutions.process.phase2.title'),
+    items: [t('solutions.process.phase2.item1'), t('solutions.process.phase2.item2')],
+    variant: 'purple' as const,
+  },
+  {
+    number: '03',
+    title: t('solutions.process.phase3.title'),
+    items: [t('solutions.process.phase3.item1'), t('solutions.process.phase3.item2')],
+    variant: 'gold' as const,
+  },
+  {
+    number: '04',
+    title: t('solutions.process.phase4.title'),
+    items: [t('solutions.process.phase4.item1'), t('solutions.process.phase4.item2')],
+    variant: 'orange' as const,
+  },
+];
+
+const outcomes = [
+  {
+    icon: 'message-circle',
+    iconType: 'lucide' as const,
+    title: t('solutions.outcomes.fluency.title'),
+    description: t('solutions.outcomes.fluency.desc'),
+    href: `/${lang}/corporate-training`,
+    linkText: t('solutions.outcomes.fluency.link'),
+    variant: 'blue' as const,
+  },
+  {
+    icon: 'graduation-cap',
+    iconType: 'lucide' as const,
+    title: t('solutions.outcomes.academic.title'),
+    description: t('solutions.outcomes.academic.desc'),
+    href: `/${lang}/academic-support`,
+    linkText: t('solutions.outcomes.academic.link'),
+    variant: 'purple' as const,
+  },
+  {
+    icon: 'rocket',
+    iconType: 'lucide' as const,
+    title: t('solutions.outcomes.career.title'),
+    description: t('solutions.outcomes.career.desc'),
+    href: `/${lang}/professional-development`,
+    linkText: t('solutions.outcomes.career.link'),
+    variant: 'gold' as const,
+  },
+  {
+    icon: 'globe',
+    iconType: 'lucide' as const,
+    title: t('solutions.outcomes.global.title'),
+    description: t('solutions.outcomes.global.desc'),
+    href: `/${lang}/k12-global-preparation`,
+    linkText: t('solutions.outcomes.global.link'),
+    variant: 'orange' as const,
+  },
+];
+
+const stats = [
+  { value: '6.3k+', label: t('solutions.stats.students'), trend: 'up' as const, trendValue: '+18%' },
+  { value: '25+', label: t('solutions.stats.countries'), trend: 'up' as const, trendValue: '+5' },
+  { value: '45k+', label: t('solutions.stats.hours'), trend: 'up' as const },
+  { value: '97%', label: t('solutions.stats.satisfaction'), trend: 'up' as const, trendValue: '+2%' },
+];
+
+const trustIndicators = [
+  { value: '340%', label: t('solutions.programs.corporate.metric1.label') },
+  { value: '97%', label: t('solutions.stats.satisfaction') },
+  { value: '25+', label: t('solutions.stats.countries') },
+];
 ---
 
 <Layout title={t('solutions.meta.title')} description={t('solutions.meta.desc')} lang={lang}>
   <Navbar />
-  <HeroSection title={t('solutions.hero.title')} subtitle={t('solutions.hero.subtitle')} cta1Text={t('solutions.cta')} cta1Href={`/${lang}/consultation`} />
 
-  <section class="section-padding bg-white">
-    <div class="container-narrow">
-      <div class="grid sm:grid-cols-2 gap-6">
-        <Card icon="🏢" title={t('home.sol1.title')} description={t('home.sol1.desc')} href={`/${lang}/corporate-training`} linkText={t('solutions.learn')} />
-        <Card icon="💼" title={t('home.sol2.title')} description={t('home.sol2.desc')} href={`/${lang}/professional-development`} linkText={t('solutions.learn')} />
-        <Card icon="🎓" title={t('home.sol3.title')} description={t('home.sol3.desc')} href={`/${lang}/academic-support`} linkText={t('solutions.learn')} />
-        <Card icon="📚" title={t('home.sol4.title')} description={t('home.sol4.desc')} href={`/${lang}/k12-global-preparation`} linkText={t('solutions.learn')} />
+  <div class="solutions-page">
+    <PremiumHero
+      eyebrow={t('solutions.hero.eyebrow')}
+      title={t('solutions.hero.title')}
+      subtitle={t('solutions.hero.subtitle')}
+      ctaPrimary={{ text: t('solutions.hero.cta'), href: `/${lang}/consultation` }}
+      ctaSecondary={{ text: t('solutions.hero.cta2'), href: '#programs' }}
+      alignment="center"
+      theme="gradient"
+      trustIndicators={trustIndicators}
+    />
+
+    <section id="programs" class="section-padding relative overflow-hidden">
+      <div class="bg-dots"></div>
+  <div class="container-wide relative">
+        <SectionHeader
+          eyebrow={t('solutions.programs.eyebrow')}
+          title={t('solutions.programs.title')}
+          description={t('solutions.programs.subtitle')}
+        />
+        <StaggerContainer className="grid md:grid-cols-2 gap-6" client:visible>
+          {programs.map((prog, i) => (
+            <StaggerItem>
+              <MotionCard client:visible>
+                <PremiumCard
+                  icon={prog.icon}
+                  iconType={prog.iconType}
+                  title={prog.title}
+                  description={prog.description}
+                  href={prog.href}
+                  linkText={prog.linkText}
+                  variant={prog.variant}
+                  size={prog.size}
+                  featured={prog.featured}
+                  featuredLabel={prog.featuredLabel}
+                  metrics={prog.metrics}
+                  tags={prog.tags}
+                />
+              </MotionCard>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      </div>
+    </section>
+
+    <section class="section-padding gradient-hero relative overflow-hidden">
+      <div class="solutions-orb solutions-orb--purple"></div>
+      <div class="solutions-orb solutions-orb--blue"></div>
+      <div class="container-wide relative">
+        <SectionHeader
+          eyebrow={t('solutions.process.eyebrow')}
+          title={t('solutions.process.title')}
+          light
+        />
+        <StaggerContainer className="solutions-process-grid" client:visible>
+          {phases.map((phase, i) => (
+            <StaggerItem>
+              <div class="process-step">
+                <div class={`process-step-number process-step-number--${phase.variant}`}>{phase.number}</div>
+                <h3 class="process-step-title">{phase.title}</h3>
+                <ul class="process-step-list">
+                  {phase.items.map(item => (
+                    <li class="process-step-item">
+                      <LucideIcon client:idle name="check" size={16} color="currentColor" className="text-brand-gold" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      </div>
+    </section>
+
+    <StatsBanner
+      stats={stats}
+      theme="gradient"
+      title={t('solutions.stats.title')}
+      subtitle={t('solutions.stats.subtitle')}
+    />
+
+    <section class="section-padding relative overflow-hidden">
+      <div class="bg-grid"></div>
+  <div class="container-wide relative">
+        <SectionHeader
+          eyebrow={t('solutions.outcomes.eyebrow')}
+          title={t('solutions.outcomes.title')}
+          description={t('solutions.outcomes.subtitle')}
+        />
+        <StaggerContainer className="grid md:grid-cols-2 gap-6" client:visible>
+          {outcomes.slice(0, 2).map((outcome, i) => (
+            <StaggerItem>
+              <MotionCard client:visible>
+                <PremiumCard
+                  icon={outcome.icon}
+                  iconType={outcome.iconType}
+                  title={outcome.title}
+                  description={outcome.description}
+                  href={outcome.href}
+                  linkText={outcome.linkText}
+                  variant={outcome.variant}
+                  size="lg"
+                />
+              </MotionCard>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+        <StaggerContainer className="grid md:grid-cols-2 gap-6 mt-6" client:visible>
+          {outcomes.slice(2).map((outcome, i) => (
+            <StaggerItem>
+              <MotionCard client:visible>
+                <PremiumCard
+                  icon={outcome.icon}
+                  iconType={outcome.iconType}
+                  title={outcome.title}
+                  description={outcome.description}
+                  href={outcome.href}
+                  linkText={outcome.linkText}
+                  variant={outcome.variant}
+                  size="lg"
+                />
+              </MotionCard>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      </div>
+    </section>
+
+    <section class="section-padding gradient-hero relative overflow-hidden">
+      <div class="solutions-orb solutions-orb--gold"></div>
+  <div class="container-wide relative">
+        <SectionHeader
+          eyebrow={t('solutions.featured.eyebrow')}
+          title={t('solutions.featured.title')}
+          description={t('solutions.featured.desc')}
+          light
+        />
+        <MotionReveal client:visible>
+<div class="solutions-featured-stats">
+          <div class="featured-stat">
+            <span class="featured-stat-value"><StatsCounter client:visible value={t('solutions.featured.stat1.value')} /></span>
+            <span class="featured-stat-label">{t('solutions.featured.stat1.label')}</span>
+          </div>
+          <div class="featured-stat-divider"></div>
+          <div class="featured-stat">
+            <span class="featured-stat-value"><StatsCounter client:visible value={t('solutions.featured.stat2.value')} /></span>
+            <span class="featured-stat-label">{t('solutions.featured.stat2.label')}</span>
+          </div>
+        </div>
+        </MotionReveal>
+        <StaggerContainer className="grid md:grid-cols-3 gap-6 mt-10" client:visible>
+<StaggerItem>
+          <div class="featured-card">
+            <div class="featured-card-icon"><LucideIcon client:idle name="trending-up" size={28} color="white" /></div>
+            <h3 class="featured-card-title">{t('solutions.featured.card1.title')}</h3>
+            <p class="featured-card-desc">{t('solutions.featured.card1.desc')}</p>
+      <div class="featured-card-metric">
+        <span class="metric-value"><StatsCounter client:visible value={t('solutions.featured.card1.metric.value')} className="metric-counter" /></span>
+        <span class="metric-label">{t('solutions.featured.card1.metric.label')}</span>
       </div>
     </div>
-  </section>
+  </StaggerItem>
+  <StaggerItem>
+    <div class="featured-card">
+      <div class="featured-card-icon"><LucideIcon client:idle name="zap" size={28} color="white" /></div>
+      <h3 class="featured-card-title">{t('solutions.featured.card2.title')}</h3>
+      <p class="featured-card-desc">{t('solutions.featured.card2.desc')}</p>
+      <div class="featured-card-metric">
+        <span class="metric-value"><StatsCounter client:visible value={t('solutions.featured.card2.metric.value')} className="metric-counter" /></span>
+        <span class="metric-label">{t('solutions.featured.card2.metric.label')}</span>
+      </div>
+    </div>
+  </StaggerItem>
+  <StaggerItem>
+    <div class="featured-card">
+      <div class="featured-card-icon"><LucideIcon client:idle name="sparkles" size={28} color="white" /></div>
+      <h3 class="featured-card-title">{t('solutions.featured.card3.title')}</h3>
+      <p class="featured-card-desc">{t('solutions.featured.card3.desc')}</p>
+      <div class="featured-card-metric">
+        <span class="metric-value"><StatsCounter client:visible value={t('solutions.featured.card3.metric.value')} className="metric-counter" /></span>
+        <span class="metric-label">{t('solutions.featured.card3.metric.label')}</span>
+      </div>
+          </div>
+        </StaggerItem>
+        </StaggerContainer>
+      </div>
+    </section>
 
-  <CTABanner title={t('home.finalcta.title')} ctaText={t('solutions.cta')} ctaHref={`/${lang}/consultation`} />
+    <PremiumCTABanner
+      title={t('solutions.cta.title')}
+      description={t('solutions.cta.subtitle')}
+      primaryCTA={{ text: t('solutions.cta.primary'), href: `/${lang}/consultation` }}
+      secondaryCTA={{ text: t('solutions.cta.secondary'), href: `/${lang}/methodology` }}
+      variant="gradient"
+  trustBadges={[
+    { icon: 'trending-up', iconType: 'lucide' as const, label: t('solutions.featured.card1.title') },
+    { icon: 'zap', iconType: 'lucide' as const, label: t('solutions.featured.card2.title') },
+    { icon: 'sparkles', iconType: 'lucide' as const, label: t('solutions.featured.card3.title') },
+  ]}
+    />
+  </div>
+
   <Footer />
 </Layout>
+
+<style>
+  .solutions-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  .solutions-orb--purple {
+    width: 400px;
+    height: 400px;
+    background: var(--color-brand-purple);
+    top: 10%;
+    right: -5%;
+  }
+
+  .solutions-orb--blue {
+    width: 300px;
+    height: 300px;
+    background: var(--color-brand-blue);
+    bottom: 10%;
+    left: -3%;
+  }
+
+  .solutions-orb--gold {
+    width: 350px;
+    height: 350px;
+    background: var(--color-brand-gold);
+    top: 15%;
+    left: -5%;
+  }
+
+  /* Process Section */
+  .solutions-process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    position: relative;
+  }
+
+.process-step {
+  position: relative;
+  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 400ms var(--ease-out-expo);
+}
+
+.process-step::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(82, 138, 237, 0.3), rgba(166, 123, 244, 0.3));
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 400ms var(--ease-out-expo);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+}
+
+.process-step:hover {
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.process-step:hover::after {
+  opacity: 1;
+}
+
+.process-step-number {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 1rem;
+  opacity: 0.4;
+}
+
+.process-step:hover .process-step-number {
+  opacity: 0.7;
+}
+
+  .process-step-number--blue { color: var(--color-brand-blue); }
+  .process-step-number--purple { color: var(--color-brand-purple); }
+  .process-step-number--gold { color: var(--color-brand-gold); }
+  .process-step-number--orange { color: var(--color-brand-orange); }
+
+  .process-step-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 1rem;
+  }
+
+  .process-step-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .process-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.5;
+  }
+
+
+
+  /* Featured Stats */
+.solutions-featured-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 2rem 3rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1rem;
+  max-width: 520px;
+  margin: 0 auto;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+  .featured-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .featured-stat-value {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .featured-stat-value .stat-value {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    display: inline;
+  }
+
+  .featured-stat-label {
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+  }
+
+  .featured-stat-divider {
+    width: 1px;
+    height: 3rem;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Featured Cards */
+.featured-card {
+  position: relative;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 400ms var(--ease-out-expo);
+}
+
+.featured-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(254, 187, 55, 0.4), rgba(251, 122, 75, 0.4));
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 400ms var(--ease-out-expo);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+}
+
+.featured-card:hover {
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.featured-card:hover::after {
+  opacity: 1;
+}
+
+.featured-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.875rem;
+  background: linear-gradient(135deg, rgba(254, 187, 55, 0.25), rgba(251, 122, 75, 0.25));
+  border: 1px solid rgba(254, 187, 55, 0.2);
+  margin-bottom: 1.25rem;
+  transition: all 300ms var(--ease-out-expo);
+}
+
+.featured-card:hover .featured-card-icon {
+  background: linear-gradient(135deg, rgba(254, 187, 55, 0.35), rgba(251, 122, 75, 0.35));
+  transform: scale(1.05) rotate(-3deg);
+}
+
+  .featured-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 0.5rem;
+  }
+
+.featured-card-desc {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.featured-card-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metric-value {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-brand-gold);
+  line-height: 1;
+}
+
+.metric-value .metric-counter {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  display: inline;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .solutions-process-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .solutions-process-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .solutions-featured-stats {
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 1.5rem 2rem;
+    }
+
+    .featured-stat-divider {
+      width: 3rem;
+      height: 1px;
+    }
+  }
+
+@media (prefers-reduced-motion: reduce) {
+  .process-step:hover,
+  .featured-card:hover {
+    transform: none;
+  }
+}
+</style>

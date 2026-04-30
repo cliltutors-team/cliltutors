@@ -1,9 +1,14 @@
 ---
 /**
- * StatsBanner Component
- * Premium statistics showcase for enterprise platform
- * Full i18n support
- */
+* StatsBanner Component
+* Premium statistics showcase for enterprise platform
+* Full i18n support
+* Animated counter via StatsCounter React island
+*/
+
+import StatsCounter from './StatsCounter';
+import MotionReveal from './MotionReveal';
+import StaggerContainer, { StaggerItem } from './StaggerContainer';
 
 interface Stat {
   value: string;
@@ -54,7 +59,7 @@ const isDark = theme === 'dark' || theme === 'gradient';
       {stats.map((stat, index) => (
         <div class="stat-card animate-fade-up" style={`animation-delay: ${index * 100}ms`}>
           <div class="stat-value-wrapper">
-            <span class="stat-value">{stat.value}</span>
+            <StatsCounter client:visible value={stat.value} />
             {stat.trend && (
               <span class:list={['stat-trend', `trend-${stat.trend}`]}>
                 {stat.trend === 'up' && (
@@ -262,7 +267,13 @@ const isDark = theme === 'dark' || theme === 'gradient';
     margin: 0;
   }
 
-  @media (max-width: 768px) {
+  @media (prefers-reduced-motion: reduce) {
+  .stat-card {
+    animation: none;
+  }
+}
+
+@media (max-width: 768px) {
     .stats-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 1rem;

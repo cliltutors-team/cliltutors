@@ -2,8 +2,14 @@
 // next.config.ts
 import type { NextConfig } from "next";
 import type { Configuration, RuleSetRule } from "webpack";
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
+
+const monorepoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
 const nextConfig: NextConfig = {
+  outputFileTracingRoot: monorepoRoot,
+
   async rewrites() {
     return [
       {

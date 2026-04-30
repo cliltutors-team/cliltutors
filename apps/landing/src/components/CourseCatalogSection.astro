@@ -1,4 +1,6 @@
 ---
+import SectionHeader from './SectionHeader.astro';
+
 interface Course {
   id: string;
   title: string;
@@ -18,29 +20,29 @@ interface Course {
 
 interface Props {
   courses: Course[];
-  title?: string;
-  subtitle?: string;
-  eyebrow?: string;
-  filterAllText?: string;
-  bestsellerText?: string;
-  featuredText?: string;
-  studentsText?: string;
-  enrollText?: string;
-  viewAllText?: string;
+  title: string;
+  subtitle: string;
+  eyebrow: string;
+  filterAllText: string;
+  bestsellerText: string;
+  featuredText: string;
+  studentsText: string;
+  enrollText: string;
+  viewAllText: string;
   viewAllHref?: string;
 }
 
 const {
   courses,
-  title = "Explore Our Courses",
-  subtitle = "Master new skills with our expertly crafted curriculum",
-  eyebrow = "Premium Catalog",
-  filterAllText = "All Courses",
-  bestsellerText = "Bestseller",
-  featuredText = "Featured",
-  studentsText = "students",
-  enrollText = "Enroll Now",
-  viewAllText = "View All Courses",
+  title,
+  subtitle,
+  eyebrow,
+  filterAllText,
+  bestsellerText,
+  featuredText,
+  studentsText,
+  enrollText,
+  viewAllText,
   viewAllHref = `${Astro.currentLocale}/courses`,
 } = Astro.props;
 
@@ -48,19 +50,11 @@ const categories = [...new Set(courses.map((c) => c.category))];
 const levels = ["beginner", "intermediate", "advanced"];
 ---
 
-<section class="section-padding bg-white">
-  <div class="container-narrow">
-    <div class="text-center mb-12 reveal">
-      <span class="eyebrow mb-4">{eyebrow}</span>
-      <h2
-        class="font-heading font-bold text-4xl sm:text-5xl text-brand-navy tracking-tight"
-      >
-        {title}
-      </h2>
-      <p class="mt-4 text-lg text-slate-light max-w-2xl mx-auto">{subtitle}</p>
-    </div>
+<section class="section-padding bg-white course-catalog-section">
+<div class="container-narrow">
+    <SectionHeader eyebrow={eyebrow} title={title} description={subtitle} />
 
-    <div class="mb-10 reveal delay-100">
+    <div class="mb-10 reveal" style="--stagger: 1">
       <div class="flex flex-wrap gap-3 justify-center">
         <button class="filter-btn active" data-filter="all"
           >{filterAllText}</button
@@ -78,12 +72,12 @@ const levels = ["beginner", "intermediate", "advanced"];
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="courses-grid">
       {
         courses.map((course, index) => (
-          <article
-            class="course-card group reveal"
-            data-category={course.category}
-            data-level={course.level}
-            style={`animation-delay: ${150 + index * 50}ms`}
-          >
+		<article
+			class="course-card group reveal"
+			data-category={course.category}
+			data-level={course.level}
+			style={`--stagger: ${2 + index}`}
+		>
             <div class="course-image-wrap relative overflow-hidden rounded-xl mb-4">
               <img
                 src={course.image}
@@ -143,7 +137,7 @@ const levels = ["beginner", "intermediate", "advanced"];
               {course.subtitle}
             </p>
 
-            <div class="flex items-center gap-3 text-xs text-gray-500 mb-4">
+            <div class="flex items-center gap-3 text-xs text-brand-blue-500 mb-4">
               <div class="flex items-center gap-1">
                 <svg
                   class="w-4 h-4"
@@ -180,7 +174,7 @@ const levels = ["beginner", "intermediate", "advanced"];
               </div>
             </div>
 
-            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+            <div class="flex items-center justify-between pt-4 border-t border-brand-blue-100">
               <div class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-full bg-gradient-to-br from-brand-blue to-brand-purple flex items-center justify-center text-white text-xs font-bold">
                   {course.instructor
@@ -189,12 +183,12 @@ const levels = ["beginner", "intermediate", "advanced"];
                     .join("")
                     .slice(0, 2)}
                 </div>
-                <span class="text-sm text-gray-600">{course.instructor}</span>
+                <span class="text-sm text-brand-navy-700">{course.instructor}</span>
               </div>
 
               <div class="text-right">
                 {course.originalPrice && (
-                  <span class="text-sm text-gray-400 line-through mr-1">
+                  <span class="text-sm text-brand-blue-400 line-through mr-1">
                     ${course.originalPrice}
                   </span>
                 )}
@@ -212,7 +206,7 @@ const levels = ["beginner", "intermediate", "advanced"];
       }
     </div>
 
-    <div class="mt-12 text-center reveal delay-600">
+	<div class="mt-12 text-center reveal" style="--stagger: 20">
       <a
         href={viewAllHref}
         class="btn-secondary inline-flex items-center gap-2"
@@ -238,7 +232,7 @@ const levels = ["beginner", "intermediate", "advanced"];
 <style>
   .course-card {
     background: var(--color-white);
-    border: 1px solid var(--color-gray-200);
+    border: 1px solid var(--color-brand-blue-200);
     border-radius: 16px;
     padding: 1rem;
     transition: all 300ms cubic-bezier(0.25, 1, 0.5, 1);
@@ -281,8 +275,8 @@ const levels = ["beginner", "intermediate", "advanced"];
     border-radius: 100px;
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--color-gray-600);
-    background: var(--color-gray-100);
+color: var(--color-brand-navy-700);
+	background: var(--color-brand-blue-50);
     border: 1.5px solid transparent;
     cursor: pointer;
     transition: all 250ms cubic-bezier(0.25, 1, 0.5, 1);
@@ -311,13 +305,30 @@ const levels = ["beginner", "intermediate", "advanced"];
     overflow: hidden;
   }
 
-  .course-card[hidden] {
-    display: none;
-  }
+.course-card[hidden] {
+  display: none;
+}
+
+.course-catalog-section .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--stagger, 0) * 80ms);
+}
+
+.course-catalog-section .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const filterBtns = document.querySelectorAll(".filter-btn");
     const courseCards = document.querySelectorAll(".course-card");
 

@@ -4,6 +4,13 @@ import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import PremiumHero from '../../components/PremiumHero.astro';
 import PremiumCard from '../../components/PremiumCard.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
+import LucideIcon from '../../components/LucideIcon.tsx';
+import MotionReveal from '../../components/MotionReveal.tsx';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
+import MotionCard from '../../components/MotionCard.tsx';
+import StatsCounter from '../../components/StatsCounter.tsx';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -15,15 +22,16 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const categories = [
-  { id: 'language', label: t('resources.cat1'), icon: '🌐' },
-  { id: 'communication', label: t('resources.cat2'), icon: '🤝' },
-  { id: 'education', label: t('resources.cat3'), icon: '🏫' },
+  { id: 'language', label: t('resources.cat1'), icon: 'globe-2', iconType: 'lucide' as const },
+  { id: 'communication', label: t('resources.cat2'), icon: 'users', iconType: 'lucide' as const },
+  { id: 'education', label: t('resources.cat3'), icon: 'school', iconType: 'lucide' as const },
 ];
 
 const featuredResources = [
   {
     category: 'language',
-    icon: '📖',
+    icon: 'book-open',
+    iconType: 'lucide' as const,
     title: t('resources.featured1.title'),
     description: t('resources.featured1.desc'),
     variant: 'blue',
@@ -32,7 +40,8 @@ const featuredResources = [
   },
   {
     category: 'communication',
-    icon: '🌍',
+    icon: 'globe',
+    iconType: 'lucide' as const,
     title: t('resources.featured2.title'),
     description: t('resources.featured2.desc'),
     variant: 'purple',
@@ -41,7 +50,8 @@ const featuredResources = [
   },
   {
     category: 'education',
-    icon: '🎓',
+    icon: 'graduation-cap',
+    iconType: 'lucide' as const,
     title: t('resources.featured3.title'),
     description: t('resources.featured3.desc'),
     variant: 'gold',
@@ -53,28 +63,32 @@ const featuredResources = [
 const additionalResources = [
   {
     category: 'language',
-    icon: '🗣️',
+    icon: 'mic',
+    iconType: 'lucide' as const,
     title: t('resources.add1.title'),
     description: t('resources.add1.desc'),
     variant: 'blue'
   },
   {
     category: 'communication',
-    icon: '💼',
+    icon: 'briefcase',
+    iconType: 'lucide' as const,
     title: t('resources.add2.title'),
     description: t('resources.add2.desc'),
     variant: 'purple'
   },
   {
     category: 'language',
-    icon: '📝',
+    icon: 'pencil',
+    iconType: 'lucide' as const,
     title: t('resources.add3.title'),
     description: t('resources.add3.desc'),
     variant: 'blue'
   },
   {
     category: 'education',
-    icon: '📊',
+    icon: 'bar-chart',
+    iconType: 'lucide' as const,
     title: t('resources.add4.title'),
     description: t('resources.add4.desc'),
     variant: 'gold'
@@ -84,261 +98,438 @@ const additionalResources = [
 
 <Layout title={t('resources.meta.title')} description={t('resources.meta.desc')} lang={lang}>
   <Navbar />
-  
-  <PremiumHero
-    eyebrow={t('resources.eyebrow')}
-    title={t('resources.hero.title')}
-    subtitle={t('resources.hero.subtitle')}
-    theme="gradient"
-    alignment="center"
-  />
 
-  <section class="resources-hub section-padding bg-white">
-    <div class="container-wide">
-      <div class="filters-container">
-        <button class="filter-btn active" data-category="all">
-          {t('resources.all')}
-        </button>
-        {categories.map(cat => (
-          <button class="filter-btn" data-category={cat.id}>
-            <span class="filter-icon">{cat.icon}</span>
-            {cat.label}
+  <div class="resources-page">
+    <PremiumHero
+      eyebrow={t('resources.eyebrow')}
+      title={t('resources.hero.title')}
+      subtitle={t('resources.hero.subtitle')}
+      theme="gradient"
+      alignment="center"
+    />
+
+    <section class="section-padding gradient-subtle relative overflow-hidden">
+      <div class="bg-dots"></div>
+      <div class="container-wide relative">
+      <MotionReveal client:visible>
+        <div class="filters-container">
+          <button class="filter-btn active" data-category="all">
+            {t('resources.all')}
           </button>
-        ))}
-      </div>
-
-      <div class="featured-section">
-        <h2 class="section-title">
-          {t('resources.featured.title')}
-        </h2>
-        <div class="featured-grid">
-          {featuredResources.map(resource => (
-            <div class="resource-card" data-category={resource.category}>
-              <PremiumCard
-                icon={resource.icon}
-                title={resource.title}
-                description={resource.description}
-                variant={resource.variant}
-size="lg"
-  featured={resource.featured}
-  featuredLabel={t('card.featured')}
-  tags={resource.tags}
-                href="#"
-                linkText={t('resources.read.article')}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div class="additional-section">
-        <h2 class="section-title">
-          {t('resources.additional.title')}
-        </h2>
-        <div class="additional-grid">
-          {additionalResources.map(resource => (
-            <div class="resource-card" data-category={resource.category}>
-              <PremiumCard
-                icon={resource.icon}
-                title={resource.title}
-                description={resource.description}
-                variant={resource.variant}
-                size="md"
-                href="#"
-                linkText={t('resources.read.article')}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div class="coming-soon-section">
-        <div class="coming-soon-card">
-          <div class="coming-soon-icon">📚</div>
-          <h3>{t('resources.coming')}</h3>
-          <form class="subscribe-form">
-            <input 
-              type="email" 
-              placeholder={t('resources.email.placeholder')} 
-              class="email-input"
-              required
-            />
-            <button type="submit" class="subscribe-btn">
-              {t('resources.subscribe')}
+          {categories.map(cat => (
+            <button class="filter-btn" data-category={cat.id}>
+              {cat.iconType === 'lucide' ? <LucideIcon client:idle name={cat.icon} size={18} color="currentColor" /> : <span class="filter-icon">{cat.icon}</span>}
+              {cat.label}
             </button>
-          </form>
+          ))}
         </div>
+      </MotionReveal>
+
+        <div class="featured-section">
+          <SectionHeader
+            eyebrow={t('resources.eyebrow')}
+            title={t('resources.featured.title')}
+          />
+      <StaggerContainer client:visible className="featured-grid">
+        {featuredResources.map((resource) => (
+          <StaggerItem>
+            <MotionCard client:visible>
+              <div class="resource-card" data-category={resource.category}>
+                <PremiumCard
+                  icon={resource.icon}
+                  iconType={resource.iconType}
+                  title={resource.title}
+                  description={resource.description}
+                  variant={resource.variant}
+                  size="lg"
+                  featured={resource.featured}
+                  featuredLabel={t('card.featured')}
+                  tags={resource.tags}
+                  href="#"
+                  linkText={t('resources.read.article')}
+                />
+              </div>
+            </MotionCard>
+          </StaggerItem>
+        ))}
+      </StaggerContainer>
+        </div>
+
+        <div class="additional-section">
+          <SectionHeader
+            title={t('resources.additional.title')}
+          />
+      <StaggerContainer client:visible className="additional-grid">
+        {additionalResources.map((resource) => (
+          <StaggerItem>
+            <MotionCard client:visible>
+              <div class="resource-card" data-category={resource.category}>
+                <PremiumCard
+                  icon={resource.icon}
+                  iconType={resource.iconType}
+                  title={resource.title}
+                  description={resource.description}
+                  variant={resource.variant}
+                  size="md"
+                  href="#"
+                  linkText={t('resources.read.article')}
+                />
+              </div>
+            </MotionCard>
+          </StaggerItem>
+        ))}
+      </StaggerContainer>
+        </div>
+
+        <MotionReveal client:visible>
+    <div class="coming-soon-section">
+      <div class="coming-soon-card">
+        <div class="coming-soon-pulse"></div>
+        <div class="coming-soon-icon-wrap">
+          <LucideIcon client:idle name="book-open" size={32} color="white" />
+        </div>
+        <h3>{t('resources.coming')}</h3>
+        <div class="coming-soon-social-proof">
+          <div class="subscriber-avatars">
+            <img src="/images/web/Laura.png" alt="" class="subscriber-avatar" />
+            <img src="/images/web/Cristian.png" alt="" class="subscriber-avatar" />
+            <img src="/images/web/Alissa.png" alt="" class="subscriber-avatar" />
+          </div>
+          <span class="subscriber-count"><StatsCounter client:visible value="2,400+" className="subscriber-counter" /> <span class="subscriber-label">{t('resources.subscribers')}</span></span>
+        </div>
+        <form class="subscribe-form">
+          <input
+            type="email"
+            placeholder={t('resources.email.placeholder')}
+            class="input-field"
+            required
+          />
+          <button type="submit" class="btn-primary btn-sweep">
+            {t('resources.subscribe')}
+          </button>
+        </form>
       </div>
     </div>
-  </section>
+      </MotionReveal>
+      </div>
+    </section>
+
+    <PremiumCTABanner
+      title={t('resources.cta.title')}
+      description={t('resources.cta.subtitle')}
+      primaryCTA={{ text: t('resources.cta.primary'), href: `/${lang}/consultation` }}
+      secondaryCTA={{ text: t('resources.cta.secondary'), href: `/${lang}/methodology` }}
+      variant="gradient-gold"
+      trustBadges={[
+        { icon: 'book-open', iconType: 'lucide' as const, label: t('resources.cat1') },
+        { icon: 'graduation-cap', iconType: 'lucide' as const, label: t('resources.cat3') },
+      ]}
+    />
+  </div>
 
   <Footer />
 </Layout>
 
 <style>
-  .resources-hub {
-    position: relative;
-  }
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
 
-  .filters-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 4rem;
-  }
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(82, 138, 237, 0.15);
+  border-radius: 100px;
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-slate);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(82, 138, 237, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 300ms var(--ease-out-expo);
+  position: relative;
+  overflow: hidden;
+}
 
-  .filter-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: white;
-    border: 1.5px solid rgba(52, 53, 79, 0.15);
-    border-radius: 100px;
-    font-family: var(--font-heading);
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--color-slate);
-    cursor: pointer;
-    transition: all 300ms var(--ease-out-expo);
-  }
+.filter-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
 
-  .filter-btn:hover {
-    border-color: var(--color-brand-blue);
-    color: var(--color-brand-blue);
-  }
+.filter-btn:hover {
+  border-color: transparent;
+  color: var(--color-brand-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(82, 138, 237, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
 
-  .filter-btn.active {
-    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
-    color: white;
-    border-color: transparent;
-    box-shadow: 0 4px 16px rgba(82, 138, 237, 0.25);
-  }
+.filter-btn:hover::after {
+  opacity: 1;
+}
 
-  .filter-icon {
-    font-size: 1.25rem;
-  }
+.filter-btn.active {
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(82, 138, 237, 0.25);
+}
 
-  .section-title {
-    font-family: var(--font-heading);
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--color-brand-navy);
-    margin-bottom: 2rem;
-    text-align: center;
-  }
+.filter-icon {
+  font-size: 1.25rem;
+}
 
-  .featured-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-bottom: 4rem;
-  }
+.featured-section {
+  margin-bottom: 4rem;
+}
 
-  .additional-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 4rem;
-  }
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
 
-  .resource-card {
-    transition: opacity 300ms var(--ease-out-expo), transform 300ms var(--ease-out-expo);
-  }
+.additional-section {
+  margin-bottom: 4rem;
+}
 
-  .resource-card.hidden {
-    opacity: 0;
-    transform: scale(0.95);
-    position: absolute;
-    pointer-events: none;
-  }
+.additional-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
 
-  .coming-soon-section {
-    max-width: 700px;
-    margin: 0 auto;
-  }
+.resource-card {
+  transition: opacity 400ms var(--ease-out-expo), transform 400ms var(--ease-out-expo), max-height 400ms var(--ease-out-expo);
+  max-height: 800px;
+  overflow: hidden;
+}
 
-  .coming-soon-card {
-    background: linear-gradient(135deg, rgba(82, 138, 237, 0.03), rgba(166, 123, 244, 0.03));
-    border: 1px solid rgba(82, 138, 237, 0.1);
-    border-radius: 1.5rem;
-    padding: 3rem 2rem;
-    text-align: center;
-  }
+.resource-card.hidden {
+  opacity: 0;
+  transform: scale(0.92) translateY(8px);
+  max-height: 0;
+  pointer-events: none;
+  margin: 0;
+  padding: 0;
+}
 
-  .coming-soon-icon {
-    font-size: 4rem;
-    margin-bottom: 1.5rem;
-  }
+.coming-soon-section {
+  max-width: 700px;
+  margin: 0 auto;
+}
 
-  .coming-soon-card h3 {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    color: var(--color-slate-light);
-    margin-bottom: 2rem;
-    line-height: 1.6;
+.coming-soon-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(82, 138, 237, 0.18);
+  border-radius: 1.5rem;
+  padding: 3.5rem 2.5rem;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(82, 138, 237, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  transition: all 400ms var(--ease-out-expo);
+}
+
+.coming-soon-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(82, 138, 237, 0.4), rgba(166, 123, 244, 0.4));
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out-expo);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1.5px;
+  pointer-events: none;
+}
+
+.coming-soon-card:hover {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 16px 48px rgba(82, 138, 237, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+}
+
+.coming-soon-card:hover::after {
+  opacity: 1;
+}
+
+.coming-soon-pulse {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(82, 138, 237, 0.06) 0%, transparent 60%);
+  animation: pulse-drift 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(5%, 5%) scale(1.1); }
+}
+
+.coming-soon-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
+  border: 1px solid rgba(82, 138, 237, 0.3);
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 8px 24px rgba(82, 138, 237, 0.2);
+  transition: all 300ms var(--ease-out-expo);
+}
+
+.coming-soon-card:hover .coming-soon-icon-wrap {
+  transform: scale(1.08) rotate(-3deg);
+  box-shadow: 0 12px 32px rgba(82, 138, 237, 0.3);
+}
+
+.coming-soon-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+
+.coming-soon-social-proof {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.subscriber-avatars {
+  display: flex;
+}
+
+.subscriber-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-left: -0.5rem;
+  object-fit: cover;
+}
+
+.subscriber-avatar:first-child {
+  margin-left: 0;
+}
+
+.subscriber-count {
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-slate);
+}
+
+.subscriber-count .subscriber-counter {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: var(--color-brand-blue);
+  display: inline;
+}
+
+.subscriber-label {
+  color: var(--color-slate-light);
+  font-weight: 400;
+}
+
+.subscribe-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.input-field {
+  flex: 1;
+  min-width: 250px;
+}
+
+.btn-primary {
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-sweep::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 600ms var(--ease-out-expo);
+}
+
+.btn-sweep:hover::before {
+  left: 100%;
+}
+
+@media (max-width: 768px) {
+  .featured-grid, .additional-grid {
+    grid-template-columns: 1fr;
   }
 
   .subscribe-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    max-width: 500px;
-    margin: 0 auto;
+    flex-direction: column;
   }
 
-  .email-input {
-    flex: 1;
-    min-width: 250px;
-    padding: 1rem 1.5rem;
-    border: 1.5px solid rgba(52, 53, 79, 0.15);
-    border-radius: 14px;
-    font-size: 1rem;
-    transition: all 300ms var(--ease-out-expo);
+  .input-field, .btn-primary {
+    width: 100%;
   }
 
-  .email-input:focus {
-    outline: none;
-    border-color: var(--color-brand-blue);
-    box-shadow: 0 0 0 3px rgba(82, 138, 237, 0.1);
+  .subscriber-avatars {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coming-soon-pulse {
+    animation: none;
   }
 
-  .subscribe-btn {
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
-    color: white;
-    border: none;
-    border-radius: 14px;
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 300ms var(--ease-out-expo);
-    box-shadow: 0 4px 16px rgba(82, 138, 237, 0.25);
+  .coming-soon-card:hover,
+  .resource-card {
+    transform: none;
   }
-
-  .subscribe-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(82, 138, 237, 0.35);
-  }
-
-  @media (max-width: 768px) {
-    .featured-grid,
-    .additional-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .subscribe-form {
-      flex-direction: column;
-    }
-
-    .email-input,
-    .subscribe-btn {
-      width: 100%;
-    }
-  }
+}
 </style>
 
 <script>
@@ -355,8 +546,15 @@ size="lg"
       resourceCards.forEach(card => {
         if (category === 'all' || card.getAttribute('data-category') === category) {
           card.classList.remove('hidden');
+          card.style.maxHeight = card.scrollHeight + 'px';
+          requestAnimationFrame(() => {
+            card.style.maxHeight = '';
+          });
         } else {
-          card.classList.add('hidden');
+          card.style.maxHeight = card.scrollHeight + 'px';
+          requestAnimationFrame(() => {
+            card.classList.add('hidden');
+          });
         }
       });
     });

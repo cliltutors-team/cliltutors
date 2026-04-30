@@ -4,7 +4,14 @@ import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import PremiumHero from '../../components/PremiumHero.astro';
 import PremiumCard from '../../components/PremiumCard.astro';
-import CTABanner from '../../components/CTABanner.astro';
+import StatsBanner from '../../components/StatsBanner.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
+import LucideIcon from '../../components/LucideIcon.tsx';
+import MotionReveal from '../../components/MotionReveal.tsx';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
+import MotionCard from '../../components/MotionCard.tsx';
+import StatsCounter from '../../components/StatsCounter.tsx';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -15,196 +22,584 @@ export function getStaticPaths() {
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const steps = [
+const methodologyStats = [
+  { value: '3.2x', label: t('methodology.stats.fluency'), trend: 'up' as const, trendValue: '+220%' },
+  { value: '94%', label: t('methodology.stats.retention'), trend: 'up' as const, trendValue: '+18%' },
+  { value: '97%', label: t('methodology.stats.satisfaction'), trend: 'up' as const, trendValue: '+12%' },
+  { value: '35+', label: t('methodology.stats.countries') }
+];
+
+const pillars = [
   {
-    step: 1,
-    icon: '🔍',
+    icon: 'search',
+    iconType: 'lucide' as const,
     title: t('methodology.diagnosis.title'),
     description: t('methodology.diagnosis.desc'),
-    items: [
-      t('methodology.diagnosis.item1'),
-      t('methodology.diagnosis.item2'),
-      t('methodology.diagnosis.item3')
+    metrics: [
+      { label: t('methodology.diagnosis.metric1.label'), value: t('methodology.diagnosis.metric1.value') },
+      { label: t('methodology.diagnosis.metric2.label'), value: t('methodology.diagnosis.metric2.value') }
     ],
-    variant: 'blue'
+    tags: [t('methodology.diagnosis.tag1'), t('methodology.diagnosis.tag2')],
+    variant: 'blue' as const,
+    featured: true
   },
   {
-    step: 2,
-    icon: '📐',
+    icon: 'ruler',
+    iconType: 'lucide' as const,
     title: t('methodology.architecture.title'),
     description: t('methodology.architecture.desc'),
-    variant: 'purple'
+    metrics: [
+      { label: t('methodology.architecture.metric1.label'), value: t('methodology.architecture.metric1.value') }
+    ],
+    tags: [t('methodology.architecture.tag1'), t('methodology.architecture.tag2')],
+    variant: 'purple' as const
   },
   {
-    step: 3,
-    icon: '📊',
+    icon: 'bar-chart',
+    iconType: 'lucide' as const,
     title: t('methodology.progression.title'),
     description: t('methodology.progression.desc'),
-    variant: 'gold'
+    metrics: [
+      { label: t('methodology.progression.metric1.label'), value: t('methodology.progression.metric1.value') }
+    ],
+    tags: [t('methodology.progression.tag1'), t('methodology.progression.tag2')],
+    variant: 'gold' as const
   },
   {
-    step: 4,
-    icon: '🎯',
+    icon: 'target',
+    iconType: 'lucide' as const,
     title: t('methodology.integration.title'),
     description: t('methodology.integration.desc'),
-    variant: 'orange'
+    metrics: [
+      { label: t('methodology.integration.metric1.label'), value: t('methodology.integration.metric1.value') }
+    ],
+    tags: [t('methodology.integration.tag1'), t('methodology.integration.tag2')],
+    variant: 'orange' as const
   },
   {
-    step: 5,
-    icon: '📈',
+    icon: 'trending-up',
+    iconType: 'lucide' as const,
     title: t('methodology.evaluation.title'),
     description: t('methodology.evaluation.desc'),
-    variant: 'navy'
+    metrics: [
+      { label: t('methodology.evaluation.metric1.label'), value: t('methodology.evaluation.metric1.value') }
+    ],
+    tags: [t('methodology.evaluation.tag1'), t('methodology.evaluation.tag2')],
+    variant: 'navy' as const
+  }
+];
+
+const methodologyProcess = [
+  { phase: '01', title: t('methodology.process.phase1.title'), items: [t('methodology.process.phase1.item1'), t('methodology.process.phase1.item2')] },
+  { phase: '02', title: t('methodology.process.phase2.title'), items: [t('methodology.process.phase2.item1'), t('methodology.process.phase2.item2')] },
+  { phase: '03', title: t('methodology.process.phase3.title'), items: [t('methodology.process.phase3.item1'), t('methodology.process.phase3.item2')] },
+  { phase: '04', title: t('methodology.process.phase4.title'), items: [t('methodology.process.phase4.item1'), t('methodology.process.phase4.item2')] }
+];
+
+const benefits = [
+  {
+    icon: 'target',
+    iconType: 'lucide' as const,
+    title: t('methodology.benefits.personalized.title'),
+    description: t('methodology.benefits.personalized.desc'),
+    linkText: t('home.finalcta.cta'),
+    href: `/${lang}/consultation`,
+    variant: 'blue' as const
+  },
+  {
+    icon: 'microscope',
+    iconType: 'lucide' as const,
+    title: t('methodology.benefits.evidence.title'),
+    description: t('methodology.benefits.evidence.desc'),
+    linkText: t('home.finalcta.cta'),
+    href: `/${lang}/consultation`,
+    variant: 'purple' as const
+  },
+  {
+    icon: 'globe-2',
+    iconType: 'lucide' as const,
+    title: t('methodology.benefits.contextual.title'),
+    description: t('methodology.benefits.contextual.desc'),
+    linkText: t('home.finalcta.cta'),
+    href: `/${lang}/consultation`,
+    variant: 'gold' as const
+  },
+  {
+    icon: 'trending-up',
+    iconType: 'lucide' as const,
+    title: t('methodology.benefits.adaptive.title'),
+    description: t('methodology.benefits.adaptive.desc'),
+    linkText: t('home.finalcta.cta'),
+    href: `/${lang}/consultation`,
+    variant: 'navy' as const
   }
 ];
 ---
 
 <Layout title={t('methodology.meta.title')} description={t('methodology.meta.desc')} lang={lang}>
-  <Navbar />
-  
-  <PremiumHero
-    eyebrow={lang === 'en' ? 'OUR METHODOLOGY' : lang === 'pt' ? 'NOSSA METODOLOGIA' : 'NUESTRA METODOLOGÍA'}
-    title={t('methodology.hero.title')}
-    subtitle={t('methodology.hero.subtitle')}
-    ctaPrimary={{ text: t('home.finalcta.cta'), href: `/${lang}/consultation` }}
-    theme="gradient"
-    alignment="center"
-  />
+  <div class="methodology-page">
+    <Navbar />
 
-  <section class="methodology-journey section-padding bg-white">
-    <div class="container-wide">
-      <div class="steps-container">
-        {steps.map((step, index) => (
-          <div class="step-wrapper">
-            <div class="step-connector">
-              <div class="step-number">{step.step}</div>
-              {index < steps.length - 1 && <div class="connector-line"></div>}
-            </div>
-            
-            <PremiumCard
-              icon={step.icon}
-              title={step.title}
-              description={step.description}
-              variant={step.variant}
-              size="lg"
-              href={`#step-${step.step}`}
-              linkText={lang === 'en' ? 'Learn more' : lang === 'pt' ? 'Saiba mais' : 'Saber más'}
-            >
-              {step.items && (
-                <ul class="step-items">
-                  {step.items.map(item => (
-                    <li>{item}</li>
-                  ))}
-                </ul>
-              )}
-            </PremiumCard>
-          </div>
+    <PremiumHero
+      eyebrow={t('methodology.hero.eyebrow')}
+      title={t('methodology.hero.title')}
+      subtitle={t('methodology.hero.subtitle')}
+      ctaPrimary={{ text: t('methodology.hero.cta'), href: `/${lang}/consultation` }}
+      ctaSecondary={{ text: t('methodology.hero.cta2'), href: `#pillars` }}
+      alignment="center"
+      theme="gradient"
+      trustIndicators={[
+        { value: '5,000+', label: t('academic.trust.students') },
+        { value: '35+', label: t('methodology.stats.countries') },
+        { value: '97%', label: t('methodology.stats.satisfaction') }
+      ]}
+    />
+
+    <StatsBanner
+      stats={methodologyStats}
+      theme="gradient"
+      title={t('methodology.stats.title')}
+      subtitle={t('methodology.stats.subtitle')}
+    />
+
+    <section id="pillars" class="section-padding gradient-subtle meth-pillars">
+      <div class="meth-bg-dots" aria-hidden="true"></div>
+      <div class="container-wide">
+      <MotionReveal client:visible>
+        <SectionHeader
+          eyebrow={t('methodology.pillars.eyebrow')}
+          title={t('methodology.pillars.title')}
+          description={t('methodology.pillars.subtitle')}
+        />
+      </MotionReveal>
+
+      <StaggerContainer className="grid md:grid-cols-2 gap-6" client:visible>
+        {pillars.slice(0, 2).map((pillar, i) => (
+          <StaggerItem>
+            <MotionCard client:visible>
+              <PremiumCard
+                icon={pillar.icon}
+                iconType={pillar.iconType}
+                title={pillar.title}
+                description={pillar.description}
+                metrics={pillar.metrics}
+                tags={pillar.tags}
+                variant={pillar.variant}
+                featured={pillar.featured}
+                featuredLabel={pillar.featured ? t('card.featured') : undefined}
+                size="lg"
+              />
+            </MotionCard>
+          </StaggerItem>
         ))}
+      </StaggerContainer>
+      <StaggerContainer className="grid md:grid-cols-3 gap-6 mt-6" client:visible>
+        {pillars.slice(2).map((pillar, i) => (
+          <StaggerItem>
+            <MotionCard client:visible>
+              <PremiumCard
+                icon={pillar.icon}
+                iconType={pillar.iconType}
+                title={pillar.title}
+                description={pillar.description}
+                metrics={pillar.metrics}
+                tags={pillar.tags}
+                variant={pillar.variant}
+                size="lg"
+              />
+            </MotionCard>
+          </StaggerItem>
+        ))}
+      </StaggerContainer>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <CTABanner title={t('home.finalcta.title')} ctaText={t('home.finalcta.cta')} ctaHref={`/${lang}/consultation`} />
-  <Footer />
+    <section class="section-padding methodology-gradient meth-process">
+      <div class="meth-orb meth-orb--gold" aria-hidden="true"></div>
+      <div class="container-wide">
+      <MotionReveal client:visible>
+        <SectionHeader
+          eyebrow={t('methodology.process.eyebrow')}
+          title={t('methodology.process.title')}
+          light
+        />
+      </MotionReveal>
+
+      <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" client:visible>
+        {methodologyProcess.map((phase, i) => (
+          <StaggerItem>
+            <div class="process-card">
+              <div class="phase-number">{phase.phase}</div>
+              <h3 class="phase-title">{phase.title}</h3>
+              <ul class="phase-items">
+                {phase.items.map((item) => (
+                  <li class="phase-item">
+                    <LucideIcon client:idle name="check" size={18} color="currentColor" className="text-brand-gold" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              {i < methodologyProcess.length - 1 && (
+                <div class="process-connector hidden lg:block"></div>
+              )}
+            </div>
+          </StaggerItem>
+        ))}
+      </StaggerContainer>
+      </div>
+    </section>
+
+    <section class="section-padding gradient-section-alt meth-benefits">
+      <div class="meth-bg-dots meth-bg-dots--right" aria-hidden="true"></div>
+      <div class="container-wide">
+      <MotionReveal client:visible>
+        <SectionHeader
+          eyebrow={t('methodology.benefits.eyebrow')}
+          title={t('methodology.benefits.title')}
+          description={t('methodology.benefits.subtitle')}
+        />
+      </MotionReveal>
+
+      <StaggerContainer className="grid lg:grid-cols-4 gap-6" client:visible>
+        {benefits.map((benefit, i) => (
+          <StaggerItem>
+            <MotionCard client:visible>
+              <PremiumCard
+                icon={benefit.icon}
+                iconType={benefit.iconType}
+                title={benefit.title}
+                description={benefit.description}
+                href={benefit.href}
+                linkText={benefit.linkText}
+                variant={benefit.variant}
+                size="md"
+              />
+            </MotionCard>
+          </StaggerItem>
+        ))}
+      </StaggerContainer>
+      </div>
+    </section>
+
+    <section class="section-padding gradient-hero text-white meth-featured">
+      <div class="meth-orb meth-orb--indigo" aria-hidden="true"></div>
+      <div class="container-wide">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <SectionHeader eyebrow={t('methodology.featured.eyebrow')} title={t('methodology.featured.title')} description={t('methodology.featured.desc')} light />
+
+            <StaggerContainer className="grid grid-cols-2 gap-6" client:visible>
+<StaggerItem>
+          <div class="featured-stat">
+            <div class="featured-value"><StatsCounter client:visible value={t('methodology.featured.stat1.value')} /></div>
+            <div class="featured-label">{t('methodology.featured.stat1.label')}</div>
+          </div>
+        </StaggerItem>
+        <StaggerItem>
+          <div class="featured-stat">
+            <div class="featured-value"><StatsCounter client:visible value={t('methodology.featured.stat2.value')} /></div>
+            <div class="featured-label">{t('methodology.featured.stat2.label')}</div>
+          </div>
+        </StaggerItem>
+            </StaggerContainer>
+          </div>
+
+          <StaggerContainer className="featured-cards" client:visible>
+            <StaggerItem>
+              <MotionCard client:visible>
+                <div class="featured-card-item">
+                  <div class="card-icon-wrap">
+                    <LucideIcon client:idle name="bar-chart" size={24} color="white" />
+                  </div>
+                  <div>
+                    <h4 class="font-heading font-semibold text-lg">{t('methodology.featured.card1.title')}</h4>
+                    <p class="text-white/70 text-sm">{t('methodology.featured.card1.desc')}</p>
+                  </div>
+                </div>
+              </MotionCard>
+            </StaggerItem>
+            <StaggerItem>
+              <MotionCard client:visible>
+                <div class="featured-card-item">
+                  <div class="card-icon-wrap">
+                    <LucideIcon client:idle name="message-circle" size={24} color="white" />
+                  </div>
+                  <div>
+                    <h4 class="font-heading font-semibold text-lg">{t('methodology.featured.card2.title')}</h4>
+                    <p class="text-white/70 text-sm">{t('methodology.featured.card2.desc')}</p>
+                  </div>
+                </div>
+              </MotionCard>
+            </StaggerItem>
+            <StaggerItem>
+              <MotionCard client:visible>
+                <div class="featured-card-item">
+                  <div class="card-icon-wrap">
+                    <LucideIcon client:idle name="brain" size={24} color="white" />
+                  </div>
+                  <div>
+                    <h4 class="font-heading font-semibold text-lg">{t('methodology.featured.card3.title')}</h4>
+                    <p class="text-white/70 text-sm">{t('methodology.featured.card3.desc')}</p>
+                  </div>
+                </div>
+              </MotionCard>
+            </StaggerItem>
+          </StaggerContainer>
+        </div>
+      </div>
+    </section>
+
+    <PremiumCTABanner
+      title={t('methodology.cta.title')}
+      description={t('methodology.cta.subtitle')}
+      primaryCTA={{ text: t('methodology.cta.primary'), href: `/${lang}/consultation` }}
+      secondaryCTA={{ text: t('methodology.cta.secondary'), href: `/${lang}/tutors` }}
+      variant="gradient"
+    />
+
+    <Footer />
+  </div>
 </Layout>
 
 <style>
-  .methodology-journey {
+  .meth-pillars,
+  .meth-benefits {
     position: relative;
+    overflow: hidden;
   }
 
-  .steps-container {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  .step-wrapper {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 2rem;
-    align-items: start;
-  }
-
-  .step-connector {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .meth-process,
+  .meth-featured {
     position: relative;
+    overflow: hidden;
   }
 
-  .step-number {
-    width: 64px;
-    height: 64px;
+  .meth-bg-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(82, 138, 237, 0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  .meth-bg-dots--right {
+    background-position: right center;
+  }
+
+  .meth-orb {
+    position: absolute;
     border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .meth-orb--gold {
+    width: 350px;
+    height: 350px;
+    top: -80px;
+    right: -80px;
+    background: radial-gradient(circle, rgba(254, 187, 55, 0.12), transparent 70%);
+  }
+
+  .meth-orb--indigo {
+    width: 400px;
+    height: 400px;
+    bottom: -100px;
+    left: -100px;
+    background: radial-gradient(circle, rgba(76, 108, 225, 0.15), transparent 70%);
+  }
+
+.methodology-gradient {
     background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
-    color: white;
+  }
+
+.process-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 400ms var(--ease-out-expo);
+}
+
+.process-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(82, 138, 237, 0.3), rgba(166, 123, 244, 0.3));
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 400ms var(--ease-out-expo);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+}
+
+.process-card:hover {
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.process-card:hover::after {
+  opacity: 1;
+}
+
+.phase-number {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.2);
+  line-height: 1;
+  margin-bottom: 1rem;
+  transition: color 300ms var(--ease-out-expo);
+}
+
+.process-card:hover .phase-number {
+  color: rgba(254, 187, 55, 0.5);
+}
+
+  .phase-title {
     font-family: var(--font-heading);
-    font-size: 1.75rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 24px rgba(82, 138, 237, 0.25);
-    position: relative;
-    z-index: 2;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1rem;
   }
 
-  .connector-line {
-    width: 3px;
-    flex: 1;
-    min-height: 60px;
-    background: linear-gradient(to bottom, var(--color-brand-blue), transparent);
-    margin-top: 1rem;
-    opacity: 0.3;
-  }
-
-  .step-items {
+  .phase-items {
     list-style: none;
     padding: 0;
-    margin: 1rem 0 0 0;
+    margin: 0;
+  }
+
+  .phase-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9375rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .process-connector {
+    position: absolute;
+    top: 50%;
+    right: -1.5rem;
+    width: 3rem;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+  }
+
+.featured-stat {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+  .featured-value {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-brand-gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .featured-value .stat-value {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    display: inline;
+  }
+
+  .featured-label {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .featured-cards {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
-  .step-items li {
+.featured-card-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 1rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: all 300ms var(--ease-out-expo);
     position: relative;
-    padding-left: 1.5rem;
-    font-size: 0.9375rem;
-    color: var(--color-slate-light);
-    line-height: 1.6;
+    overflow: hidden;
   }
 
-  .step-items li::before {
-    content: '✓';
+  .featured-card-item::after {
+    content: "";
     position: absolute;
-    left: 0;
-    color: var(--color-brand-blue);
-    font-weight: 700;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 1.5px;
+    background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-indigo));
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 400ms ease;
+    pointer-events: none;
   }
 
-  @media (max-width: 768px) {
-    .step-wrapper {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
+  .featured-card-item:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: transparent;
+    box-shadow: 0 8px 32px rgba(166, 123, 244, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transform: translateX(8px);
+  }
 
-    .step-connector {
-      flex-direction: row;
-      justify-content: flex-start;
-    }
+  .featured-card-item:hover::after {
+    opacity: 1;
+  }
 
-    .connector-line {
-      display: none;
-    }
+.card-icon-wrap {
+  width: 3rem;
+  height: 3rem;
+  background: linear-gradient(135deg, rgba(166, 123, 244, 0.2), rgba(82, 138, 237, 0.2));
+  border: 1px solid rgba(166, 123, 244, 0.15);
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 300ms var(--ease-out-expo);
+}
 
-    .step-number {
-      width: 48px;
-      height: 48px;
-      font-size: 1.25rem;
-    }
+.featured-card-item:hover .card-icon-wrap {
+  background: linear-gradient(135deg, rgba(166, 123, 244, 0.3), rgba(82, 138, 237, 0.3));
+  transform: scale(1.05);
+}
+
+  @media (max-width: 1024px) {
+.process-connector {
+display: none;
+}
   }
 </style>

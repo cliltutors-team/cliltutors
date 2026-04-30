@@ -53,7 +53,7 @@ export default function TutorProfilePage({ tutor, lang, t }: Props) {
               transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <div className="relative group">
-                <div className="w-56 h-56 lg:w-72 lg:h-72 rounded-2xl overflow-hidden border-4 border-brand-blue-100 bg-gray-100 shadow-lg transition-all duration-500 group-hover:border-brand-blue-200 group-hover:shadow-glow-blue">
+                <div className="w-56 h-56 lg:w-72 lg:h-72 rounded-2xl overflow-hidden border-4 border-brand-blue-100 bg-brand-blue-50 shadow-lg transition-all duration-500 group-hover:border-brand-blue-200 group-hover:shadow-glow-blue">
                   <img
                     src={tutor.photo}
                     alt={tutor.name}
@@ -89,7 +89,7 @@ export default function TutorProfilePage({ tutor, lang, t }: Props) {
                   >
                     <stat.icon className="w-4 h-4 text-brand-indigo shrink-0" />
                     <span className="text-sm font-semibold text-brand-navy">{stat.value}</span>
-                    <span className="text-sm text-gray-500">{stat.label}</span>
+                    <span className="text-sm text-brand-blue-500">{stat.label}</span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -122,8 +122,8 @@ export default function TutorProfilePage({ tutor, lang, t }: Props) {
                 variants={stagger.item}
                 className="flex flex-wrap items-center gap-2 mt-5"
               >
-                <Globe className="w-4 h-4 text-gray-400 shrink-0" />
-                <span className="text-sm font-medium text-gray-500">{t('tutor.profile.languages')}:</span>
+<Globe className="w-4 h-4 text-brand-blue-400 shrink-0" />
+      <span className="text-sm font-medium text-brand-blue-500">{t('tutor.profile.languages')}:</span>
                 {tutor.languages.map(l => (
                   <span
                     key={l}
@@ -185,7 +185,7 @@ export default function TutorProfilePage({ tutor, lang, t }: Props) {
               </h2>
             </div>
             <div className="max-w-3xl">
-              <p className="text-lg text-gray-600 leading-relaxed">{bio}</p>
+              <p className="text-lg text-brand-navy-700 leading-relaxed">{bio}</p>
             </div>
           </motion.div>
         </div>
@@ -210,7 +210,7 @@ export default function TutorProfilePage({ tutor, lang, t }: Props) {
             <div className="max-w-3xl">
               <div className="relative pl-6 border-l-3 border-brand-indigo">
                 <div className="absolute -left-[7px] top-0 w-3.5 h-3.5 rounded-full bg-brand-indigo ring-4 ring-brand-blue-50" />
-                <p className="text-lg text-gray-600 leading-relaxed">{approach}</p>
+                <p className="text-lg text-brand-navy-700 leading-relaxed">{approach}</p>
               </div>
             </div>
           </motion.div>

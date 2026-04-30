@@ -23,7 +23,7 @@ const { name, photo, languages: langs, specialization, ctaText, ctaHref = '#' } 
       <span class="lang-tag">{l}</span>
     ))}
   </div>
-  <p class="text-sm text-gray-500 mt-3 leading-relaxed">{specialization}</p>
+  <p class="text-sm text-brand-navy-700 mt-3 leading-relaxed">{specialization}</p>
   <a href={ctaHref} class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-blue group-hover:text-brand-indigo transition-all">
     {ctaText}
     <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
@@ -31,50 +31,86 @@ const { name, photo, languages: langs, specialization, ctaText, ctaHref = '#' } 
 </div>
 
 <style>
-  .instructor-card {
-    background: white;
-    border: 1px solid var(--color-gray-200);
-    border-radius: 20px;
-    padding: 2rem;
-    text-align: center;
-    transition: all 300ms cubic-bezier(0.25, 1, 0.5, 1);
-  }
+.instructor-card {
+  background: white;
+  border: 1px solid var(--color-brand-blue-200);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 300ms cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  overflow: hidden;
+}
 
-  .instructor-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(82, 138, 237, 0.08);
-    border-color: var(--color-brand-blue-200);
-  }
+.instructor-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo), var(--color-brand-purple));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
 
-  .instructor-photo-wrap {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto;
-    border-radius: 50%;
-    overflow: hidden;
-    background: var(--color-gray-100);
-    border: 3px solid transparent;
-    background-clip: padding-box;
-    position: relative;
-    transition: border-color 300ms;
-  }
+.instructor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(82, 138, 237, 0.08);
+  border-color: transparent;
+}
 
-  .instructor-card:hover .instructor-photo-wrap {
-    border-color: var(--color-brand-blue-200);
-  }
+.instructor-card:hover::before {
+  opacity: 1;
+}
 
-  .lang-tag {
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.625rem;
-    border-radius: 100px;
-    background: var(--color-brand-blue-50);
-    color: var(--color-brand-blue);
-    border: 1px solid var(--color-brand-blue-200);
-    transition: all 200ms;
-  }
+.instructor-photo-wrap {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-brand-blue-50);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  transition: border-color 300ms;
+}
 
-  .instructor-card:hover .lang-tag {
-    background: var(--color-brand-blue-100);
-  }
+.instructor-card:hover .instructor-photo-wrap {
+  border-color: var(--color-brand-blue-200);
+}
+
+.lang-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  border-radius: 100px;
+  background: var(--color-brand-blue-50);
+  color: var(--color-brand-blue);
+  border: 1px solid var(--color-brand-blue-200);
+  transition: all 200ms;
+}
+
+.instructor-card:hover .lang-tag {
+  background: var(--color-brand-blue-100);
+}
+
+.instructor-card.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 300ms cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 300ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition-delay: calc(var(--stagger, 0) * 80ms);
+}
+
+.instructor-card.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 </style>

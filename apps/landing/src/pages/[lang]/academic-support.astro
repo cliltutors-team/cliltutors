@@ -5,6 +5,13 @@ import Footer from '../../components/Footer.astro';
 import PremiumHero from '../../components/PremiumHero.astro';
 import PremiumCard from '../../components/PremiumCard.astro';
 import StatsBanner from '../../components/StatsBanner.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
+import LucideIcon from '../../components/LucideIcon.tsx';
+import MotionReveal from '../../components/MotionReveal.tsx';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
+import MotionCard from '../../components/MotionCard.tsx';
+import StatsCounter from '../../components/StatsCounter.tsx';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -17,9 +24,9 @@ const t = useTranslations(lang);
 
 const academicPrograms = [
   {
-		icon: '📝',
-		iconAriaHidden: true,
-		title: t('academic.programs.essay.title'),
+    icon: 'pencil',
+    iconType: 'lucide' as const,
+    title: t('academic.programs.essay.title'),
     description: t('academic.programs.essay.desc'),
     metrics: [
       { label: t('academic.programs.essay.metric1.label'), value: t('academic.programs.essay.metric1.value') },
@@ -30,7 +37,8 @@ const academicPrograms = [
     featured: true
   },
   {
-    icon: '📚',
+    icon: 'book-open',
+    iconType: 'lucide' as const,
     title: t('academic.programs.thesis.title'),
     description: t('academic.programs.thesis.desc'),
     metrics: [
@@ -40,7 +48,8 @@ const academicPrograms = [
     variant: 'blue' as const
   },
   {
-    icon: '🔬',
+    icon: 'microscope',
+    iconType: 'lucide' as const,
     title: t('academic.programs.research.title'),
     description: t('academic.programs.research.desc'),
     metrics: [
@@ -50,7 +59,8 @@ const academicPrograms = [
     variant: 'gold' as const
   },
   {
-    icon: '🎤',
+    icon: 'mic',
+    iconType: 'lucide' as const,
     title: t('academic.programs.defense.title'),
     description: t('academic.programs.defense.desc'),
     metrics: [
@@ -70,7 +80,8 @@ const academicStats = [
 
 const supportAreas = [
   {
-    icon: '📖',
+    icon: 'book-open',
+    iconType: 'lucide' as const,
     title: t('academic.areas.writing.title'),
     description: t('academic.areas.writing.desc'),
     linkText: t('academic.areas.link'),
@@ -78,7 +89,8 @@ const supportAreas = [
     variant: 'navy' as const
   },
   {
-    icon: '📊',
+    icon: 'bar-chart',
+    iconType: 'lucide' as const,
     title: t('academic.areas.methodology.title'),
     description: t('academic.areas.methodology.desc'),
     linkText: t('academic.areas.link'),
@@ -86,7 +98,8 @@ const supportAreas = [
     variant: 'navy' as const
   },
   {
-    icon: '💬',
+    icon: 'message-circle',
+    iconType: 'lucide' as const,
     title: t('academic.areas.communication.title'),
     description: t('academic.areas.communication.desc'),
     linkText: t('academic.areas.link'),
@@ -101,243 +114,312 @@ const researchProcess = [
   { phase: '03', title: t('academic.process.phase3.title'), items: [t('academic.process.phase3.item1'), t('academic.process.phase3.item2')] },
   { phase: '04', title: t('academic.process.phase4.title'), items: [t('academic.process.phase4.item1'), t('academic.process.phase4.item2')] }
 ];
+
+const featuredCards = [
+  { icon: 'file-text', iconType: 'lucide' as const, title: t('academic.featured.card1.title'), desc: t('academic.featured.card1.desc') },
+  { icon: 'graduation-cap', iconType: 'lucide' as const, title: t('academic.featured.card2.title'), desc: t('academic.featured.card2.desc') },
+  { icon: 'globe-2', iconType: 'lucide' as const, title: t('academic.featured.card3.title'), desc: t('academic.featured.card3.desc') }
+];
 ---
 
 <Layout title={t('academic.meta.title')} description={t('academic.meta.desc')} lang={lang}>
   <Navbar />
 
-  <PremiumHero
-    eyebrow={t('academic.hero.eyebrow')}
-    title={t('academic.hero.title')}
-    subtitle={t('academic.hero.subtitle')}
-    ctaPrimary={{ text: t('academic.hero.cta'), href: `/${lang}/consultation` }}
-    ctaSecondary={{ text: t('academic.hero.cta2'), href: `#programs` }}
-    alignment="center"
-    theme="gradient"
-    trustIndicators={[
-      { value: '5,000+', label: t('academic.trust.students') },
-      { value: '150+', label: t('academic.trust.universities') },
-      { value: '92%', label: t('academic.trust.satisfaction') }
-    ]}
-  />
+  <div class="academic-page">
+    <PremiumHero
+      eyebrow={t('academic.hero.eyebrow')}
+      title={t('academic.hero.title')}
+      subtitle={t('academic.hero.subtitle')}
+      ctaPrimary={{ text: t('academic.hero.cta'), href: `/${lang}/consultation` }}
+      ctaSecondary={{ text: t('academic.hero.cta2'), href: `#programs` }}
+      alignment="center"
+      theme="gradient"
+      trustIndicators={[
+        { value: '5,000+', label: t('academic.trust.students') },
+        { value: '150+', label: t('academic.trust.universities') },
+        { value: '92%', label: t('academic.trust.satisfaction') }
+      ]}
+    />
 
-  <StatsBanner
-    stats={academicStats}
-    theme="gradient"
-    title={t('academic.stats.title')}
-    subtitle={t('academic.stats.subtitle')}
-  />
+    <StatsBanner
+      stats={academicStats}
+      theme="gradient"
+      title={t('academic.stats.title')}
+      subtitle={t('academic.stats.subtitle')}
+    />
 
-  <section id="programs" class="section-padding bg-white">
-    <div class="container-wide">
-      <div class="text-center mb-16">
-        <span class="eyebrow-academic">{t('academic.programs.eyebrow')}</span>
-        <h2 class="section-title mt-4">{t('academic.programs.title')}</h2>
-        <p class="section-subtitle max-w-2xl mx-auto">{t('academic.programs.subtitle')}</p>
+    <section id="programs" class="section-padding gradient-subtle relative overflow-hidden">
+      <div class="bg-dots"></div>
+      <div class="container-wide relative">
+        <SectionHeader
+          eyebrow={t('academic.programs.eyebrow')}
+          title={t('academic.programs.title')}
+          description={t('academic.programs.subtitle')}
+        />
+
+        <StaggerContainer className="grid md:grid-cols-2 gap-6" client:visible>
+          {academicPrograms.map((program, i) => (
+            <StaggerItem>
+              <MotionCard client:visible>
+                <PremiumCard
+                  icon={program.icon}
+                  iconType={program.iconType}
+                  title={program.title}
+                  description={program.description}
+                  metrics={program.metrics}
+                  tags={program.tags}
+                  variant={program.variant}
+                  featured={program.featured}
+                  featuredLabel={t('card.featured')}
+                  size="lg"
+                />
+              </MotionCard>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
       </div>
+    </section>
 
-      <div class="grid md:grid-cols-2 gap-6">
-        {academicPrograms.map((program) => (
-          <PremiumCard
-            icon={program.icon}
-            title={program.title}
-            description={program.description}
-            metrics={program.metrics}
-            tags={program.tags}
-            variant={program.variant}
-featured={program.featured}
-  featuredLabel={t('card.featured')}
-  size="lg"
-          />
-        ))}
+    <section class="section-padding relative overflow-hidden academic-purple-gradient">
+      <div class="process-bg-orb orb-a"></div>
+      <div class="process-bg-orb orb-b"></div>
+      <div class="container-wide relative">
+        <SectionHeader
+          eyebrow={t('academic.process.eyebrow')}
+          title={t('academic.process.title')}
+          light={true}
+        />
+
+        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" client:visible>
+          {researchProcess.map((phase, i) => (
+            <StaggerItem>
+              <div class="process-card">
+                <div class="phase-number">{phase.phase}</div>
+                <h3 class="phase-title">{phase.title}</h3>
+                <ul class="phase-items">
+                  {phase.items.map((item) => (
+                    <li class="phase-item">
+                      <LucideIcon client:idle name="check" size={18} color="currentColor" className="text-brand-gold" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                {i < researchProcess.length - 1 && (
+                  <div class="process-connector hidden lg:block" aria-hidden="true"></div>
+                )}
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section-padding academic-gradient">
-    <div class="container-wide">
-      <div class="text-center mb-16">
-        <span class="eyebrow-academic">{t('academic.process.eyebrow')}</span>
-        <h2 class="section-title-academic mt-4">{t('academic.process.title')}</h2>
+<section class="section-padding gradient-section-alt relative overflow-hidden">
+  <div class="bg-grid"></div>
+      <div class="container-wide relative">
+        <SectionHeader
+          eyebrow={t('academic.areas.eyebrow')}
+          title={t('academic.areas.title')}
+          description={t('academic.areas.subtitle')}
+        />
+
+        <StaggerContainer className="grid lg:grid-cols-3 gap-6" client:visible>
+          {supportAreas.map((area, i) => (
+            <StaggerItem>
+              <MotionCard client:visible>
+                <PremiumCard
+                  icon={area.icon}
+                  iconType={area.iconType}
+                  title={area.title}
+                  description={area.description}
+                  href={area.href}
+                  linkText={area.linkText}
+                  variant={area.variant}
+                  size="md"
+                />
+              </MotionCard>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
       </div>
+    </section>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {researchProcess.map((phase, i) => (
-          <div class="process-card">
-            <div class="phase-number">{phase.phase}</div>
-            <h3 class="phase-title">{phase.title}</h3>
-            <ul class="phase-items">
-              {phase.items.map((item) => (
-                <li class="phase-item">
-                  <svg class="check-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                  </svg>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            {i < researchProcess.length - 1 && (
-              <div class="process-connector hidden lg:block"></div>
-            )}
+    <section class="section-padding gradient-hero text-white relative overflow-hidden">
+      <div class="featured-bg-orb orb-c"></div>
+      <div class="featured-bg-orb orb-d"></div>
+      <div class="container-wide relative">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <MotionReveal client:visible>
+            <SectionHeader
+              eyebrow={t('academic.featured.eyebrow')}
+              title={t('academic.featured.title')}
+              description={t('academic.featured.desc')}
+              light={true}
+            />
+
+            <StaggerContainer className="grid grid-cols-2 gap-6" client:visible>
+<StaggerItem>
+          <div class="featured-stat">
+            <div class="featured-value"><StatsCounter client:visible value={t('academic.featured.stat1.value')} /></div>
+            <div class="featured-label">{t('academic.featured.stat1.label')}</div>
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section-padding bg-white">
-    <div class="container-wide">
-      <div class="text-center mb-16">
-        <span class="eyebrow-academic">{t('academic.areas.eyebrow')}</span>
-        <h2 class="section-title mt-4">{t('academic.areas.title')}</h2>
-        <p class="section-subtitle max-w-2xl mx-auto">{t('academic.areas.subtitle')}</p>
-      </div>
-
-      <div class="grid lg:grid-cols-3 gap-6">
-        {supportAreas.map((area) => (
-          <PremiumCard
-            icon={area.icon}
-            title={area.title}
-            description={area.description}
-            href={area.href}
-            linkText={area.linkText}
-            variant={area.variant}
-            size="md"
-          />
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section-padding bg-brand-navy text-white">
-    <div class="container-wide">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <span class="text-brand-gold font-heading font-bold text-xs tracking-widest uppercase">{t('academic.featured.eyebrow')}</span>
-          <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4 mb-6">{t('academic.featured.title')}</h2>
-          <p class="text-white/80 text-lg leading-relaxed mb-8">{t('academic.featured.desc')}</p>
-
-          <div class="grid grid-cols-2 gap-6">
-            <div class="featured-stat">
-              <div class="featured-value">{t('academic.featured.stat1.value')}</div>
-              <div class="featured-label">{t('academic.featured.stat1.label')}</div>
-            </div>
-            <div class="featured-stat">
-              <div class="featured-value">{t('academic.featured.stat2.value')}</div>
-              <div class="featured-label">{t('academic.featured.stat2.label')}</div>
-            </div>
+        </StaggerItem>
+        <StaggerItem>
+          <div class="featured-stat">
+            <div class="featured-value"><StatsCounter client:visible value={t('academic.featured.stat2.value')} /></div>
+            <div class="featured-label">{t('academic.featured.stat2.label')}</div>
           </div>
+        </StaggerItem>
+            </StaggerContainer>
+          </MotionReveal>
+
+          <StaggerContainer className="featured-cards" client:visible>
+            {featuredCards.map((card, i) => (
+              <StaggerItem>
+                <MotionCard client:visible>
+                  <div class="featured-card-item">
+                    <div class="card-icon-wrap">
+                      <LucideIcon client:idle name={card.icon} size={24} color="white" />
+                    </div>
+                    <div>
+                      <h4 class="font-heading font-semibold text-lg">{card.title}</h4>
+                      <p class="text-white/70 text-sm">{card.desc}</p>
+                    </div>
+                  </div>
+                </MotionCard>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </div>
-
-        <div class="featured-cards">
-          <div class="featured-card-item">
-            <div class="card-icon-wrap">
-              <span class="text-3xl" aria-hidden="true">📑</span>
-            </div>
-            <div>
-              <h4 class="font-heading font-semibold text-lg">{t('academic.featured.card1.title')}</h4>
-              <p class="text-white/70 text-sm">{t('academic.featured.card1.desc')}</p>
-            </div>
-          </div>
-          <div class="featured-card-item">
-            <div class="card-icon-wrap">
-              <span class="text-3xl" aria-hidden="true">🎓</span>
-            </div>
-            <div>
-              <h4 class="font-heading font-semibold text-lg">{t('academic.featured.card2.title')}</h4>
-              <p class="text-white/70 text-sm">{t('academic.featured.card2.desc')}</p>
-            </div>
-          </div>
-          <div class="featured-card-item">
-            <div class="card-icon-wrap">
-              <span class="text-3xl" aria-hidden="true">🌐</span>
-            </div>
-            <div>
-              <h4 class="font-heading font-semibold text-lg">{t('academic.featured.card3.title')}</h4>
-              <p class="text-white/70 text-sm">{t('academic.featured.card3.desc')}</p>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section-padding bg-white">
-    <div class="container-narrow text-center">
-      <h2 class="section-title">{t('academic.cta.title')}</h2>
-      <p class="section-subtitle mb-8">{t('academic.cta.subtitle')}</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href={`/${lang}/consultation`} class="btn-primary-premium">
-          {t('academic.cta.primary')}
-<svg class="w-5 h-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-    </svg>
-        </a>
-        <a href={`/${lang}/methodology`} class="btn-outline-premium">{t('academic.cta.secondary')}</a>
-      </div>
-    </div>
-  </section>
+    <PremiumCTABanner
+      title={t('academic.cta.title')}
+      description={t('academic.cta.subtitle')}
+      primaryCTA={{ text: t('academic.cta.primary'), href: `/${lang}/consultation` }}
+      secondaryCTA={{ text: t('academic.cta.secondary'), href: `/${lang}/methodology` }}
+      variant="gradient-purple"
+      trustBadges={[
+        { icon: 'check', iconType: 'lucide' as const, label: t('academic.trust.students'), value: '5,000+' },
+        { icon: 'star', iconType: 'lucide' as const, label: t('academic.trust.satisfaction'), value: '92%' }
+      ]}
+    />
+  </div>
 
   <Footer />
 </Layout>
 
 <style>
-  .eyebrow-academic {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background: rgba(166, 123, 244, 0.08);
-    color: var(--color-brand-purple);
-    border-radius: 100px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-family: var(--font-heading);
+  .academic-page .academic-purple-gradient {
+  background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-indigo));
+}
+
+  .process-bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
   }
 
-  .section-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700;
-    color: var(--color-brand-navy);
-    letter-spacing: -0.02em;
-    font-family: var(--font-heading);
+  .orb-a {
+    top: -15%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.08);
+    animation: float 10s ease-in-out infinite;
   }
 
-  .section-title-academic {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700;
-    color: white;
-    letter-spacing: -0.02em;
-    font-family: var(--font-heading);
+  .orb-b {
+    bottom: -15%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: rgba(254, 187, 55, 0.06);
+    animation: float 12s ease-in-out infinite;
+    animation-delay: 3s;
   }
 
-  .section-subtitle {
-    font-size: 1.125rem;
-    color: var(--color-slate-light);
-    line-height: 1.7;
+  .featured-bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
   }
 
-  .academic-gradient {
-    background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-indigo));
+  .orb-c {
+    top: -10%;
+    left: -5%;
+    width: 450px;
+    height: 450px;
+    background: rgba(166, 123, 244, 0.1);
+    animation: float 10s ease-in-out infinite;
   }
 
-  .process-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 1.25rem;
-    padding: 2rem;
-    position: relative;
+  .orb-d {
+    bottom: -10%;
+    right: -5%;
+    width: 350px;
+    height: 350px;
+    background: rgba(82, 138, 237, 0.08);
+    animation: float 12s ease-in-out infinite;
+    animation-delay: 2s;
   }
 
-  .phase-number {
-    font-family: var(--font-heading);
-    font-size: 3rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.15);
-    line-height: 1;
-    margin-bottom: 1rem;
-  }
+.process-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(82, 138, 237, 0.18);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  position: relative;
+  transition: all 400ms var(--ease-out-expo);
+  box-shadow: 0 8px 32px rgba(82, 138, 237, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.process-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(82, 138, 237, 0.5), rgba(166, 123, 244, 0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.process-card:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: transparent;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(82, 138, 237, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.process-card:hover::after {
+  opacity: 0.6;
+}
+
+.phase-number {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.2);
+  line-height: 1;
+  margin-bottom: 1rem;
+  transition: color 400ms var(--ease-out-expo);
+}
+
+.process-card:hover .phase-number {
+  color: rgba(254, 187, 55, 0.5);
+}
 
   .phase-title {
     font-family: var(--font-heading);
@@ -362,14 +444,6 @@ featured={program.featured}
     margin-bottom: 0.5rem;
   }
 
-  .check-icon {
-    width: 18px;
-    height: 18px;
-    color: var(--color-brand-gold);
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
   .process-connector {
     position: absolute;
     top: 50%;
@@ -379,12 +453,15 @@ featured={program.featured}
     background: linear-gradient(90deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
   }
 
-  .featured-stat {
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
+.featured-stat {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 1rem;
+  border: 1px solid rgba(82, 138, 237, 0.15);
+  box-shadow: 0 8px 32px rgba(82, 138, 237, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
 
   .featured-value {
     font-family: var(--font-heading);
@@ -393,6 +470,14 @@ featured={program.featured}
     color: var(--color-brand-gold);
     line-height: 1;
     margin-bottom: 0.5rem;
+  }
+
+  .featured-value .stat-value {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    display: inline;
   }
 
   .featured-label {
@@ -406,74 +491,77 @@ featured={program.featured}
     gap: 1rem;
   }
 
-  .featured-card-item {
+.featured-card-item {
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 1.25rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(166, 123, 244, 0.15);
     border-radius: 1rem;
-    transition: all 300ms var(--ease-out-expo);
+    box-shadow: 0 4px 20px rgba(166, 123, 244, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transition: all 400ms var(--ease-out-expo);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured-card-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 1.5px;
+    background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-blue));
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 400ms ease;
+    pointer-events: none;
   }
 
   .featured-card-item:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: transparent;
     transform: translateX(8px);
+    box-shadow: 0 8px 28px rgba(166, 123, 244, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
-  .card-icon-wrap {
-    width: 3rem;
-    height: 3rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  .featured-card-item:hover::after {
+    opacity: 1;
   }
 
-  .btn-primary-premium {
-    display: inline-flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-indigo));
-    color: white;
-    font-weight: 600;
-    border-radius: 14px;
-    text-decoration: none;
-    transition: all 300ms var(--ease-out-expo);
-    font-family: var(--font-heading);
-  }
+.card-icon-wrap {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: linear-gradient(135deg, rgba(166, 123, 244, 0.2), rgba(82, 138, 237, 0.2));
+  border: 1px solid rgba(166, 123, 244, 0.2);
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 400ms var(--ease-out-expo);
+}
 
-  .btn-primary-premium:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(166, 123, 244, 0.4);
-  }
-
-  .btn-outline-premium {
-    display: inline-flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: transparent;
-    color: var(--color-brand-navy);
-    font-weight: 600;
-    border: 1.5px solid rgba(52, 53, 79, 0.2);
-    border-radius: 14px;
-    text-decoration: none;
-    transition: all 250ms var(--ease-out-expo);
-    font-family: var(--font-heading);
-  }
-
-  .btn-outline-premium:hover {
-    background: rgba(52, 53, 79, 0.04);
-    border-color: rgba(52, 53, 79, 0.3);
-  }
+.featured-card-item:hover .card-icon-wrap {
+  transform: scale(1.08) rotate(3deg);
+  border-color: rgba(166, 123, 244, 0.35);
+}
 
   @media (max-width: 1024px) {
     .process-connector {
       display: none;
     }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+  .process-bg-orb, .featured-bg-orb {
+    animation: none;
+  }
   }
 </style>

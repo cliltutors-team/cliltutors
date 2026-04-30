@@ -2,10 +2,17 @@
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
-import HeroSection from '../../components/HeroSection.astro';
-import InstructorCard from '../../components/InstructorCard.astro';
+import PremiumHero from '../../components/PremiumHero.astro';
+import PremiumCard from '../../components/PremiumCard.astro';
+import StatsBanner from '../../components/StatsBanner.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
+import InstructorGrid from '../../components/InstructorGrid.tsx';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
+import MotionCard from '../../components/MotionCard.tsx';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
+import { tutorProfiles } from '../../data/tutors';
 
 export function getStaticPaths() {
   return Object.keys(languages).map(lang => ({ params: { lang } }));
@@ -14,35 +21,194 @@ export function getStaticPaths() {
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const instructors = [
-  { name: 'Jimmy Ramires', photo: '/images/web/Jimmy.png', languages: ['Spanish', 'English'], specialization: 'CLIL · Business Communication' },
-  { name: 'Alissa Lechleitner', photo: '/images/web/Alissa.png', languages: ['English', 'Portuguese'], specialization: 'CLIL · Academic Writing' },
-  { name: 'Laura Gomes', photo: '/images/web/Laura.png', languages: ['Portuguese', 'English'], specialization: 'CLIL · STEM Education' },
-  { name: 'Thayline Candatti', photo: '/images/web/Thayline.png', languages: ['English', 'Portuguese'], specialization: 'CLIL · Professional Coaching' },
-  { name: 'Xiomara Ramires', photo: '/images/web/Xiomara.png', languages: ['Spanish', 'Portuguese'], specialization: 'CLIL · Cultural Communication' },
-  { name: 'Cristian', photo: '/images/web/Cristian.png', languages: ['Spanish', 'English', 'Portuguese'], specialization: 'CLIL · Corporate Training' },
+const langMap: Record<string, string> = {
+  en: t('instructors.lang.en'),
+  pt: t('instructors.lang.pt'),
+  es: t('instructors.lang.es'),
+};
+
+const specMap: Record<string, string> = {
+  business: t('instructors.spec.business'),
+  academic: t('instructors.spec.academic'),
+  stem: t('instructors.spec.stem'),
+  coaching: t('instructors.spec.coaching'),
+  culture: t('instructors.spec.culture'),
+  corporate: t('instructors.spec.corporate'),
+};
+
+const instructors = tutorProfiles.map((tutor, i) => ({
+  name: tutor.name,
+  slug: tutor.slug,
+  photo: tutor.photo,
+  languages: tutor.languages.map(l => langMap[l] || l),
+  specialization: specMap[tutor.specKey] || tutor.specialization,
+  specKey: tutor.specKey,
+  students: tutor.students,
+  rating: tutor.rating,
+  bio: tutor.bio[lang] || tutor.bio.en,
+  credentials: tutor.credentials,
+  variant: (['blue', 'purple', 'gold', 'orange', 'navy', 'purple'] as const)[i % 6],
+}));
+
+const expertiseFeatures = [
+  {
+  icon: 'briefcase',
+  iconType: 'lucide' as const,
+  title: t('instructors.spec.business'),
+    description: t('instructors.hero.subtitle'),
+    variant: 'blue' as const,
+  },
+  {
+  icon: 'graduation-cap',
+  iconType: 'lucide' as const,
+  title: t('instructors.spec.academic'),
+    description: t('instructors.hero.subtitle'),
+    variant: 'purple' as const,
+  },
+  {
+  icon: 'microscope',
+  iconType: 'lucide' as const,
+  title: t('instructors.spec.stem'),
+    description: t('instructors.hero.subtitle'),
+    variant: 'gold' as const,
+  },
+  {
+  icon: 'rocket',
+  iconType: 'lucide' as const,
+  title: t('instructors.spec.coaching'),
+    description: t('instructors.hero.subtitle'),
+    variant: 'orange' as const,
+  },
+];
+
+const stats = [
+  { value: '6+', label: t('trust.experts'), trend: 'neutral' as const },
+  { value: '6.3k+', label: t('instructors.students'), trend: 'up' as const, trendValue: '+18%' },
+  { value: '4.9', label: t('instructors.rating'), trend: 'up' as const },
+  { value: '3', label: t('instructors.hero.eyebrow'), trend: 'neutral' as const },
+];
+
+const trustIndicators = [
+  { value: '4.9', label: t('instructors.rating') },
+  { value: '6.3k+', label: t('instructors.students') },
+  { value: '100%', label: t('instructors.verified') },
 ];
 ---
 
 <Layout title={t('instructors.meta.title')} description={t('instructors.meta.desc')} lang={lang}>
   <Navbar />
-  <HeroSection title={t('instructors.hero.title')} subtitle={t('instructors.hero.subtitle')} />
 
-  <section class="section-padding bg-white">
-    <div class="container-narrow">
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {instructors.map(inst => (
-          <InstructorCard
-            name={inst.name}
-            photo={inst.photo}
-            languages={inst.languages}
-            specialization={inst.specialization}
-            ctaText={t('instructors.cta')}
-          />
+  <div class="instructors-page">
+    <PremiumHero
+      eyebrow={t('instructors.hero.eyebrow')}
+      title={t('instructors.hero.title')}
+      subtitle={t('instructors.hero.subtitle')}
+      ctaPrimary={{ text: t('nav.consultation'), href: `/${lang}/consultation` }}
+      ctaSecondary={{ text: t('instructors.viewall'), href: '#instructors' }}
+      alignment="center"
+      theme="gradient"
+      trustIndicators={trustIndicators}
+    />
+
+    <InstructorGrid
+      client:visible
+      t={t}
+      lang={lang}
+      instructors={instructors}
+      eyebrow={t('instructors.eyebrow')}
+      title={t('instructors.title')}
+      subtitle={t('instructors.subtitle')}
+    />
+
+    <section class="section-padding gradient-hero relative overflow-hidden">
+      <div class="instructors-orb instructors-orb--purple"></div>
+      <div class="instructors-orb instructors-orb--blue"></div>
+      <div class="max-w-[1200px] mx-auto px-6 relative">
+        <SectionHeader
+          eyebrow={t('instructors.expertise.eyebrow')}
+          title={t('instructors.expertise.title')}
+          description={t('instructors.expertise.subtitle')}
+          light
+        />
+      <StaggerContainer client:visible className="grid md:grid-cols-2 gap-6">
+        {expertiseFeatures.slice(0, 2).map((feat) => (
+          <StaggerItem>
+            <MotionCard client:visible>
+              <PremiumCard
+                icon={feat.icon}
+                iconType={feat.iconType}
+                title={feat.title}
+                description={feat.description}
+                variant={feat.variant}
+                size="lg"
+              />
+            </MotionCard>
+          </StaggerItem>
         ))}
+      </StaggerContainer>
+      <StaggerContainer client:visible className="grid md:grid-cols-2 gap-6 mt-6">
+        {expertiseFeatures.slice(2).map((feat) => (
+          <StaggerItem>
+            <MotionCard client:visible>
+              <PremiumCard
+                icon={feat.icon}
+                iconType={feat.iconType}
+                title={feat.title}
+                description={feat.description}
+                variant={feat.variant}
+                size="lg"
+              />
+            </MotionCard>
+          </StaggerItem>
+        ))}
+      </StaggerContainer>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <StatsBanner
+      stats={stats}
+      theme="gradient"
+      title={t('instructors.stats.title')}
+    />
+
+    <PremiumCTABanner
+      title={t('instructors.cta.title')}
+      description={t('instructors.cta.subtitle')}
+      primaryCTA={{ text: t('nav.consultation'), href: `/${lang}/consultation` }}
+      variant="gradient"
+        trustBadges={[
+          { icon: 'check', iconType: 'lucide' as const, label: t('instructors.verified') },
+          { icon: 'star', iconType: 'lucide' as const, label: t('instructors.rating') },
+          { icon: 'globe', iconType: 'lucide' as const, label: t('instructors.hero.eyebrow') },
+        ]}
+    />
+  </div>
 
   <Footer />
 </Layout>
+
+<style>
+.instructors-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.instructors-orb--purple {
+  width: 350px;
+  height: 350px;
+  background: var(--color-brand-purple);
+  top: 10%;
+  right: -5%;
+}
+
+.instructors-orb--blue {
+  width: 280px;
+  height: 280px;
+  background: var(--color-brand-blue);
+  bottom: 15%;
+  left: -5%;
+}
+</style>

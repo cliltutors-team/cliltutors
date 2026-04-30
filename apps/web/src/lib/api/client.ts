@@ -351,8 +351,6 @@ export async function apiClient<T>(
     const response = await fetch(url, {
       ...fetchOptions,
       headers,
-      coldStartRetries,
-      coldStartTimeout,
     });
     return handleResponse<T>(response);
   }

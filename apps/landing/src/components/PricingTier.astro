@@ -46,7 +46,7 @@ const {
 } = Astro.props;
 ---
 
-<div 
+<div
   class:list={[
     'pricing-tier',
     `variant-${variant}`,
@@ -55,6 +55,7 @@ const {
   {...analytics?.tierId && { 'data-tier': analytics.tierId }}
 >
   {/* Featured Badge */}
+  <div class="reveal" style="--stagger: 0">
   {featured && badge && (
     <div class="featured-badge">
       <svg class="badge-icon" viewBox="0 0 20 20" fill="currentColor">
@@ -63,11 +64,12 @@ const {
       <span>{badge}</span>
     </div>
   )}
+  </div>
 
   {/* Header */}
-  <div class="tier-header">
+  <div class="tier-header reveal" style="--stagger: 1">
     <h3 class="tier-name">{name}</h3>
-    
+
     <div class="tier-price">
       {typeof price === 'number' && (
         <>
@@ -87,7 +89,7 @@ const {
   </div>
 
   {/* Features */}
-  <ul class="tier-features">
+  <ul class="tier-features reveal" style="--stagger: 2">
     {features.map((feature) => (
       <li class:list={['feature-item', feature.highlighted && 'feature-highlighted']}>
         {feature.included !== false ? (
@@ -106,9 +108,10 @@ const {
 
   {/* CTA */}
   {cta && (
-    <a 
+    <a
       href={cta.href}
-      class:list={['tier-cta', featured && 'cta-primary']}
+      class:list={['tier-cta', 'reveal', featured && 'cta-primary']}
+      style="--stagger: 3"
       {...analytics?.clickAction && { 'data-action': analytics.clickAction }}
     >
       <span>{cta.text}</span>
@@ -125,7 +128,7 @@ const {
   background: white;
   border-radius: 1.5rem;
   padding: 2rem;
-  border: 2px solid var(--color-gray-200);
+  border: 2px solid var(--color-brand-blue-200);
   display: flex;
   flex-direction: column;
   transition: all 400ms var(--ease-out-expo);
@@ -259,7 +262,7 @@ const {
 }
 
 .icon-x {
-  color: var(--color-gray-300);
+  color: var(--color-brand-blue-400);
 }
 
 .feature-highlighted {
@@ -276,7 +279,7 @@ const {
 
 .feature-text {
   font-size: 0.9375rem;
-  color: var(--color-gray-700);
+  color: var(--color-brand-navy-700);
   line-height: 1.5;
 }
 
@@ -323,7 +326,18 @@ const {
   transform: translateX(4px);
 }
 
-/* Variant: Minimal */
+  .pricing-tier .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+    transition-delay: calc(var(--stagger, 0) * 80ms);
+  }
+.pricing-tier .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+  /* Variant: Minimal */
 .variant-minimal {
   border: none;
   background: transparent;
@@ -345,6 +359,16 @@ const {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .pricing-tier:hover {
+    transform: none;
+  }
+
+  .tier-featured:hover {
+    transform: none;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .pricing-tier {
@@ -354,5 +378,7 @@ const {
   .price-value {
     font-size: 2.5rem;
   }
-}
+  }
 </style>
+
+
