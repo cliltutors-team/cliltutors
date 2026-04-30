@@ -5,6 +5,10 @@ import Footer from '../../components/Footer.astro';
 import PremiumHero from '../../components/PremiumHero.astro';
 import PremiumCard from '../../components/PremiumCard.astro';
 import StatsBanner from '../../components/StatsBanner.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
+import MotionCard from '../../components/MotionCard.tsx';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -17,8 +21,9 @@ const t = useTranslations(lang);
 
 const careerPrograms = [
   {
-    icon: '💼',
-    title: t('professional.programs.interview.title'),
+  icon: 'briefcase',
+  iconType: 'lucide' as const,
+  title: t('professional.programs.interview.title'),
     description: t('professional.programs.interview.desc'),
     metrics: [
       { label: t('professional.programs.interview.metric1.label'), value: t('professional.programs.interview.metric1.value') },
@@ -29,8 +34,9 @@ const careerPrograms = [
     featured: true
   },
   {
-    icon: '🎯',
-    title: t('professional.programs.presentation.title'),
+  icon: 'target',
+  iconType: 'lucide' as const,
+  title: t('professional.programs.presentation.title'),
     description: t('professional.programs.presentation.desc'),
     metrics: [
       { label: t('professional.programs.presentation.metric1.label'), value: t('professional.programs.presentation.metric1.value') }
@@ -39,8 +45,9 @@ const careerPrograms = [
     variant: 'purple' as const
   },
   {
-    icon: '🤝',
-    title: t('professional.programs.negotiation.title'),
+  icon: 'users',
+  iconType: 'lucide' as const,
+  title: t('professional.programs.negotiation.title'),
     description: t('professional.programs.negotiation.desc'),
     metrics: [
       { label: t('professional.programs.negotiation.metric1.label'), value: t('professional.programs.negotiation.metric1.value') }
@@ -49,8 +56,9 @@ const careerPrograms = [
     variant: 'gold' as const
   },
   {
-    icon: '🌐',
-    title: t('professional.programs.collaboration.title'),
+  icon: 'globe-2',
+  iconType: 'lucide' as const,
+  title: t('professional.programs.collaboration.title'),
     description: t('professional.programs.collaboration.desc'),
     metrics: [
       { label: t('professional.programs.collaboration.metric1.label'), value: t('professional.programs.collaboration.metric1.value') }
@@ -69,24 +77,27 @@ const careerStats = [
 
 const careerTracks = [
   {
-    icon: '📈',
-    title: t('professional.tracks.executive.title'),
+  icon: 'trending-up',
+  iconType: 'lucide' as const,
+  title: t('professional.tracks.executive.title'),
     description: t('professional.tracks.executive.desc'),
     linkText: t('professional.tracks.link'),
     href: `/${lang}/consultation`,
     variant: 'navy' as const
   },
   {
-    icon: '🔬',
-    title: t('professional.tracks.technical.title'),
+  icon: 'microscope',
+  iconType: 'lucide' as const,
+  title: t('professional.tracks.technical.title'),
     description: t('professional.tracks.technical.desc'),
     linkText: t('professional.tracks.link'),
     href: `/${lang}/consultation`,
     variant: 'navy' as const
   },
   {
-    icon: '🎨',
-    title: t('professional.tracks.creative.title'),
+  icon: 'palette',
+  iconType: 'lucide' as const,
+  title: t('professional.tracks.creative.title'),
     description: t('professional.tracks.creative.desc'),
     linkText: t('professional.tracks.link'),
     href: `/${lang}/consultation`,
@@ -105,190 +116,224 @@ const methodologySteps = [
 <Layout title={t('professional.meta.title')} description={t('professional.meta.desc')} lang={lang}>
   <Navbar />
 
-  <PremiumHero
-    eyebrow={t('professional.hero.eyebrow')}
-    title={t('professional.hero.title')}
-    subtitle={t('professional.hero.subtitle')}
-    ctaPrimary={{ text: t('professional.hero.cta'), href: `/${lang}/consultation` }}
-    ctaSecondary={{ text: t('professional.hero.cta2'), href: `#programs` }}
-    alignment="center"
-    theme="gradient"
-    trustIndicators={[
-      { value: '10,000+', label: t('professional.trust.professionals') },
-      { value: '95%', label: t('professional.trust.satisfaction') },
-      { value: '45+', label: t('professional.trust.countries') }
-    ]}
-  />
+  <div class="prof-dev-page">
+    <PremiumHero
+      eyebrow={t('professional.hero.eyebrow')}
+      title={t('professional.hero.title')}
+      subtitle={t('professional.hero.subtitle')}
+      ctaPrimary={{ text: t('professional.hero.cta'), href: `/${lang}/consultation` }}
+      ctaSecondary={{ text: t('professional.hero.cta2'), href: `#programs` }}
+      alignment="center"
+      theme="gradient"
+      trustIndicators={[
+        { value: '10,000+', label: t('professional.trust.professionals') },
+        { value: '95%', label: t('professional.trust.satisfaction') },
+        { value: '45+', label: t('professional.trust.countries') }
+      ]}
+    />
 
-  <StatsBanner
-    stats={careerStats}
-    theme="dark"
-    title={t('professional.stats.title')}
-    subtitle={t('professional.stats.subtitle')}
-  />
+    <StatsBanner
+      stats={careerStats}
+      theme="dark"
+      title={t('professional.stats.title')}
+      subtitle={t('professional.stats.subtitle')}
+    />
 
-  <section id="programs" class="section-padding bg-white">
-    <div class="container-wide">
-      <div class="text-center mb-16">
-        <span class="eyebrow">{t('professional.programs.eyebrow')}</span>
-        <h2 class="section-title mt-4">{t('professional.programs.title')}</h2>
-        <p class="section-subtitle max-w-2xl mx-auto">{t('professional.programs.subtitle')}</p>
-      </div>
+    <section id="programs" class="section-padding gradient-subtle relative overflow-hidden">
+      <div class="bg-dots"></div>
+      <div class="container-wide relative">
+        <SectionHeader
+          eyebrow={t('professional.programs.eyebrow')}
+          title={t('professional.programs.title')}
+          description={t('professional.programs.subtitle')}
+        />
 
-      <div class="grid md:grid-cols-2 gap-6">
+      <StaggerContainer client:visible className="grid md:grid-cols-2 gap-6">
         {careerPrograms.map((program) => (
-          <PremiumCard
-            icon={program.icon}
-            title={program.title}
-            description={program.description}
-            metrics={program.metrics}
-            tags={program.tags}
-            variant={program.variant}
-featured={program.featured}
-  featuredLabel={t('card.featured')}
-  size="lg"
-          />
+          <StaggerItem>
+            <MotionCard client:visible>
+              <PremiumCard
+                icon={program.icon}
+                iconType={program.iconType}
+                title={program.title}
+                description={program.description}
+                metrics={program.metrics}
+                tags={program.tags}
+                variant={program.variant}
+                featured={program.featured}
+                featuredLabel={t('card.featured')}
+                size="lg"
+              />
+            </MotionCard>
+          </StaggerItem>
         ))}
+      </StaggerContainer>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section-padding gradient-subtle">
-    <div class="container-wide">
-      <div class="text-center mb-16">
-        <span class="eyebrow">{t('professional.tracks.eyebrow')}</span>
-        <h2 class="section-title mt-4">{t('professional.tracks.title')}</h2>
-        <p class="section-subtitle max-w-2xl mx-auto">{t('professional.tracks.subtitle')}</p>
-      </div>
+    <section class="section-padding relative overflow-hidden professional-blue-fade">
+      <div class="bg-grid"></div>
+      <div class="container-wide relative">
+        <SectionHeader
+          eyebrow={t('professional.tracks.eyebrow')}
+          title={t('professional.tracks.title')}
+          description={t('professional.tracks.subtitle')}
+        />
 
-      <div class="grid lg:grid-cols-3 gap-6">
+      <StaggerContainer client:visible className="grid lg:grid-cols-3 gap-6">
         {careerTracks.map((track) => (
-          <PremiumCard
-            icon={track.icon}
-            title={track.title}
-            description={track.description}
-            href={track.href}
-            linkText={track.linkText}
-            variant={track.variant}
-            size="md"
-          />
+          <StaggerItem>
+            <MotionCard client:visible>
+              <PremiumCard
+                icon={track.icon}
+                iconType={track.iconType}
+                title={track.title}
+                description={track.description}
+                href={track.href}
+                linkText={track.linkText}
+                variant={track.variant}
+                size="md"
+              />
+            </MotionCard>
+          </StaggerItem>
         ))}
+      </StaggerContainer>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section-padding bg-brand-navy text-white">
-    <div class="container-wide">
-      <div class="text-center mb-16">
-        <span class="text-brand-gold font-heading font-bold text-xs tracking-widest uppercase">{t('professional.method.eyebrow')}</span>
-        <h2 class="text-4xl md:text-5xl font-heading font-bold mt-4">{t('professional.method.title')}</h2>
-      </div>
+    <section class="section-padding gradient-hero text-white relative overflow-hidden">
+      <div class="method-bg-orb orb-a"></div>
+      <div class="method-bg-orb orb-b"></div>
+      <div class="container-wide relative">
+        <SectionHeader
+          eyebrow={t('professional.method.eyebrow')}
+          title={t('professional.method.title')}
+          light={true}
+        />
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <StaggerContainer client:visible className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         {methodologySteps.map((step, i) => (
-          <div class="relative">
-            <div class="step-number text-brand-gold/20 font-heading font-bold text-7xl mb-4">{step.number}</div>
-            <h3 class="font-heading font-semibold text-xl mb-3">{step.title}</h3>
-            <p class="text-white/70 leading-relaxed">{step.desc}</p>
-            {i < methodologySteps.length - 1 && (
-              <div class="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-brand-gold/30" aria-hidden="true"></div>
-            )}
-          </div>
+          <StaggerItem>
+            <div class="method-step">
+              <div class="step-number">{step.number}</div>
+              <h3 class="font-heading font-semibold text-xl mb-3">{step.title}</h3>
+              <p class="text-white/70 leading-relaxed">{step.desc}</p>
+              {i < methodologySteps.length - 1 && (
+                <div class="step-connector hidden lg:block" aria-hidden="true"></div>
+              )}
+            </div>
+          </StaggerItem>
         ))}
+      </StaggerContainer>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section-padding bg-white">
-    <div class="container-narrow text-center">
-      <h2 class="section-title">{t('professional.cta.title')}</h2>
-      <p class="section-subtitle mb-8">{t('professional.cta.subtitle')}</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href={`/${lang}/consultation`} class="btn-primary-premium">
-          {t('professional.cta.primary')}
-<svg class="w-5 h-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-    </svg>
-        </a>
-        <a href={`/${lang}/methodology`} class="btn-outline-premium">{t('professional.cta.secondary')}</a>
-      </div>
-    </div>
-  </section>
+    <PremiumCTABanner
+      title={t('professional.cta.title')}
+      description={t('professional.cta.subtitle')}
+      primaryCTA={{ text: t('professional.cta.primary'), href: `/${lang}/consultation` }}
+      secondaryCTA={{ text: t('professional.cta.secondary'), href: `/${lang}/methodology` }}
+      variant="gradient"
+        trustBadges={[
+          { icon: 'check', iconType: 'lucide' as const, label: t('professional.trust.professionals'), value: '10,000+' },
+          { icon: 'star', iconType: 'lucide' as const, label: t('professional.trust.satisfaction'), value: '95%' }
+        ]}
+    />
+  </div>
 
   <Footer />
 </Layout>
 
 <style>
-  .eyebrow {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background: rgba(82, 138, 237, 0.08);
-    color: var(--color-brand-blue);
-    border-radius: 100px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-family: var(--font-heading);
-  }
+.prof-dev-page .professional-blue-fade {
+  background: linear-gradient(to bottom, var(--color-brand-blue-50), white);
+}
 
-  .section-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700;
-    color: var(--color-brand-navy);
-    letter-spacing: -0.02em;
-    font-family: var(--font-heading);
-  }
+.method-bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+}
 
-  .section-subtitle {
-    font-size: 1.125rem;
-    color: var(--color-slate-light);
-    line-height: 1.7;
-  }
+.orb-a {
+  top: -15%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(82, 138, 237, 0.12);
+  animation: float 10s ease-in-out infinite;
+}
 
-  .btn-primary-premium {
-    display: inline-flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
-    color: white;
-    font-weight: 600;
-    border-radius: 14px;
-    text-decoration: none;
-    transition: all 300ms var(--ease-out-expo);
-    font-family: var(--font-heading);
-  }
+.orb-b {
+  bottom: -15%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: rgba(166, 123, 244, 0.1);
+  animation: float 12s ease-in-out infinite;
+  animation-delay: 3s;
+}
 
-  .btn-primary-premium:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(82, 138, 237, 0.4);
-  }
+.method-step {
+  position: relative;
+  padding: 2rem;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 400ms var(--ease-out-expo);
+  overflow: hidden;
+}
 
-  .btn-outline-premium {
-    display: inline-flex;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: transparent;
-    color: var(--color-brand-navy);
-    font-weight: 600;
-    border: 1.5px solid rgba(52, 53, 79, 0.2);
-    border-radius: 14px;
-    text-decoration: none;
-    transition: all 250ms var(--ease-out-expo);
-    font-family: var(--font-heading);
-  }
+.method-step::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-brand-gold), var(--color-brand-orange));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
 
-  .btn-outline-premium:hover {
-    background: rgba(52, 53, 79, 0.04);
-    border-color: rgba(52, 53, 79, 0.3);
-  }
+.method-step:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: transparent;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(-4px);
+}
 
-  .step-number {
-    font-size: 5rem;
-    line-height: 1;
-  }
+.method-step:hover::after {
+  opacity: 1;
+}
 
-  .gradient-subtle {
-    background: linear-gradient(to bottom, var(--color-off-white), white);
-  }
+.step-number {
+  font-size: 5rem;
+  line-height: 1;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: rgba(254, 187, 55, 0.15);
+  margin-bottom: 1rem;
+  transition: color 400ms ease;
+}
+
+.method-step:hover .step-number {
+  color: rgba(254, 187, 55, 0.35);
+}
+
+.step-connector {
+  position: absolute;
+  top: 50%;
+  right: -1rem;
+  width: 2rem;
+  height: 2px;
+  background: linear-gradient(to right, rgba(254, 187, 55, 0.4), transparent);
+}
 </style>

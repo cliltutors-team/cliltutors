@@ -1,7 +1,7 @@
 "use client";
 
 import { Component, ReactNode } from "react";
-import { ApiClientError } from "@/lib/api/client";
+import { ApiClientError } from "@/src/lib/api/client";
 
 interface Props {
   children: ReactNode;

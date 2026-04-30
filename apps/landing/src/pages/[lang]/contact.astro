@@ -3,588 +3,222 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import PremiumHero from '../../components/PremiumHero.astro';
-import PremiumCard from '../../components/PremiumCard.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
+import ContactForm from '../../components/ContactForm.tsx';
+import LucideIcon from '../../components/LucideIcon.tsx';
+import MotionReveal from '../../components/MotionReveal.tsx';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
+import MotionCard from '../../components/MotionCard.tsx';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
 export function getStaticPaths() {
-return Object.keys(languages).map(lang => ({ params: { lang } }));
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
 }
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const trustIndicators = [
-{ value: '24h', label: t('contact.trust.response') },
-{ value: '5★', label: t('contact.trust.rating') },
-{ value: '100%', label: t('contact.trust.dedicated') },
+  { value: '24h', label: t('contact.trust.response') },
+  { value: '4.9', label: t('contact.trust.rating') },
+  { value: '100%', label: t('contact.trust.dedicated') },
 ];
 
 const contactMethods = [
-{
-icon: '📧',
-title: t('contact.method.email.title'),
-description: t('contact.method.email.desc'),
-action: 'hello@cliltutors.com',
-href: 'mailto:hello@cliltutors.com',
-},
-{
-icon: '💬',
-title: t('contact.method.chat.title'),
-description: t('contact.method.chat.desc'),
-action: t('contact.method.chat.action'),
-href: '#',
-},
-{
-icon: '📅',
-title: t('contact.method.meeting.title'),
-description: t('contact.method.meeting.desc'),
-action: t('contact.method.meeting.action'),
-href: `/${lang}/consultation`,
-},
+  {
+    icon: 'mail', iconType: 'lucide' as const,
+    title: t('contact.method.email.title'),
+    description: t('contact.method.email.desc'),
+    action: 'hello@cliltutors.com',
+    href: 'mailto:hello@cliltutors.com',
+  },
+  {
+    icon: 'message-circle', iconType: 'lucide' as const,
+    title: t('contact.method.chat.title'),
+    description: t('contact.method.chat.desc'),
+    action: t('contact.method.chat.action'),
+    href: '#',
+  },
+  {
+    icon: 'calendar', iconType: 'lucide' as const,
+    title: t('contact.method.meeting.title'),
+    description: t('contact.method.meeting.desc'),
+    action: t('contact.method.meeting.action'),
+    href: `/${lang}/consultation`,
+  },
 ];
 
 const faqs = [
-{ question: t('contact.faq1.q'), answer: t('contact.faq1.a') },
-{ question: t('contact.faq2.q'), answer: t('contact.faq2.a') },
-{ question: t('contact.faq3.q'), answer: t('contact.faq3.a') },
+  { question: t('contact.faq1.q'), answer: t('contact.faq1.a') },
+  { question: t('contact.faq2.q'), answer: t('contact.faq2.a') },
+  { question: t('contact.faq3.q'), answer: t('contact.faq3.a') },
 ];
 ---
 
 <Layout title={t('contact.meta.title')} description={t('contact.meta.desc')} lang={lang}>
-<Navbar />
+  <Navbar />
 
-<PremiumHero
-eyebrow={t('contact.hero.eyebrow')}
-title={t('contact.hero.title')}
-subtitle={t('contact.hero.subtitle')}
-alignment="center"
-theme="gradient"
-trustIndicators={trustIndicators}
-/>
+  <div class="contact-page">
+    <PremiumHero
+      eyebrow={t('contact.hero.eyebrow')}
+      title={t('contact.hero.title')}
+      subtitle={t('contact.hero.subtitle')}
+      alignment="center"
+      theme="gradient"
+      trustIndicators={trustIndicators}
+    />
 
-<section class="section-padding bg-white">
-<div class="container-narrow max-w-6xl">
-<div class="contact-methods-grid mb-16">
-{contactMethods.map((method) => (
-<a href={method.href} class="contact-method-card">
-<div class="method-icon">{method.icon}</div>
-<h3 class="method-title">{method.title}</h3>
-<p class="method-desc">{method.description}</p>
-<span class="method-action">{method.action}</span>
-</a>
-))}
-</div>
+    <section class="section-padding relative overflow-hidden">
+      <div class="bg-dots"></div>
+      <div class="container-narrow max-w-6xl relative">
+        <SectionHeader
+          eyebrow={t('contact.methods.eyebrow')}
+          title={t('contact.methods.title')}
+          description={t('contact.methods.subtitle')}
+        />
+      <StaggerContainer client:visible className="contact-methods-grid mb-16">
+        {contactMethods.map((method) => (
+          <StaggerItem>
+            <MotionCard client:visible>
+              <a href={method.href} class="contact-method-card">
+                <div class="method-icon">
+                  {method.iconType === 'lucide' ? (
+                    <LucideIcon client:idle name={method.icon} size={32} color="currentColor" className="text-brand-blue" />
+                  ) : (
+                    method.icon
+                  )}
+                </div>
+                <h3 class="method-title">{method.title}</h3>
+                <p class="method-desc">{method.description}</p>
+                <span class="method-action">{method.action}</span>
+              </a>
+            </MotionCard>
+          </StaggerItem>
+        ))}
+      </StaggerContainer>
 
-<div class="grid lg:grid-cols-5 gap-12 items-start">
-<div class="lg:col-span-3">
-<div class="form-header mb-8">
-<h2 class="font-heading text-3xl font-semibold text-brand-navy mb-3">{t('contact.form.header')}</h2>
-<p class="text-brand-slate-light">{t('contact.form.subheader')}</p>
-</div>
+        <ContactForm
+          client:visible
+          t={t}
+          lang={lang}
+          contactMethods={contactMethods}
+          faqs={faqs}
+        />
+      </div>
+    </section>
 
-<form id="contact-form" class="premium-form">
-<div class="form-group">
-<label for="contact-name" class="form-label">
-{t('contact.form.name')}
-<span class="required" aria-label="required">*</span>
-</label>
-<input
-type="text"
-id="contact-name"
-name="name"
-required
-class="form-input"
-placeholder={t('contact.form.name.placeholder')}
-aria-required="true"
-/>
-</div>
+    <PremiumCTABanner
+      title={t('contact.cta.title')}
+      description={t('contact.cta.subtitle')}
+      primaryCTA={{ text: t('nav.consultation'), href: `/${lang}/consultation` }}
+      secondaryCTA={{ text: t('nav.methodology'), href: `/${lang}/methodology` }}
+      variant="gradient-purple"
+      trustBadges={[
+    { icon: 'mail', iconType: 'lucide' as const, label: t('contact.trust.response') },
+    { icon: 'star', iconType: 'lucide' as const, label: t('contact.trust.rating') },
+      ]}
+    />
+  </div>
 
-<div class="form-group">
-<label for="contact-email" class="form-label">
-{t('contact.form.email')}
-<span class="required" aria-label="required">*</span>
-</label>
-<input
-type="email"
-id="contact-email"
-name="email"
-required
-class="form-input"
-placeholder={t('contact.form.email.placeholder')}
-aria-required="true"
-/>
-</div>
-
-<div class="form-group">
-<label for="contact-subject" class="form-label">{t('contact.form.subject')}</label>
-<select id="contact-subject" name="subject" class="form-input form-select">
-<option value="">{t('contact.form.subject.select')}</option>
-<option value="general">{t('contact.form.subject.general')}</option>
-<option value="corporate">{t('contact.form.subject.corporate')}</option>
-<option value="academic">{t('contact.form.subject.academic')}</option>
-<option value="partnership">{t('contact.form.subject.partnership')}</option>
-<option value="other">{t('contact.form.subject.other')}</option>
-</select>
-</div>
-
-<div class="form-group">
-<label for="contact-message" class="form-label">
-{t('contact.form.message')}
-<span class="required" aria-label="required">*</span>
-</label>
-<textarea
-id="contact-message"
-name="message"
-rows="6"
-required
-class="form-input form-textarea"
-placeholder={t('contact.form.message.placeholder')}
-aria-required="true"
-></textarea>
-</div>
-
-<div class="form-group">
-<label for="contact-referral" class="form-label">{t('contact.form.referral')}</label>
-<input
-type="text"
-id="contact-referral"
-name="referral"
-class="form-input"
-placeholder={t('contact.form.referral.placeholder')}
-/>
-</div>
-
-<button type="submit" class="form-submit-btn">
-<span>{t('contact.form.submit')}</span>
-<svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-</svg>
-</button>
-
-<div id="form-success" class="form-success hidden" role="alert" aria-live="polite">
-<svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-</svg>
-<p>{t('contact.form.success')}</p>
-</div>
-</form>
-</div>
-
-<div class="lg:col-span-2">
-<div class="sidebar-section mb-10">
-<h3 class="font-heading text-xl font-semibold text-brand-navy mb-5">{t('contact.social.title')}</h3>
-<div class="social-links">
-<a href="https://linkedin.com/company/cliltutors" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-<div class="social-icon">
-<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-</svg>
-</div>
-<span>LinkedIn</span>
-</a>
-<a href="https://instagram.com/cliltutors" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-<div class="social-icon">
-<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-</svg>
-</div>
-<span>Instagram</span>
-</a>
-<a href="https://youtube.com/@cliltutors" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
-<div class="social-icon">
-<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-<path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-</svg>
-</div>
-<span>YouTube</span>
-</a>
-</div>
-</div>
-
-<div class="sidebar-section">
-<h3 class="font-heading text-xl font-semibold text-brand-navy mb-5">{t('contact.faq.title')}</h3>
-<div class="faq-list space-y-4">
-{faqs.map((faq, index) => (
-<div class="faq-item">
-<button
-class="faq-question"
-aria-expanded="false"
-aria-controls={`faq-answer-${index}`}
-id={`faq-question-${index}`}
->
-<span>{faq.question}</span>
-<svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-</svg>
-</button>
-<div class="faq-answer" id={`faq-answer-${index}`} role="region" aria-labelledby={`faq-question-${index}`}>
-<p>{faq.answer}</p>
-</div>
-</div>
-))}
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<Footer />
+  <Footer />
 </Layout>
 
 <style>
-.section-padding {
-padding: 5rem 0;
-}
-
 .contact-methods-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
 .contact-method-card {
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-padding: 2rem;
-background: white;
-border: 1.5px solid var(--color-gray-200);
-border-radius: 1.25rem;
-text-decoration: none;
-transition: all 300ms var(--ease-out-expo);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(82, 138, 237, 0.15);
+  border-radius: 1.25rem;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(82, 138, 237, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 400ms var(--ease-out-expo);
+  overflow: hidden;
+}
+
+.contact-method-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
 }
 
 .contact-method-card:hover {
-transform: translateY(-4px);
-border-color: var(--color-brand-blue);
-box-shadow: 0 12px 30px rgba(82, 138, 237, 0.1);
+  background: rgba(255, 255, 255, 0.88);
+  border-color: transparent;
+  box-shadow: 0 12px 40px rgba(82, 138, 237, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+.contact-method-card:hover::after {
+  opacity: 1;
 }
 
 .method-icon {
-font-size: 2.5rem;
-margin-bottom: 1rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  background: linear-gradient(135deg, rgba(82, 138, 237, 0.12), rgba(166, 123, 244, 0.1));
+  border: 1px solid rgba(82, 138, 237, 0.2);
+  transition: all 400ms var(--ease-out-expo);
+}
+
+.contact-method-card:hover .method-icon {
+  transform: scale(1.08) rotate(-3deg);
+  border-color: rgba(82, 138, 237, 0.35);
+  background: linear-gradient(135deg, rgba(82, 138, 237, 0.18), rgba(166, 123, 244, 0.16));
 }
 
 .method-title {
-font-family: var(--font-heading);
-font-size: 1.25rem;
-font-weight: 600;
-color: var(--color-brand-navy);
-margin-bottom: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-brand-navy);
+  margin-bottom: 0.5rem;
 }
 
 .method-desc {
-font-size: 0.9375rem;
-color: var(--color-slate-light);
-line-height: 1.6;
-margin-bottom: 1rem;
+  font-size: 0.9375rem;
+  color: var(--color-slate-light);
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
 .method-action {
-font-family: var(--font-heading);
-font-size: 0.875rem;
-font-weight: 600;
-color: var(--color-brand-blue);
-}
-
-.form-header {
-border-bottom: 2px solid var(--color-gray-100);
-padding-bottom: 1.5rem;
-}
-
-.premium-form {
-display: flex;
-flex-direction: column;
-gap: 1.75rem;
-}
-
-.form-group {
-display: flex;
-flex-direction: column;
-gap: 0.5rem;
-}
-
-.form-label {
-display: flex;
-align-items: center;
-gap: 0.25rem;
-font-family: var(--font-heading);
-font-size: 0.875rem;
-font-weight: 600;
-color: var(--color-brand-navy);
-}
-
-.required {
-color: var(--color-brand-blue);
-font-weight: 700;
-}
-
-.form-input {
-width: 100%;
-padding: 0.875rem 1rem;
-font-size: 0.9375rem;
-color: var(--color-brand-navy);
-background: var(--color-gray-50);
-border: 1.5px solid var(--color-gray-200);
-border-radius: 12px;
-transition: all 250ms ease;
-}
-
-.form-input:hover {
-border-color: var(--color-gray-300);
-}
-
-.form-input:focus {
-outline: none;
-background: white;
-border-color: var(--color-brand-blue);
-box-shadow: 0 0 0 3px rgba(82, 138, 237, 0.1);
-}
-
-.form-input::placeholder {
-color: var(--color-gray-400);
-}
-
-.form-textarea {
-resize: vertical;
-min-height: 150px;
-}
-
-.form-select {
-appearance: none;
-background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-background-repeat: no-repeat;
-background-position: right 0.75rem center;
-background-size: 1.25rem;
-padding-right: 2.5rem;
-}
-
-.form-submit-btn {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 0.75rem;
-width: 100%;
-padding: 1rem 2rem;
-font-family: var(--font-heading);
-font-size: 1rem;
-font-weight: 600;
-color: white;
-background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
-border: none;
-border-radius: 14px;
-cursor: pointer;
-transition: all 300ms var(--ease-out-expo);
-box-shadow: 0 4px 15px rgba(82, 138, 237, 0.3);
-}
-
-.form-submit-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 8px 25px rgba(82, 138, 237, 0.4);
-}
-
-.btn-icon {
-width: 18px;
-height: 18px;
-transition: transform 300ms var(--ease-out-expo);
-}
-
-.form-submit-btn:hover .btn-icon {
-transform: translateX(4px);
-}
-
-.form-success {
-display: flex;
-align-items: center;
-gap: 0.75rem;
-padding: 1rem 1.25rem;
-background: linear-gradient(135deg, rgba(82, 138, 237, 0.1), rgba(166, 123, 244, 0.1));
-border: 1px solid var(--color-brand-blue);
-border-radius: 12px;
-margin-top: 1rem;
-}
-
-.success-icon {
-width: 24px;
-height: 24px;
-color: var(--color-brand-blue);
-flex-shrink: 0;
-}
-
-.form-success p {
-font-size: 0.9375rem;
-font-weight: 500;
-color: var(--color-brand-blue);
-margin: 0;
-}
-
-.sidebar-section {
-background: var(--color-gray-50);
-border-radius: 1.25rem;
-padding: 1.5rem;
-}
-
-.social-links {
-display: flex;
-flex-direction: column;
-gap: 0.75rem;
-}
-
-.social-link {
-display: flex;
-align-items: center;
-gap: 0.75rem;
-padding: 0.875rem 1rem;
-background: white;
-border: 1px solid var(--color-gray-200);
-border-radius: 12px;
-text-decoration: none;
-transition: all 250ms ease;
-}
-
-.social-link:hover {
-border-color: var(--color-brand-blue);
-transform: translateX(4px);
-}
-
-.social-icon {
-width: 2.5rem;
-height: 2.5rem;
-display: flex;
-align-items: center;
-justify-content: center;
-background: var(--color-gray-100);
-border-radius: 10px;
-color: var(--color-slate);
-}
-
-.social-link:hover .social-icon {
-background: var(--color-brand-blue);
-color: white;
-}
-
-.social-link span {
-font-family: var(--font-heading);
-font-size: 0.9375rem;
-font-weight: 600;
-color: var(--color-brand-navy);
-}
-
-.faq-item {
-background: white;
-border: 1px solid var(--color-gray-200);
-border-radius: 12px;
-overflow: hidden;
-}
-
-.faq-question {
-width: 100%;
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 1rem;
-padding: 1.25rem;
-background: transparent;
-border: none;
-cursor: pointer;
-text-align: left;
-transition: all 250ms ease;
-}
-
-.faq-question:hover {
-background: var(--color-gray-50);
-}
-
-.faq-question span {
-font-family: var(--font-heading);
-font-size: 0.9375rem;
-font-weight: 600;
-color: var(--color-brand-navy);
-}
-
-.faq-icon {
-width: 20px;
-height: 20px;
-color: var(--color-brand-blue);
-flex-shrink: 0;
-transition: transform 300ms var(--ease-out-expo);
-}
-
-.faq-question[aria-expanded="true"] .faq-icon {
-transform: rotate(180deg);
-}
-
-.faq-answer {
-max-height: 0;
-overflow: hidden;
-transition: max-height 300ms ease, padding 300ms ease;
-}
-
-.faq-answer.open {
-max-height: 200px;
-padding: 0 1.25rem 1.25rem;
-}
-
-.faq-answer p {
-font-size: 0.9375rem;
-color: var(--color-slate-light);
-line-height: 1.6;
-margin: 0;
-}
-
-@media (max-width: 1024px) {
-.grid.lg\\:grid-cols-5 {
-grid-template-columns: 1fr;
-gap: 3rem;
-}
-
-.lg\\:col-span-2 {
-order: -1;
-}
-
-.sidebar-section {
-padding: 1.25rem;
-}
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-brand-blue);
 }
 
 @media (max-width: 640px) {
-.section-padding {
-padding: 3rem 0;
-}
-
-.contact-methods-grid {
-grid-template-columns: 1fr;
-}
+  .contact-methods-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
-
-<script>
-const form = document.getElementById('contact-form');
-const success = document.getElementById('form-success');
-
-form?.addEventListener('submit', (e) => {
-e.preventDefault();
-
-const formData = new FormData(form as HTMLFormElement);
-const data = Object.fromEntries(formData.entries());
-
-console.log('Contact form submitted:', data);
-
-success?.classList.remove('hidden');
-(form as HTMLFormElement).reset();
-
-setTimeout(() => success?.classList.add('hidden'), 6000);
-});
-
-document.querySelectorAll('.faq-question').forEach((button) => {
-button.addEventListener('click', () => {
-const expanded = button.getAttribute('aria-expanded') === 'true';
-const answer = button.nextElementSibling;
-
-button.setAttribute('aria-expanded', String(!expanded));
-answer?.classList.toggle('open');
-});
-});
-</script>

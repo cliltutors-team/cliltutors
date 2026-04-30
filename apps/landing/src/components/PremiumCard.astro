@@ -1,13 +1,9 @@
 ---
-/**
- * PremiumCard Component
- * Sophisticated card for enterprise $10M platform
- * Features: Glassmorphism, dynamic hovers, multi-variant support
- */
+import LucideIcon from './LucideIcon';
 
 interface Props {
   icon?: string;
-  iconType?: 'emoji' | 'svg' | 'image';
+  iconType?: 'emoji' | 'svg' | 'image' | 'lucide';
   title: string;
   description: string;
   href?: string;
@@ -40,7 +36,7 @@ const variantMap = {
   purple: { gradient: 'from-brand-purple-50 to-brand-purple-100', icon: 'icon-purple', border: 'border-brand-purple-200' },
   gold: { gradient: 'from-brand-gold-50 to-brand-gold-100', icon: 'icon-gold', border: 'border-brand-gold-200' },
   orange: { gradient: 'from-brand-orange-50 to-brand-coral-50', icon: 'icon-orange', border: 'border-brand-orange-200' },
-  navy: { gradient: 'from-gray-50 to-gray-100', icon: 'icon-navy', border: 'border-gray-300' },
+  navy: { gradient: 'from-brand-navy-50 to-brand-blue-100', icon: 'icon-navy', border: 'border-brand-blue-200' },
   glass: { gradient: 'from-white/80 to-white/60', icon: 'icon-glass', border: 'border-white/50' }
 };
 
@@ -72,9 +68,14 @@ const sizeClasses = {
   {/* Icon */}
   {icon && (
     <div class:list={['card-icon', variantMap[variant].icon]}>
-      {iconType === 'emoji' && <span class="icon-emoji" aria-hidden="true">{icon}</span>}
-      {iconType === 'svg' && <div class="icon-svg" set:html={icon} />}
-      {iconType === 'image' && <img src={icon} alt="" class="icon-image" />}
+  {iconType === 'emoji' && <span class="icon-emoji" aria-hidden="true">{icon}</span>}
+  {iconType === 'svg' && <div class="icon-svg" set:html={icon} />}
+  {iconType === 'image' && <img src={icon} alt="" class="icon-image" />}
+  {iconType === 'lucide' && (
+    <div data-lucide-icon={icon} class:list={['icon-lucide-container', `lucide-${variant}`]}>
+      <LucideIcon client:visible name={icon} size={22} color="currentColor" strokeWidth={1.75} />
+    </div>
+  )}
     </div>
   )}
 
@@ -122,37 +123,61 @@ const sizeClasses = {
 </article>
 
 <style>
-  .premium-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 1.25rem;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    transition: all 400ms var(--ease-out-expo);
-    overflow: hidden;
-  }
+.premium-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(82, 138, 237, 0.1);
+  box-shadow: 0 4px 24px rgba(82, 138, 237, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 400ms var(--ease-out-expo);
+  overflow: hidden;
+}
 
-  .premium-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(82, 138, 237, 0.02), rgba(166, 123, 244, 0.02));
-    opacity: 0;
-    transition: opacity 400ms var(--ease-out-expo);
-  }
+.premium-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(82, 138, 237, 0.05), rgba(166, 123, 244, 0.05));
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out-expo);
+}
 
-  .card-interactive:hover {
-    transform: translateY(-6px);
-    box-shadow: 
-      0 20px 50px rgba(0, 0, 0, 0.08),
-      0 8px 20px rgba(0, 0, 0, 0.04);
-    border-color: rgba(82, 138, 237, 0.15);
-  }
+.premium-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 400ms var(--ease-out-expo);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+}
 
-  .card-interactive:hover::before {
-    opacity: 1;
-  }
+.card-interactive:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 50px rgba(82, 138, 237, 0.12),
+    0 8px 20px rgba(82, 138, 237, 0.06);
+  border-color: transparent;
+}
+
+.card-interactive:hover::before {
+  opacity: 1;
+}
+
+.card-interactive:hover::after {
+  opacity: 0.6;
+}
 
   .card-featured {
     border: 2px solid var(--color-brand-gold);
@@ -210,10 +235,10 @@ const sizeClasses = {
     border: 1px solid var(--color-brand-orange-200);
   }
 
-  .icon-navy {
-    background: linear-gradient(135deg, var(--color-gray-50), var(--color-gray-100));
-    border: 1px solid var(--color-gray-300);
-  }
+.icon-navy {
+  background: linear-gradient(135deg, var(--color-brand-navy-50), var(--color-brand-blue-100));
+  border: 1px solid var(--color-brand-blue-200);
+}
 
   .icon-glass {
     background: rgba(255, 255, 255, 0.6);
@@ -235,11 +260,27 @@ const sizeClasses = {
     height: 1.5rem;
   }
 
-  .icon-image {
-    width: 2rem;
-    height: 2rem;
-    object-fit: contain;
-  }
+.icon-image {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+.icon-lucide-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-brand-blue);
+}
+
+.lucide-blue { color: var(--color-brand-blue); }
+.lucide-purple { color: var(--color-brand-purple); }
+.lucide-gold { color: var(--color-brand-gold); }
+.lucide-orange { color: var(--color-brand-orange); }
+.lucide-navy { color: var(--color-brand-navy); }
+.lucide-glass { color: var(--color-brand-blue); }
 
   /* Content */
   .card-content {
@@ -274,14 +315,14 @@ const sizeClasses = {
     margin-top: 0.5rem;
   }
 
-  .tag {
-    padding: 0.25rem 0.625rem;
-    background: var(--color-gray-100);
-    color: var(--color-gray-600);
-    font-size: 0.75rem;
-    font-weight: 500;
-    border-radius: 100px;
-  }
+.tag {
+  padding: 0.25rem 0.625rem;
+  background: var(--color-brand-blue-50);
+  color: var(--color-brand-blue-500);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 100px;
+}
 
   /* Metrics */
   .card-metrics {
@@ -290,7 +331,7 @@ const sizeClasses = {
     gap: 1rem;
     padding-top: 1rem;
     margin-top: 1rem;
-    border-top: 1px solid var(--color-gray-100);
+    border-top: 1px solid rgba(82, 138, 237, 0.1);
   }
 
   .metric {
@@ -308,7 +349,7 @@ const sizeClasses = {
 
   .metric-label {
     font-size: 0.75rem;
-    color: var(--color-gray-500);
+    color: var(--color-brand-blue-500);
   }
 
   /* Link */

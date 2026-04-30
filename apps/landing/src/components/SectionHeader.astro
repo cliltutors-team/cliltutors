@@ -1,4 +1,6 @@
 ---
+import MotionReveal from './MotionReveal';
+
 interface Props {
   eyebrow?: string;
   title: string;
@@ -10,20 +12,52 @@ interface Props {
 const { eyebrow, title, description, center = true, light = false } = Astro.props;
 ---
 
-<div class={`mb-12 lg:mb-16 ${center ? 'text-center' : ''} reveal`}>
+<div class:list={['mb-12 lg:mb-16 section-header', { 'text-center': center }]}>
   {eyebrow && (
-    <span class={`eyebrow mb-4 ${light ? 'eyebrow-light' : ''}`}>
-      <span class="eyebrow-dot"></span>
+    <MotionReveal
+      client:visible
+      direction="up"
+      delay={0}
+      duration={0.5}
+      className={`eyebrow mb-4 ${light ? 'eyebrow-light' : ''}`}
+    >
+      <span class="eyebrow-dot" />
       {eyebrow}
-    </span>
+    </MotionReveal>
   )}
-  <h2 class={`font-heading font-bold text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.1] tracking-[-0.025em] text-balance ${center ? 'max-w-3xl mx-auto' : ''} ${light ? 'text-white' : 'text-brand-navy'}`}>
-    {title}
-  </h2>
+  <MotionReveal
+    client:visible
+    direction="up"
+    delay={0.08}
+    duration={0.6}
+  >
+    <h2
+      class:list={[
+        'font-heading font-bold text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.1] tracking-[-0.025em] text-balance',
+        { 'max-w-3xl mx-auto': center },
+        { 'text-white': light, 'text-brand-navy': !light },
+      ]}
+    >
+      {title}
+    </h2>
+  </MotionReveal>
   {description && (
-    <p class={`mt-5 text-lg leading-relaxed ${center ? 'max-w-2xl mx-auto' : 'max-w-3xl'} ${light ? 'text-white/70' : 'text-slate-light'}`}>
-      {description}
-    </p>
+    <MotionReveal
+      client:visible
+      direction="up"
+      delay={0.16}
+      duration={0.6}
+    >
+      <p
+        class:list={[
+          'mt-5 text-lg leading-relaxed',
+          { 'max-w-2xl mx-auto': center, 'max-w-3xl': !center },
+          { 'text-white/70': light, 'text-slate-light': !light },
+        ]}
+      >
+        {description}
+      </p>
+    </MotionReveal>
   )}
 </div>
 

@@ -8,7 +8,6 @@ interface Tutor {
   name: string
   photo: string
   languages: string[]
-  specialization: string
   specKey: string
   students: string
   rating: string
@@ -20,12 +19,12 @@ interface TutorsPageProps {
 }
 
 const tutorsData: Tutor[] = [
-  { slug: 'jimmy-ramires', name: 'Jimmy Ramires', photo: '/images/web/Jimmy.png', languages: ['es', 'en'], specialization: 'CLIL · Business Communication', specKey: 'business', students: '1.2k', rating: '4.9' },
-  { slug: 'alissa-lechleitner', name: 'Alissa Lechleitner', photo: '/images/web/Alissa.png', languages: ['en', 'pt'], specialization: 'CLIL · Academic Writing', specKey: 'academic', students: '980', rating: '4.8' },
-  { slug: 'laura-gomes', name: 'Laura Gomes', photo: '/images/web/Laura.png', languages: ['pt', 'en'], specialization: 'CLIL · STEM Education', specKey: 'stem', students: '1.1k', rating: '4.9' },
-  { slug: 'thayline-candatti', name: 'Thayline Candatti', photo: '/images/web/Thayline.png', languages: ['en', 'pt'], specialization: 'CLIL · Professional Coaching', specKey: 'coaching', students: '870', rating: '4.9' },
-  { slug: 'xiomara-ramires', name: 'Xiomara Ramires', photo: '/images/web/Xiomara.png', languages: ['es', 'pt'], specialization: 'CLIL · Cultural Communication', specKey: 'culture', students: '760', rating: '4.8' },
-  { slug: 'cristian', name: 'Cristian', photo: '/images/web/Cristian.png', languages: ['es', 'en', 'pt'], specialization: 'CLIL · Corporate Training', specKey: 'business', students: '1.4k', rating: '4.9' },
+  { slug: 'jimmy-ramires', name: 'Jimmy Ramires', photo: '/images/web/Jimmy.png', languages: ['es', 'en'], specKey: 'business', students: '1.2k', rating: '4.9' },
+  { slug: 'alissa-lechleitner', name: 'Alissa Lechleitner', photo: '/images/web/Alissa.png', languages: ['en', 'pt'], specKey: 'academic', students: '980', rating: '4.8' },
+  { slug: 'laura-gomes', name: 'Laura Gomes', photo: '/images/web/Laura.png', languages: ['pt', 'en'], specKey: 'stem', students: '1.1k', rating: '4.9' },
+  { slug: 'thayline-candatti', name: 'Thayline Candatti', photo: '/images/web/Thayline.png', languages: ['en', 'pt'], specKey: 'coaching', students: '870', rating: '4.9' },
+  { slug: 'xiomara-ramires', name: 'Xiomara Ramires', photo: '/images/web/Xiomara.png', languages: ['es', 'pt'], specKey: 'culture', students: '760', rating: '4.8' },
+  { slug: 'cristian', name: 'Cristian', photo: '/images/web/Cristian.png', languages: ['es', 'en', 'pt'], specKey: 'business', students: '1.4k', rating: '4.9' },
 ]
 
 const langFilterOptions = ['en', 'es', 'pt'] as const
@@ -59,11 +58,11 @@ export default function TutorsPage({ lang, t }: TutorsPageProps) {
   return (
     <div>
       {/* Filters */}
-      <section className="section-padding bg-white border-b border-gray-100">
+      <section className="section-padding bg-white border-b border-brand-blue-100">
         <div className="container-narrow">
           <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
-              <Filter className="w-4 h-4" />
+<div className="flex items-center gap-2 text-sm font-medium text-brand-blue-500">
+        <Filter className="w-4 h-4" />
               <span>{t('tutors.filter.language')}</span>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -84,10 +83,10 @@ export default function TutorsPage({ lang, t }: TutorsPageProps) {
               ))}
             </div>
 
-            <div className="w-px h-6 bg-gray-200 mx-2 hidden sm:block" />
+            <div className="w-px h-6 bg-brand-blue-100 mx-2 hidden sm:block" />
 
-            <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
-              <span>{t('tutors.filter.specialization')}</span>
+<div className="flex items-center gap-2 text-sm font-medium text-brand-blue-500">
+        <span>{t('tutors.filter.specialization')}</span>
             </div>
             <div className="flex flex-wrap gap-2">
         {specFilterOptions.map(spec => (
@@ -111,7 +110,7 @@ export default function TutorsPage({ lang, t }: TutorsPageProps) {
         <button
           onClick={clearFilters}
           aria-label={t('tutors.filter.all')}
-          className="flex items-center gap-1 text-sm text-gray-400 hover:text-gray-600 transition-colors ml-2"
+          className="flex items-center gap-1 text-sm text-brand-blue-400 hover:text-brand-navy-700 transition-colors ml-2"
               >
                 <X className="w-3.5 h-3.5" />
                 {t('tutors.filter.all')}
@@ -142,7 +141,7 @@ export default function TutorsPage({ lang, t }: TutorsPageProps) {
               transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.4, delay: i * 0.08 }}
                     className="card-gradient p-6 text-center group hover:translate-y-[-4px]"
                   >
-                    <div className="w-24 h-24 mx-auto rounded-full overflow-hidden border-3 border-brand-blue-100 bg-gray-100 transition-all duration-300 group-hover:border-brand-blue-200">
+                    <div className="w-24 h-24 mx-auto rounded-full overflow-hidden border-3 border-brand-blue-100 bg-brand-blue-50 transition-all duration-300 group-hover:border-brand-blue-200">
                       <img src={tutor.photo} alt={tutor.name} className="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <h3 className="font-heading font-semibold text-lg text-brand-navy mt-4 group-hover:text-brand-indigo transition-colors">
@@ -155,8 +154,8 @@ export default function TutorsPage({ lang, t }: TutorsPageProps) {
                         </span>
                       ))}
                     </div>
-                    <p className="text-sm text-gray-500 mt-3">{t(`tutors.spec.${tutor.specKey}`)}</p>
-                    <div className="flex items-center justify-center gap-4 mt-3 text-xs text-gray-400">
+                    <p className="text-sm text-brand-blue-500 mt-3">{t(`tutors.spec.${tutor.specKey}`)}</p>
+                    <div className="flex items-center justify-center gap-4 mt-3 text-xs text-brand-blue-400">
                       <span className="flex items-center gap-1">
                         <Users className="w-3.5 h-3.5" />
                         {tutor.students} {t('tutors.card.students')}
@@ -190,7 +189,7 @@ export default function TutorsPage({ lang, t }: TutorsPageProps) {
               >
         <div className="text-5xl mb-4" aria-hidden="true">🔍</div>
         <h3 className="font-heading font-semibold text-xl text-brand-navy">{t('tutors.empty.title')}</h3>
-                <p className="text-gray-500 mt-2">{t('tutors.empty.desc')}</p>
+                <p className="text-brand-blue-500 mt-2">{t('tutors.empty.desc')}</p>
                 <button
                   onClick={clearFilters}
                   className="mt-6 btn-primary"

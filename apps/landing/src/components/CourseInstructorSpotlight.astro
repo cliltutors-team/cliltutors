@@ -1,4 +1,6 @@
 ---
+import SectionHeader from './SectionHeader.astro';
+
 interface Instructor {
   id: string;
   name: string;
@@ -18,46 +20,38 @@ interface Instructor {
 
 interface Props {
   instructors: Instructor[];
-  title?: string;
-  subtitle?: string;
-  eyebrow?: string;
-  viewAllText?: string;
-  coursesText?: string;
-  studentsText?: string;
-  ratingText?: string;
+  title: string;
+  subtitle: string;
+  eyebrow: string;
+  viewAllText: string;
+  coursesText: string;
+  studentsText: string;
+  ratingText: string;
 }
 
 const {
   instructors,
-  title = "Learn from Industry Experts",
-  subtitle = "Our instructors are practicing professionals with decades of experience",
-  eyebrow = "Expert Faculty",
-  viewAllText = "Meet All Instructors",
-  coursesText = "courses",
-  studentsText = "students",
-  ratingText = "Rating",
+  title,
+  subtitle,
+  eyebrow,
+  viewAllText,
+  coursesText,
+  studentsText,
+  ratingText,
 } = Astro.props;
 ---
 
-<section class="section-padding gradient-section-alt">
+<section class="section-padding gradient-section-alt instructor-spotlight-section">
   <div class="container-narrow">
-    <div class="text-center mb-14 reveal">
-      <span class="eyebrow mb-4">{eyebrow}</span>
-      <h2
-        class="font-heading font-bold text-4xl sm:text-5xl text-brand-navy tracking-tight mb-4"
-      >
-        {title}
-      </h2>
-      <p class="text-lg text-slate-light max-w-2xl mx-auto">{subtitle}</p>
-    </div>
+    <SectionHeader eyebrow={eyebrow} title={title} description={subtitle} />
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       {
         instructors.map((instructor, index) => (
-          <article
-            class="instructor-card group reveal"
-            style={`animation-delay: ${150 + index * 75}ms`}
-          >
+		<article
+			class="instructor-card group reveal"
+			style={`--stagger: ${1 + index}`}
+		>
             <div class="relative overflow-hidden rounded-t-2xl">
               <div class="aspect-[4/5] bg-gradient-to-br from-brand-blue-50 to-brand-purple-50">
                 <img
@@ -129,7 +123,7 @@ const {
                 {instructor.title}
               </p>
 
-              <div class="flex items-center gap-4 mb-4 text-xs text-gray-600">
+              <div class="flex items-center gap-4 mb-4 text-xs text-brand-navy-700">
                 <div class="flex items-center gap-1">
                   <svg
                     class="w-4 h-4"
@@ -170,7 +164,7 @@ const {
 
               <div class="flex flex-wrap gap-2">
                 {instructor.specialties.slice(0, 3).map((specialty) => (
-                  <span class="px-2.5 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-md">
+                  <span class="px-2.5 py-1 bg-brand-blue-50 text-brand-blue text-xs font-medium rounded-md">
                     {specialty}
                   </span>
                 ))}
@@ -181,7 +175,7 @@ const {
       }
     </div>
 
-    <div class="mt-12 text-center reveal delay-600">
+	<div class="mt-12 text-center reveal" style="--stagger: 20">
       <a
         href=`${Astro.currentLocale}/instructors`
         class="btn-secondary inline-flex items-center gap-2"
@@ -209,7 +203,7 @@ const {
     border-radius: 20px;
     overflow: hidden;
     background: var(--color-white);
-    border: 1px solid var(--color-gray-200);
+    border: 1px solid var(--color-brand-blue-200);
     transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
     position: relative;
   }
@@ -241,7 +235,24 @@ const {
     box-shadow: 0 20px 40px rgba(52, 53, 79, 0.15);
   }
 
-  .instructor-card:hover::before {
-    opacity: 1;
-  }
+.instructor-card:hover::before {
+  opacity: 1;
+}
+
+.instructor-spotlight-section .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--stagger, 0) * 80ms);
+}
+
+.instructor-spotlight-section .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 </style>

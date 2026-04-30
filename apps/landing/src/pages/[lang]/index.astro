@@ -6,7 +6,6 @@ import PremiumHero from '../../components/PremiumHero.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import PremiumCard from '../../components/PremiumCard.astro';
 import StatsBanner from '../../components/StatsBanner.astro';
-import CTABanner from '../../components/CTABanner.astro';
 import TestimonialCard from '../../components/TestimonialCard.astro';
 import MethodStep from '../../components/MethodStep.astro';
 import CourseCatalogSection from '../../components/CourseCatalogSection.astro';
@@ -16,6 +15,9 @@ import CourseInstructorSpotlight from '../../components/CourseInstructorSpotligh
 import LearningOutcomesSection from '../../components/LearningOutcomesSection.astro';
 import SuccessStoriesSection from '../../components/SuccessStoriesSection.astro';
 import FinalCTASection from '../../components/FinalCTASection.astro';
+import MotionReveal from '../../components/MotionReveal';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer';
+import MotionCard from '../../components/MotionCard';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -27,235 +29,243 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const heroTrustIndicators = [
-  { value: '94%', label: 'Success Rate' },
-  { value: '3x', label: 'Faster Learning' },
-  { value: '92%', label: 'Satisfaction' },
+  { value: '94%', label: t('home.hero.trust.successRate') },
+  { value: '3x', label: t('home.hero.trust.fasterLearning') },
+  { value: '92%', label: t('home.hero.trust.satisfaction') },
 ];
 
 const outcomeStats = [
-  { value: '94%', label: 'Improved communication' },
-  { value: '87%', label: 'Collaboration effectiveness' },
-  { value: '3x', label: 'Faster acquisition' },
-  { value: '92%', label: 'Client satisfaction' },
+  { value: '94%', label: t('home.outcomes.stats.communication') },
+  { value: '87%', label: t('home.outcomes.stats.collaboration') },
+  { value: '3x', label: t('home.outcomes.stats.acquisition') },
+  { value: '92%', label: t('home.outcomes.stats.clientSatisfaction') },
 ];
 
 const courses = [
   {
     id: '1',
-    title: 'Business English Mastery',
-    subtitle: 'Communicate confidently in professional settings',
-    category: 'Business',
-    level: 'intermediate',
-    duration: '40 hours',
+    title: t('home.course1.title'),
+    subtitle: t('home.course1.subtitle'),
+    category: t('home.course1.category'),
+    level: 'intermediate' as const,
+    duration: t('home.course1.duration'),
     students: 2340,
     rating: 4.8,
     price: 297,
     originalPrice: 397,
     image: '/images/web/first_sec.webp',
-    instructor: 'Sarah Johnson',
+    instructor: t('home.course1.instructor'),
     bestseller: true,
   },
   {
     id: '2',
-    title: 'Spanish for Healthcare',
-    subtitle: 'Essential medical Spanish for patient care',
-    category: 'Professional',
-    level: 'beginner',
-    duration: '32 hours',
+    title: t('home.course2.title'),
+    subtitle: t('home.course2.subtitle'),
+    category: t('home.course2.category'),
+    level: 'beginner' as const,
+    duration: t('home.course2.duration'),
     students: 1850,
     rating: 4.9,
     price: 247,
     image: '/images/web/second_sec.webp',
-    instructor: 'Carlos Martínez',
+    instructor: t('home.course2.instructor'),
     featured: true,
   },
   {
     id: '3',
-    title: 'Academic Writing Excellence',
-    subtitle: 'Master research writing and publications',
-    category: 'Academic',
-    level: 'advanced',
-    duration: '48 hours',
+    title: t('home.course3.title'),
+    subtitle: t('home.course3.subtitle'),
+    category: t('home.course3.category'),
+    level: 'advanced' as const,
+    duration: t('home.course3.duration'),
     students: 1560,
     rating: 4.7,
     price: 347,
     image: '/images/web/third_sec.webp',
-    instructor: 'Dr. Emily Chen',
+    instructor: t('home.course3.instructor'),
   },
 ];
 
 const pricingTiers = [
   {
     id: 'basic',
-    name: 'Starter',
-    description: 'Perfect for getting started',
+    name: t('home.pricing.basic.name'),
+    description: t('home.pricing.basic.desc'),
     price: 49,
     period: 'month',
     features: [
-      'Access to 50+ courses',
-      'Mobile app access',
-      'Community forums',
-      'Course certificates',
+      t('home.pricing.basic.feature1'),
+      t('home.pricing.basic.feature2'),
+      t('home.pricing.basic.feature3'),
+      t('home.pricing.basic.feature4'),
     ],
-    ctaText: 'Start Learning',
+    ctaText: t('home.pricing.basic.cta'),
     ctaHref: '/signup',
   },
   {
     id: 'pro',
-    name: 'Professional',
-    description: 'Best value for serious learners',
+    name: t('home.pricing.pro.name'),
+    description: t('home.pricing.pro.desc'),
     price: 99,
     originalPrice: 149,
     period: 'month',
     features: [
-      'Access to 200+ premium courses',
-      'Personalized learning paths',
-      '1-on-1 mentoring sessions',
-      'Priority support',
-      'Verified certificates',
-      'Offline downloads',
+      t('home.pricing.pro.feature1'),
+      t('home.pricing.pro.feature2'),
+      t('home.pricing.pro.feature3'),
+      t('home.pricing.pro.feature4'),
+      t('home.pricing.pro.feature5'),
+      t('home.pricing.pro.feature6'),
     ],
     highlighted: true,
-    badge: 'Most Popular',
-    ctaText: 'Go Professional',
+    badge: t('home.pricing.pro.badge'),
+    ctaText: t('home.pricing.pro.cta'),
     ctaHref: '/signup',
   },
   {
     id: 'enterprise',
-    name: 'Enterprise',
-    description: 'For teams and organizations',
+    name: t('home.pricing.enterprise.name'),
+    description: t('home.pricing.enterprise.desc'),
     price: 299,
     period: 'month',
     features: [
-      'Everything in Professional',
-      'Team analytics dashboard',
-      'Custom course creation',
-      'SSO authentication',
-      'Dedicated account manager',
-      'API access',
+      t('home.pricing.enterprise.feature1'),
+      t('home.pricing.enterprise.feature2'),
+      t('home.pricing.enterprise.feature3'),
+      t('home.pricing.enterprise.feature4'),
+      t('home.pricing.enterprise.feature5'),
+      t('home.pricing.enterprise.feature6'),
     ],
-    ctaText: 'Contact Sales',
+    ctaText: t('home.pricing.enterprise.cta'),
     ctaHref: '/enterprise',
   },
 ];
 
 const trustIndicators = [
-  { value: '94%', label: 'Success Rate', icon: '✓' },
-  { value: '50K+', label: 'Students', icon: '👨‍🎓' },
-  { value: '4.9', label: 'Average Rating', icon: '⭐' },
-  { value: '120+', label: 'Countries', icon: '🌍' },
+  { value: '94%', label: t('home.trust.successRate'), icon: 'check', iconType: 'lucide' as const },
+  { value: '50K+', label: t('home.trust.students'), icon: 'users', iconType: 'lucide' as const },
+  { value: '4.9', label: t('home.trust.avgRating'), icon: 'star', iconType: 'lucide' as const },
+  { value: '120+', label: t('home.trust.countries'), icon: 'globe', iconType: 'lucide' as const },
 ];
 
 const instructors = [
   {
     id: '1',
-    name: 'Sarah Johnson',
-    title: 'Business English Specialist',
-    bio: '15+ years teaching professionals',
+    name: t('home.instructor1.name'),
+    title: t('home.instructor1.title'),
+    bio: t('home.instructor1.bio'),
     image: '/images/web/Laura.png',
     courses: 12,
     students: 8450,
     rating: 4.9,
-    specialties: ['Business', 'Communication', 'Interviews'],
+    specialties: [t('home.instructor1.spec1'), t('home.instructor1.spec2'), t('home.instructor1.spec3')],
   },
   {
     id: '2',
-    name: 'Carlos Martínez',
-    title: 'Medical Spanish Expert',
-    bio: 'Certified medical interpreter',
+    name: t('home.instructor2.name'),
+    title: t('home.instructor2.title'),
+    bio: t('home.instructor2.bio'),
     image: '/images/web/Cristian.png',
     courses: 8,
     students: 5200,
     rating: 4.8,
-    specialties: ['Healthcare', 'Medical', 'Professional'],
+    specialties: [t('home.instructor2.spec1'), t('home.instructor2.spec2'), t('home.instructor2.spec3')],
   },
   {
     id: '3',
-    name: 'Dr. Emily Chen',
-    title: 'Academic Writing Coach',
-    bio: 'Published researcher and professor',
+    name: t('home.instructor3.name'),
+    title: t('home.instructor3.title'),
+    bio: t('home.instructor3.bio'),
     image: '/images/web/Xiomara.png',
     courses: 6,
     students: 3900,
     rating: 4.9,
-    specialties: ['Academic', 'Research', 'Writing'],
+    specialties: [t('home.instructor3.spec1'), t('home.instructor3.spec2'), t('home.instructor3.spec3')],
   },
 ];
 
 const outcomes = [
   {
     id: '1',
-    title: 'Fluency Improvement',
-    description: 'Students report significant improvement',
-    icon: '🎯',
+    title: t('home.outcome1.title'),
+    description: t('home.outcome1.desc'),
+    icon: 'target',
+    iconType: 'lucide' as const,
     percentage: 94,
-    color: 'blue',
+    color: 'blue' as const,
   },
   {
     id: '2',
-    title: 'Career Advancement',
-    description: 'Landed better opportunities',
-    icon: '📈',
+    title: t('home.outcome2.title'),
+    description: t('home.outcome2.desc'),
+    icon: 'trending-up',
+    iconType: 'lucide' as const,
     percentage: 87,
-    color: 'purple',
+    color: 'purple' as const,
   },
   {
     id: '3',
-    title: 'Confidence Boost',
-    description: 'Feel more confident speaking',
-    icon: '💪',
+    title: t('home.outcome3.title'),
+    description: t('home.outcome3.desc'),
+    icon: 'dumbbell',
+    iconType: 'lucide' as const,
     percentage: 96,
-    color: 'gold',
+    color: 'gold' as const,
   },
   {
     id: '4',
-    title: 'Goal Achievement',
-    description: 'Reached learning objectives',
-    icon: '✓',
+    title: t('home.outcome4.title'),
+    description: t('home.outcome4.desc'),
+    icon: 'check',
+    iconType: 'lucide' as const,
     percentage: 92,
-    color: 'orange',
+    color: 'orange' as const,
   },
 ];
 
 const successStories = [
   {
     id: '1',
-    name: 'Maria Rodriguez',
-    role: 'Healthcare Administrator',
-    company: 'Regional Hospital',
+    name: t('home.story1.name'),
+    role: t('home.story1.role'),
+    company: t('home.story1.company'),
     image: '/images/web/Laura.png',
-    quote: 'The medical Spanish course transformed how I communicate with patients. My confidence skyrocketed and patient satisfaction improved.',
-    outcome: 'Promoted to Director',
-    outcomeIcon: '📈',
-    course: 'Medical Spanish',
+    quote: t('home.story1.quote'),
+    outcome: t('home.story1.outcome'),
+    outcomeIcon: 'trending-up',
+    outcomeIconType: 'lucide' as const,
+    course: t('home.story1.course'),
   },
   {
     id: '2',
-    name: 'James Chen',
-    role: 'Software Engineer',
-    company: 'Tech Startup',
+    name: t('home.story2.name'),
+    role: t('home.story2.role'),
+    company: t('home.story2.company'),
     image: '/images/web/Cristian.png',
-    quote: 'Business English mastery helped me lead international projects and present at global conferences with confidence.',
-    outcome: '2x Salary Increase',
-    outcomeIcon: '💰',
-    course: 'Business English',
+    quote: t('home.story2.quote'),
+    outcome: t('home.story2.outcome'),
+    outcomeIcon: 'wallet',
+    outcomeIconType: 'lucide' as const,
+    course: t('home.story2.course'),
   },
   {
     id: '3',
-    name: 'Ana Silva',
-    role: 'PhD Candidate',
-    company: 'University Research',
+    name: t('home.story3.name'),
+    role: t('home.story3.role'),
+    company: t('home.story3.company'),
     image: '/images/web/Xiomara.png',
-    quote: 'The academic writing course helped me publish 3 papers in top journals. The structured approach was exactly what I needed.',
-    outcome: '3 Papers Published',
-    outcomeIcon: '📚',
-    course: 'Academic Writing',
+    quote: t('home.story3.quote'),
+    outcome: t('home.story3.outcome'),
+    outcomeIcon: 'book-open',
+    outcomeIconType: 'lucide' as const,
+    course: t('home.story3.course'),
   },
 ];
 ---
 
 <Layout title={t('home.meta.title')} description={t('home.meta.desc')} lang={lang}>
 <Navbar />
+<div class="home-page">
 
   <!-- Premium Hero -->
   <PremiumHero
@@ -264,11 +274,11 @@ const successStories = [
     subtitle={t('home.hero.subtitle')}
     ctaPrimary={{ text: t('home.hero.cta1'), href: `/${lang}/solutions` }}
     ctaSecondary={{ text: t('home.hero.cta2'), href: `/${lang}/consultation` }}
-    visualType="image"
-    visualAsset="/images/web/Corporate_Hero.webp"
-    alignment="split"
-    theme="gradient"
-    trustIndicators={heroTrustIndicators}
+  visualType="animated"
+  visualVariant="dashboard"
+  visualStats={heroTrustIndicators}
+  theme="gradient"
+  trustIndicators={heroTrustIndicators}
   />
 
 <!-- NEW: Trust Signals Section -->
@@ -288,116 +298,194 @@ const successStories = [
 />
 
   <!-- Challenge Section -->
-  <section class="section-padding bg-white">
-    <div class="container-narrow">
+  <section class="challenge-section section-padding relative overflow-hidden">
+    <div class="challenge-bg" aria-hidden="true">
+      <div class="challenge-orb challenge-orb-1"></div>
+      <div class="challenge-orb challenge-orb-2"></div>
+      <div class="challenge-dots"></div>
+    </div>
+    <div class="container-narrow relative z-10">
       <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <div class="reveal-left">
-          <SectionHeader eyebrow={t('home.challenge.eyebrow')} title={t('home.challenge.title')} center={false} />
-          <p class="text-slate-light leading-relaxed text-lg -mt-8">{t('home.challenge.desc')}</p>
+        <div>
+          <MotionReveal client:visible direction="up" delay={0} duration={0.7}>
+            <SectionHeader eyebrow={t('home.challenge.eyebrow')} title={t('home.challenge.title')} center={false} />
+          </MotionReveal>
+          <MotionReveal client:visible direction="up" delay={0.1} duration={0.7}>
+            <p class="text-slate-light leading-relaxed text-lg -mt-8">{t('home.challenge.desc')}</p>
+          </MotionReveal>
         </div>
-        <div class="reveal">
-          <div class="challenge-image-wrap">
-            <img src="/images/web/first_sec.webp" alt="Global challenge" class="w-full rounded-xl" loading="lazy" />
-          </div>
-        </div>
+        <MotionReveal client:visible direction="up" delay={0.2} duration={0.7}>
+          <MotionCard client:visible hoverScale={1.02} hoverY={-4}>
+            <div class="challenge-image-wrap">
+              <img src="/images/web/first_sec.webp" alt="Global challenge" class="w-full rounded-xl" loading="lazy" />
+            </div>
+          </MotionCard>
+        </MotionReveal>
       </div>
     </div>
   </section>
 
   <!-- Capabilities with Premium Cards -->
-  <section class="section-padding gradient-section-alt">
-    <div class="container-narrow">
-      <SectionHeader eyebrow={t('home.capabilities.eyebrow')} title={t('home.capabilities.title')} />
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <PremiumCard
-          icon="🌐"
-          title={t('home.cap1.title')}
-          description={t('home.cap1.desc')}
-          variant="blue"
-          size="md"
-        />
-        <PremiumCard
-          icon="🤝"
-          title={t('home.cap2.title')}
-          description={t('home.cap2.desc')}
-          variant="purple"
-          size="md"
-        />
-        <PremiumCard
-          icon="🧠"
-          title={t('home.cap3.title')}
-          description={t('home.cap3.desc')}
-          variant="gold"
-          size="md"
-        />
-        <PremiumCard
-          icon="🎯"
-          title={t('home.cap4.title')}
-          description={t('home.cap4.desc')}
-          variant="orange"
-          size="md"
-        />
-      </div>
+  <section class="capabilities-section section-padding gradient-section-alt relative overflow-hidden">
+    <div class="capabilities-bg" aria-hidden="true">
+      <div class="capabilities-orb capabilities-orb-1"></div>
+    </div>
+    <div class="container-narrow relative z-10">
+      <MotionReveal client:visible direction="up" delay={0} duration={0.7}>
+        <SectionHeader eyebrow={t('home.capabilities.eyebrow')} title={t('home.capabilities.title')} />
+      </MotionReveal>
+      <StaggerContainer client:visible staggerDelay={0.1} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StaggerItem client:visible>
+          <MotionCard client:visible hoverScale={1.03} hoverY={-6}>
+            <PremiumCard
+              icon="globe-2"
+              iconType="lucide"
+              title={t('home.cap1.title')}
+              description={t('home.cap1.desc')}
+              variant="blue"
+              size="md"
+            />
+          </MotionCard>
+        </StaggerItem>
+        <StaggerItem client:visible>
+          <MotionCard client:visible hoverScale={1.03} hoverY={-6}>
+            <PremiumCard
+              icon="users"
+              iconType="lucide"
+              title={t('home.cap2.title')}
+              description={t('home.cap2.desc')}
+              variant="purple"
+              size="md"
+            />
+          </MotionCard>
+        </StaggerItem>
+        <StaggerItem client:visible>
+          <MotionCard client:visible hoverScale={1.03} hoverY={-6}>
+            <PremiumCard
+              icon="brain"
+              iconType="lucide"
+              title={t('home.cap3.title')}
+              description={t('home.cap3.desc')}
+              variant="gold"
+              size="md"
+            />
+          </MotionCard>
+        </StaggerItem>
+        <StaggerItem client:visible>
+          <MotionCard client:visible hoverScale={1.03} hoverY={-6}>
+            <PremiumCard
+              icon="target"
+              iconType="lucide"
+              title={t('home.cap4.title')}
+              description={t('home.cap4.desc')}
+              variant="orange"
+              size="md"
+            />
+          </MotionCard>
+        </StaggerItem>
+      </StaggerContainer>
     </div>
   </section>
 
   <!-- Solutions Grid with Premium Cards -->
-  <section class="section-padding bg-white">
-    <div class="container-narrow">
-      <SectionHeader eyebrow={t('home.solutions.eyebrow')} title={t('home.solutions.title')} />
-      <div class="grid sm:grid-cols-2 gap-6">
-        <PremiumCard
-          icon="🏢"
-          title={t('home.sol1.title')}
-          description={t('home.sol1.desc')}
-          href={`/${lang}/corporate-training`}
-          linkText={t('solutions.learn')}
-          variant="blue"
-size="lg"
-  featured={true}
-  featuredLabel={t('card.featured')}
-        />
-        <PremiumCard
-          icon="💼"
-          title={t('home.sol2.title')}
-          description={t('home.sol2.desc')}
-          href={`/${lang}/professional-development`}
-          linkText={t('solutions.learn')}
-          variant="purple"
-          size="lg"
-        />
-        <PremiumCard
-          icon="🎓"
-          title={t('home.sol3.title')}
-          description={t('home.sol3.desc')}
-          href={`/${lang}/academic-support`}
-          linkText={t('solutions.learn')}
-          variant="gold"
-          size="lg"
-        />
-        <PremiumCard
-          icon="📚"
-          title={t('home.sol4.title')}
-          description={t('home.sol4.desc')}
-          href={`/${lang}/k12-global-preparation`}
-          linkText={t('solutions.learn')}
-          variant="orange"
-          size="lg"
-        />
-      </div>
+  <section class="solutions-section section-padding relative overflow-hidden">
+    <div class="solutions-bg" aria-hidden="true">
+      <div class="solutions-orb solutions-orb-1"></div>
+      <div class="solutions-orb solutions-orb-2"></div>
+    </div>
+    <div class="container-narrow relative z-10">
+      <MotionReveal client:visible direction="up" delay={0} duration={0.7}>
+        <SectionHeader eyebrow={t('home.solutions.eyebrow')} title={t('home.solutions.title')} />
+      </MotionReveal>
+      <StaggerContainer client:visible staggerDelay={0.12} className="grid sm:grid-cols-2 gap-6">
+        <StaggerItem client:visible>
+          <MotionCard client:visible hoverScale={1.02} hoverY={-5}>
+            <PremiumCard
+              icon="briefcase"
+              iconType="lucide"
+              title={t('home.sol1.title')}
+              description={t('home.sol1.desc')}
+              href={`/${lang}/corporate-training`}
+              linkText={t('solutions.learn')}
+              variant="blue"
+              size="lg"
+              featured={true}
+              featuredLabel={t('card.featured')}
+            />
+          </MotionCard>
+        </StaggerItem>
+        <StaggerItem client:visible>
+          <MotionCard client:visible hoverScale={1.02} hoverY={-5}>
+            <PremiumCard
+              icon="briefcase"
+              iconType="lucide"
+              title={t('home.sol2.title')}
+              description={t('home.sol2.desc')}
+              href={`/${lang}/professional-development`}
+              linkText={t('solutions.learn')}
+              variant="purple"
+              size="lg"
+            />
+          </MotionCard>
+        </StaggerItem>
+        <StaggerItem client:visible>
+          <MotionCard client:visible hoverScale={1.02} hoverY={-5}>
+            <PremiumCard
+              icon="graduation-cap"
+              iconType="lucide"
+              title={t('home.sol3.title')}
+              description={t('home.sol3.desc')}
+              href={`/${lang}/academic-support`}
+              linkText={t('solutions.learn')}
+              variant="gold"
+              size="lg"
+            />
+          </MotionCard>
+        </StaggerItem>
+        <StaggerItem client:visible>
+          <MotionCard client:visible hoverScale={1.02} hoverY={-5}>
+            <PremiumCard
+              icon="book-open"
+              iconType="lucide"
+              title={t('home.sol4.title')}
+              description={t('home.sol4.desc')}
+              href={`/${lang}/k12-global-preparation`}
+              linkText={t('solutions.learn')}
+              variant="orange"
+              size="lg"
+            />
+          </MotionCard>
+        </StaggerItem>
+      </StaggerContainer>
     </div>
   </section>
 
   <!-- Methodology -->
-  <section class="section-padding gradient-section-alt">
-    <div class="container-narrow">
-      <SectionHeader eyebrow={t('home.methodology.eyebrow')} title={t('home.methodology.title')} />
+  <section class="methodology-section section-padding gradient-section-alt relative overflow-hidden">
+    <div class="methodology-bg" aria-hidden="true">
+      <div class="methodology-orb methodology-orb-1"></div>
+      <div class="methodology-dots"></div>
+    </div>
+    <div class="container-narrow relative z-10">
+      <MotionReveal client:visible direction="up" delay={0} duration={0.7}>
+        <SectionHeader eyebrow={t('home.methodology.eyebrow')} title={t('home.methodology.title')} />
+      </MotionReveal>
       <div class="max-w-2xl mx-auto">
-        <MethodStep step={1} eyebrow={t('home.method1.title')} title={t('home.method1.title')} description={t('home.method1.desc')} />
-        <MethodStep step={2} eyebrow={t('home.method2.title')} title={t('home.method2.title')} description={t('home.method2.desc')} />
-        <MethodStep step={3} eyebrow={t('home.method3.title')} title={t('home.method3.title')} description={t('home.method3.desc')} />
-        <MethodStep step={4} eyebrow={t('home.method4.title')} title={t('home.method4.title')} description={t('home.method4.desc')} />
-        <MethodStep step={5} eyebrow={t('home.method5.title')} title={t('home.method5.title')} description={t('home.method5.desc')} isLast />
+        <MotionReveal client:visible direction="up" delay={0.1} duration={0.7}>
+          <MethodStep step={1} eyebrow={t('home.method1.title')} title={t('home.method1.title')} description={t('home.method1.desc')} stagger={0} />
+        </MotionReveal>
+        <MotionReveal client:visible direction="up" delay={0.15} duration={0.7}>
+          <MethodStep step={2} eyebrow={t('home.method2.title')} title={t('home.method2.title')} description={t('home.method2.desc')} stagger={1} />
+        </MotionReveal>
+        <MotionReveal client:visible direction="up" delay={0.2} duration={0.7}>
+          <MethodStep step={3} eyebrow={t('home.method3.title')} title={t('home.method3.title')} description={t('home.method3.desc')} stagger={2} />
+        </MotionReveal>
+        <MotionReveal client:visible direction="up" delay={0.25} duration={0.7}>
+          <MethodStep step={4} eyebrow={t('home.method4.title')} title={t('home.method4.title')} description={t('home.method4.desc')} stagger={3} />
+        </MotionReveal>
+        <MotionReveal client:visible direction="up" delay={0.3} duration={0.7}>
+          <MethodStep step={5} eyebrow={t('home.method5.title')} title={t('home.method5.title')} description={t('home.method5.desc')} isLast stagger={4} />
+        </MotionReveal>
       </div>
     </div>
   </section>
@@ -412,14 +500,32 @@ size="lg"
   />
 
   <!-- Testimonials -->
-  <section class="section-padding bg-white">
-    <div class="container-narrow">
-      <SectionHeader eyebrow={t('home.testimonials.eyebrow')} title={t('home.testimonials.title')} />
-      <div class="grid md:grid-cols-3 gap-6">
-        <TestimonialCard quote={t('home.test1.quote')} name={t('home.test1.name')} role={t('home.test1.role')} />
-        <TestimonialCard quote={t('home.test2.quote')} name={t('home.test2.name')} role={t('home.test2.role')} />
-        <TestimonialCard quote={t('home.test3.quote')} name={t('home.test3.name')} role={t('home.test3.role')} />
-      </div>
+  <section class="testimonials-section section-padding bg-white relative overflow-hidden">
+    <div class="testimonials-bg" aria-hidden="true">
+      <div class="testimonials-orb testimonials-orb-1"></div>
+      <div class="testimonials-orb testimonials-orb-2"></div>
+    </div>
+    <div class="container-narrow relative z-10">
+      <MotionReveal client:visible direction="up" delay={0} duration={0.7}>
+        <SectionHeader eyebrow={t('home.testimonials.eyebrow')} title={t('home.testimonials.title')} />
+      </MotionReveal>
+      <StaggerContainer client:visible staggerDelay={0.12} className="grid md:grid-cols-3 gap-6">
+        <StaggerItem client:visible>
+          <MotionCard client:visible hoverScale={1.02} hoverY={-4}>
+          <TestimonialCard quote={t('home.test1.quote')} name={t('home.test1.name')} role={t('home.test1.role')} stars={5} avatar="/images/web/Laura.png" />
+        </MotionCard>
+      </StaggerItem>
+      <StaggerItem client:visible>
+        <MotionCard client:visible hoverScale={1.02} hoverY={-4}>
+          <TestimonialCard quote={t('home.test2.quote')} name={t('home.test2.name')} role={t('home.test2.role')} stars={5} avatar="/images/web/Cristian.png" />
+        </MotionCard>
+      </StaggerItem>
+      <StaggerItem client:visible>
+        <MotionCard client:visible hoverScale={1.02} hoverY={-4}>
+          <TestimonialCard quote={t('home.test3.quote')} name={t('home.test3.name')} role={t('home.test3.role')} stars={5} avatar="/images/web/Alissa.png" />
+          </MotionCard>
+        </StaggerItem>
+      </StaggerContainer>
     </div>
   </section>
 
@@ -439,31 +545,57 @@ size="lg"
   />
 
   <!-- NEW: Learning Outcomes Section -->
-  <LearningOutcomesSection 
+  <LearningOutcomesSection
     outcomes={outcomes}
     title={t('outcomes.title')}
     subtitle={t('outcomes.subtitle')}
+    eyebrow={t('outcomes.eyebrow')}
+    successTitle={t('outcomes.success')}
+    successDesc={t('outcomes.success.desc')}
+    successRate={t('outcomes.successRate')}
+    completeText={t('outcomes.complete')}
+    completeValue={t('outcomes.completeValue')}
+    timeText={t('outcomes.time')}
+    timeValue={t('outcomes.timeValue')}
+    salaryText={t('outcomes.salary')}
+    salaryValue={t('outcomes.salaryValue')}
   />
 
   <!-- NEW: Instructor Spotlight Section -->
-  <CourseInstructorSpotlight 
+  <CourseInstructorSpotlight
     instructors={instructors}
     title={t('instructors.title')}
     subtitle={t('instructors.subtitle')}
+    eyebrow={t('instructors.eyebrow')}
+    viewAllText={t('instructors.viewall')}
+    coursesText={t('instructors.courses')}
+    studentsText={t('instructors.students')}
+    ratingText={t('instructors.rating')}
   />
 
   <!-- NEW: Premium Pricing Section -->
-  <PremiumPricingSection 
+  <PremiumPricingSection
     tiers={pricingTiers}
     title={t('pricing.section.title')}
     subtitle={t('pricing.section.subtitle')}
+    eyebrow={t('pricing.eyebrow')}
+    enterpriseText={t('pricing.enterprise')}
+    secureText={t('pricing.secure')}
+    secureDesc={t('pricing.secure.desc')}
+    billingText={t('pricing.billing')}
+    billingDesc={t('pricing.billing.desc')}
+    refundText={t('pricing.refund')}
+    refundDesc={t('pricing.refund.desc')}
+    customSolutionText={t('pricing.customSolution')}
   />
 
   <!-- NEW: Success Stories Section -->
-  <SuccessStoriesSection 
+  <SuccessStoriesSection
     stories={successStories}
     title={t('stories.title')}
     subtitle={t('stories.subtitle')}
+    eyebrow={t('stories.eyebrow')}
+    viewAllText={t('stories.readmore')}
   />
 
 <!-- NEW: Final CTA Section -->
@@ -482,36 +614,116 @@ size="lg"
   communityDesc={t('finalcta.community.desc')}
  />
 
-  <Footer />
+  </div>
+<Footer />
 </Layout>
 
 <style>
-.challenge-image-wrap {
-background: linear-gradient(135deg, var(--color-brand-blue-50), var(--color-brand-purple-50));
-border-radius: 1.25rem;
-padding: 1.5rem;
-border: 1px solid var(--color-brand-blue-100);
-}
+  .challenge-image-wrap {
+    background: linear-gradient(135deg, rgba(82, 138, 237, 0.08), rgba(166, 123, 244, 0.08));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(82, 138, 237, 0.15);
+    position: relative;
+    box-shadow: 0 8px 32px rgba(82, 138, 237, 0.06);
+  }
+  .challenge-image-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 1.35rem;
+    background: var(--gradient-card-border);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out-expo);
+  }
+  .challenge-image-wrap:hover::before {
+    opacity: 1;
+  }
 
-@keyframes fade-up {
-from {
-opacity: 0;
-transform: translateY(20px);
-}
-to {
-opacity: 1;
-transform: translateY(0);
-}
-}
+  /* Decorative orbs — brand colors */
+  .challenge-orb,
+  .capabilities-orb,
+  .solutions-orb-1,
+  .solutions-orb-2,
+  .methodology-orb,
+  .testimonials-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    opacity: 0.25;
+  }
+  .challenge-orb-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--color-brand-blue);
+    top: -100px;
+    right: -100px;
+  }
+  .challenge-orb-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--color-brand-purple);
+    bottom: -80px;
+    left: -60px;
+  }
+  .capabilities-orb-1 {
+    width: 350px;
+    height: 350px;
+    background: var(--color-brand-indigo);
+    top: -120px;
+    left: -80px;
+  }
+  .solutions-orb-1 {
+    width: 320px;
+    height: 320px;
+    background: var(--color-brand-gold);
+    top: -80px;
+    right: -100px;
+    opacity: 0.15;
+  }
+  .solutions-orb-2 {
+    width: 280px;
+    height: 280px;
+    background: var(--color-brand-coral);
+    bottom: -60px;
+    left: -80px;
+    opacity: 0.12;
+  }
+  .methodology-orb-1 {
+    width: 360px;
+    height: 360px;
+    background: var(--color-brand-orange);
+    top: -100px;
+    right: -120px;
+    opacity: 0.15;
+  }
+  .testimonials-orb-1 {
+    width: 300px;
+    height: 300px;
+    background: var(--color-brand-blue);
+    top: -80px;
+    left: -100px;
+  }
+  .testimonials-orb-2 {
+    width: 250px;
+    height: 250px;
+    background: var(--color-brand-gold);
+    bottom: -60px;
+    right: -80px;
+    opacity: 0.15;
+  }
 
-.animate-fade-up {
-animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-opacity: 0;
-}
-
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
+  /* Dot patterns */
+  .challenge-dots, .methodology-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--color-brand-blue) 0.8px, transparent 0.8px);
+    background-size: 24px 24px;
+    opacity: 0.04;
+    pointer-events: none;
+  }
 </style>

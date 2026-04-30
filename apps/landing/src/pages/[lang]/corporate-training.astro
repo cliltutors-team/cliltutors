@@ -6,7 +6,11 @@ import PremiumHero from '../../components/PremiumHero.astro';
 import PremiumCard from '../../components/PremiumCard.astro';
 import StatsBanner from '../../components/StatsBanner.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
-import CTABanner from '../../components/CTABanner.astro';
+import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
+import MotionReveal from '../../components/MotionReveal.tsx';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
+import MotionCard from '../../components/MotionCard.tsx';
+import LucideIcon from '../../components/LucideIcon.tsx';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -19,133 +23,158 @@ const t = useTranslations(lang);
 ---
 
 <Layout title={t('corporate.meta.title')} description={t('corporate.meta.desc')} lang={lang}>
+  <div class="corporate-training">
   <Navbar />
-  
+
   <PremiumHero
     eyebrow={t('corporate.hero.eyebrow')}
     title={t('corporate.hero.title')}
     subtitle={t('corporate.hero.subtitle')}
     ctaPrimary={{ text: t('corporate.cta.btn'), href: `/${lang}/consultation` }}
     ctaSecondary={{ text: t('corporate.hero.cta2'), href: `/${lang}/methodology` }}
-    visualType="image"
-    visualAsset="/images/web/Corporate_Hero.webp"
-    alignment="split"
-    theme="gradient"
-    trustIndicators={[
-      { value: '500+', label: t('corporate.trust.companies') },
-      { value: '15K+', label: t('corporate.trust.professionals') },
-      { value: '94%', label: t('corporate.trust.satisfaction') }
-    ]}
+  visualType="animated"
+  visualVariant="growth"
+  visualStats={[
+    { value: '500+', label: t('corporate.trust.companies') },
+    { value: '15K+', label: t('corporate.trust.professionals') },
+    { value: '94%', label: t('corporate.trust.satisfaction') }
+  ]}
+  theme="gradient"
+  trustIndicators={[
+    { value: '500+', label: t('corporate.trust.companies') },
+    { value: '15K+', label: t('corporate.trust.professionals') },
+    { value: '94%', label: t('corporate.trust.satisfaction') }
+  ]}
   />
 
-  <StatsBanner
-    title={t('corporate.stats.title')}
-    subtitle={t('corporate.stats.subtitle')}
-    stats={[
-      { value: '87%', label: t('corporate.stats.collaboration'), trend: 'up', trendValue: '+23%' },
-      { value: '3x', label: t('corporate.stats.speed'), trend: 'up' },
-      { value: '25%', label: t('corporate.stats.productivity'), trend: 'up', trendValue: '+18%' },
-      { value: '92%', label: t('corporate.stats.retention'), trend: 'up' }
-    ]}
-    layout="grid"
-    theme="gradient"
-  />
-
-  <section class="section-padding bg-white">
+  <section class="section-padding gradient-subtle ct-challenges">
+    <div class="ct-bg-dots" aria-hidden="true"></div>
     <div class="container-narrow">
+<MotionReveal client:visible>
       <SectionHeader
         eyebrow={t('corporate.challenges.eyebrow')}
         title={t('corporate.challenges.title')}
       />
-      
-      <div class="grid md:grid-cols-3 gap-8">
-        <PremiumCard
-          icon="🌍"
-          title={t('corporate.ch1.title')}
-          description={t('corporate.ch1.desc')}
-          variant="navy"
-          featured={false}
-          metrics={[
-            { label: t('corporate.metric.productivity'), value: '25%' }
-          ]}
-        />
-        <PremiumCard
-          icon="🤝"
-          title={t('corporate.ch2.title')}
-          description={t('corporate.ch2.desc')}
-          variant="navy"
-          featured={false}
-          metrics={[
-            { label: t('corporate.metric.expansion'), value: '-40%' }
-          ]}
-        />
-        <PremiumCard
-          icon="👥"
-          title={t('corporate.ch3.title')}
-          description={t('corporate.ch3.desc')}
-          variant="navy"
-          featured={false}
-          metrics={[
-            { label: t('corporate.metric.performance'), value: '-35%' }
-          ]}
-        />
-      </div>
+    </MotionReveal>
+
+    <StaggerContainer className="grid md:grid-cols-3 gap-8" client:visible>
+      <StaggerItem>
+        <MotionCard client:visible>
+          <PremiumCard
+            icon="globe" iconType="lucide"
+            title={t('corporate.ch1.title')}
+            description={t('corporate.ch1.desc')}
+            variant="navy"
+            featured={false}
+            metrics={[
+              { label: t('corporate.metric.productivity'), value: '25%' }
+            ]}
+          />
+        </MotionCard>
+      </StaggerItem>
+      <StaggerItem>
+        <MotionCard client:visible>
+          <PremiumCard
+            icon="users" iconType="lucide"
+            title={t('corporate.ch2.title')}
+            description={t('corporate.ch2.desc')}
+            variant="navy"
+            featured={false}
+            metrics={[
+              { label: t('corporate.metric.expansion'), value: '-40%' }
+            ]}
+          />
+        </MotionCard>
+      </StaggerItem>
+      <StaggerItem>
+        <MotionCard client:visible>
+          <PremiumCard
+            icon="users" iconType="lucide"
+            title={t('corporate.ch3.title')}
+            description={t('corporate.ch3.desc')}
+            variant="navy"
+            featured={false}
+            metrics={[
+              { label: t('corporate.metric.performance'), value: '-35%' }
+            ]}
+          />
+        </MotionCard>
+      </StaggerItem>
+    </StaggerContainer>
     </div>
   </section>
 
-  <section class="section-padding gradient-subtle">
+  <section class="section-padding gradient-subtle ct-programs">
+    <div class="ct-orb ct-orb--blue" aria-hidden="true"></div>
     <div class="container-narrow">
+<MotionReveal client:visible>
       <SectionHeader
         eyebrow={t('corporate.programs.eyebrow')}
         title={t('corporate.programs.title')}
       />
-      
-      <div class="grid md:grid-cols-3 gap-8">
-        <PremiumCard
-          icon="👔"
-          title={t('corporate.prog1.title')}
-          description={t('corporate.prog1.desc')}
-          href={`/${lang}/consultation`}
-          linkText={t('corporate.programs.learn')}
-variant="blue"
-  featured={true}
-  featuredLabel={t('card.featured')}
-  tags={[t('corporate.tag.c-suite'), t('corporate.tag.leadership')]}
-        />
-        <PremiumCard
-          icon="📋"
-          title={t('corporate.prog2.title')}
-          description={t('corporate.prog2.desc')}
-          href={`/${lang}/consultation`}
-          linkText={t('corporate.programs.learn')}
-          variant="purple"
-          featured={false}
-          tags={[t('corporate.tag.departments'), t('corporate.tag.teams')]}
-        />
-        <PremiumCard
-          icon="🌐"
-          title={t('corporate.prog3.title')}
-          description={t('corporate.prog3.desc')}
-          href={`/${lang}/consultation`}
-          linkText={t('corporate.programs.learn')}
-          variant="gold"
-          featured={false}
-          tags={[t('corporate.tag.workshops'), t('corporate.tag.cultural')]}
-        />
-      </div>
+    </MotionReveal>
+
+    <StaggerContainer className="grid md:grid-cols-3 gap-8" client:visible>
+      <StaggerItem>
+        <MotionCard client:visible>
+          <PremiumCard
+            icon="briefcase" iconType="lucide"
+            title={t('corporate.prog1.title')}
+            description={t('corporate.prog1.desc')}
+            href={`/${lang}/consultation`}
+            linkText={t('corporate.programs.learn')}
+            variant="blue"
+            featured={true}
+            featuredLabel={t('card.featured')}
+            tags={[t('corporate.tag.c-suite'), t('corporate.tag.leadership')]}
+          />
+        </MotionCard>
+      </StaggerItem>
+      <StaggerItem>
+        <MotionCard client:visible>
+          <PremiumCard
+            icon="clipboard-list" iconType="lucide"
+            title={t('corporate.prog2.title')}
+            description={t('corporate.prog2.desc')}
+            href={`/${lang}/consultation`}
+            linkText={t('corporate.programs.learn')}
+            variant="purple"
+            featured={false}
+            tags={[t('corporate.tag.departments'), t('corporate.tag.teams')]}
+          />
+        </MotionCard>
+      </StaggerItem>
+      <StaggerItem>
+        <MotionCard client:visible>
+          <PremiumCard
+            icon="globe-2" iconType="lucide"
+            title={t('corporate.prog3.title')}
+            description={t('corporate.prog3.desc')}
+            href={`/${lang}/consultation`}
+            linkText={t('corporate.programs.learn')}
+            variant="gold"
+            featured={false}
+            tags={[t('corporate.tag.workshops'), t('corporate.tag.cultural')]}
+          />
+        </MotionCard>
+      </StaggerItem>
+    </StaggerContainer>
     </div>
   </section>
 
-  <section class="section-padding bg-white">
+  <section class="section-padding gradient-section-alt ct-structure">
     <div class="container-narrow">
+<MotionReveal client:visible>
       <SectionHeader
         eyebrow={t('corporate.structure.eyebrow')}
         title={t('corporate.structure.title')}
         description={t('corporate.structure.desc')}
       />
-      
-      <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
-        <div class="structure-visual">
+    </MotionReveal>
+
+    <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
+      <StaggerContainer className="structure-visual" client:visible>
+        <StaggerItem>
           <div class="structure-step">
             <div class="step-number">01</div>
             <div class="step-content">
@@ -153,7 +182,9 @@ variant="blue"
               <p class="step-desc">{t('corporate.step1.desc')}</p>
             </div>
           </div>
-          
+        </StaggerItem>
+
+        <StaggerItem>
           <div class="structure-step">
             <div class="step-number">02</div>
             <div class="step-content">
@@ -161,7 +192,9 @@ variant="blue"
               <p class="step-desc">{t('corporate.step2.desc')}</p>
             </div>
           </div>
-          
+        </StaggerItem>
+
+        <StaggerItem>
           <div class="structure-step">
             <div class="step-number">03</div>
             <div class="step-content">
@@ -169,7 +202,9 @@ variant="blue"
               <p class="step-desc">{t('corporate.step3.desc')}</p>
             </div>
           </div>
-          
+        </StaggerItem>
+
+        <StaggerItem>
           <div class="structure-step">
             <div class="step-number">04</div>
             <div class="step-content">
@@ -177,83 +212,100 @@ variant="blue"
               <p class="step-desc">{t('corporate.step4.desc')}</p>
             </div>
           </div>
+        </StaggerItem>
+      </StaggerContainer>
+
+      <StaggerContainer className="structure-benefits" client:visible>
+        <StaggerItem>
+          <MotionCard client:visible>
+        <div class="benefit-card">
+          <div class="benefit-icon-wrap">
+            <LucideIcon client:idle name="check-circle" size={24} color="var(--color-brand-blue)" />
+          </div>
+          <h4>{t('corporate.benefit1.title')}</h4>
+          <p>{t('corporate.benefit1.desc')}</p>
         </div>
-        
-        <div class="structure-benefits">
-          <div class="benefit-card">
-<svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-            <h4>{t('corporate.benefit1.title')}</h4>
-            <p>{t('corporate.benefit1.desc')}</p>
+          </MotionCard>
+        </StaggerItem>
+
+        <StaggerItem>
+          <MotionCard client:visible>
+        <div class="benefit-card">
+          <div class="benefit-icon-wrap">
+            <LucideIcon client:idle name="zap" size={24} color="var(--color-brand-blue)" />
           </div>
-          
-          <div class="benefit-card">
-<svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-    </svg>
-            <h4>{t('corporate.benefit2.title')}</h4>
-            <p>{t('corporate.benefit2.desc')}</p>
-          </div>
-          
-          <div class="benefit-card">
-<svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-    </svg>
-            <h4>{t('corporate.benefit3.title')}</h4>
-            <p>{t('corporate.benefit3.desc')}</p>
-          </div>
+          <h4>{t('corporate.benefit2.title')}</h4>
+          <p>{t('corporate.benefit2.desc')}</p>
         </div>
-      </div>
+          </MotionCard>
+        </StaggerItem>
+
+        <StaggerItem>
+          <MotionCard client:visible>
+        <div class="benefit-card">
+          <div class="benefit-icon-wrap">
+            <LucideIcon client:idle name="bar-chart" size={24} color="var(--color-brand-brand-blue)" />
+          </div>
+          <h4>{t('corporate.benefit3.title')}</h4>
+          <p>{t('corporate.benefit3.desc')}</p>
+        </div>
+          </MotionCard>
+        </StaggerItem>
+      </StaggerContainer>
+    </div>
     </div>
   </section>
 
-  <section class="section-padding gradient-premium">
+  <section class="section-padding gradient-premium ct-solution">
+    <div class="ct-orb ct-orb--purple" aria-hidden="true"></div>
     <div class="container-narrow">
+<MotionReveal client:visible>
       <SectionHeader
         eyebrow={t('corporate.solution.eyebrow')}
         title={t('corporate.solution.title')}
       />
-      
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div class="solution-content">
+    </MotionReveal>
+
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <StaggerContainer className="solution-content" client:visible>
+        <StaggerItem>
           <div class="solution-point">
-<div class="point-icon blue">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
-    </div>
+            <div class="point-icon blue">
+              <LucideIcon client:idle name="search" size={28} color="currentColor" />
+            </div>
             <div class="point-content">
               <h3>{t('corporate.solution1.title')}</h3>
               <p>{t('corporate.solution1.desc')}</p>
             </div>
           </div>
-          
+        </StaggerItem>
+
+        <StaggerItem>
           <div class="solution-point">
-<div class="point-icon purple">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 0v3m0 0v-3m0 0h3m-3 0h-3m12 0a2 2 0 100-4m0 4a2 2 0 110-4m0 0v3m0 0v-3m0 0h3m-3 0h-3" />
-      </svg>
+            <div class="point-icon purple">
+              <LucideIcon client:idle name="settings" size={28} color="currentColor" />
             </div>
             <div class="point-content">
               <h3>{t('corporate.solution2.title')}</h3>
               <p>{t('corporate.solution2.desc')}</p>
             </div>
           </div>
-          
+        </StaggerItem>
+
+        <StaggerItem>
           <div class="solution-point">
-<div class="point-icon gold">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-      </svg>
+            <div class="point-icon gold">
+              <LucideIcon client:idle name="shield-check" size={28} color="currentColor" />
             </div>
             <div class="point-content">
               <h3>{t('corporate.solution3.title')}</h3>
               <p>{t('corporate.solution3.desc')}</p>
             </div>
           </div>
-        </div>
-        
+        </StaggerItem>
+      </StaggerContainer>
+
+      <MotionReveal client:visible direction="left" delay={0.2}>
         <div class="solution-visual">
           <div class="visual-card card-1">
             <div class="card-header">
@@ -265,7 +317,7 @@ variant="blue"
               <span class="metric-label">{t('corporate.visual.engagement')}</span>
             </div>
           </div>
-          
+
           <div class="visual-card card-2">
             <div class="card-header">
               <div class="status-dot success"></div>
@@ -277,101 +329,205 @@ variant="blue"
             </div>
           </div>
         </div>
-      </div>
+      </MotionReveal>
+    </div>
     </div>
   </section>
 
-  <section class="section-padding bg-white">
+  <section class="section-padding gradient-subtle ct-cases">
+    <div class="ct-bg-dots ct-bg-dots--right" aria-hidden="true"></div>
     <div class="container-narrow">
+<MotionReveal client:visible>
       <SectionHeader
         eyebrow={t('corporate.cases.eyebrow')}
         title={t('corporate.cases.title')}
       />
-      
-      <div class="grid md:grid-cols-3 gap-8">
-        <PremiumCard
-          icon="🏢"
-          title={t('corporate.case1.company')}
-          description={t('corporate.case1.desc')}
-          variant="blue"
-          metrics={[
-            { label: t('corporate.case.metric1'), value: '+45%' },
-            { label: t('corporate.case.metric2'), value: t('corporate.case1.duration') }
-          ]}
-        />
-        <PremiumCard
-          icon="🏭"
-          title={t('corporate.case2.company')}
-          description={t('corporate.case2.desc')}
-          variant="purple"
-          metrics={[
-            { label: t('corporate.case.metric1'), value: '+62%' },
-            { label: t('corporate.case.metric2'), value: t('corporate.case2.duration') }
-          ]}
-        />
-        <PremiumCard
-          icon="🏦"
-          title={t('corporate.case3.company')}
-          description={t('corporate.case3.desc')}
-          variant="gold"
-          metrics={[
-            { label: t('corporate.case.metric1'), value: '+78%' },
-            { label: t('corporate.case.metric2'), value: t('corporate.case3.duration') }
-          ]}
-        />
-      </div>
+    </MotionReveal>
+
+    <StaggerContainer className="grid md:grid-cols-3 gap-8" client:visible>
+      <StaggerItem>
+        <MotionCard client:visible>
+          <PremiumCard
+            icon="briefcase" iconType="lucide"
+            title={t('corporate.case1.company')}
+            description={t('corporate.case1.desc')}
+            variant="blue"
+            metrics={[
+              { label: t('corporate.case.metric1'), value: '+45%' },
+              { label: t('corporate.case.metric2'), value: t('corporate.case1.duration') }
+            ]}
+          />
+        </MotionCard>
+      </StaggerItem>
+      <StaggerItem>
+        <MotionCard client:visible>
+          <PremiumCard
+            icon="factory" iconType="lucide"
+            title={t('corporate.case2.company')}
+            description={t('corporate.case2.desc')}
+            variant="purple"
+            metrics={[
+              { label: t('corporate.case.metric1'), value: '+62%' },
+              { label: t('corporate.case.metric2'), value: t('corporate.case2.duration') }
+            ]}
+          />
+        </MotionCard>
+      </StaggerItem>
+      <StaggerItem>
+        <MotionCard client:visible>
+          <PremiumCard
+            icon="landmark" iconType="lucide"
+            title={t('corporate.case3.company')}
+            description={t('corporate.case3.desc')}
+            variant="gold"
+            metrics={[
+              { label: t('corporate.case.metric1'), value: '+78%' },
+              { label: t('corporate.case.metric2'), value: t('corporate.case3.duration') }
+            ]}
+          />
+        </MotionCard>
+      </StaggerItem>
+    </StaggerContainer>
     </div>
   </section>
 
-  <CTABanner
+  <PremiumCTABanner
     title={t('corporate.cta.title')}
-    ctaText={t('corporate.cta.btn')}
-    ctaHref={`/${lang}/consultation`}
+    primaryCTA={{ text: t('corporate.cta.btn'), href: `/${lang}/consultation` }}
+    variant="gradient"
+    trustBadges={[
+      { icon: 'briefcase', iconType: 'lucide' as const, label: t('corporate.trust.companies'), value: '500+' },
+      { icon: 'user', iconType: 'lucide' as const, label: t('corporate.trust.professionals'), value: '15K+' },
+      { icon: 'star', iconType: 'lucide' as const, label: t('corporate.trust.satisfaction'), value: '94%' }
+    ]}
   />
-  
+
   <Footer />
+  </div>
 </Layout>
 
 <style>
-  .gradient-subtle {
-    background: linear-gradient(180deg, rgba(249, 250, 252, 1) 0%, rgba(255, 255, 255, 1) 100%);
+  .ct-challenges,
+  .ct-programs,
+  .ct-structure,
+  .ct-solution,
+  .ct-cases {
+    position: relative;
+    overflow: hidden;
   }
 
-  .gradient-premium {
-    background: linear-gradient(135deg, rgba(82, 138, 237, 0.03) 0%, rgba(166, 123, 244, 0.03) 100%);
+  .ct-bg-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(82, 138, 237, 0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
   }
 
-  .structure-visual {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  .ct-bg-dots--right {
+    background-position: right center;
   }
 
-  .structure-step {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-    padding: 1.5rem;
-    background: white;
-    border-radius: 1rem;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    transition: all 300ms var(--ease-out-expo);
+  .ct-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
   }
 
-  .structure-step:hover {
-    transform: translateX(8px);
-    border-color: var(--color-brand-blue);
-    box-shadow: 0 8px 24px rgba(82, 138, 237, 0.12);
+  .ct-orb--blue {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+    background: radial-gradient(circle, rgba(82, 138, 237, 0.12), transparent 70%);
   }
 
-  .step-number {
-    font-family: var(--font-heading);
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-brand-blue);
-    line-height: 1;
-    opacity: 0.3;
+  .ct-orb--purple {
+    width: 350px;
+    height: 350px;
+    bottom: -80px;
+    left: -80px;
+    background: radial-gradient(circle, rgba(166, 123, 244, 0.1), transparent 70%);
   }
+
+.structure-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.structure-visual::before {
+  content: "";
+  position: absolute;
+  left: 3.5rem;
+  top: 2.5rem;
+  bottom: 2.5rem;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-brand-blue), var(--color-brand-indigo), var(--color-brand-purple));
+  opacity: 0.2;
+  border-radius: 1px;
+}
+
+.structure-step {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  position: relative;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(82, 138, 237, 0.15);
+  box-shadow: 0 8px 32px rgba(82, 138, 237, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 400ms var(--ease-out-expo);
+  overflow: hidden;
+}
+
+.structure-step::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
+
+.structure-step:hover {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: transparent;
+  box-shadow: 0 12px 40px rgba(82, 138, 237, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateX(8px);
+}
+
+.structure-step:hover::after {
+  opacity: 1;
+}
+
+.step-number {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.25;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: all 400ms ease;
+}
+
+.structure-step:hover .step-number {
+  opacity: 0.6;
+}
 
   .step-content {
     flex: 1;
@@ -398,34 +554,78 @@ variant="blue"
     gap: 1.5rem;
   }
 
-  .benefit-card {
-    padding: 1.5rem;
-    background: linear-gradient(135deg, rgba(82, 138, 237, 0.04), rgba(166, 123, 244, 0.04));
-    border-radius: 1rem;
-    border: 1px solid rgba(82, 138, 237, 0.1);
-  }
+.benefit-card {
+  position: relative;
+  padding: 1.75rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(82, 138, 237, 0.15);
+  box-shadow: 0 8px 32px rgba(82, 138, 237, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 400ms var(--ease-out-expo);
+  overflow: hidden;
+}
 
-  .benefit-icon {
-    width: 2.5rem;
-    height: 2.5rem;
-    color: var(--color-brand-blue);
-    margin-bottom: 1rem;
-  }
+.benefit-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
 
-  .benefit-card h4 {
-    font-family: var(--font-heading);
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--color-brand-navy);
-    margin: 0 0 0.5rem;
-  }
+.benefit-card:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: transparent;
+  box-shadow: 0 12px 40px rgba(82, 138, 237, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
 
-  .benefit-card p {
-    font-size: 0.9375rem;
-    color: var(--color-slate-light);
-    line-height: 1.6;
-    margin: 0;
-  }
+.benefit-card:hover::after {
+  opacity: 1;
+}
+
+.benefit-icon-wrap {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(82, 138, 237, 0.12), rgba(166, 123, 244, 0.12));
+  border: 1px solid rgba(82, 138, 237, 0.2);
+  margin-bottom: 1rem;
+  transition: all 400ms var(--ease-out-expo);
+}
+
+.benefit-card:hover .benefit-icon-wrap {
+  transform: scale(1.08) rotate(-3deg);
+  border-color: rgba(82, 138, 237, 0.3);
+  background: linear-gradient(135deg, rgba(82, 138, 237, 0.18), rgba(166, 123, 244, 0.18));
+}
+
+.benefit-card h4 {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-brand-navy);
+  margin: 0 0 0.5rem;
+}
+
+.benefit-card p {
+  font-size: 0.9375rem;
+  color: var(--color-slate-light);
+  line-height: 1.6;
+  margin: 0;
+}
 
   .solution-content {
     display: flex;
@@ -433,41 +633,92 @@ variant="blue"
     gap: 2rem;
   }
 
-  .solution-point {
-    display: flex;
-    gap: 1.5rem;
-    align-items: flex-start;
-  }
+.solution-point {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  position: relative;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 400ms var(--ease-out-expo);
+  overflow: hidden;
+}
 
-  .point-icon {
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
+.solution-point::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
 
-  .point-icon svg {
-    width: 1.75rem;
-    height: 1.75rem;
-  }
+.solution-point:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: transparent;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateX(8px);
+}
 
-  .point-icon.blue {
-    background: linear-gradient(135deg, var(--color-brand-blue-50), var(--color-brand-blue-100));
-    color: var(--color-brand-blue);
-  }
+.solution-point:hover::after {
+  opacity: 1;
+}
 
-  .point-icon.purple {
-    background: linear-gradient(135deg, var(--color-brand-purple-50), var(--color-brand-purple-100));
-    color: var(--color-brand-purple);
-  }
+.point-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 400ms var(--ease-out-expo);
+}
 
-  .point-icon.gold {
-    background: linear-gradient(135deg, var(--color-brand-gold-50), var(--color-brand-gold-100));
-    color: var(--color-brand-gold);
-  }
+.point-icon.blue {
+  background: linear-gradient(135deg, rgba(82, 138, 237, 0.15), rgba(76, 108, 225, 0.15));
+  border: 1px solid rgba(82, 138, 237, 0.25);
+  color: var(--color-brand-blue);
+}
+
+.point-icon.purple {
+  background: linear-gradient(135deg, rgba(166, 123, 244, 0.15), rgba(82, 138, 237, 0.1));
+  border: 1px solid rgba(166, 123, 244, 0.25);
+  color: var(--color-brand-purple);
+}
+
+.point-icon.gold {
+  background: linear-gradient(135deg, rgba(254, 187, 55, 0.15), rgba(251, 122, 75, 0.1));
+  border: 1px solid rgba(254, 187, 55, 0.25);
+  color: var(--color-brand-gold);
+}
+
+.solution-point:hover .point-icon {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.solution-point:hover .point-icon.blue {
+  border-color: rgba(82, 138, 237, 0.4);
+}
+
+.solution-point:hover .point-icon.purple {
+  border-color: rgba(166, 123, 244, 0.4);
+}
+
+.solution-point:hover .point-icon.gold {
+  border-color: rgba(254, 187, 55, 0.4);
+}
 
   .point-content h3 {
     font-family: var(--font-heading);
@@ -489,25 +740,27 @@ variant="blue"
     height: 400px;
   }
 
-  .visual-card {
-    position: absolute;
-    background: white;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-  }
+.visual-card {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(82, 138, 237, 0.08);
+  border: 1px solid rgba(82, 138, 237, 0.15);
+}
 
   .card-1 {
     top: 0;
     right: 0;
-    width: 280px;
-  }
+  max-width: 280px;
+}
 
-  .card-2 {
-    bottom: 0;
-    left: 20%;
-    width: 300px;
+.card-2 {
+  bottom: 0;
+  left: 20%;
+  max-width: 300px;
   }
 
   .card-header {
@@ -516,7 +769,7 @@ variant="blue"
     gap: 0.5rem;
     margin-bottom: 1rem;
     font-size: 0.875rem;
-    color: var(--color-gray-600);
+    color: var(--color-brand-navy-700);
   }
 
   .status-dot {
@@ -552,7 +805,7 @@ variant="blue"
 
   .metric-label {
     font-size: 0.875rem;
-    color: var(--color-gray-500);
+    color: var(--color-brand-blue-500);
   }
 
   @media (max-width: 768px) {
@@ -579,7 +832,8 @@ variant="blue"
       top: auto;
       right: auto;
       bottom: auto;
-      left: auto;
-    }
-  }
+left: auto;
+}
+}
 </style>
+

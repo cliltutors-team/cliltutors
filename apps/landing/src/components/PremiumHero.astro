@@ -1,8 +1,14 @@
 ---
-/**
+import MotionReveal from './MotionReveal';
+import StaggerContainer, { StaggerItem } from './StaggerContainer';
+import StatsCounter from './StatsCounter';
+import HeroVisual from './HeroVisual';
+
+/** 
  * PremiumHero Component
- * Enterprise-grade hero section for $10M language learning platform
- * Features: Dynamic gradients, animated backgrounds, premium typography
+ * Enterprise-grade hero section for $10M+ language learning platform
+ * Features: Dynamic gradients, animated backgrounds, premium typography,
+ * MotionReveal scroll entrances, glassmorphism trust bar, micro-interactions
  * i18n: Full translation support via props
  */
 
@@ -12,11 +18,13 @@ interface Props {
   subtitle: string;
   ctaPrimary?: { text: string; href: string };
   ctaSecondary?: { text: string; href: string };
-  visualType?: "image" | "illustration" | "gradient" | "video";
+  visualType?: "image" | "illustration" | "gradient" | "video" | "animated";
   visualAsset?: string;
+  visualVariant?: "dashboard" | "growth" | "network";
+  visualStats?: Array<{ value: string; label: string }>;
   alignment?: "left" | "center" | "split";
   theme?: "dark" | "light" | "gradient";
-  trustIndicators?: Array<{ value: string; label: string }>;
+  trustIndicators?: Array<{ value: string; label: string; animated?: boolean }>;
 }
 
 const {
@@ -27,6 +35,8 @@ const {
   ctaSecondary,
   visualType = "gradient",
   visualAsset,
+  visualVariant = "dashboard",
+  visualStats = [],
   alignment = "split",
   theme = "gradient",
   trustIndicators = [],
@@ -48,22 +58,26 @@ const isSplit = alignment === "split";
     isDark && (
       <Fragment>
         <div class="desert-mesh">
-          <svg style="display:none" aria-hidden="true">
-            <filter id="grainy">
-              <feTurbulence
-                type="fractalNoise"
-                baseFrequency="0.65"
-                numOctaves="3"
-                stitchTiles="stitch"
-              />
-              <feColorMatrix type="saturate" values="0" />
-              <feComponentTransfer>
-                <feFuncA type="linear" slope="0.1" />
-              </feComponentTransfer>
-              <feBlend mode="overlay" in2="SourceGraphic" />
-            </filter>
-          </svg>
+        <svg style="display:none" aria-hidden="true">
+        <filter id="grainy">
+        <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.65"
+        numOctaves="3"
+        stitchTiles="stitch"
+        />
+        <feColorMatrix type="saturate" values="0" />
+        <feComponentTransfer>
+        <feFuncA type="linear" slope="0.1" />
+        </feComponentTransfer>
+        <feBlend mode="overlay" in2="SourceGraphic" />
+        </filter>
+        </svg>
         </div>
+        <div class="hero-dot-grid"></div>
+        <div class="hero-float hero-float-1"></div>
+        <div class="hero-float hero-float-2"></div>
+        <div class="hero-float hero-float-3"></div>
       </Fragment>
     )
   }
@@ -78,36 +92,60 @@ const isSplit = alignment === "split";
       {/* Eyebrow Badge */}
       {
         eyebrow && (
-          <div
-            class={`hero-eyebrow animate-fade-up ${isDark ? "dark" : "light"}`}
+          <MotionReveal
+            client:visible
+            direction="up"
+            delay={0}
+            duration={0.6}
+            className={`hero-eyebrow ${isDark ? "dark" : "light"}`}
           >
             <span class="eyebrow-dot" />
             {eyebrow}
-          </div>
+          </MotionReveal>
         )
       }
 
       {/* Title with Premium Typography */}
+      <MotionReveal
+        client:visible
+        direction="up"
+        delay={0.1}
+        duration={0.7}
+      >
       <h1
-        class={`hero-title animate-fade-up delay-100 ${isDark ? "text-white" : "text-brand-navy"}`}
+        class={`hero-title ${isDark ? "gradient-text-hero" : "text-brand-navy"}`}
         set:html={title}
       />
+      </MotionReveal>
 
       {/* Subtitle */}
-      <p
-        class={`hero-subtitle animate-fade-up delay-200 ${isDark ? "text-white/80" : "text-slate-light"}`}
-        set:html={subtitle}
-      />
+      <MotionReveal
+        client:visible
+        direction="up"
+        delay={0.2}
+        duration={0.7}
+      >
+        <p
+          class={`hero-subtitle ${isDark ? "text-white/80" : "text-slate-light"}`}
+          set:html={subtitle}
+        />
+      </MotionReveal>
 
       {/* CTAs */}
       {
         (ctaPrimary || ctaSecondary) && (
-          <div class="hero-cta-group animate-fade-up delay-300">
-            {ctaPrimary && (
-              <a
-                href={ctaPrimary.href}
-                class={`hero-btn-primary ${isDark ? "btn-white-premium" : "btn-primary-premium"}`}
-              >
+          <MotionReveal
+            client:visible
+            direction="up"
+            delay={0.3}
+            duration={0.6}
+            className="hero-cta-group"
+          >
+      {ctaPrimary && (
+        <a
+          href={ctaPrimary.href}
+          class={`hero-btn-primary hero-btn-magnetic ${isDark ? "btn-white" : "btn-primary"}`}
+        >
                 <span>{ctaPrimary.text}</span>
                 <svg
                   class="btn-arrow"
@@ -124,61 +162,106 @@ const isSplit = alignment === "split";
                 </svg>
               </a>
             )}
-            {ctaSecondary && (
-              <a
-                href={ctaSecondary.href}
-                class={`hero-btn-secondary ${isDark ? "btn-ghost-premium" : "btn-outline-premium"}`}
-              >
+      {ctaSecondary && (
+        <a
+          href={ctaSecondary.href}
+          class={`hero-btn-secondary hero-btn-magnetic ${isDark ? "btn-ghost-hero" : "btn-secondary"}`}
+        >
                 {ctaSecondary.text}
               </a>
             )}
-          </div>
+          </MotionReveal>
         )
       }
 
-      {/* Trust Indicators */}
+      {/* Trust Indicators — glassmorphism bar */}
       {
         trustIndicators.length > 0 && (
-          <div class="hero-trust-bar animate-fade-up delay-400">
-            {trustIndicators.map((indicator) => (
-              <div class="trust-indicator">
-                <span class="trust-value">{indicator.value}</span>
-                <span class="trust-label">{indicator.label}</span>
-              </div>
-            ))}
-          </div>
+          <MotionReveal
+            client:visible
+            direction="up"
+            delay={0.45}
+            duration={0.6}
+            className="hero-trust-bar"
+          >
+            <StaggerContainer
+              client:visible
+              staggerDelay={0.08}
+              className="trust-indicators-grid"
+            >
+        {trustIndicators.map((indicator) => (
+          <StaggerItem client:visible className="trust-indicator">
+            <span class="trust-value">
+              {indicator.animated !== false
+                ? <StatsCounter client:visible value={indicator.value} className="trust-counter" />
+                : indicator.value}
+            </span>
+            <span class="trust-label">{indicator.label}</span>
+          </StaggerItem>
+        ))}
+            </StaggerContainer>
+          </MotionReveal>
         )
       }
     </div>
 
-    {/* Visual Panel */}
-    {
-      visualType !== "gradient" && visualAsset && (
-        <div class="hero-visual h-full animate-fade-up delay-300">
-          <div class="visual-wrapper h-full">
-            {visualType === "image" && (
-              <img
-                src={visualAsset}
-                alt=""
-                class="visual-image"
-                loading="eager"
-              />
-            )}
-            {visualType === "illustration" && (
-              <div class="visual-illustration" set:html={visualAsset} />
-            )}
-          </div>
+  {/* Visual Panel */}
+  {
+    visualType === "animated" && (
+      <MotionReveal
+        client:visible
+        direction="left"
+        delay={0.3}
+        duration={0.8}
+        className="hero-visual h-full"
+      >
+        <HeroVisual
+          client:visible
+          variant={visualVariant}
+          stats={visualStats.length > 0 ? visualStats : trustIndicators.map(i => ({ value: i.value, label: i.label }))}
+        />
+      </MotionReveal>
+    )
+  }
+  {
+    visualType !== "gradient" && visualType !== "animated" && visualAsset && (
+      <MotionReveal
+        client:visible
+        direction="left"
+        delay={0.3}
+        duration={0.8}
+        className="hero-visual h-full"
+      >
+        <div class="visual-wrapper h-full">
+          {visualType === "image" && (
+            <img
+              src={visualAsset}
+              alt=""
+              class="visual-image"
+              loading="eager"
+            />
+          )}
+          {visualType === "illustration" && (
+            <div class="visual-illustration" set:html={visualAsset} />
+          )}
         </div>
-      )
-    }
+      </MotionReveal>
+    )
+  }
   </div>
 
   {/* Scroll Indicator */}
-  <div class="hero-scroll-indicator animate-fade-up delay-500">
+  <MotionReveal
+    client:visible
+    direction="up"
+    delay={0.6}
+    duration={0.5}
+    className="hero-scroll-indicator"
+  >
     <div class="scroll-mouse">
       <div class="scroll-wheel"></div>
     </div>
-  </div>
+  </MotionReveal>
 </section>
 
 <style>
@@ -321,14 +404,7 @@ const isSplit = alignment === "split";
     border: 1px solid rgba(255, 255, 255, 0.12);
   }
 
-  .eyebrow-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-  }
-
-  .hero-title {
+.hero-title {
     font-family: var(--font-heading);
     font-size: clamp(2.5rem, 5vw, 4.5rem);
     font-weight: 700;
@@ -361,94 +437,114 @@ const isSplit = alignment === "split";
     margin-bottom: 3rem;
   }
 
-  .hero-btn-primary,
-  .hero-btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1rem 2rem;
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 14px;
-    text-decoration: none;
-    transition: all 300ms var(--ease-out-expo);
-    cursor: pointer;
-  }
+.hero-btn-primary,
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 14px;
+  text-decoration: none;
+  transition: all 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
 
-  .btn-white-premium {
-    background: white;
-    color: var(--color-brand-navy);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  }
+.hero-btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  .btn-white-premium:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-  }
+.hero-btn-primary:hover::before {
+  transform: translateX(100%);
+}
 
-  .btn-ghost-premium {
-    background: rgba(255, 255, 255, 0.08);
-    color: white;
-    border: 1.5px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(12px);
-  }
+.hero-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(82, 138, 237, 0.35), 0 0 40px rgba(82, 138, 237, 0.12);
+}
 
-  .btn-ghost-premium:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-  }
+.hero-btn-primary:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 10px rgba(82, 138, 237, 0.2);
+}
 
-  .btn-primary-premium {
-    background: linear-gradient(
-      135deg,
-      var(--color-brand-blue),
-      var(--color-brand-indigo)
-    );
-    color: white;
-    box-shadow: 0 4px 15px rgba(82, 138, 237, 0.3);
-  }
+.hero-btn-secondary:hover {
+  transform: translateY(-3px);
+}
 
-  .btn-primary-premium:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(82, 138, 237, 0.4);
-  }
+.hero-btn-secondary:active {
+  transform: translateY(0px);
+}
 
-  .btn-outline-premium {
-    background: transparent;
-    color: var(--color-brand-navy);
-    border: 1.5px solid rgba(52, 53, 79, 0.2);
-  }
+.btn-ghost-hero {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
 
-  .btn-outline-premium:hover {
-    background: rgba(52, 53, 79, 0.04);
-    border-color: rgba(52, 53, 79, 0.3);
-  }
+.btn-ghost-hero:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.1), 0 0 40px rgba(255, 255, 255, 0.04);
+}
 
-  .btn-arrow {
-    width: 18px;
-    height: 18px;
-    transition: transform 300ms var(--ease-out-expo);
-  }
+.btn-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  .hero-btn-primary:hover .btn-arrow {
-    transform: translateX(4px);
-  }
+.hero-btn-primary:hover .btn-arrow {
+  transform: translateX(4px);
+}
 
-  /* ── Trust Bar ── */
+  /* ── Trust Bar — glassmorphism ── */
   .hero-trust-bar {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 0.5rem;
+  }
+
+  .trust-indicators-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .trust-indicator {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 300ms var(--ease-out-expo);
+  }
+
+  .trust-indicator:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
   }
 
   .trust-value {
@@ -503,71 +599,233 @@ const isSplit = alignment === "split";
     display: block;
   }
 
-  /* ── Scroll Indicator ── */
-  .hero-scroll-indicator {
-    position: absolute;
-    bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-  }
+/* ── Gradient Text Hero ── */
+.gradient-text-hero {
+  background: linear-gradient(135deg, white 0%, white 40%, var(--color-brand-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-  .scroll-mouse {
-    width: 26px;
-    height: 42px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    padding-top: 8px;
+/* ── Dot Grid Overlay ── */
+.hero-dot-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+/* ── Floating Elements ── */
+.hero-float {
+  position: absolute;
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-float-1 {
+  width: 120px;
+  height: 80px;
+  top: 18%;
+  right: 8%;
+  background: rgba(82, 138, 237, 0.1);
+  box-shadow: 0 8px 32px rgba(82, 138, 237, 0.12);
+  animation: float-1 12s ease-in-out infinite;
+}
+
+.hero-float-2 {
+  width: 90px;
+  height: 90px;
+  bottom: 25%;
+  right: 15%;
+  background: rgba(166, 123, 244, 0.1);
+  border-radius: 50%;
+  box-shadow: 0 8px 32px rgba(166, 123, 244, 0.1);
+  animation: float-2 10s ease-in-out infinite;
+}
+
+.hero-float-3 {
+  width: 100px;
+  height: 60px;
+  top: 55%;
+  right: 5%;
+  background: rgba(254, 187, 55, 0.08);
+  box-shadow: 0 8px 32px rgba(254, 187, 55, 0.1);
+  animation: float-3 14s ease-in-out infinite;
+}
+
+@keyframes float-1 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(15px) scale(1.05); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(-1deg); }
+  66% { transform: translateY(8px) rotate(1deg); }
+}
+
+/* ── Magnetic Button ── */
+.hero-btn-magnetic {
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Trust Counter ── */
+.trust-value .trust-counter {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  display: inline;
+}
+
+/* ── Scroll Indicator ── */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  opacity: 0.7;
+  transition: opacity 400ms ease;
+}
+
+.hero-scroll-indicator:hover {
+  opacity: 1;
+}
+
+.scroll-mouse {
+  width: 26px;
+  height: 42px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.scroll-wheel {
+  width: 3px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 2px;
+  animation: scroll-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes scroll-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(10px);
+  }
+}
+
+/* ── Responsive ── */
+@media (prefers-reduced-motion: reduce) {
+  .desert-mesh::before {
+    animation: none;
   }
 
   .scroll-wheel {
-    width: 4px;
-    height: 8px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 2px;
-    animation: scroll-pulse 2s ease-in-out infinite;
+    animation: none;
   }
 
-  @keyframes scroll-pulse {
-    0%,
-    100% {
-      opacity: 0.3;
-      transform: translateY(0);
-    }
-    50% {
-      opacity: 1;
-      transform: translateY(6px);
-    }
+  .hero-float-1,
+  .hero-float-2,
+  .hero-float-3 {
+    animation: none;
   }
 
-  /* ── Responsive ── */
-  @media (max-width: 1024px) {
-    .hero-align-split .hero-container {
-      grid-template-columns: 1fr;
-      text-align: center;
-    }
+  .hero-dot-grid {
+    display: none;
+  }
+}
 
-    .hero-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .hero-cta-group {
-      justify-content: center;
-    }
+@media (max-width: 1024px) {
+  .hero-align-split .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
   }
 
-  @media (max-width: 640px) {
-    .hero-container {
-      padding: 2rem 1rem;
-    }
-
-    .hero-trust-bar {
-      flex-direction: column;
-      gap: 1.5rem;
-    }
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
+
+  .hero-cta-group {
+    justify-content: center;
+  }
+
+  .hero-float-1,
+  .hero-float-2,
+  .hero-float-3 {
+    display: none;
+  }
+
+  .hero-dot-grid {
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-container {
+    padding: 2rem 1rem;
+  }
+
+  .trust-indicators-grid {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .hero-scroll-indicator {
+    bottom: 1.5rem;
+  }
+
+  .hero-float {
+    display: none;
+  }
+
+  .hero-dot-grid {
+    display: none;
+  }
+}
+
+
 </style>
+
+<script>
+  const magneticBtns = document.querySelectorAll('.hero-btn-magnetic');
+  const STRENGTH = 0.15;
+
+  magneticBtns.forEach((btn) => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const deltaX = (e.clientX - centerX) * STRENGTH;
+      const deltaY = (e.clientY - centerY) * STRENGTH;
+      btn.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+</script>

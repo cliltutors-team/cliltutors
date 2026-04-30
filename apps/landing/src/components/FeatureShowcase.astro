@@ -1,13 +1,9 @@
 ---
-/**
- * FeatureShowcase Component
- * Premium feature highlight with split layout
- * Features: Icon + title + description, premium animations, i18n support
- */
+import LucideIcon from './LucideIcon';
 
 interface Feature {
   icon?: string;
-  iconType?: 'emoji' | 'svg' | 'image';
+  iconType?: 'emoji' | 'svg' | 'image' | 'lucide';
   title: string;
   description: string;
   href?: string;
@@ -38,7 +34,6 @@ const {
   columns = 3,
   variant = 'default',
   showMetrics = true,
-  animated = true,
   analytics
 } = Astro.props;
 
@@ -47,13 +42,6 @@ const columnClasses = {
   3: 'lg:grid-cols-3',
   4: 'lg:grid-cols-4'
 };
-
-const iconGradients = [
-  'from-brand-blue-500 to-brand-indigo-500',
-  'from-brand-purple-500 to-brand-indigo-500',
-  'from-brand-gold-500 to-brand-orange-500',
-  'from-brand-blue-400 to-brand-purple-400'
-];
 ---
 
 <div 
@@ -66,23 +54,28 @@ const iconGradients = [
         class:list={[
           'feature-card',
           `variant-${variant}`,
-          animated && 'feature-animated'
+          'reveal'
         ]}
-        style={`--index: ${index}; --delay: ${index * 150}ms`}
+        style={`--stagger: ${index}`}
         {...analytics?.clickAction && { 'data-action': analytics.clickAction }}
       >
         {/* Icon */}
         {feature.icon && (
-          <div class:list={['feature-icon-wrapper', `gradient-${index % iconGradients.length}`]}>
+          <div class:list={['feature-icon-wrapper', `gradient-${index % 4}`]}>
             {feature.iconType === 'emoji' && (
               <span class="icon-emoji">{feature.icon}</span>
             )}
             {feature.iconType === 'svg' && (
               <div class="icon-svg" set:html={feature.icon} />
             )}
-            {feature.iconType === 'image' && (
-              <img src={feature.icon} alt="" class="icon-image" />
-            )}
+{feature.iconType === 'image' && (
+          <img src={feature.icon} alt="" class="icon-image" />
+          )}
+          {feature.iconType === 'lucide' && (
+          <div data-lucide-icon={feature.icon} class="icon-lucide-container">
+            <LucideIcon client:visible name={feature.icon} size={28} color="white" strokeWidth={1.75} />
+          </div>
+          )}
           </div>
         )}
 
@@ -150,24 +143,19 @@ const iconGradients = [
   background: white;
   border-radius: 1.5rem;
   padding: 2rem;
-  border: 1px solid var(--color-gray-200);
+  border: 1px solid var(--color-brand-blue-200);
   transition: all 400ms var(--ease-out-expo);
 }
 
-.feature-animated {
-  animation: fadeSlideUp 0.8s ease-out backwards;
-  animation-delay: var(--delay);
+.feature-showcase-wrapper .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+  transition-delay: calc(var(--stagger, 0) * 80ms);
 }
-
-@keyframes fadeSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.feature-showcase-wrapper .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .feature-card:hover {
@@ -201,19 +189,19 @@ const iconGradients = [
 }
 
 .gradient-0 {
-  background: linear-gradient(135deg, var(--color-brand-blue-500), var(--color-brand-indigo-500));
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
 }
 
 .gradient-1 {
-  background: linear-gradient(135deg, var(--color-brand-purple-500), var(--color-brand-indigo-500));
+  background: linear-gradient(135deg, var(--color-brand-purple), var(--color-brand-indigo));
 }
 
 .gradient-2 {
-  background: linear-gradient(135deg, var(--color-brand-gold-500), var(--color-brand-orange-500));
+  background: linear-gradient(135deg, var(--color-brand-gold), var(--color-brand-orange));
 }
 
 .gradient-3 {
-  background: linear-gradient(135deg, var(--color-brand-blue-400), var(--color-brand-purple-400));
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
 }
 
 .feature-card:hover .feature-icon-wrapper {
@@ -235,6 +223,15 @@ const iconGradients = [
   width: 2.5rem;
   height: 2.5rem;
   object-fit: contain;
+}
+
+.icon-lucide-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: white;
 }
 
 /* Content */
@@ -275,8 +272,8 @@ const iconGradients = [
 
 .tag {
   padding: 0.25rem 0.75rem;
-  background: var(--color-gray-100);
-  color: var(--color-gray-600);
+  background: var(--color-brand-blue-50);
+  color: var(--color-brand-blue-500);
   font-size: 0.75rem;
   font-weight: 500;
   border-radius: 100px;
@@ -289,7 +286,7 @@ const iconGradients = [
   gap: 1rem;
   padding-top: 1rem;
   margin-top: 0.5rem;
-  border-top: 1px solid var(--color-gray-100);
+  border-top: 1px solid var(--color-brand-blue-100);
 }
 
 .metric {
@@ -307,7 +304,7 @@ const iconGradients = [
 
 .metric-label {
   font-size: 0.75rem;
-  color: var(--color-gray-500);
+  color: var(--color-brand-blue-500);
 }
 
 /* Link */
@@ -362,6 +359,24 @@ const iconGradients = [
   scroll-snap-align: start;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .feature-card:hover {
+    transform: none;
+  }
+
+  .feature-card:hover .feature-icon-wrapper {
+    transform: none;
+  }
+
+  .layout-alternating .feature-card:nth-child(even) {
+    transform: none;
+  }
+
+  .feature-link:hover .link-icon {
+    transform: none;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .feature-card {
@@ -371,5 +386,7 @@ const iconGradients = [
   .feature-metrics {
     grid-template-columns: 1fr;
   }
-}
+  }
 </style>
+
+

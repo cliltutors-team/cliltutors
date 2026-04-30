@@ -1,37 +1,48 @@
 ---
+import SectionHeader from './SectionHeader.astro';
+import LucideIcon from './LucideIcon';
+import MotionReveal from './MotionReveal';
+
 interface Outcome {
   id: string;
   title: string;
   description: string;
   icon: string;
+  iconType?: 'emoji' | 'lucide';
   percentage: number;
   color: 'blue' | 'purple' | 'gold' | 'orange' | 'coral';
 }
 
 interface Props {
   outcomes: Outcome[];
-  title?: string;
-  subtitle?: string;
-  eyebrow?: string;
-  successTitle?: string;
-  successRate?: string;
-  successDesc?: string;
-  completeText?: string;
-  timeText?: string;
-  salaryText?: string;
+  title: string;
+  subtitle: string;
+  eyebrow: string;
+  successTitle: string;
+  successRate: string;
+  successDesc: string;
+  completeText: string;
+  completeValue: string;
+  timeText: string;
+  timeValue: string;
+  salaryText: string;
+  salaryValue: string;
 }
 
 const {
   outcomes,
-  title = "What You'll Achieve",
-  subtitle = "Real-world outcomes measured across thousands of learners",
-  eyebrow = "Measurable Results",
-  successTitle = "Average Success Rate",
-  successRate = "94%",
-  successDesc = "of students achieve their goals",
-  completeText = "Complete course",
-  timeText = "Average time",
-  salaryText = "Salary increase"
+  title,
+  subtitle,
+  eyebrow,
+  successTitle,
+  successRate,
+  successDesc,
+  completeText,
+  completeValue,
+  timeText,
+  timeValue,
+  salaryText,
+  salaryValue
 } = Astro.props;
 
 const colorClasses = {
@@ -43,102 +54,91 @@ const colorClasses = {
 };
 ---
 
-<section class="section-padding bg-white">
+<section class="section-padding bg-white outcomes-section">
   <div class="container-narrow">
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-      <div class="reveal-left">
-        <span class="eyebrow mb-4">Measurable Results</span>
-        <h2 class="font-heading font-bold text-4xl sm:text-5xl text-brand-navy tracking-tight mb-6">{title}</h2>
-        <p class="text-lg text-slate-light leading-relaxed mb-8">{subtitle}</p>
-        
+      <div>
+        <SectionHeader eyebrow={eyebrow} title={title} description={subtitle} center={false} />
+
         <div class="space-y-6">
           {outcomes.map((outcome, index) => {
             const colors = colorClasses[outcome.color];
             return (
-              <div class="outcome-item" style={`animation-delay: ${150 + index * 100}ms`}>
-                <div class="flex items-start gap-4 mb-3">
-                  <div class={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}>
-                    <span class="text-2xl">{outcome.icon}</span>
+              <MotionReveal client:visible direction="up" delay={0.1 + index * 0.08}>
+                <div class="outcome-item">
+                  <div class="flex items-start gap-4 mb-3">
+                    <div class={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}>
+                      {outcome.iconType === 'lucide' ? (
+                        <LucideIcon client:idle name={outcome.icon} size={24} color="currentColor" className={colors.text} />
+                      ) : (
+                        <span class="text-2xl">{outcome.icon}</span>
+                      )}
+                    </div>
+                    <div class="flex-1">
+                      <h3 class="font-heading font-semibold text-lg text-brand-navy mb-1">{outcome.title}</h3>
+                      <p class="text-sm text-brand-navy-700">{outcome.description}</p>
+                    </div>
+                    <div class={`font-heading font-bold text-2xl ${colors.text} flex-shrink-0`}>
+                      {outcome.percentage}%
+                    </div>
                   </div>
-                  <div class="flex-1">
-                    <h3 class="font-heading font-semibold text-lg text-brand-navy mb-1">{outcome.title}</h3>
-                    <p class="text-sm text-gray-600">{outcome.description}</p>
-                  </div>
-                  <div class={`font-heading font-bold text-2xl ${colors.text} flex-shrink-0`}>
-                    {outcome.percentage}%
+                  <div class="ml-16 h-2 bg-brand-blue-50 rounded-full overflow-hidden">
+                    <div
+                      class={`h-full ${colors.bar} progress-bar`}
+                      style={`width: ${outcome.percentage}%`}
+                    ></div>
                   </div>
                 </div>
-                <div class="ml-16 h-2 bg-gray-100 rounded-full overflow-hidden">
-                  <div 
-                    class={`h-full ${colors.bar} progress-bar`}
-                    style={`width: ${outcome.percentage}%`}
-                  ></div>
-                </div>
-              </div>
+              </MotionReveal>
             );
           })}
         </div>
       </div>
 
-      <div class="reveal">
+      <MotionReveal client:visible direction="up" delay={0.1}>
         <div class="relative">
           <div class="absolute inset-0 bg-gradient-to-br from-brand-blue/10 via-brand-purple/10 to-brand-gold/10 rounded-3xl transform rotate-3"></div>
-          
-<div class="relative bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-  <div class="text-center mb-8">
-    <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-blue to-brand-indigo mb-4">
-      <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-      </svg>
-    </div>
-    <h3 class="font-heading font-bold text-2xl text-brand-navy mb-2">{successTitle}</h3>
-    <div class="font-heading font-bold text-5xl bg-gradient-to-r from-brand-blue to-brand-purple bg-clip-text text-transparent">
-      {successRate}
-    </div>
-    <p class="text-sm text-gray-600 mt-2">{successDesc}</p>
-  </div>
 
-  <div class="grid grid-cols-3 gap-4 pt-8 border-t border-gray-100">
-    <div class="text-center">
-      <div class="font-heading font-bold text-2xl text-brand-navy mb-1">8/10</div>
-      <div class="text-xs text-gray-600">{completeText}</div>
-    </div>
-    <div class="text-center">
-      <div class="font-heading font-bold text-2xl text-brand-navy mb-1">12w</div>
-      <div class="text-xs text-gray-600">{timeText}</div>
-    </div>
-    <div class="text-center">
-      <div class="font-heading font-bold text-2xl text-brand-navy mb-1">2.5x</div>
-      <div class="text-xs text-gray-600">{salaryText}</div>
-    </div>
-  </div>
-</div>
+          <div class="relative bg-white rounded-2xl shadow-xl p-8 border border-brand-blue-100">
+            <div class="text-center mb-8">
+              <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-blue to-brand-indigo mb-4">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+              </div>
+              <h3 class="font-heading font-bold text-2xl text-brand-navy mb-2">{successTitle}</h3>
+              <div class="font-heading font-bold text-5xl bg-gradient-to-r from-brand-blue to-brand-purple bg-clip-text text-transparent">
+                {successRate}
+              </div>
+              <p class="text-sm text-brand-navy-700 mt-2">{successDesc}</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 pt-8 border-t border-brand-blue-100">
+              <div class="text-center">
+                <div class="font-heading font-bold text-2xl text-brand-navy mb-1">{completeValue}</div>
+                <div class="text-xs text-brand-navy-700">{completeText}</div>
+              </div>
+              <div class="text-center">
+                <div class="font-heading font-bold text-2xl text-brand-navy mb-1">{timeValue}</div>
+                <div class="text-xs text-brand-navy-700">{timeText}</div>
+              </div>
+              <div class="text-center">
+                <div class="font-heading font-bold text-2xl text-brand-navy mb-1">{salaryValue}</div>
+                <div class="text-xs text-brand-navy-700">{salaryText}</div>
+              </div>
+            </div>
+          </div>
 
           <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-brand-gold/20 to-brand-orange/20 rounded-full blur-2xl"></div>
           <div class="absolute -top-6 -left-6 w-24 h-24 bg-gradient-to-br from-brand-blue/20 to-brand-purple/20 rounded-full blur-2xl"></div>
         </div>
-      </div>
+      </MotionReveal>
     </div>
   </div>
 </section>
 
 <style>
-.outcome-item {
-  animation: fade-up 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.progress-bar {
+  .progress-bar {
   transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
   animation: progress-fill 1.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -149,14 +149,10 @@ const colorClasses = {
   }
 }
 
-@keyframes count-up {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar {
+    animation: none;
+    transition: none;
   }
 }
 </style>

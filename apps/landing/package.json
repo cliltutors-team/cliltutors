@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
@@ -11,6 +11,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.9",
     "@astrojs/react": "^4.4.2",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/montserrat": "^5.2.8",
@@ -36,6 +37,6 @@
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "eslint": "^9.39.1",
-    "typescript": "5.9.2"
+    "typescript": "^5.9.2"
   }
 }
