@@ -7,9 +7,9 @@ import PremiumCard from '../../components/PremiumCard.astro';
 import StatsBanner from '../../components/StatsBanner.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
-import InstructorGrid from '../../components/InstructorGrid.tsx';
-import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
-import MotionCard from '../../components/MotionCard.tsx';
+import InstructorGrid from '../../components/InstructorGrid';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer';
+import MotionCard from '../../components/MotionCard';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 import { tutorProfiles } from '../../data/tutors';
@@ -112,9 +112,9 @@ const trustIndicators = [
 
     <InstructorGrid
       client:visible
-      t={t}
-      lang={lang}
-      instructors={instructors}
+  t={t as (key: string) => string}
+  lang={lang}
+  instructors={instructors}
       eyebrow={t('instructors.eyebrow')}
       title={t('instructors.title')}
       subtitle={t('instructors.subtitle')}

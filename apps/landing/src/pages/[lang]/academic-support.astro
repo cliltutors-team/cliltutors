@@ -7,11 +7,11 @@ import PremiumCard from '../../components/PremiumCard.astro';
 import StatsBanner from '../../components/StatsBanner.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
-import LucideIcon from '../../components/LucideIcon.tsx';
-import MotionReveal from '../../components/MotionReveal.tsx';
-import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
-import MotionCard from '../../components/MotionCard.tsx';
-import StatsCounter from '../../components/StatsCounter.tsx';
+import LucideIcon from '../../components/LucideIcon';
+import MotionReveal from '../../components/MotionReveal';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer';
+import MotionCard from '../../components/MotionCard';
+import StatsCounter from '../../components/StatsCounter';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -151,14 +151,16 @@ const featuredCards = [
     <section id="programs" class="section-padding gradient-subtle relative overflow-hidden">
       <div class="bg-dots"></div>
       <div class="container-wide relative">
-        <SectionHeader
-          eyebrow={t('academic.programs.eyebrow')}
-          title={t('academic.programs.title')}
-          description={t('academic.programs.subtitle')}
-        />
+        <MotionReveal client:visible>
+          <SectionHeader
+            eyebrow={t('academic.programs.eyebrow')}
+            title={t('academic.programs.title')}
+            description={t('academic.programs.subtitle')}
+          />
+        </MotionReveal>
 
         <StaggerContainer className="grid md:grid-cols-2 gap-6" client:visible>
-          {academicPrograms.map((program, i) => (
+          {academicPrograms.map((program) => (
             <StaggerItem>
               <MotionCard client:visible>
                 <PremiumCard
@@ -184,17 +186,19 @@ const featuredCards = [
       <div class="process-bg-orb orb-a"></div>
       <div class="process-bg-orb orb-b"></div>
       <div class="container-wide relative">
-        <SectionHeader
-          eyebrow={t('academic.process.eyebrow')}
-          title={t('academic.process.title')}
-          light={true}
-        />
+        <MotionReveal client:visible>
+          <SectionHeader
+            eyebrow={t('academic.process.eyebrow')}
+            title={t('academic.process.title')}
+            light={true}
+          />
+        </MotionReveal>
 
         <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" client:visible>
-          {researchProcess.map((phase, i) => (
-            <StaggerItem>
-              <div class="process-card">
-                <div class="phase-number">{phase.phase}</div>
+{researchProcess.map((phase, i) => (
+<StaggerItem>
+<div class="process-card">
+<div class="phase-number">{phase.phase}</div>
                 <h3 class="phase-title">{phase.title}</h3>
                 <ul class="phase-items">
                   {phase.items.map((item) => (
@@ -217,14 +221,16 @@ const featuredCards = [
 <section class="section-padding gradient-section-alt relative overflow-hidden">
   <div class="bg-grid"></div>
       <div class="container-wide relative">
-        <SectionHeader
-          eyebrow={t('academic.areas.eyebrow')}
-          title={t('academic.areas.title')}
-          description={t('academic.areas.subtitle')}
-        />
+        <MotionReveal client:visible>
+          <SectionHeader
+            eyebrow={t('academic.areas.eyebrow')}
+            title={t('academic.areas.title')}
+            description={t('academic.areas.subtitle')}
+          />
+        </MotionReveal>
 
         <StaggerContainer className="grid lg:grid-cols-3 gap-6" client:visible>
-          {supportAreas.map((area, i) => (
+          {supportAreas.map((area) => (
             <StaggerItem>
               <MotionCard client:visible>
                 <PremiumCard
@@ -274,7 +280,7 @@ const featuredCards = [
           </MotionReveal>
 
           <StaggerContainer className="featured-cards" client:visible>
-            {featuredCards.map((card, i) => (
+            {featuredCards.map((card) => (
               <StaggerItem>
                 <MotionCard client:visible>
                   <div class="featured-card-item">
@@ -461,6 +467,32 @@ const featuredCards = [
   border-radius: 1rem;
   border: 1px solid rgba(82, 138, 237, 0.15);
   box-shadow: 0 8px 32px rgba(82, 138, 237, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 400ms var(--ease-out-expo);
+  position: relative;
+}
+
+.featured-stat::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.featured-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(82, 138, 237, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.featured-stat:hover::after {
+  opacity: 1;
 }
 
   .featured-value {

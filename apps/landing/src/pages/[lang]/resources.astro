@@ -6,11 +6,11 @@ import PremiumHero from '../../components/PremiumHero.astro';
 import PremiumCard from '../../components/PremiumCard.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
-import LucideIcon from '../../components/LucideIcon.tsx';
-import MotionReveal from '../../components/MotionReveal.tsx';
-import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
-import MotionCard from '../../components/MotionCard.tsx';
-import StatsCounter from '../../components/StatsCounter.tsx';
+import LucideIcon from '../../components/LucideIcon';
+import MotionReveal from '../../components/MotionReveal';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer';
+import MotionCard from '../../components/MotionCard';
+import StatsCounter from '../../components/StatsCounter';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -34,27 +34,27 @@ const featuredResources = [
     iconType: 'lucide' as const,
     title: t('resources.featured1.title'),
     description: t('resources.featured1.desc'),
-    variant: 'blue',
-    featured: true,
-    tags: [t('resources.featured1.tag1'), t('resources.featured1.tagCLIL'), t('resources.featured1.tag2')]
+  variant: 'blue' as const,
+  featured: true,
+  tags: [t('resources.featured1.tag1'), t('resources.featured1.tagCLIL'), t('resources.featured1.tag2')]
   },
   {
-    category: 'communication',
-    icon: 'globe',
-    iconType: 'lucide' as const,
-    title: t('resources.featured2.title'),
-    description: t('resources.featured2.desc'),
-    variant: 'purple',
-    featured: true,
-    tags: [t('resources.featured2.tag1'), t('resources.featured2.tag2')]
+  category: 'communication',
+  icon: 'globe',
+  iconType: 'lucide' as const,
+  title: t('resources.featured2.title'),
+  description: t('resources.featured2.desc'),
+  variant: 'purple' as const,
+  featured: true,
+  tags: [t('resources.featured2.tag1'), t('resources.featured2.tag2')]
   },
   {
-    category: 'education',
-    icon: 'graduation-cap',
-    iconType: 'lucide' as const,
-    title: t('resources.featured3.title'),
-    description: t('resources.featured3.desc'),
-    variant: 'gold',
+  category: 'education',
+  icon: 'graduation-cap',
+  iconType: 'lucide' as const,
+  title: t('resources.featured3.title'),
+  description: t('resources.featured3.desc'),
+  variant: 'gold' as const,
     featured: true,
     tags: [t('resources.featured3.tag1'), t('resources.featured3.tag2')]
   }
@@ -67,31 +67,31 @@ const additionalResources = [
     iconType: 'lucide' as const,
     title: t('resources.add1.title'),
     description: t('resources.add1.desc'),
-    variant: 'blue'
+  variant: 'blue' as const
   },
   {
-    category: 'communication',
-    icon: 'briefcase',
-    iconType: 'lucide' as const,
-    title: t('resources.add2.title'),
-    description: t('resources.add2.desc'),
-    variant: 'purple'
+  category: 'communication',
+  icon: 'briefcase',
+  iconType: 'lucide' as const,
+  title: t('resources.add2.title'),
+  description: t('resources.add2.desc'),
+  variant: 'purple' as const
   },
   {
-    category: 'language',
-    icon: 'pencil',
-    iconType: 'lucide' as const,
-    title: t('resources.add3.title'),
-    description: t('resources.add3.desc'),
-    variant: 'blue'
+  category: 'language',
+  icon: 'pencil',
+  iconType: 'lucide' as const,
+  title: t('resources.add3.title'),
+  description: t('resources.add3.desc'),
+  variant: 'blue' as const
   },
   {
-    category: 'education',
-    icon: 'bar-chart',
-    iconType: 'lucide' as const,
-    title: t('resources.add4.title'),
-    description: t('resources.add4.desc'),
-    variant: 'gold'
+  category: 'education',
+  icon: 'bar-chart',
+  iconType: 'lucide' as const,
+  title: t('resources.add4.title'),
+  description: t('resources.add4.desc'),
+  variant: 'gold' as const
   }
 ];
 ---
@@ -126,10 +126,12 @@ const additionalResources = [
       </MotionReveal>
 
         <div class="featured-section">
-          <SectionHeader
-            eyebrow={t('resources.eyebrow')}
-            title={t('resources.featured.title')}
-          />
+    <MotionReveal client:visible>
+      <SectionHeader
+        eyebrow={t('resources.eyebrow')}
+        title={t('resources.featured.title')}
+      />
+    </MotionReveal>
       <StaggerContainer client:visible className="featured-grid">
         {featuredResources.map((resource) => (
           <StaggerItem>
@@ -156,9 +158,11 @@ const additionalResources = [
         </div>
 
         <div class="additional-section">
-          <SectionHeader
-            title={t('resources.additional.title')}
-          />
+    <MotionReveal client:visible>
+      <SectionHeader
+        title={t('resources.additional.title')}
+      />
+    </MotionReveal>
       <StaggerContainer client:visible className="additional-grid">
         {additionalResources.map((resource) => (
           <StaggerItem>
@@ -534,7 +538,7 @@ const additionalResources = [
 
 <script>
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const resourceCards = document.querySelectorAll('.resource-card');
+  const resourceCards = document.querySelectorAll<HTMLElement>('.resource-card');
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {

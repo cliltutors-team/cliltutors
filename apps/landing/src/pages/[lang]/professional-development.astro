@@ -7,8 +7,9 @@ import PremiumCard from '../../components/PremiumCard.astro';
 import StatsBanner from '../../components/StatsBanner.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
-import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
-import MotionCard from '../../components/MotionCard.tsx';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer';
+import MotionCard from '../../components/MotionCard';
+import MotionReveal from '../../components/MotionReveal';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -142,11 +143,13 @@ const methodologySteps = [
     <section id="programs" class="section-padding gradient-subtle relative overflow-hidden">
       <div class="bg-dots"></div>
       <div class="container-wide relative">
-        <SectionHeader
-          eyebrow={t('professional.programs.eyebrow')}
-          title={t('professional.programs.title')}
-          description={t('professional.programs.subtitle')}
-        />
+        <MotionReveal client:visible>
+          <SectionHeader
+            eyebrow={t('professional.programs.eyebrow')}
+            title={t('professional.programs.title')}
+            description={t('professional.programs.subtitle')}
+          />
+        </MotionReveal>
 
       <StaggerContainer client:visible className="grid md:grid-cols-2 gap-6">
         {careerPrograms.map((program) => (
@@ -174,11 +177,13 @@ const methodologySteps = [
     <section class="section-padding relative overflow-hidden professional-blue-fade">
       <div class="bg-grid"></div>
       <div class="container-wide relative">
-        <SectionHeader
-          eyebrow={t('professional.tracks.eyebrow')}
-          title={t('professional.tracks.title')}
-          description={t('professional.tracks.subtitle')}
-        />
+        <MotionReveal client:visible>
+          <SectionHeader
+            eyebrow={t('professional.tracks.eyebrow')}
+            title={t('professional.tracks.title')}
+            description={t('professional.tracks.subtitle')}
+          />
+        </MotionReveal>
 
       <StaggerContainer client:visible className="grid lg:grid-cols-3 gap-6">
         {careerTracks.map((track) => (
@@ -205,11 +210,13 @@ const methodologySteps = [
       <div class="method-bg-orb orb-a"></div>
       <div class="method-bg-orb orb-b"></div>
       <div class="container-wide relative">
-        <SectionHeader
-          eyebrow={t('professional.method.eyebrow')}
-          title={t('professional.method.title')}
-          light={true}
-        />
+        <MotionReveal client:visible>
+          <SectionHeader
+            eyebrow={t('professional.method.eyebrow')}
+            title={t('professional.method.title')}
+            light={true}
+          />
+        </MotionReveal>
 
       <StaggerContainer client:visible className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         {methodologySteps.map((step, i) => (

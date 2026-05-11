@@ -5,11 +5,11 @@ import Footer from '../../components/Footer.astro';
 import PremiumHero from '../../components/PremiumHero.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
-import ContactForm from '../../components/ContactForm.tsx';
-import LucideIcon from '../../components/LucideIcon.tsx';
-import MotionReveal from '../../components/MotionReveal.tsx';
-import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
-import MotionCard from '../../components/MotionCard.tsx';
+import ContactForm from '../../components/ContactForm';
+import LucideIcon from '../../components/LucideIcon';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer';
+import MotionCard from '../../components/MotionCard';
+import MotionReveal from '../../components/MotionReveal';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -73,11 +73,13 @@ const faqs = [
     <section class="section-padding relative overflow-hidden">
       <div class="bg-dots"></div>
       <div class="container-narrow max-w-6xl relative">
-        <SectionHeader
-          eyebrow={t('contact.methods.eyebrow')}
-          title={t('contact.methods.title')}
-          description={t('contact.methods.subtitle')}
-        />
+        <MotionReveal client:visible>
+          <SectionHeader
+            eyebrow={t('contact.methods.eyebrow')}
+            title={t('contact.methods.title')}
+            description={t('contact.methods.subtitle')}
+          />
+        </MotionReveal>
       <StaggerContainer client:visible className="contact-methods-grid mb-16">
         {contactMethods.map((method) => (
           <StaggerItem>
@@ -101,9 +103,9 @@ const faqs = [
 
         <ContactForm
           client:visible
-          t={t}
-          lang={lang}
-          contactMethods={contactMethods}
+  t={t as (key: string) => string}
+  lang={lang}
+  contactMethods={contactMethods}
           faqs={faqs}
         />
       </div>

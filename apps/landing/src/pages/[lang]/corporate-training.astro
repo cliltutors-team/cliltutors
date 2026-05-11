@@ -4,13 +4,12 @@ import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import PremiumHero from '../../components/PremiumHero.astro';
 import PremiumCard from '../../components/PremiumCard.astro';
-import StatsBanner from '../../components/StatsBanner.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
-import MotionReveal from '../../components/MotionReveal.tsx';
-import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
-import MotionCard from '../../components/MotionCard.tsx';
-import LucideIcon from '../../components/LucideIcon.tsx';
+import MotionReveal from '../../components/MotionReveal';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer';
+import MotionCard from '../../components/MotionCard';
+import LucideIcon from '../../components/LucideIcon';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -748,7 +747,21 @@ const t = useTranslations(lang);
   border-radius: 1rem;
   padding: 1.5rem;
   box-shadow: 0 8px 32px rgba(82, 138, 237, 0.08);
-  border: 1px solid rgba(82, 138, 237, 0.15);
+  border: none;
+}
+
+.visual-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.35;
+  pointer-events: none;
 }
 
   .card-1 {

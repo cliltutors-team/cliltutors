@@ -7,8 +7,6 @@
 */
 
 import StatsCounter from './StatsCounter';
-import MotionReveal from './MotionReveal';
-import StaggerContainer, { StaggerItem } from './StaggerContainer';
 
 interface Stat {
   value: string;
@@ -32,8 +30,6 @@ const {
   title,
   subtitle
 } = Astro.props;
-
-const isDark = theme === 'dark' || theme === 'gradient';
 ---
 
 <section class:list={['stats-banner', `theme-${theme}`, `layout-${layout}`]}>
@@ -169,26 +165,51 @@ const isDark = theme === 'dark' || theme === 'gradient';
     gap: 3rem;
   }
 
-  .stat-card {
-    text-align: center;
-    padding: 2rem 1.5rem;
-    border-radius: 1.25rem;
-    transition: all 300ms var(--ease-out-expo);
-  }
+.stat-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-radius: 1.25rem;
+  transition: all 300ms var(--ease-out-expo);
+  position: relative;
+  overflow: hidden;
+}
 
-  .theme-dark .stat-card,
-  .theme-gradient .stat-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-  }
+.theme-dark .stat-card,
+.theme-gradient .stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
 
-  .theme-dark .stat-card:hover,
-  .theme-gradient .stat-card:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-4px);
-  }
+.theme-dark .stat-card::after,
+.theme-gradient .stat-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1.25rem;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 300ms var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.theme-dark .stat-card:hover,
+.theme-gradient .stat-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: transparent;
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .stat-card:hover::after,
+.theme-gradient .stat-card:hover::after {
+  opacity: 1;
+}
 
   .theme-light .stat-card {
     background: white;
