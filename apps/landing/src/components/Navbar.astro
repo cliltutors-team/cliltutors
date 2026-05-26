@@ -576,6 +576,39 @@ const navLinks = [
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
   }
 
+  /* ── Dark-hero transparent state ── */
+  #main-nav:not(.scrolled) .nav-link-premium {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  #main-nav:not(.scrolled) .nav-link-premium:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  #main-nav:not(.scrolled) .nav-link-premium::after {
+    background: linear-gradient(90deg, white, rgba(255, 255, 255, 0.6));
+  }
+  #main-nav:not(.scrolled) .lang-trigger {
+    color: rgba(255, 255, 255, 0.85);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  #main-nav:not(.scrolled) .lang-trigger:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  #main-nav:not(.scrolled) svg {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  #main-nav:not(.scrolled) #mobile-toggle svg {
+    color: white;
+  }
+
+  /* ── CTA button explicit colors (all scroll states) ── */
+  .btn-primary {
+    background: var(--color-brand-blue);
+    color: white;
+  }
+
   /* ── Mobile menu ── */
   .mobile-menu-inner {
     background: white;

@@ -7,11 +7,11 @@ import PremiumCard from '../../components/PremiumCard.astro';
 import StatsBanner from '../../components/StatsBanner.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
-import LucideIcon from '../../components/LucideIcon.tsx';
-import MotionReveal from '../../components/MotionReveal.tsx';
-import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer.tsx';
-import MotionCard from '../../components/MotionCard.tsx';
-import StatsCounter from '../../components/StatsCounter.tsx';
+import LucideIcon from '../../components/LucideIcon';
+import MotionReveal from '../../components/MotionReveal';
+import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer';
+import MotionCard from '../../components/MotionCard';
+import StatsCounter from '../../components/StatsCounter';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -174,7 +174,7 @@ const benefits = [
       </MotionReveal>
 
       <StaggerContainer className="grid md:grid-cols-2 gap-6" client:visible>
-        {pillars.slice(0, 2).map((pillar, i) => (
+        {pillars.slice(0, 2).map((pillar) => (
           <StaggerItem>
             <MotionCard client:visible>
               <PremiumCard
@@ -194,7 +194,7 @@ const benefits = [
         ))}
       </StaggerContainer>
       <StaggerContainer className="grid md:grid-cols-3 gap-6 mt-6" client:visible>
-        {pillars.slice(2).map((pillar, i) => (
+        {pillars.slice(2).map((pillar) => (
           <StaggerItem>
             <MotionCard client:visible>
               <PremiumCard
@@ -261,7 +261,7 @@ const benefits = [
       </MotionReveal>
 
       <StaggerContainer className="grid lg:grid-cols-4 gap-6" client:visible>
-        {benefits.map((benefit, i) => (
+        {benefits.map((benefit) => (
           <StaggerItem>
             <MotionCard client:visible>
               <PremiumCard
@@ -286,7 +286,9 @@ const benefits = [
       <div class="container-wide">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <SectionHeader eyebrow={t('methodology.featured.eyebrow')} title={t('methodology.featured.title')} description={t('methodology.featured.desc')} light />
+            <MotionReveal client:visible>
+          <SectionHeader eyebrow={t('methodology.featured.eyebrow')} title={t('methodology.featured.title')} description={t('methodology.featured.desc')} light />
+        </MotionReveal>
 
             <StaggerContainer className="grid grid-cols-2 gap-6" client:visible>
 <StaggerItem>
@@ -505,6 +507,32 @@ const benefits = [
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 400ms var(--ease-out-expo);
+  position: relative;
+}
+
+.featured-stat::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.featured-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.featured-stat:hover::after {
+  opacity: 1;
 }
 
   .featured-value {

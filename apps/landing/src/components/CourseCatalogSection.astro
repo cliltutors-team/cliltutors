@@ -51,7 +51,11 @@ const levels = ["beginner", "intermediate", "advanced"];
 ---
 
 <section class="section-padding bg-white course-catalog-section">
-<div class="container-narrow">
+  <div class="section-decor">
+    <div class="decor-dots"></div>
+    <div class="decor-orb"></div>
+  </div>
+  <div class="container-narrow">
     <SectionHeader eyebrow={eyebrow} title={title} description={subtitle} />
 
     <div class="mb-10 reveal" style="--stagger: 1">
@@ -230,14 +234,51 @@ const levels = ["beginner", "intermediate", "advanced"];
 </section>
 
 <style>
-  .course-card {
-    background: var(--color-white);
-    border: 1px solid var(--color-brand-blue-200);
-    border-radius: 16px;
-    padding: 1rem;
-    transition: all 300ms cubic-bezier(0.25, 1, 0.5, 1);
-    position: relative;
-  }
+  .course-catalog-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.decor-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--color-brand-blue-200) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.35;
+}
+
+.decor-orb {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(82, 138, 237, 0.08), transparent 70%);
+  top: -100px;
+  right: -150px;
+  filter: blur(60px);
+}
+
+.course-catalog-section .container-narrow {
+  position: relative;
+  z-index: 1;
+}
+
+.course-card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(82, 138, 237, 0.15);
+  border-radius: 16px;
+  padding: 1rem;
+  transition: all 300ms cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+}
 
   .course-card::before {
     content: "";
@@ -260,32 +301,55 @@ const levels = ["beginner", "intermediate", "advanced"];
     transition: opacity 300ms ease;
   }
 
-  .course-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(52, 53, 79, 0.12);
-    border-color: transparent;
-  }
+.course-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(52, 53, 79, 0.12);
+  border-color: transparent;
+}
 
   .course-card:hover::before {
     opacity: 1;
   }
 
-  .filter-btn {
-    padding: 0.5rem 1.25rem;
-    border-radius: 100px;
-    font-size: 0.875rem;
-    font-weight: 600;
-color: var(--color-brand-navy-700);
-	background: var(--color-brand-blue-50);
-    border: 1.5px solid transparent;
-    cursor: pointer;
-    transition: all 250ms cubic-bezier(0.25, 1, 0.5, 1);
-  }
+.filter-btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 100px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-brand-navy-700);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(82, 138, 237, 0.15);
+  cursor: pointer;
+  transition: all 250ms cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  overflow: hidden;
+}
 
-  .filter-btn:hover {
-    background: var(--color-brand-blue-50);
-    color: var(--color-brand-blue);
-  }
+.filter-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo), var(--color-brand-purple));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 250ms ease;
+  pointer-events: none;
+}
+
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-brand-blue);
+  border-color: transparent;
+}
+
+.filter-btn:hover::after {
+  opacity: 1;
+}
 
   .filter-btn.active {
     background: linear-gradient(

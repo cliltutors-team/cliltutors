@@ -30,7 +30,7 @@ theme="gradient"
 
 <section class="tutors-page section-padding gradient-subtle">
 <div class="container-wide">
-<TutorsPage client:idle lang={lang} t={t} />
+<TutorsPage client:idle lang={lang} t={t as (key: string) => string} />
 </div>
 </section>
 

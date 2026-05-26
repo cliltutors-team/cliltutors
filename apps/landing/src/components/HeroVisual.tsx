@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
-import { motion, useInView, useReducedMotion, AnimatePresence } from 'motion/react'
+import { motion, useInView, useReducedMotion } from 'motion/react'
 
 interface HeroVisualProps {
   variant?: 'dashboard' | 'growth' | 'network'

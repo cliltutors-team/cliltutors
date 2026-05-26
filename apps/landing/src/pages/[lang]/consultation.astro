@@ -4,7 +4,7 @@ import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import PremiumHero from '../../components/PremiumHero.astro';
 import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
-import ConsultationForm from '../../components/ConsultationForm.tsx';
+import ConsultationForm from '../../components/ConsultationForm';
 import MotionReveal from '../../components/MotionReveal';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
@@ -51,7 +51,7 @@ const benefits = [
         <MotionReveal client:visible direction="up" delay={0.1} duration={0.7}>
           <ConsultationForm
             client:visible
-            t={t}
+            t={t as (key: string) => string}
             lang={lang}
             benefits={benefits}
           />
