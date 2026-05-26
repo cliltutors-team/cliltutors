@@ -21,12 +21,20 @@
   --color-brand-blue-50: #eef4fe;
   --color-brand-blue-100: #d9e6fd;
   --color-brand-blue-200: #b3ccfb;
+  --color-brand-blue-400: #93B4F5;
+  --color-brand-blue-500: #5C8DEA;
   --color-brand-purple-50: #f5f0fe;
   --color-brand-purple-100: #ece0fc;
+  --color-brand-purple-200: #D4B8FA;
   --color-brand-gold-50: #fef9e8;
   --color-brand-gold-100: #fdf0c4;
+  --color-brand-gold-200: #FDE08A;
   --color-brand-orange-50: #fef3ee;
+  --color-brand-orange-200: #FDB898;
   --color-brand-coral-50: #fef0ed;
+  --color-brand-navy-50: #ECEDF5;
+  --color-brand-blue-700: #1d4ed8;
+  --color-brand-navy-500: #4B4D6A;
   --color-brand-navy-700: #252639;
   --color-brand-navy-800: #1a1b2e;
   --color-brand-navy-900: #111220;
@@ -747,7 +755,7 @@ img { max-width: 100%; height: auto; }
 .hero-visual-bar-label {
   font-family: "Inter", sans-serif;
   font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.65);
   font-weight: 500;
 }
 
@@ -881,7 +889,7 @@ img { max-width: 100%; height: auto; }
 .hero-visual-metric-label {
   font-family: "Inter", sans-serif;
   font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.65);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.04em;

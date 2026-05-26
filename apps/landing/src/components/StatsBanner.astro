@@ -39,7 +39,7 @@ const {
 const [featured, ...rest] = stats;
 ---
 
-<section class:list={['stats-banner', `theme-${theme}`, `layout-${layout}`]}>
+<section class:list={['stats-banner section-padding', `theme-${theme}`, `layout-${layout}`]}>
   {/* Mesh background */}
   <div class="sb-mesh" aria-hidden="true">
     <div class="sb-orb sb-orb-1"></div>
@@ -143,7 +143,6 @@ const [featured, ...rest] = stats;
   /* ── Base ── */
   .stats-banner {
     position: relative;
-    padding: 6rem 0;
     overflow: hidden;
   }
 
@@ -160,6 +159,32 @@ const [featured, ...rest] = stats;
   .theme-light {
     background: #f8faff;
     color: var(--color-brand-navy);
+  }
+
+  /* ── Theme-light text overrides ── */
+  .theme-light :global(.sb-counter-xl),
+  .theme-light :global(.sb-counter-md),
+  .theme-light :global(.sb-counter-lg) {
+    background: linear-gradient(135deg, var(--color-brand-navy), var(--color-brand-navy-700));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .theme-light .sb-featured-label,
+  .theme-light .sb-featured-sublabel,
+  .theme-light .sb-secondary-label,
+  .theme-light .sb-secondary-sublabel,
+  .theme-light .sb-grid-label {
+    color: var(--color-brand-navy);
+  }
+  .theme-light .sb-featured-card,
+  .theme-light .sb-card-secondary {
+    background: rgba(52, 53, 79, 0.04);
+    border-color: rgba(52, 53, 79, 0.1);
+  }
+  .theme-light .sb-featured-sublabel,
+  .theme-light .sb-secondary-sublabel {
+    color: var(--color-slate-light);
   }
 
   /* ── Mesh background ── */
@@ -398,7 +423,7 @@ const [featured, ...rest] = stats;
 
   .sb-featured-sublabel {
     font-size: 0.875rem;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.65);
     margin: 0;
     line-height: 1.5;
   }
@@ -520,7 +545,7 @@ const [featured, ...rest] = stats;
 
   .sb-secondary-sublabel {
     font-size: 0.8125rem;
-    color: rgba(255,255,255,0.45);
+    color: rgba(255,255,255,0.65);
     margin: 0;
   }
 
@@ -581,7 +606,7 @@ const [featured, ...rest] = stats;
 
   @media (max-width: 640px) {
     .stats-banner {
-      padding: 4rem 0;
+      padding-block: 4rem;
     }
 
     .sb-card-inner {
