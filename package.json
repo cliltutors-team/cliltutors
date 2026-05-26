@@ -1,8 +1,6 @@
 {
   "name": "cliltutors-monorepo",
-  "version": "0.0.0",
   "private": true,
-  "version": "0.0.0",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --filter=@cliltutors/web --filter=@cliltutors/landing",
