@@ -84,11 +84,11 @@ function InstructorCard({ instructor, lang, t, index, isInView, prefersReducedMo
 
         <div className="relative z-[2] text-center flex flex-col items-center flex-1">
           <h3 className="font-heading text-xl font-semibold text-brand-navy">{instructor.name}</h3>
-          <p className="text-sm text-brand-blue font-medium mt-1.5">{instructor.specialization}</p>
+          <p className="text-sm text-brand-blue-700 font-medium mt-1.5">{instructor.specialization}</p>
 
           <div className="flex flex-wrap justify-center gap-1.5 mt-3">
             {instructor.languages.map((l) => (
-              <Badge key={l} variant="secondary" className="text-[0.6875rem] font-semibold px-2.5 py-0.5 bg-brand-blue-50 text-brand-blue border-brand-blue-200 group-hover:bg-brand-blue-100 transition-colors">
+              <Badge key={l} variant="secondary" className="text-[0.6875rem] font-semibold px-2.5 py-0.5 bg-brand-blue-50 text-brand-blue-700 border-brand-blue-200 group-hover:bg-brand-blue-100 transition-colors">
                 {l}
               </Badge>
             ))}
@@ -99,18 +99,18 @@ function InstructorCard({ instructor, lang, t, index, isInView, prefersReducedMo
           <div className="flex items-center gap-4 mt-5 py-3 px-5 bg-brand-blue-50 rounded-xl w-full justify-center">
             <div className="flex flex-col items-center">
               <span className="font-heading text-lg font-bold text-brand-navy">{instructor.students}</span>
-              <span className="text-[0.6875rem] text-brand-slate-light font-medium uppercase tracking-wider">{t('instructors.students')}</span>
+              <span className="text-[0.6875rem] text-brand-navy-700 font-medium uppercase tracking-wider">{t('instructors.students')}</span>
             </div>
             <Separator orientation="vertical" className="h-8" />
             <div className="flex flex-col items-center">
               <span className="font-heading text-lg font-bold text-brand-navy">{instructor.rating}</span>
-              <span className="text-[0.6875rem] text-brand-slate-light font-medium uppercase tracking-wider">{t('instructors.rating')}</span>
+              <span className="text-[0.6875rem] text-brand-navy-700 font-medium uppercase tracking-wider">{t('instructors.rating')}</span>
             </div>
           </div>
 
           <a
             href={`/${lang}/instructors`}
-            className="inline-flex items-center gap-2 mt-5 text-sm font-semibold text-brand-blue group-hover:text-brand-indigo transition-colors duration-300"
+            className="inline-flex items-center gap-2 mt-5 text-sm font-semibold text-brand-blue-700 group-hover:text-brand-indigo transition-colors duration-300"
           >
             {t('instructors.viewprofile')}
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -135,7 +135,7 @@ export default function InstructorGrid({ t, lang, instructors, eyebrow, title, s
           transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 bg-brand-blue/8 text-brand-blue rounded-full text-xs font-bold tracking-[0.12em] uppercase font-heading">
+          <span className="inline-block px-4 py-2 bg-brand-blue-50 text-brand-blue-700 rounded-full text-xs font-bold tracking-[0.12em] uppercase font-heading">
             {eyebrow}
           </span>
           <h2 className="font-heading text-[clamp(2rem,4vw,3rem)] font-bold text-brand-navy tracking-tight mt-4">{title}</h2>

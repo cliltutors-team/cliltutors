@@ -309,10 +309,7 @@ const successStories = [
       <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <div>
           <MotionReveal client:visible direction="up" delay={0} duration={0.7}>
-            <SectionHeader eyebrow={t('home.challenge.eyebrow')} title={t('home.challenge.title')} center={false} />
-          </MotionReveal>
-          <MotionReveal client:visible direction="up" delay={0.1} duration={0.7}>
-            <p class="text-slate-light leading-relaxed text-lg -mt-8">{t('home.challenge.desc')}</p>
+            <SectionHeader eyebrow={t('home.challenge.eyebrow')} title={t('home.challenge.title')} description={t('home.challenge.desc')} center={false} />
           </MotionReveal>
         </div>
         <MotionReveal client:visible direction="up" delay={0.2} duration={0.7}>

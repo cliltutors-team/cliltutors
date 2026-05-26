@@ -12,18 +12,18 @@ interface Props {
 const { step, eyebrow, title, description, items, isLast = false, stagger = 0 } = Astro.props;
 
 const stepColors = [
-  { bg: 'bg-brand-blue', glow: 'shadow-brand-blue' },
-  { bg: 'bg-brand-indigo', glow: 'shadow-brand-indigo' },
-  { bg: 'bg-brand-purple', glow: 'shadow-brand-purple' },
-  { bg: 'bg-brand-gold', glow: 'shadow-brand-gold' },
-  { bg: 'bg-brand-orange', glow: 'shadow-brand-orange' },
+  { bg: 'bg-brand-blue', glow: 'shadow-brand-blue', text: 'text-white' },
+  { bg: 'bg-brand-indigo', glow: 'shadow-brand-indigo', text: 'text-white' },
+  { bg: 'bg-brand-purple', glow: 'shadow-brand-purple', text: 'text-brand-navy' },
+  { bg: 'bg-brand-gold', glow: 'shadow-brand-gold', text: 'text-brand-navy' },
+  { bg: 'bg-brand-orange', glow: 'shadow-brand-orange', text: 'text-brand-navy' },
 ];
 const color = stepColors[(step - 1) % stepColors.length];
 ---
 
 <div class="method-step group reveal" style={`--stagger: ${stagger}`}>
   <div class="flex flex-col items-center shrink-0">
-    <div class={`step-badge ${color.bg}`}>
+    <div class={`step-badge ${color.bg} ${color.text}`}>
       {step}
     </div>
     {!isLast && (
@@ -31,7 +31,7 @@ const color = stepColors[(step - 1) % stepColors.length];
     )}
   </div>
   <div class={`pb-10 ${isLast ? 'pb-0' : ''}`}>
-    <span class="text-xs font-bold tracking-[0.12em] uppercase text-brand-blue">{eyebrow}</span>
+    <span class="text-xs font-bold tracking-[0.12em] uppercase text-brand-indigo">{eyebrow}</span>
     <h3 class="font-heading font-semibold text-xl text-brand-navy mt-1 group-hover:text-brand-indigo transition-colors">{title}</h3>
     <p class="text-brand-navy-700 mt-2 leading-relaxed">{description}</p>
     {items && items.length > 0 && (
@@ -71,7 +71,6 @@ const color = stepColors[(step - 1) % stepColors.length];
   width: 48px;
   height: 48px;
   border-radius: 14px;
-  color: white;
   display: flex;
   align-items: center;
   justify-content: center;

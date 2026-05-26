@@ -86,7 +86,7 @@ const {
         <div class="flex flex-wrap gap-6 justify-center">
           {features.map((feature, index) => (
             <div 
-			class="flex items-center gap-2 text-white/80 text-sm"
+			class="flex items-center gap-2 text-white/90 text-sm"
 			style={`--stagger: ${4 + index}`}
             >
               <svg class="w-4 h-4 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +99,7 @@ const {
       )}
     </div>
 
-  <div class="mt-16 grid sm:grid-cols-3 gap-8 reveal" style="--stagger: 8">
+  <div class="mt-16 grid sm:grid-cols-3 gap-10 lg:gap-12 reveal" style="--stagger: 8">
   <div class="text-center">
     <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm mb-3">
       <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,7 +107,7 @@ const {
       </svg>
     </div>
     <div class="font-heading font-bold text-2xl text-white mb-1">{accessTitle}</div>
-    <p class="text-sm text-white/70">{accessDesc}</p>
+    <p class="text-sm text-white/80">{accessDesc}</p>
   </div>
 
   <div class="text-center">

@@ -61,7 +61,7 @@ const {
                 />
               </div>
 
-              <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-brand-navy/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400">
+              <div class="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-brand-navy/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div class="absolute bottom-4 left-4 right-4 flex justify-center gap-3">
                   {instructor.social?.linkedin && (
                     <a
@@ -102,7 +102,7 @@ const {
 
               <div class="absolute top-4 right-4 px-3 py-1.5 bg-white/95 backdrop-blur-sm rounded-lg flex items-center gap-1.5 shadow-sm">
                 <svg
-                  class="w-4 h-4 text-brand-gold"
+                  class="w-4 h-4 text-brand-orange"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -112,7 +112,7 @@ const {
                         {instructor.rating.toFixed(1)}
                       </span>
                       {ratingText && (
-                        <span class="text-xs text-brand-navy-500 ml-1">{ratingText}</span>
+                        <span class="text-xs text-brand-navy-700 ml-1">{ratingText}</span>
                       )}
               </div>
             </div>
@@ -121,7 +121,7 @@ const {
               <h3 class="font-heading font-bold text-xl text-brand-navy mb-1 group-hover:text-brand-indigo transition-colors">
                 {instructor.name}
               </h3>
-              <p class="text-sm text-brand-blue font-medium mb-3">
+              <p class="text-sm text-brand-blue-700 font-medium mb-3">
                 {instructor.title}
               </p>
 
@@ -166,7 +166,7 @@ const {
 
               <div class="flex flex-wrap gap-2">
                 {instructor.specialties.slice(0, 3).map((specialty) => (
-                  <span class="px-2.5 py-1 bg-brand-blue-50 text-brand-blue text-xs font-medium rounded-md">
+                  <span class="px-2.5 py-1 bg-brand-blue-50 text-brand-blue-700 text-xs font-medium rounded-md">
                     {specialty}
                   </span>
                 ))}
@@ -177,7 +177,7 @@ const {
       }
     </div>
 
-	<div class="mt-12 text-center reveal" style="--stagger: 20">
+	<div class="mt-12 text-center reveal" style="--stagger: 4">
       <a
         href=`${Astro.currentLocale}/instructors`
         class="btn-secondary inline-flex items-center gap-2"

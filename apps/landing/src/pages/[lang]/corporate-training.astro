@@ -3,13 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import PremiumHero from '../../components/PremiumHero.astro';
-import PremiumCard from '../../components/PremiumCard.astro';
-import SectionHeader from '../../components/SectionHeader.astro';
 import PremiumCTABanner from '../../components/PremiumCTABanner.astro';
-import MotionReveal from '../../components/MotionReveal';
-import StaggerContainer, { StaggerItem } from '../../components/StaggerContainer';
-import MotionCard from '../../components/MotionCard';
-import LucideIcon from '../../components/LucideIcon';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { languages } from '../../i18n/ui';
 
@@ -31,362 +25,387 @@ const t = useTranslations(lang);
     subtitle={t('corporate.hero.subtitle')}
     ctaPrimary={{ text: t('corporate.cta.btn'), href: `/${lang}/consultation` }}
     ctaSecondary={{ text: t('corporate.hero.cta2'), href: `/${lang}/methodology` }}
-  visualType="animated"
-  visualVariant="growth"
-  visualStats={[
-    { value: '500+', label: t('corporate.trust.companies') },
-    { value: '15K+', label: t('corporate.trust.professionals') },
-    { value: '94%', label: t('corporate.trust.satisfaction') }
-  ]}
-  theme="gradient"
-  trustIndicators={[
-    { value: '500+', label: t('corporate.trust.companies') },
-    { value: '15K+', label: t('corporate.trust.professionals') },
-    { value: '94%', label: t('corporate.trust.satisfaction') }
-  ]}
+    visualType="animated"
+    visualVariant="growth"
+    visualStats={[
+      { value: '500+', label: t('corporate.trust.companies') },
+      { value: '15K+', label: t('corporate.trust.professionals') },
+      { value: '94%', label: t('corporate.trust.satisfaction') }
+    ]}
+    theme="gradient"
+    trustIndicators={[
+      { value: '500+', label: t('corporate.trust.companies') },
+      { value: '15K+', label: t('corporate.trust.professionals') },
+      { value: '94%', label: t('corporate.trust.satisfaction') }
+    ]}
   />
 
-  <section class="section-padding gradient-subtle ct-challenges">
-    <div class="ct-bg-dots" aria-hidden="true"></div>
+  <!-- ============================================================
+       SECTION 1: CHALLENGES — Diagnostic dark panel with impact bars
+       ============================================================ -->
+  <section class="section-padding ct-challenges reveal-section" aria-labelledby="challenges-heading">
     <div class="container-narrow">
-<MotionReveal client:visible>
-      <SectionHeader
-        eyebrow={t('corporate.challenges.eyebrow')}
-        title={t('corporate.challenges.title')}
-      />
-    </MotionReveal>
-
-    <StaggerContainer className="grid md:grid-cols-3 gap-8" client:visible>
-      <StaggerItem>
-        <MotionCard client:visible>
-          <PremiumCard
-            icon="globe" iconType="lucide"
-            title={t('corporate.ch1.title')}
-            description={t('corporate.ch1.desc')}
-            variant="navy"
-            featured={false}
-            metrics={[
-              { label: t('corporate.metric.productivity'), value: '25%' }
-            ]}
-          />
-        </MotionCard>
-      </StaggerItem>
-      <StaggerItem>
-        <MotionCard client:visible>
-          <PremiumCard
-            icon="users" iconType="lucide"
-            title={t('corporate.ch2.title')}
-            description={t('corporate.ch2.desc')}
-            variant="navy"
-            featured={false}
-            metrics={[
-              { label: t('corporate.metric.expansion'), value: '-40%' }
-            ]}
-          />
-        </MotionCard>
-      </StaggerItem>
-      <StaggerItem>
-        <MotionCard client:visible>
-          <PremiumCard
-            icon="users" iconType="lucide"
-            title={t('corporate.ch3.title')}
-            description={t('corporate.ch3.desc')}
-            variant="navy"
-            featured={false}
-            metrics={[
-              { label: t('corporate.metric.performance'), value: '-35%' }
-            ]}
-          />
-        </MotionCard>
-      </StaggerItem>
-    </StaggerContainer>
-    </div>
-  </section>
-
-  <section class="section-padding gradient-subtle ct-programs">
-    <div class="ct-orb ct-orb--blue" aria-hidden="true"></div>
-    <div class="container-narrow">
-<MotionReveal client:visible>
-      <SectionHeader
-        eyebrow={t('corporate.programs.eyebrow')}
-        title={t('corporate.programs.title')}
-      />
-    </MotionReveal>
-
-    <StaggerContainer className="grid md:grid-cols-3 gap-8" client:visible>
-      <StaggerItem>
-        <MotionCard client:visible>
-          <PremiumCard
-            icon="briefcase" iconType="lucide"
-            title={t('corporate.prog1.title')}
-            description={t('corporate.prog1.desc')}
-            href={`/${lang}/consultation`}
-            linkText={t('corporate.programs.learn')}
-            variant="blue"
-            featured={true}
-            featuredLabel={t('card.featured')}
-            tags={[t('corporate.tag.c-suite'), t('corporate.tag.leadership')]}
-          />
-        </MotionCard>
-      </StaggerItem>
-      <StaggerItem>
-        <MotionCard client:visible>
-          <PremiumCard
-            icon="clipboard-list" iconType="lucide"
-            title={t('corporate.prog2.title')}
-            description={t('corporate.prog2.desc')}
-            href={`/${lang}/consultation`}
-            linkText={t('corporate.programs.learn')}
-            variant="purple"
-            featured={false}
-            tags={[t('corporate.tag.departments'), t('corporate.tag.teams')]}
-          />
-        </MotionCard>
-      </StaggerItem>
-      <StaggerItem>
-        <MotionCard client:visible>
-          <PremiumCard
-            icon="globe-2" iconType="lucide"
-            title={t('corporate.prog3.title')}
-            description={t('corporate.prog3.desc')}
-            href={`/${lang}/consultation`}
-            linkText={t('corporate.programs.learn')}
-            variant="gold"
-            featured={false}
-            tags={[t('corporate.tag.workshops'), t('corporate.tag.cultural')]}
-          />
-        </MotionCard>
-      </StaggerItem>
-    </StaggerContainer>
-    </div>
-  </section>
-
-  <section class="section-padding gradient-section-alt ct-structure">
-    <div class="container-narrow">
-<MotionReveal client:visible>
-      <SectionHeader
-        eyebrow={t('corporate.structure.eyebrow')}
-        title={t('corporate.structure.title')}
-        description={t('corporate.structure.desc')}
-      />
-    </MotionReveal>
-
-    <div class="mt-12 grid md:grid-cols-2 gap-8 items-center">
-      <StaggerContainer className="structure-visual" client:visible>
-        <StaggerItem>
-          <div class="structure-step">
-            <div class="step-number">01</div>
-            <div class="step-content">
-              <h3 class="step-title">{t('corporate.step1.title')}</h3>
-              <p class="step-desc">{t('corporate.step1.desc')}</p>
-            </div>
-          </div>
-        </StaggerItem>
-
-        <StaggerItem>
-          <div class="structure-step">
-            <div class="step-number">02</div>
-            <div class="step-content">
-              <h3 class="step-title">{t('corporate.step2.title')}</h3>
-              <p class="step-desc">{t('corporate.step2.desc')}</p>
-            </div>
-          </div>
-        </StaggerItem>
-
-        <StaggerItem>
-          <div class="structure-step">
-            <div class="step-number">03</div>
-            <div class="step-content">
-              <h3 class="step-title">{t('corporate.step3.title')}</h3>
-              <p class="step-desc">{t('corporate.step3.desc')}</p>
-            </div>
-          </div>
-        </StaggerItem>
-
-        <StaggerItem>
-          <div class="structure-step">
-            <div class="step-number">04</div>
-            <div class="step-content">
-              <h3 class="step-title">{t('corporate.step4.title')}</h3>
-              <p class="step-desc">{t('corporate.step4.desc')}</p>
-            </div>
-          </div>
-        </StaggerItem>
-      </StaggerContainer>
-
-      <StaggerContainer className="structure-benefits" client:visible>
-        <StaggerItem>
-          <MotionCard client:visible>
-        <div class="benefit-card">
-          <div class="benefit-icon-wrap">
-            <LucideIcon client:idle name="check-circle" size={24} color="var(--color-brand-blue)" />
-          </div>
-          <h4>{t('corporate.benefit1.title')}</h4>
-          <p>{t('corporate.benefit1.desc')}</p>
+      <div class="ct-challenges-inner">
+        <div class="ct-challenges-header">
+          <span class="ct-eyebrow ct-eyebrow--light">{t('corporate.challenges.eyebrow')}</span>
+          <h2 id="challenges-heading" class="ct-section-title ct-section-title--light">
+            {t('corporate.challenges.title')}
+          </h2>
         </div>
-          </MotionCard>
-        </StaggerItem>
 
-        <StaggerItem>
-          <MotionCard client:visible>
-        <div class="benefit-card">
-          <div class="benefit-icon-wrap">
-            <LucideIcon client:idle name="zap" size={24} color="var(--color-brand-blue)" />
-          </div>
-          <h4>{t('corporate.benefit2.title')}</h4>
-          <p>{t('corporate.benefit2.desc')}</p>
-        </div>
-          </MotionCard>
-        </StaggerItem>
-
-        <StaggerItem>
-          <MotionCard client:visible>
-        <div class="benefit-card">
-          <div class="benefit-icon-wrap">
-            <LucideIcon client:idle name="bar-chart" size={24} color="var(--color-brand-brand-blue)" />
-          </div>
-          <h4>{t('corporate.benefit3.title')}</h4>
-          <p>{t('corporate.benefit3.desc')}</p>
-        </div>
-          </MotionCard>
-        </StaggerItem>
-      </StaggerContainer>
-    </div>
-    </div>
-  </section>
-
-  <section class="section-padding gradient-premium ct-solution">
-    <div class="ct-orb ct-orb--purple" aria-hidden="true"></div>
-    <div class="container-narrow">
-<MotionReveal client:visible>
-      <SectionHeader
-        eyebrow={t('corporate.solution.eyebrow')}
-        title={t('corporate.solution.title')}
-      />
-    </MotionReveal>
-
-    <div class="grid md:grid-cols-2 gap-12 items-center">
-      <StaggerContainer className="solution-content" client:visible>
-        <StaggerItem>
-          <div class="solution-point">
-            <div class="point-icon blue">
-              <LucideIcon client:idle name="search" size={28} color="currentColor" />
+        <div class="ct-challenges-list">
+          <!-- Challenge 1 -->
+          <div class="ct-challenge-row reveal" style="--stagger:1">
+            <div class="ct-challenge-ordinal">01</div>
+            <div class="ct-challenge-body">
+              <h3 class="ct-challenge-name">{t('corporate.ch1.title')}</h3>
+              <p class="ct-challenge-desc">{t('corporate.ch1.desc')}</p>
             </div>
-            <div class="point-content">
-              <h3>{t('corporate.solution1.title')}</h3>
-              <p>{t('corporate.solution1.desc')}</p>
-            </div>
-          </div>
-        </StaggerItem>
-
-        <StaggerItem>
-          <div class="solution-point">
-            <div class="point-icon purple">
-              <LucideIcon client:idle name="settings" size={28} color="currentColor" />
-            </div>
-            <div class="point-content">
-              <h3>{t('corporate.solution2.title')}</h3>
-              <p>{t('corporate.solution2.desc')}</p>
-            </div>
-          </div>
-        </StaggerItem>
-
-        <StaggerItem>
-          <div class="solution-point">
-            <div class="point-icon gold">
-              <LucideIcon client:idle name="shield-check" size={28} color="currentColor" />
-            </div>
-            <div class="point-content">
-              <h3>{t('corporate.solution3.title')}</h3>
-              <p>{t('corporate.solution3.desc')}</p>
-            </div>
-          </div>
-        </StaggerItem>
-      </StaggerContainer>
-
-      <MotionReveal client:visible direction="left" delay={0.2}>
-        <div class="solution-visual">
-          <div class="visual-card card-1">
-            <div class="card-header">
-              <div class="status-dot"></div>
-              <span>{t('corporate.visual.active')}</span>
-            </div>
-            <div class="card-metric">
-              <span class="metric-value">+127%</span>
-              <span class="metric-label">{t('corporate.visual.engagement')}</span>
+            <div class="ct-challenge-impact">
+              <div class="ct-impact-bar-wrap">
+                <div class="ct-impact-label">{t('corporate.metric.productivity')} loss</div>
+                <div class="ct-impact-track">
+                  <div class="ct-impact-fill ct-impact-fill--25"></div>
+                </div>
+                <div class="ct-impact-value">−25%</div>
+              </div>
             </div>
           </div>
 
-          <div class="visual-card card-2">
-            <div class="card-header">
-              <div class="status-dot success"></div>
-              <span>{t('corporate.visual.completed')}</span>
+          <div class="ct-challenge-divider"></div>
+
+          <!-- Challenge 2 -->
+          <div class="ct-challenge-row reveal" style="--stagger:2">
+            <div class="ct-challenge-ordinal">02</div>
+            <div class="ct-challenge-body">
+              <h3 class="ct-challenge-name">{t('corporate.ch2.title')}</h3>
+              <p class="ct-challenge-desc">{t('corporate.ch2.desc')}</p>
             </div>
-            <div class="card-metric">
-              <span class="metric-value">2,847</span>
-              <span class="metric-label">{t('corporate.visual.professionals')}</span>
+            <div class="ct-challenge-impact">
+              <div class="ct-impact-bar-wrap">
+                <div class="ct-impact-label">{t('corporate.metric.expansion')} speed</div>
+                <div class="ct-impact-track">
+                  <div class="ct-impact-fill ct-impact-fill--40"></div>
+                </div>
+                <div class="ct-impact-value">−40%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ct-challenge-divider"></div>
+
+          <!-- Challenge 3 -->
+          <div class="ct-challenge-row reveal" style="--stagger:3">
+            <div class="ct-challenge-ordinal">03</div>
+            <div class="ct-challenge-body">
+              <h3 class="ct-challenge-name">{t('corporate.ch3.title')}</h3>
+              <p class="ct-challenge-desc">{t('corporate.ch3.desc')}</p>
+            </div>
+            <div class="ct-challenge-impact">
+              <div class="ct-impact-bar-wrap">
+                <div class="ct-impact-label">{t('corporate.metric.performance')} drop</div>
+                <div class="ct-impact-track">
+                  <div class="ct-impact-fill ct-impact-fill--35"></div>
+                </div>
+                <div class="ct-impact-value">−35%</div>
+              </div>
             </div>
           </div>
         </div>
-      </MotionReveal>
-    </div>
+      </div>
     </div>
   </section>
 
-  <section class="section-padding gradient-subtle ct-cases">
-    <div class="ct-bg-dots ct-bg-dots--right" aria-hidden="true"></div>
+  <!-- ============================================================
+       SECTION 2: PROGRAMS — Horizontal track lanes
+       ============================================================ -->
+  <section class="section-padding ct-programs reveal-section" aria-labelledby="programs-heading">
     <div class="container-narrow">
-<MotionReveal client:visible>
-      <SectionHeader
-        eyebrow={t('corporate.cases.eyebrow')}
-        title={t('corporate.cases.title')}
-      />
-    </MotionReveal>
+      <div class="ct-programs-header reveal" style="--stagger:0">
+        <span class="ct-eyebrow">{t('corporate.programs.eyebrow')}</span>
+        <h2 id="programs-heading" class="ct-section-title">{t('corporate.programs.title')}</h2>
+        <p class="ct-section-subtitle">{t('corporate.programs.subtitle')}</p>
+      </div>
 
-    <StaggerContainer className="grid md:grid-cols-3 gap-8" client:visible>
-      <StaggerItem>
-        <MotionCard client:visible>
-          <PremiumCard
-            icon="briefcase" iconType="lucide"
-            title={t('corporate.case1.company')}
-            description={t('corporate.case1.desc')}
-            variant="blue"
-            metrics={[
-              { label: t('corporate.case.metric1'), value: '+45%' },
-              { label: t('corporate.case.metric2'), value: t('corporate.case1.duration') }
-            ]}
-          />
-        </MotionCard>
-      </StaggerItem>
-      <StaggerItem>
-        <MotionCard client:visible>
-          <PremiumCard
-            icon="factory" iconType="lucide"
-            title={t('corporate.case2.company')}
-            description={t('corporate.case2.desc')}
-            variant="purple"
-            metrics={[
-              { label: t('corporate.case.metric1'), value: '+62%' },
-              { label: t('corporate.case.metric2'), value: t('corporate.case2.duration') }
-            ]}
-          />
-        </MotionCard>
-      </StaggerItem>
-      <StaggerItem>
-        <MotionCard client:visible>
-          <PremiumCard
-            icon="landmark" iconType="lucide"
-            title={t('corporate.case3.company')}
-            description={t('corporate.case3.desc')}
-            variant="gold"
-            metrics={[
-              { label: t('corporate.case.metric1'), value: '+78%' },
-              { label: t('corporate.case.metric2'), value: t('corporate.case3.duration') }
-            ]}
-          />
-        </MotionCard>
-      </StaggerItem>
-    </StaggerContainer>
+      <div class="ct-programs-tracks">
+        <!-- Track 1: Executive Immersion -->
+        <a href={`/${lang}/consultation`} class="ct-track ct-track--blue reveal" style="--stagger:1" aria-label={t('corporate.prog1.title')}>
+          <div class="ct-track-accent ct-track-accent--blue"></div>
+          <div class="ct-track-content">
+            <div class="ct-track-meta">
+              <span class="ct-track-index">01</span>
+              <div class="ct-track-tags">
+                <span class="ct-tag ct-tag--blue">{t('corporate.tag.c-suite')}</span>
+                <span class="ct-tag ct-tag--blue">{t('corporate.tag.leadership')}</span>
+              </div>
+            </div>
+            <div class="ct-track-main">
+              <h3 class="ct-track-title">{t('corporate.prog1.title')}</h3>
+              <p class="ct-track-desc">{t('corporate.prog1.desc')}</p>
+            </div>
+            <div class="ct-track-cta">
+              <span class="ct-track-link">{t('corporate.programs.learn')}</span>
+              <svg class="ct-track-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Track 2: Team Training -->
+        <a href={`/${lang}/consultation`} class="ct-track ct-track--purple reveal" style="--stagger:2" aria-label={t('corporate.prog2.title')}>
+          <div class="ct-track-accent ct-track-accent--purple"></div>
+          <div class="ct-track-content">
+            <div class="ct-track-meta">
+              <span class="ct-track-index">02</span>
+              <div class="ct-track-tags">
+                <span class="ct-tag ct-tag--purple">{t('corporate.tag.departments')}</span>
+                <span class="ct-tag ct-tag--purple">{t('corporate.tag.teams')}</span>
+              </div>
+            </div>
+            <div class="ct-track-main">
+              <h3 class="ct-track-title">{t('corporate.prog2.title')}</h3>
+              <p class="ct-track-desc">{t('corporate.prog2.desc')}</p>
+            </div>
+            <div class="ct-track-cta">
+              <span class="ct-track-link">{t('corporate.programs.learn')}</span>
+              <svg class="ct-track-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Track 3: Global Onboarding -->
+        <a href={`/${lang}/consultation`} class="ct-track ct-track--gold reveal" style="--stagger:3" aria-label={t('corporate.prog3.title')}>
+          <div class="ct-track-accent ct-track-accent--gold"></div>
+          <div class="ct-track-content">
+            <div class="ct-track-meta">
+              <span class="ct-track-index">03</span>
+              <div class="ct-track-tags">
+                <span class="ct-tag ct-tag--gold">{t('corporate.tag.workshops')}</span>
+                <span class="ct-tag ct-tag--gold">{t('corporate.tag.cultural')}</span>
+              </div>
+            </div>
+            <div class="ct-track-main">
+              <h3 class="ct-track-title">{t('corporate.prog3.title')}</h3>
+              <p class="ct-track-desc">{t('corporate.prog3.desc')}</p>
+            </div>
+            <div class="ct-track-cta">
+              <span class="ct-track-link">{t('corporate.programs.learn')}</span>
+              <svg class="ct-track-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3: HOW IT WORKS — Horizontal connected timeline
+       ============================================================ -->
+  <section class="section-padding ct-journey reveal-section" aria-labelledby="journey-heading">
+    <div class="container-narrow">
+      <div class="ct-journey-header reveal" style="--stagger:0">
+        <span class="ct-eyebrow">{t('corporate.structure.eyebrow')}</span>
+        <h2 id="journey-heading" class="ct-section-title">{t('corporate.structure.title')}</h2>
+        <p class="ct-section-subtitle">{t('corporate.structure.desc')}</p>
+      </div>
+
+      <div class="ct-timeline" role="list">
+        <div class="ct-timeline-track" aria-hidden="true"></div>
+
+        <div class="ct-timeline-node reveal" style="--stagger:1" role="listitem">
+          <div class="ct-node-dot ct-node-dot--blue">
+            <span class="ct-node-num">01</span>
+          </div>
+          <div class="ct-node-card">
+            <h3 class="ct-node-title">{t('corporate.step1.title')}</h3>
+            <p class="ct-node-desc">{t('corporate.step1.desc')}</p>
+          </div>
+        </div>
+
+        <div class="ct-timeline-node reveal" style="--stagger:2" role="listitem">
+          <div class="ct-node-dot ct-node-dot--indigo">
+            <span class="ct-node-num">02</span>
+          </div>
+          <div class="ct-node-card">
+            <h3 class="ct-node-title">{t('corporate.step2.title')}</h3>
+            <p class="ct-node-desc">{t('corporate.step2.desc')}</p>
+          </div>
+        </div>
+
+        <div class="ct-timeline-node reveal" style="--stagger:3" role="listitem">
+          <div class="ct-node-dot ct-node-dot--purple">
+            <span class="ct-node-num">03</span>
+          </div>
+          <div class="ct-node-card">
+            <h3 class="ct-node-title">{t('corporate.step3.title')}</h3>
+            <p class="ct-node-desc">{t('corporate.step3.desc')}</p>
+          </div>
+        </div>
+
+        <div class="ct-timeline-node reveal" style="--stagger:4" role="listitem">
+          <div class="ct-node-dot ct-node-dot--gold">
+            <span class="ct-node-num">04</span>
+          </div>
+          <div class="ct-node-card">
+            <h3 class="ct-node-title">{t('corporate.step4.title')}</h3>
+            <p class="ct-node-desc">{t('corporate.step4.desc')}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4: WHY CLILTUTORS — Editorial alternating rows
+       ============================================================ -->
+  <section class="section-padding ct-why reveal-section" aria-labelledby="why-heading">
+    <div class="container-narrow">
+      <div class="ct-why-header reveal" style="--stagger:0">
+        <span class="ct-eyebrow ct-eyebrow--light">{t('corporate.solution.eyebrow')}</span>
+        <h2 id="why-heading" class="ct-section-title ct-section-title--light">{t('corporate.solution.title')}</h2>
+      </div>
+
+      <div class="ct-why-rows">
+        <!-- Row 1 -->
+        <div class="ct-why-row reveal" style="--stagger:1">
+          <div class="ct-why-stat">
+            <span class="ct-why-stat-num">01</span>
+            <div class="ct-why-stat-bar ct-why-stat-bar--blue"></div>
+          </div>
+          <div class="ct-why-divider" aria-hidden="true"></div>
+          <div class="ct-why-content">
+            <h3 class="ct-why-title">{t('corporate.solution1.title')}</h3>
+            <p class="ct-why-desc">{t('corporate.solution1.desc')}</p>
+          </div>
+          <div class="ct-why-metric">
+            <span class="ct-why-metric-value">100%</span>
+            <span class="ct-why-metric-label">Native speakers</span>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="ct-why-row reveal" style="--stagger:2">
+          <div class="ct-why-stat">
+            <span class="ct-why-stat-num">02</span>
+            <div class="ct-why-stat-bar ct-why-stat-bar--purple"></div>
+          </div>
+          <div class="ct-why-divider" aria-hidden="true"></div>
+          <div class="ct-why-content">
+            <h3 class="ct-why-title">{t('corporate.solution2.title')}</h3>
+            <p class="ct-why-desc">{t('corporate.solution2.desc')}</p>
+          </div>
+          <div class="ct-why-metric">
+            <span class="ct-why-metric-value">3×</span>
+            <span class="ct-why-metric-label">Faster fluency</span>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="ct-why-row reveal" style="--stagger:3">
+          <div class="ct-why-stat">
+            <span class="ct-why-stat-num">03</span>
+            <div class="ct-why-stat-bar ct-why-stat-bar--gold"></div>
+          </div>
+          <div class="ct-why-divider" aria-hidden="true"></div>
+          <div class="ct-why-content">
+            <h3 class="ct-why-title">{t('corporate.solution3.title')}</h3>
+            <p class="ct-why-desc">{t('corporate.solution3.desc')}</p>
+          </div>
+          <div class="ct-why-metric">
+            <span class="ct-why-metric-value">+127%</span>
+            <span class="ct-why-metric-label">{t('corporate.visual.engagement')}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5: CASES — Impact spotlight (1 featured + 2 strips)
+       ============================================================ -->
+  <section class="section-padding ct-cases reveal-section" aria-labelledby="cases-heading">
+    <div class="container-narrow">
+      <div class="ct-cases-header reveal" style="--stagger:0">
+        <span class="ct-eyebrow">{t('corporate.cases.eyebrow')}</span>
+        <h2 id="cases-heading" class="ct-section-title">{t('corporate.cases.title')}</h2>
+      </div>
+
+      <!-- Featured case: full-width spotlight -->
+      <div class="ct-case-featured reveal" style="--stagger:1">
+        <div class="ct-case-featured-bg" aria-hidden="true"></div>
+        <div class="ct-case-featured-content">
+          <div class="ct-case-company-wrap">
+            <div class="ct-case-company-logo" aria-hidden="true">TC</div>
+            <div>
+              <h3 class="ct-case-company-name">{t('corporate.case1.company')}</h3>
+              <span class="ct-case-duration">{t('corporate.case1.duration')}</span>
+            </div>
+          </div>
+          <p class="ct-case-featured-desc">{t('corporate.case1.desc')}</p>
+          <div class="ct-case-featured-metrics">
+            <div class="ct-case-metric-big">
+              <span class="ct-case-metric-value">+45%</span>
+              <span class="ct-case-metric-label">{t('corporate.metric.productivity')}</span>
+            </div>
+            <div class="ct-case-metric-big">
+              <span class="ct-case-metric-value">−40%</span>
+              <span class="ct-case-metric-label">Onboarding time</span>
+            </div>
+          </div>
+        </div>
+        <div class="ct-case-featured-visual" aria-hidden="true">
+          <div class="ct-case-ring ct-case-ring--1"></div>
+          <div class="ct-case-ring ct-case-ring--2"></div>
+          <div class="ct-case-ring ct-case-ring--3"></div>
+          <div class="ct-case-ring-center">+45%</div>
+        </div>
+      </div>
+
+      <!-- Two compact horizontal strips -->
+      <div class="ct-case-strips">
+        <div class="ct-case-strip reveal" style="--stagger:2">
+          <div class="ct-strip-accent ct-strip-accent--purple"></div>
+          <div class="ct-strip-logo" aria-hidden="true">FG</div>
+          <div class="ct-strip-body">
+            <h3 class="ct-strip-company">{t('corporate.case2.company')}</h3>
+            <p class="ct-strip-desc">{t('corporate.case2.desc')}</p>
+          </div>
+          <div class="ct-strip-metrics">
+            <div class="ct-strip-metric">
+              <span class="ct-strip-metric-value">+62%</span>
+              <span class="ct-strip-metric-label">{t('corporate.metric.performance')}</span>
+            </div>
+            <div class="ct-strip-metric">
+              <span class="ct-strip-metric-value">{t('corporate.case2.duration')}</span>
+              <span class="ct-strip-metric-label">{t('corporate.case.metric1')}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ct-case-strip reveal" style="--stagger:3">
+          <div class="ct-strip-accent ct-strip-accent--gold"></div>
+          <div class="ct-strip-logo ct-strip-logo--gold" aria-hidden="true">IH</div>
+          <div class="ct-strip-body">
+            <h3 class="ct-strip-company">{t('corporate.case3.company')}</h3>
+            <p class="ct-strip-desc">{t('corporate.case3.desc')}</p>
+          </div>
+          <div class="ct-strip-metrics">
+            <div class="ct-strip-metric">
+              <span class="ct-strip-metric-value">×3</span>
+              <span class="ct-strip-metric-label">Collaboration</span>
+            </div>
+            <div class="ct-strip-metric">
+              <span class="ct-strip-metric-value">{t('corporate.case3.duration')}</span>
+              <span class="ct-strip-metric-label">{t('corporate.case.metric1')}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -406,447 +425,959 @@ const t = useTranslations(lang);
 </Layout>
 
 <style>
-  .ct-challenges,
-  .ct-programs,
-  .ct-structure,
-  .ct-solution,
-  .ct-cases {
-    position: relative;
-    overflow: hidden;
-  }
+/* ─── Shared tokens ─────────────────────────────────────── */
+.ct-eyebrow {
+  display: inline-block;
+  padding: 0.375rem 1rem;
+  background: var(--color-brand-blue-50);
+  color: var(--color-brand-blue-700);
+  border-radius: 100px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: var(--font-heading);
+}
 
-  .ct-bg-dots {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(82, 138, 237, 0.06) 1px, transparent 1px);
-    background-size: 32px 32px;
-    pointer-events: none;
-  }
+.ct-eyebrow--light {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+}
 
-  .ct-bg-dots--right {
-    background-position: right center;
-  }
+.ct-section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--color-brand-navy);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 1rem 0 0;
+}
 
-  .ct-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    pointer-events: none;
-  }
+.ct-section-title--light {
+  color: white;
+}
 
-  .ct-orb--blue {
-    width: 400px;
-    height: 400px;
-    top: -100px;
-    right: -100px;
-    background: radial-gradient(circle, rgba(82, 138, 237, 0.12), transparent 70%);
-  }
+.ct-section-subtitle {
+  font-size: 1.125rem;
+  color: var(--color-slate-light);
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 1rem 0 0;
+}
 
-  .ct-orb--purple {
-    width: 350px;
-    height: 350px;
-    bottom: -80px;
-    left: -80px;
-    background: radial-gradient(circle, rgba(166, 123, 244, 0.1), transparent 70%);
-  }
+/* ─── Reveal animation ──────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--stagger, 0) * 90ms);
+}
 
-.structure-visual {
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION 1 — CHALLENGES
+   Dark scan panel with horizontal impact bars
+   ════════════════════════════════════════════════════════════ */
+.ct-challenges {
+  background: linear-gradient(160deg, var(--color-brand-navy) 0%, #1a1b30 60%, #0d0e1f 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.ct-challenges::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(82, 138, 237, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(82, 138, 237, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+.ct-challenges-inner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .ct-challenges-inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.ct-challenges-header {
+  position: sticky;
+  top: 6rem;
+  max-width: 280px;
+}
+
+@media (max-width: 768px) {
+  .ct-challenges-header {
+    position: static;
+    max-width: none;
+  }
+}
+
+.ct-challenges-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  position: relative;
 }
 
-.structure-visual::before {
-  content: "";
-  position: absolute;
-  left: 3.5rem;
-  top: 2.5rem;
-  bottom: 2.5rem;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--color-brand-blue), var(--color-brand-indigo), var(--color-brand-purple));
-  opacity: 0.2;
-  border-radius: 1px;
-}
-
-.structure-step {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-  position: relative;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 1.25rem;
-  border: 1px solid rgba(82, 138, 237, 0.15);
-  box-shadow: 0 8px 32px rgba(82, 138, 237, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 400ms var(--ease-out-expo);
-  overflow: hidden;
-}
-
-.structure-step::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 1.25rem;
-  padding: 1.5px;
-  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 400ms ease;
-  pointer-events: none;
-}
-
-.structure-step:hover {
-  background: rgba(255, 255, 255, 0.88);
-  border-color: transparent;
-  box-shadow: 0 12px 40px rgba(82, 138, 237, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  transform: translateX(8px);
-}
-
-.structure-step:hover::after {
-  opacity: 1;
-}
-
-.step-number {
-  font-family: var(--font-heading);
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1;
-  opacity: 0.25;
-  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  transition: all 400ms ease;
-}
-
-.structure-step:hover .step-number {
-  opacity: 0.6;
-}
-
-  .step-content {
-    flex: 1;
-  }
-
-  .step-title {
-    font-family: var(--font-heading);
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: var(--color-brand-navy);
-    margin: 0 0 0.5rem;
-  }
-
-  .step-desc {
-    font-size: 0.9375rem;
-    color: var(--color-slate-light);
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .structure-benefits {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-.benefit-card {
-  position: relative;
-  padding: 1.75rem;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 1.25rem;
-  border: 1px solid rgba(82, 138, 237, 0.15);
-  box-shadow: 0 8px 32px rgba(82, 138, 237, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 400ms var(--ease-out-expo);
-  overflow: hidden;
-}
-
-.benefit-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 1.25rem;
-  padding: 1.5px;
-  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 400ms ease;
-  pointer-events: none;
-}
-
-.benefit-card:hover {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: transparent;
-  box-shadow: 0 12px 40px rgba(82, 138, 237, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  transform: translateY(-4px);
-}
-
-.benefit-card:hover::after {
-  opacity: 1;
-}
-
-.benefit-icon-wrap {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 0.75rem;
-  display: flex;
+.ct-challenge-row {
+  display: grid;
+  grid-template-columns: 4rem 1fr auto;
+  gap: 2rem;
   align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, rgba(82, 138, 237, 0.12), rgba(166, 123, 244, 0.12));
-  border: 1px solid rgba(82, 138, 237, 0.2);
-  margin-bottom: 1rem;
-  transition: all 400ms var(--ease-out-expo);
+  padding: 2.5rem 0;
 }
 
-.benefit-card:hover .benefit-icon-wrap {
-  transform: scale(1.08) rotate(-3deg);
-  border-color: rgba(82, 138, 237, 0.3);
-  background: linear-gradient(135deg, rgba(82, 138, 237, 0.18), rgba(166, 123, 244, 0.18));
+@media (max-width: 640px) {
+  .ct-challenge-row {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 2rem 0;
+  }
 }
 
-.benefit-card h4 {
+.ct-challenge-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ct-challenge-ordinal {
   font-family: var(--font-heading);
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--color-brand-navy);
-  margin: 0 0 0.5rem;
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+  letter-spacing: -0.04em;
+  flex-shrink: 0;
 }
 
-.benefit-card p {
+.ct-challenge-name {
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 0.625rem;
+}
+
+.ct-challenge-desc {
   font-size: 0.9375rem;
-  color: var(--color-slate-light);
-  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.7;
   margin: 0;
 }
 
-  .solution-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
+.ct-challenge-impact {
+  flex-shrink: 0;
+  min-width: 200px;
+}
 
-.solution-point {
+@media (max-width: 640px) {
+  .ct-challenge-impact {
+    min-width: 0;
+  }
+}
+
+.ct-impact-bar-wrap {
   display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ct-impact-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.ct-impact-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
   position: relative;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition: all 400ms var(--ease-out-expo);
+}
+
+.ct-impact-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--color-brand-blue), var(--color-brand-indigo));
+  transform-origin: left;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  transform: scaleX(0);
+}
+
+.reveal.visible .ct-impact-fill {
+  transform: scaleX(1);
+}
+
+.ct-impact-fill--25 { background: linear-gradient(90deg, var(--color-brand-blue), var(--color-brand-indigo)); width: 25%; }
+.ct-impact-fill--40 { background: linear-gradient(90deg, var(--color-brand-indigo), var(--color-brand-purple)); width: 40%; }
+.ct-impact-fill--35 { background: linear-gradient(90deg, var(--color-brand-purple), var(--color-brand-orange)); width: 35%; }
+
+.ct-impact-value {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.03em;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION 2 — PROGRAMS
+   Full-width horizontal track lanes
+   ════════════════════════════════════════════════════════════ */
+.ct-programs {
+  background: var(--color-white);
+}
+
+.ct-programs-header {
+  margin-bottom: 3.5rem;
+}
+
+.ct-programs-tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(82, 138, 237, 0.1);
+  box-shadow: 0 4px 32px rgba(52, 53, 79, 0.06);
+}
+
+.ct-track {
+  display: grid;
+  grid-template-columns: 6px 1fr;
+  text-decoration: none;
+  background: white;
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
   overflow: hidden;
 }
 
-.solution-point::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 1.25rem;
-  padding: 1.5px;
-  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+.ct-track:hover {
+  background: #fafbff;
+}
+
+.ct-track-accent {
+  width: 6px;
+  flex-shrink: 0;
+  transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ct-track:hover .ct-track-accent {
+  width: 8px;
+}
+
+.ct-track-accent--blue  { background: linear-gradient(to bottom, var(--color-brand-blue), var(--color-brand-indigo)); }
+.ct-track-accent--purple { background: linear-gradient(to bottom, var(--color-brand-indigo), var(--color-brand-purple)); }
+.ct-track-accent--gold  { background: linear-gradient(to bottom, var(--color-brand-gold), var(--color-brand-orange)); }
+
+.ct-track-content {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 2.5rem 2.5rem 2.5rem 2rem;
+}
+
+@media (max-width: 768px) {
+  .ct-track-content {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1.75rem 1.5rem 1.75rem 1.25rem;
+  }
+}
+
+.ct-track-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-width: 140px;
+}
+
+.ct-track-index {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-brand-navy);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  opacity: 0.15;
+  transition: opacity 0.35s ease;
+}
+
+.ct-track:hover .ct-track-index {
+  opacity: 0.35;
+}
+
+.ct-track-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.ct-tag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.25rem 0.625rem;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+}
+
+.ct-tag--blue   { background: var(--color-brand-blue-50); color: var(--color-brand-blue-700); }
+.ct-tag--purple { background: rgba(166, 123, 244, 0.08); color: #6d28d9; }
+.ct-tag--gold   { background: rgba(254, 187, 55, 0.1); color: #92400e; }
+
+.ct-track-main {
+  border-left: 1px solid rgba(52, 53, 79, 0.06);
+  padding-left: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .ct-track-main { border-left: none; padding-left: 0; }
+}
+
+.ct-track-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+  margin: 0 0 0.625rem;
+  transition: color 0.3s ease;
+}
+
+.ct-track--blue:hover .ct-track-title   { color: var(--color-brand-blue-700); }
+.ct-track--purple:hover .ct-track-title { color: #6d28d9; }
+.ct-track--gold:hover .ct-track-title   { color: #92400e; }
+
+.ct-track-desc {
+  font-size: 1rem;
+  color: var(--color-slate-light);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.ct-track-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
   opacity: 0;
-  transition: opacity 400ms ease;
+  transform: translateX(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.ct-track:hover .ct-track-cta {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.ct-track-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-brand-navy);
+}
+
+.ct-track-arrow {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-brand-navy);
+  transition: transform 0.3s ease;
+}
+
+.ct-track:hover .ct-track-arrow {
+  transform: translateX(4px);
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION 3 — HOW IT WORKS
+   Horizontal connected timeline
+   ════════════════════════════════════════════════════════════ */
+.ct-journey {
+  background: linear-gradient(to bottom, #f6f8ff, var(--color-white));
+}
+
+.ct-journey-header {
+  margin-bottom: 4rem;
+}
+
+.ct-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+@media (max-width: 768px) {
+  .ct-timeline {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.ct-timeline-track {
+  position: absolute;
+  top: 2rem;
+  left: calc(12.5% + 1rem);
+  right: calc(12.5% + 1rem);
+  height: 2px;
+  background: linear-gradient(90deg,
+    var(--color-brand-blue),
+    var(--color-brand-indigo),
+    var(--color-brand-purple),
+    var(--color-brand-gold)
+  );
+  opacity: 0.2;
   pointer-events: none;
 }
 
-.solution-point:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: transparent;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transform: translateX(8px);
+@media (max-width: 768px) {
+  .ct-timeline-track {
+    display: none;
+  }
 }
 
-.solution-point:hover::after {
-  opacity: 1;
+.ct-timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 1.25rem;
+  position: relative;
 }
 
-.point-icon {
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 1rem;
+@media (max-width: 768px) {
+  .ct-timeline-node {
+    flex-direction: row;
+    text-align: left;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(52, 53, 79, 0.06);
+  }
+
+  .ct-timeline-node:last-child {
+    border-bottom: none;
+  }
+}
+
+.ct-node-dot {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: all 400ms var(--ease-out-expo);
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-.point-icon.blue {
-  background: linear-gradient(135deg, rgba(82, 138, 237, 0.15), rgba(76, 108, 225, 0.15));
-  border: 1px solid rgba(82, 138, 237, 0.25);
-  color: var(--color-brand-blue);
+@media (max-width: 768px) {
+  .ct-node-dot { margin-bottom: 0; }
 }
 
-.point-icon.purple {
-  background: linear-gradient(135deg, rgba(166, 123, 244, 0.15), rgba(82, 138, 237, 0.1));
-  border: 1px solid rgba(166, 123, 244, 0.25);
-  color: var(--color-brand-purple);
+.ct-node-dot--blue   { background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo)); }
+.ct-node-dot--indigo { background: linear-gradient(135deg, var(--color-brand-indigo), var(--color-brand-purple)); }
+.ct-node-dot--purple { background: linear-gradient(135deg, var(--color-brand-purple), #9333ea); }
+.ct-node-dot--gold   { background: linear-gradient(135deg, var(--color-brand-gold), var(--color-brand-orange)); }
+
+.ct-node-num {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.02em;
 }
 
-.point-icon.gold {
-  background: linear-gradient(135deg, rgba(254, 187, 55, 0.15), rgba(251, 122, 75, 0.1));
-  border: 1px solid rgba(254, 187, 55, 0.25);
-  color: var(--color-brand-gold);
+.ct-node-card {
+  flex: 1;
 }
 
-.solution-point:hover .point-icon {
-  transform: scale(1.08) rotate(-3deg);
+.ct-node-title {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-brand-navy);
+  margin: 0 0 0.625rem;
 }
 
-.solution-point:hover .point-icon.blue {
-  border-color: rgba(82, 138, 237, 0.4);
+.ct-node-desc {
+  font-size: 0.9375rem;
+  color: var(--color-slate-light);
+  line-height: 1.65;
+  margin: 0;
 }
 
-.solution-point:hover .point-icon.purple {
-  border-color: rgba(166, 123, 244, 0.4);
+/* ════════════════════════════════════════════════════════════
+   SECTION 4 — WHY CLILTUTORS
+   Editorial alternating rows on dark background
+   ════════════════════════════════════════════════════════════ */
+.ct-why {
+  background: linear-gradient(160deg, #1a1b30 0%, var(--color-brand-navy) 50%, #2a1a4a 100%);
+  position: relative;
+  overflow: hidden;
 }
 
-.solution-point:hover .point-icon.gold {
-  border-color: rgba(254, 187, 55, 0.4);
-}
-
-  .point-content h3 {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-brand-navy);
-    margin: 0 0 0.5rem;
-  }
-
-  .point-content p {
-    font-size: 1rem;
-    color: var(--color-slate-light);
-    line-height: 1.7;
-    margin: 0;
-  }
-
-  .solution-visual {
-    position: relative;
-    height: 400px;
-  }
-
-.visual-card {
+.ct-why::after {
+  content: "";
   position: absolute;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 8px 32px rgba(82, 138, 237, 0.08);
-  border: none;
-}
-
-.visual-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 1rem;
-  padding: 1px;
-  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-purple));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.35;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(166, 123, 244, 0.08) 0%, transparent 70%);
+  top: -200px;
+  right: -200px;
   pointer-events: none;
 }
 
-  .card-1 {
-    top: 0;
-    right: 0;
-  max-width: 280px;
+.ct-why-header {
+  margin-bottom: 4rem;
 }
 
-.card-2 {
+.ct-why-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.ct-why-row {
+  display: grid;
+  grid-template-columns: 100px 1px 1fr auto;
+  gap: 2.5rem;
+  align-items: center;
+  padding: 2.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.35s ease;
+}
+
+.ct-why-row:last-child {
+  border-bottom: none;
+}
+
+.ct-why-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (max-width: 768px) {
+  .ct-why-row {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 2rem 0;
+  }
+  .ct-why-divider { display: none; }
+}
+
+.ct-why-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.ct-why-stat-num {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  letter-spacing: -0.04em;
+}
+
+.ct-why-stat-bar {
+  height: 3px;
+  width: 48px;
+  border-radius: 2px;
+}
+
+.ct-why-stat-bar--blue   { background: var(--color-brand-blue); }
+.ct-why-stat-bar--purple { background: var(--color-brand-purple); }
+.ct-why-stat-bar--gold   { background: var(--color-brand-gold); }
+
+.ct-why-divider {
+  width: 1px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.1);
+  align-self: center;
+}
+
+.ct-why-content {
+  flex: 1;
+}
+
+.ct-why-title {
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 0.625rem;
+}
+
+.ct-why-desc {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.ct-why-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  min-width: 120px;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .ct-why-metric { align-items: flex-start; text-align: left; }
+}
+
+.ct-why-metric-value {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.ct-why-metric-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION 5 — CASES
+   Impact spotlight: 1 featured + 2 compact strips
+   ════════════════════════════════════════════════════════════ */
+.ct-cases {
+  background: var(--color-white);
+}
+
+.ct-cases-header {
+  margin-bottom: 3rem;
+}
+
+/* Featured full-width case */
+.ct-case-featured {
+  position: relative;
+  border-radius: 1.75rem;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 3.5rem 4rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(82, 138, 237, 0.12);
+  background: linear-gradient(135deg, #f6f8ff 0%, #f0f2ff 100%);
+  box-shadow: 0 8px 48px rgba(82, 138, 237, 0.08);
+  min-height: 280px;
+}
+
+@media (max-width: 768px) {
+  .ct-case-featured {
+    grid-template-columns: 1fr;
+    padding: 2.5rem 2rem;
+  }
+}
+
+.ct-case-featured-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 50%, rgba(82, 138, 237, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(76, 108, 225, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.ct-case-featured-content {
+  position: relative;
+  z-index: 1;
+}
+
+.ct-case-company-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.ct-case-company-logo {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.875rem;
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-indigo));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.ct-case-company-name {
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+  margin: 0 0 0.125rem;
+}
+
+.ct-case-duration {
+  font-size: 0.8125rem;
+  color: var(--color-brand-navy-700);
+  font-weight: 500;
+}
+
+.ct-case-featured-desc {
+  font-size: 1.0625rem;
+  color: var(--color-slate-light);
+  line-height: 1.7;
+  margin: 0 0 2rem;
+  max-width: 540px;
+}
+
+.ct-case-featured-metrics {
+  display: flex;
+  gap: 3rem;
+}
+
+.ct-case-metric-big {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.ct-case-metric-value {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-brand-navy);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.ct-case-metric-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-brand-navy-700);
+}
+
+/* Decorative ring visual */
+.ct-case-featured-visual {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .ct-case-featured-visual { display: none; }
+}
+
+.ct-case-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(82, 138, 237, 0.15);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ct-ring-pulse 4s ease-in-out infinite;
+}
+
+.ct-case-ring--1 { width: 100%; height: 100%; animation-delay: 0s; }
+.ct-case-ring--2 { width: 75%; height: 75%; border-color: rgba(82, 138, 237, 0.25); animation-delay: 0.6s; }
+.ct-case-ring--3 { width: 50%; height: 50%; border-color: rgba(82, 138, 237, 0.4); animation-delay: 1.2s; }
+
+@keyframes ct-ring-pulse {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.04); }
+}
+
+.ct-case-ring-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--color-brand-navy);
+  letter-spacing: -0.04em;
+}
+
+/* Compact horizontal strips */
+.ct-case-strips {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .ct-case-strips { grid-template-columns: 1fr; }
+}
+
+.ct-case-strip {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4px auto 1fr auto;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.75rem 2rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(82, 138, 237, 0.08);
+  background: white;
+  box-shadow: 0 2px 16px rgba(52, 53, 79, 0.04);
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  overflow: hidden;
+}
+
+.ct-case-strip:hover {
+  box-shadow: 0 8px 40px rgba(52, 53, 79, 0.1);
+  transform: translateY(-3px);
+  border-color: rgba(82, 138, 237, 0.15);
+}
+
+.ct-strip-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
   bottom: 0;
-  left: 20%;
-  max-width: 300px;
-  }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    font-size: 0.875rem;
-    color: var(--color-brand-navy-700);
-  }
-
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-brand-blue);
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  .status-dot.success {
-    background: #10b981;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
-
-  .card-metric {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .metric-value {
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--color-brand-navy);
-    line-height: 1;
-  }
-
-  .metric-label {
-    font-size: 0.875rem;
-    color: var(--color-brand-blue-500);
-  }
-
-  @media (max-width: 768px) {
-    .structure-step,
-    .solution-point {
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .solution-visual {
-      height: 300px;
-      margin-top: 2rem;
-    }
-
-    .visual-card {
-      position: relative;
-      width: 100%;
-      margin-bottom: 1rem;
-    }
-
-    .card-1,
-    .card-2 {
-      position: relative;
-      top: auto;
-      right: auto;
-      bottom: auto;
-left: auto;
+  width: 4px;
+  border-radius: 4px 0 0 4px;
 }
+
+.ct-strip-accent--purple { background: linear-gradient(to bottom, var(--color-brand-indigo), var(--color-brand-purple)); }
+.ct-strip-accent--gold   { background: linear-gradient(to bottom, var(--color-brand-gold), var(--color-brand-orange)); }
+
+.ct-strip-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.625rem;
+  background: linear-gradient(135deg, var(--color-brand-indigo), var(--color-brand-purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.ct-strip-logo--gold {
+  background: linear-gradient(135deg, var(--color-brand-gold), var(--color-brand-orange));
+}
+
+.ct-strip-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ct-strip-company {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-brand-navy);
+  margin: 0 0 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ct-strip-desc {
+  font-size: 0.875rem;
+  color: var(--color-slate-light);
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ct-strip-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.ct-strip-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.ct-strip-metric-value {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-brand-navy);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.ct-strip-metric-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-brand-navy-700);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
 }
 </style>
 
+<script>
+  // Intersection observer for .reveal elements
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '-40px 0px' }
+  );
+
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>
