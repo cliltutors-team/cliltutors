@@ -1,6 +1,6 @@
 {
-  "buildCommand": "turbo run build",
+  "buildCommand": "astro build",
   "outputDirectory": "dist",
   "framework": "astro",
-  "ignoreCommand": "npx turbo-ignore --fallback=HEAD^1"
+  "installCommand": "npm install --prefix=../.."
 }
