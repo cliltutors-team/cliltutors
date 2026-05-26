@@ -1,6 +1,7 @@
 {
   "name": "cliltutors-monorepo",
   "private": true,
+  "packageManager": "npm@10.9.2",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --filter=@cliltutors/web --filter=@cliltutors/landing",
